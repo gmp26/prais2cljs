@@ -5,6 +5,12 @@
     (:import goog.History))
 
 
+;;
+;; basic hashbang routing to configure some game options
+;;
+(secretary/set-config! :prefix "#")
+
+
 (defroute "/users/:id" {:as params}
   (js/console.log (str "User: " (:id params) " " (:foo (:query-params params)))))
 
