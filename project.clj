@@ -24,7 +24,7 @@
 
               :figwheel { :on-jsload "prais2.core/on-js-reload" }
 
-              :compiler {:main prais2.core
+              :compiler {:main prais2.main
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -35,7 +35,7 @@
               :compiler {:output-to "resources/public/js/compiled/prais2.js"
                          :asset-path "js/compiled/prod"
                          :output-dir "resources/public/js/compiled/prod"
-                         :main prais2.core
+                         :main prais2.main
                          :externs ["resources/externs/svg.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false}
