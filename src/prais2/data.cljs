@@ -46,14 +46,14 @@
        [:td "46"]]]]]])
 
 (def table1-data
-  {:th ["Hospital"
+  {:headers ["Hospital"
         "Hospital Code"
         "Number of Operations"
         "Number of deaths"
         "Number of survivors"
         "Survival rate (%)"
         "Predicted survival range using statistical model"]
-   :tr [["Belfast, Royal Victoria Hospital"	"RVB"	204	2	202	99.0	96.6 100]
+   :rows [["Belfast, Royal Victoria Hospital"	"RVB"	204	2	202	99.0	96.6 100]
         ["London, Harley Street Clinic"	"HSC"	482	7	475	98.5	95.9   98.8]
         ["Leicester, Glenfield Hospital"	"GRL"	582	11	571	98.1	96.2  98.8]
         ["Newcastle, Freeman Hospital"	"FRE"	678	15	663	97.8	96  98.4]
@@ -69,27 +69,47 @@
         ["London, Great Ormond Street Hospital for Children"	"GOS"	1881	30	1851	98.4	97  98.4]]}
   )
 
+(defn compare-one
+  "return a comparator on one sort column"
+  [first-comparator second-comparator]
+  (fn [cell1 cell2])
+  )
+
+
+(defn compare-all
+  "return a comparator which sorts columns in order. sort-columns is an array of
+  column-index increasing/decreasing pairs"
+  [sort-columns]
+  (reduce compare-one sort-columns)
+  )
+
+(defn sort-column
+  "sort a data table"
+  [data sort-columns]
+  (assoc data :rows (sort (compare-all sort-columns) (:rows data)))
+  )
+
 (r/defc table1 < r/reactive (data-table-on :#table1) [data]
-  (let [headers (:th data)]
+  (let [headers (:headers data)]
     [:div.row
      [:div.col-md-12
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
-       [:thead
+       [:thead {:key :thead}
         [:tr
            (for [col (range (count headers))]
              (do (prn (nth headers col))
-                 [:th (nth headers col)]))
+                 [:th {:key [:th col]} (nth headers col)]))
            ]]
 
-       [:tbody
-        (let [rows (:tr data)]
+       [:tbody {:key :tbody}
+        (let [rows (:rows data)]
           (for [row (range (count rows))]
             (let [row-cells (nth rows row)]
-              [:tr
+              [:tr {:key row}
                (for [cell (range (count headers))]
-                 [:td (if (< (+ 1 cell) (count headers))
-                        (nth row-cells cell)
-                        (str (nth row-cells cell) "% - " (nth row-cells (inc cell)) "%")
-                        )])]))
+                 [:td {:key [row cell]} (if (< (+ 1 cell) (count headers))
+                           (nth row-cells cell)
+                           (str (nth row-cells cell) "% - " (nth row-cells (inc cell)) "%")
+                           )])]))
           )]
        ]]]))

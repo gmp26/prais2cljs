@@ -43,39 +43,3 @@
 ;;
 (defn on-js-reload []
   (swap! app update-in [:__figwheel_counter] inc))
-
-;;;
-;;; MOVE TO data.cljs
-;;;
-
-(comment
-;;;
-  ;; Sample jQuery usage:
-  ;;  Attach the jQuery plugin only after React has mounted the selected element and jQuery has loaded.
-;;;
-  (defn home-did-mount
-    "attach DataTable plugin to the example table. Adds search, filter, sorts, and pagination."
-    [state]
-    (ready
-     (.DataTable ($ :#example)))
-    state)
-
-  ;; data-table mixin - adds jQuery DataTable code on jQuery ready
-  (def data-table {:did-mount home-did-mount})
-
-  (r/defc home < r/reactive data-table []
-    [:div.row
-     [:div.col-md-6
-      [:table#example.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
-       [:thead
-        [:tr [:th "Name"]
-         [:th "Age"]]]
-       [:tbody
-        [:tr [:td "Matthew"]
-         [:td "26"]]
-        [:tr [:td "Anna"]
-         [:td "24"]]
-        [:tr [:td "Michelle"]
-         [:td "42"]]
-        [:tr [:td "Frank"]
-         [:td "46"]]]]]]))
