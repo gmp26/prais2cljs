@@ -72,6 +72,7 @@
 (defn compare-all
   "return a sort-by key-fn which operates on all sort-columns"
   [sort-columns]
+  (prn sort-columns)
   (reduce #(compare-merge %1 %2) (constantly 0)  sort-columns)
   )
 
@@ -81,8 +82,11 @@
   (assoc data :rows (sort (compare-all sort-columns) (:rows data)))
   )
 
-(r/defc table1 < r/reactive (data-table-on :#table1) [data]
-  (let [headers (:headers data)
+(def sort-columns (atom [[5 true] [1 false]]))
+
+(r/defc table1 < r/reactive #_(data-table-on :#table1) [data]
+  (let [sdata (sort-column data @sort-columns)
+        headers (:headers sdata)
         visible-headers (- (count headers) 1)]
     [:div.row
      [:div.col-md-12
@@ -95,7 +99,7 @@
            ]]
 
        [:tbody {:key :tbody}
-        (let [rows (:rows data)]
+        (let [rows (:rows sdata)]
           (for [row (range (count rows))]
             (let [row-cells (nth rows row)]
               [:tr {:key row}
