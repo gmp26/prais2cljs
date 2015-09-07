@@ -28,23 +28,6 @@
                                        })))
                 state)})
 
-(r/defc sample-data-table < r/reactive (data-table-on :#sample) []
-  [:div.row
-   [:div.col-md-6
-    [:table#sample.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
-     [:thead
-      [:tr [:th "Name"]
-       [:th "Age"]]]
-     [:tbody
-      [:tr [:td "Matthew"]
-       [:td "26"]]
-      [:tr [:td "Anna"]
-       [:td "24"]]
-      [:tr [:td "Michelle"]
-       [:td "42"]]
-      [:tr [:td "Frank"]
-       [:td "46"]]]]]])
-
 (def table1-data
   {:headers ["Hospital"
         "Hospital Code"
@@ -69,18 +52,27 @@
         ["London, Great Ormond Street Hospital for Children"	"GOS"	1881	30	1851	98.4	97  98.4]]}
   )
 
-(defn compare-one
-  "return a comparator on one sort column"
-  [first-comparator second-comparator]
-  (fn [cell1 cell2])
+(defn compare-merge
+  "merge a comparator with one on another sort column"
+  [comparator [column order]]
+  (prn (str compare-merge " " column " " order))
+  (fn [row1 row2]
+    (let [comp1 (comparator row1 row2)]
+      (if (not= comp1 0)
+        comp1
+        (let [cell1 (nth row1 column)
+              cell2 (nth row2 column)]
+          (if order
+            (compare cell1 cell2)
+            (compare cell2 cell1)))
+        )
+      ) )
   )
 
-
 (defn compare-all
-  "return a comparator which sorts columns in order. sort-columns is an array of
-  column-index increasing/decreasing pairs"
+  "return a sort-by key-fn which operates on all sort-columns"
   [sort-columns]
-  (reduce compare-one sort-columns)
+  (reduce #(compare-merge %1 %2) (constantly 0)  sort-columns)
   )
 
 (defn sort-column
@@ -90,13 +82,14 @@
   )
 
 (r/defc table1 < r/reactive (data-table-on :#table1) [data]
-  (let [headers (:headers data)]
+  (let [headers (:headers data)
+        visible-headers (- (count headers) 1)]
     [:div.row
      [:div.col-md-12
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
        [:thead {:key :thead}
         [:tr
-           (for [col (range (count headers))]
+           (for [col (range visible-headers)]
              (do (prn (nth headers col))
                  [:th {:key [:th col]} (nth headers col)]))
            ]]
@@ -106,10 +99,32 @@
           (for [row (range (count rows))]
             (let [row-cells (nth rows row)]
               [:tr {:key row}
-               (for [cell (range (count headers))]
-                 [:td {:key [row cell]} (if (< (+ 1 cell) (count headers))
-                           (nth row-cells cell)
-                           (str (nth row-cells cell) "% - " (nth row-cells (inc cell)) "%")
-                           )])]))
-          )]
-       ]]]))
+               (for [cell (range visible-headers)]
+                 [:td {:key [row cell]}
+                  (cond
+                    (< cell (- visible-headers 1))
+                    (nth row-cells cell)
+
+                    (< cell visible-headers)
+                    (str  (nth row-cells cell) "%")
+                    )])])))]]]]))
+
+;;;
+;; Samples
+;;;
+#_(r/defc sample-data-table < r/reactive (data-table-on :#sample) []
+  [:div.row
+   [:div.col-md-6
+    [:table#sample.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
+     [:thead
+      [:tr [:th "Name"]
+       [:th "Age"]]]
+     [:tbody
+      [:tr [:td "Matthew"]
+       [:td "26"]]
+      [:tr [:td "Anna"]
+       [:td "24"]]
+      [:tr [:td "Michelle"]
+       [:td "42"]]
+      [:tr [:td "Frank"]
+       [:td "46"]]]]]])

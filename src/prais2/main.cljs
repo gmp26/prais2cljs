@@ -22,6 +22,18 @@
 
 (defn el [id] (.getElementById js/document id))
 
+(defn select
+  "Return the first matching DOM element selected by the CSS selector. "
+  [selector]
+  (.querySelector js/document selector)
+  )
+
+(defn selectAll
+  "Return the first matching DOM element selected by the CSS selector. "
+  [selector]
+  (.querySelectorAll js/document selector)
+  )
+
 ;;
 ;; Put the app/app in here
 ;;
