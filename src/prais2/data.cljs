@@ -64,23 +64,18 @@
               cell2 (nth row2 column)]
           (if order
             (compare cell1 cell2)
-            (compare cell2 cell1)))
-        )
-      ) )
-  )
+            (compare cell2 cell1)))))))
 
 (defn compare-all
   "return a sort-by key-fn which operates on all sort-columns"
   [sort-columns]
   (prn sort-columns)
-  (reduce #(compare-merge %1 %2) (constantly 0)  sort-columns)
-  )
+  (reduce #(compare-merge %1 %2) (constantly 0)  sort-columns))
 
 (defn sort-column
   "sort a data table"
   [data sort-columns]
-  (assoc data :rows (sort (compare-all sort-columns) (:rows data)))
-  )
+  (assoc data :rows (sort (compare-all sort-columns) (:rows data))))
 
 (def sort-columns (atom [[5 true] [1 false]]))
 
