@@ -4,6 +4,7 @@
               [clojure.set :refer (intersection)]
               [cljsjs.react]
               [prais2.routes]
+              [prais2.content :as content]
               [prais2.data :as data]
               [jayq.core :refer ($)])
     (:require-macros [jayq.macros :refer [ready]])
@@ -29,7 +30,7 @@
   )
 
 (defn selectAll
-  "Return the first matching DOM element selected by the CSS selector. "
+  "Returns a NodeList object containing all matching DOM elements."
   [selector]
   (.querySelectorAll js/document selector)
   )
@@ -38,12 +39,14 @@
 ;; Put the app/app in here
 ;;
 (r/defc app-container < r/reactive []
-  [:div#box
-   [:h1 (:title (r/react app))]
+  (let [appl (r/react app)]
+    [:div#box
+     [:img {:src (:logo appl) :style {:float "left" :padding "8px" :padding-right "20px" }}]
+     [:h1 (:title appl)]
 
-   #_(data/sample-data-table)
-   (data/table1 data/table1-data)
-   ])
+     #_(data/sample-data-table)
+     (data/table1 content/table1-data)
+     ]))
 
 ;;
 ;; mount main component on html app element
