@@ -59,48 +59,46 @@
 
 (def sort-columns (atom [[:h-name true] [:h-code false]]))
 
+(defn sort-rows-by
+  "sort rows by header spec"
+  [headers column-keys]
+  (zipmap column-keys headers)
+  )
+
+
 (r/defc table1 < r/reactive #_(data-table-on :#table1) [data]
-  (let [sdata data #_(sort-column data @sort-columns)
-        headers (:headers sdata)
-        visible-headers (- (count headers) 1)]
+  (let [headers (first data)
+        rows (rest data)
+        column-keys (keys headers)]
+    #_(prn (sort-rows-by headers column-keys) )
+    #_(prn column-keys)
     [:div.row
      [:div.col-md-12
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
        [:thead {:key :thead}
         [:tr
-           (for [col (range visible-headers)]
-             (do (prn (nth headers col))
-                 [:th {:key [:th col]
-                       :style {:width "10px"
-                               :vertical-align "top"}}
-                  [:i {:class "fa fa-sort-desc"}]
-                  (:title (nth headers col))
-                  ]
-                 #_[:th {:class "sorting_asc"
-                       :tab-index "0"
-                       :aria-controls "table1"
-                       :aria-sort "ascending"
-                       :aria-label "Hospital: activate to sort column descending"
-                       :key [:th col]} (nth headers col)]))]]
+         (for [column-key column-keys :when (-> headers column-key :shown)]
+           (let [header (column-key headers)]
+             [:th {:key [column-key "head"]
+                   :style {:width "10px"
+                           :vertical-align "top"}}
+              [:i {:class "fa fa-sort-desc"}]
+              (:title header)
+              ]
+
+             #_[:th {:class "sorting_asc"
+                     :tab-index "0"
+                     :aria-controls "table1"
+                     :aria-sort "ascending"
+                     :aria-label "Hospital: activate to sort column descending"
+                     :key [:th col]} (nth headers col)]))]]
 
        [:tbody {:key :tbody}
-        (let [rows (:rows sdata)]
-          (for [row (range (count rows))]
-            (let [row-cells (nth rows row)
-                  row-keys (keys (first rows))
-                  ]
-              (prn row-cells)
-              [:tr {:key row}
-               (for [cell-key row-keys]
-                 (do
-                   (prn (str "cell " cell-key))
-                   (when (and (not= cell-key :low-prediction)
-                              (not= cell-key :high-prediction))
-                     [:td {:key [row cell-key]}
-                      (cell-key row-cells)
-                      ]
-
-                       )))])))]]]]))
+        (for [row rows]
+          [:tr {:key (:h-code row)}
+           (for [column-key column-keys :when (-> headers column-key :shown)]
+             [:td {:key [column-key "r"]}
+              (column-key row)])])]]]]))
 
 ;;;
 ;; Samples
