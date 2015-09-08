@@ -28,7 +28,8 @@
                                        })))
                 state)})
 
-(def table1-data
+(
+def table1-data
   {:headers ["Hospital"
         "Hospital Code"
         "Number of Operations"
@@ -90,8 +91,14 @@
         [:tr
            (for [col (range visible-headers)]
              (do (prn (nth headers col))
-                 [:th {:key [:th col]} (nth headers col)]))
-           ]]
+                 [:th {:key [:th col]} (nth headers col)
+                  [:i {:class "fa fa-sort-desc"}]]
+                 #_[:th {:class "sorting_asc"
+                       :tab-index "0"
+                       :aria-controls "table1"
+                       :aria-sort "ascending"
+                       :aria-label "Hospital: activate to sort column descending"
+                       :key [:th col]} (nth headers col)]))]]
 
        [:tbody {:key :tbody}
         (let [rows (:rows sdata)]
