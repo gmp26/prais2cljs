@@ -79,7 +79,7 @@
 
 (def sort-columns (atom [[5 true] [1 false]]))
 
-(r/defc table1 < r/reactive #_(data-table-on :#table1) [data]
+(r/defc table1 < r/reactive (data-table-on :#table1) [data]
   (let [sdata (sort-column data @sort-columns)
         headers (:headers sdata)
         visible-headers (- (count headers) 1)]
