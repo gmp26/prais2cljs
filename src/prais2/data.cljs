@@ -29,47 +29,30 @@
                                        })))
                 state)})
 
+(defn sort-on-column
+  "sort a column"
+  [app column-key]
+  (let [ap @app
+        sort-column (:sort-by ap)
+        sort-mode (:sort-ascending ap)]
+    (prn ap)
+    (if (= sort-column column-key)
+      (swap! app #(assoc % :sort-ascending (not sort-mode)))
+      (swap! app #(assoc % :sort-ascending true :sort-by column-key)))))
 
+(defn handle-sort
+  "handle sort click"
+  [event app column-key]
+  (let [ap @app]
+    (prn column-key)
+    (sort-on-column app column-key)))
 
-(defn compare-merge
-  "merge a comparator with one on another sort column"
-  [comparator [column-key order]]
-  (prn (str "compare-merge "  column-key " " order))
-  (fn [row1 row2]
-    (let [comp1 (comparator row1 row2)]
-      (prn row1)
-      (if (not= comp1 0)
-        comp1
-        (let [cell1 (column-key row1)
-              cell2 (column-key row2)]
-          (if order
-            (compare cell1 cell2)
-            (compare cell2 cell1)))))))
-
-(defn compare-all
-  "return a sort-by key-fn which operates on all sort-columns"
-  [sort-columns]
-  (prn sort-columns)
-  (reduce #(compare-merge %1 %2) (constantly 0)  sort-columns))
-
-(defn sort-column
-  "sort a data table"
-  [data sort-columns]
-  (assoc data :rows (sort (compare-all sort-columns) (:rows data))))
-
-(def sort-columns (atom [[:h-name true] [:h-code false]]))
-
-(defn sort-rows-by
-  "sort rows by header spec"
-  [headers column-keys]
-  (zipmap column-keys headers)
-  )
-
-(r/defc table1 < r/reactive #_(data-table-on :#table1) [data sort-key direction]
-  (let [headers (first data)
+(r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
+  (let [ap @app
+        headers (first data)
         rows  (if sort-key
                 (let [sorted (sort-by sort-key (rest data))]
-                  (if direction sorted (reverse sorted)))
+                  (if sort-direction sorted (reverse sorted)))
                 (rest data))
         column-keys (keys headers)]
     [:div.row
@@ -78,13 +61,21 @@
        [:thead {:key :thead}
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
-           (let [header (column-key headers)]
+           (let [header (column-key headers)
+                 sortable (:sortable header)]
              [:th {:key [column-key "head"]
+                   :on-click (when sortable #(handle-sort % app column-key))
                    :style {:width "10px"
-                           :vertical-align "top"}}
-              [:i {:class "fa fa-sort-desc"}]
-              (:title header)
-              ]
+                           :vertical-align "top"
+                           :cursor "pointer"}}
+              (when sortable [:i {:key :icon
+                                  :class (str  "fa fa-sort"
+                                               (if (= column-key (:sort-by ap))
+                                                 (if (:sort-ascending ap) "-asc" "-desc") ""))
+                                  :style {:pointer-events "none"}}])
+              [:span {:key :text
+                      :style {:pointer-events "none"}}
+               (:title header)]]
 
              #_[:th {:class "sorting_asc"
                      :tab-index "0"
@@ -99,23 +90,3 @@
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
               (column-key row)])])]]]]))
-
-;;;
-;; Samples
-;;;
-#_(r/defc sample-data-table < r/reactive (data-table-on :#sample) []
-  [:div.row
-   [:div.col-md-6
-    [:table#sample.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
-     [:thead
-      [:tr [:th "Name"]
-       [:th "Age"]]]
-     [:tbody
-      [:tr [:td "Matthew"]
-       [:td "26"]]
-      [:tr [:td "Anna"]
-       [:td "24"]]
-      [:tr [:td "Michelle"]
-       [:td "42"]]
-      [:tr [:td "Frank"]
-       [:td "46"]]]]]])

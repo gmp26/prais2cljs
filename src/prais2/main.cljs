@@ -16,37 +16,35 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
-                    :logo "assets/logo-placeholder.png"
-                    :page "home"
-                    :__figwheel_counter 0}))
+(def app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
+                :logo "assets/logo-placeholder.png"
+                :page "home"
+                :sort-by nil
+                :sort-ascending true
+                :__figwheel_counter 0}))
 
 (defn el [id] (.getElementById js/document id))
 
 (defn select
   "Return the first matching DOM element selected by the CSS selector. "
   [selector]
-  (.querySelector js/document selector)
-  )
+  (.querySelector js/document selector))
 
 (defn selectAll
   "Returns a NodeList object containing all matching DOM elements."
   [selector]
-  (.querySelectorAll js/document selector)
-  )
+  (.querySelectorAll js/document selector))
 
 ;;
 ;; Put the app in here
 ;;
 (r/defc app-container < r/reactive []
-  (let [appl (r/react app)]
+  (let [ap (r/react app)]
     [:div#box
-     [:img {:src (:logo appl) :style {:float "left" :padding "8px" :padding-right "20px" }}]
-     [:h1 (:title appl)]
-
-     #_(data/sample-data-table)
-     (data/table1 content/table1-data :h-name true)
-     ]))
+     [:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
+     [:h1 {:key :ap2} (:title ap)]
+     (r/with-key (data/table1 app content/table1-data (:sort-by ap) (:sort-ascending ap)
+) :ap3)]))
 
 ;;
 ;; mount main component on html app element
