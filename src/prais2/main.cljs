@@ -36,7 +36,7 @@
   )
 
 ;;
-;; Put the app/app in here
+;; Put the app in here
 ;;
 (r/defc app-container < r/reactive []
   (let [appl (r/react app)]
@@ -45,7 +45,7 @@
      [:h1 (:title appl)]
 
      #_(data/sample-data-table)
-     (data/table1 content/table1-data)
+     (data/table1 content/table1-data :h-name true)
      ]))
 
 ;;

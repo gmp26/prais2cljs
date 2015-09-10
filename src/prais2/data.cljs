@@ -65,13 +65,13 @@
   (zipmap column-keys headers)
   )
 
-
-(r/defc table1 < r/reactive #_(data-table-on :#table1) [data]
+(r/defc table1 < r/reactive #_(data-table-on :#table1) [data sort-key direction]
   (let [headers (first data)
-        rows (rest data)
+        rows  (if sort-key
+                (let [sorted (sort-by sort-key (rest data))]
+                  (if direction sorted (reverse sorted)))
+                (rest data))
         column-keys (keys headers)]
-    #_(prn (sort-rows-by headers column-keys) )
-    #_(prn column-keys)
     [:div.row
      [:div.col-md-12
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
