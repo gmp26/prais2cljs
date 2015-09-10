@@ -1,7 +1,8 @@
 (ns ^:figwheel-always prais2.data
     (:require [rum :as r]
               [jayq.core :refer ($)]
-              [prais2.content])
+              [prais2.content :as content
+               ])
     (:require-macros [jayq.macros :refer [ready]]))
 
 ;;;
@@ -47,6 +48,48 @@
     (prn column-key)
     (sort-on-column app column-key)))
 
+(def chart-width 300)
+
+(defn min-outer-low
+  "the minimum outer-low value across all rows"
+  [data]
+  (apply min (map :outer-low (rest data))))
+;; (min-outer-low content/table1-data) => 94.8
+
+
+(defn bar-scale
+  "value to pixel-width scale-factor controlled by slider in [0-1]"
+  [slider]
+  (/ chart-width (- 100 (* (min-outer-low content/table1-data) slider))))
+;; (bar-scale 1) => 57.7 (a 5.2% range expanded to 300px)
+;; (bar-scale 0) => 3 (a 100% range expanded to 300px)
+
+
+(defn bar-width
+  "return pixel-width for a bar"
+  [slider value]
+  (* value (bar-scale slider))
+  )
+
+(r/defc bar < r/static [slider value fill]
+  [:div {:style {:display "inline-block"
+                 :background-color fill
+                 :height "20px"
+                 :width (str (bar-width slider value) "px")}
+         }])
+
+
+(r/defc bar-chart < r/static [row]
+  (let [slider 1]
+    [:div
+     #_(bar slider (:outer-low row) "red")
+     (bar slider (- (:inner-low row) (:outer-low row)) "cyan")
+     (bar slider (- (:inner-high row) (:inner-low row)) "blue")
+     (bar slider (- (:outer-high row) (:inner-high row)) "cyan")
+     ])
+  )
+
+
 (r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
   (let [ap @app
         headers (first data)
@@ -82,11 +125,20 @@
                      :aria-controls "table1"
                      :aria-sort "ascending"
                      :aria-label "Hospital: activate to sort column descending"
-                     :key [:th col]} (nth headers col)]))]]
+                     :key [:th col]} (nth headers col)]))
+         [:th
+          {:style {:width "300px"
+                   :vertical-align "top"
+                   :cursor "pointer"}}
+          "chart"]]]
 
        [:tbody {:key :tbody}
         (for [row rows]
           [:tr {:key (:h-code row)}
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
-              (column-key row)])])]]]]))
+              (column-key row)])
+           [:td
+            {:style {:background-color "white"}}
+            (bar-chart row)]])]]]])
+  )
