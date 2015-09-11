@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.48"]
+                 [org.clojure/clojurescript "1.7.122"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
                  [secretary "1.2.3"]
                  [rum "0.3.0"]
@@ -24,7 +24,7 @@
 
               :figwheel { :on-jsload "prais2.core/on-js-reload" }
 
-              :compiler {:main prais2.main
+              :compiler {:main prais2.scroll-demo ;prais2.main
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"

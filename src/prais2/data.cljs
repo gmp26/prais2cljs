@@ -100,11 +100,27 @@
     :outer-high "#7fcdbb"
     :high "#edf8b1"
     :dot "black"}
+   :christina
+   {:low "white"
+    :inner "#7CA3DC"
+    :outer-low "#4579CA"
+    :outer-high "#4579CA"
+    :high "white"
+    :dot "black"
+    }
+   :anitsirch
+   {:low "white"
+    :inner "#4579CA"
+    :outer-low "#7CA3DC"
+    :outer-high "#7CA3DC"
+    :high "white"
+    :dot "black"
+    }
    })
 
 
 
-(def colour-map (:brewer-YlGnBu colour-map-options))
+(def colour-map (:christina colour-map-options))
 
 
 (r/defc bar < r/static [slider value fill]

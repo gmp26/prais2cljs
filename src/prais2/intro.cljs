@@ -1,4 +1,5 @@
-(ns ^:figwheel-always prais2.intro    (:require [rum :as r]
+(ns ^:figwheel-always prais2.intro
+    (:require [rum :as r]
               [cljs.reader :as reader]
               [clojure.set :refer (intersection)]
               [cljsjs.react]
