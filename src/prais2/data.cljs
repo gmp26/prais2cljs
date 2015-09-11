@@ -48,7 +48,7 @@
     (prn column-key)
     (sort-on-column app column-key)))
 
-(def chart-width 300)
+(def chart-width 100)
 
 (def min-outer-low  (apply min (map :outer-low (rest content/table1-data))))
 ;;  "the minimum outer-low value across all rows"
@@ -72,24 +72,61 @@
 (r/defc bar < r/static [slider value fill]
   [:div {:style {:padding 0
                  :margin 0
-                 :display "inline-block"
+                 :vertical-align "middle"
+                 :display "inline-table"
                  :background-color fill
                  :height "22px"
-                 :width (str (bar-width slider value) "px")}
+                 :width (str (bar-width slider value) "%")}
          }])
 
 
+
+(def colour-map-options
+  {:brewer-RdYlBu
+   {:low "#91bfdb"
+    :inner "#fc8d59"
+    :outer-low "#ffffbf"
+    :outer-high "#ffffbf"
+    :high "#91bfdb"
+    :dot "white"
+    }
+   :brewer-RdYl
+   {:low "white"
+    :inner "#fc8d59"
+    :outer-low "#ffffbf"
+    :outer-high "#ffffbf"
+    :high "white"
+    :dot "black"}
+   :brewer-YlRd
+   {:low "white"
+    :inner "#ffffbf"
+    :outer-low "#fc8d59"
+    :outer-high "#fc8d59"
+    :high "white"
+    :dot "black"}
+   :brewer-YlGnBu
+   {:low "#edf8b1"
+    :inner "#2c7fb8"
+    :outer-low "#7fcdbb"
+    :outer-high "#7fcdbb"
+    :high "#edf8b1"
+    :dot "black"}
+   })
+
+
+
+(def colour-map (:brewer-YlGnBu colour-map-options))
+
 (r/defc bar-chart < r/static [row]
-  (let [slider 1]
+  (let [slider 0.9]
     [:div
-     (bar slider (- (:outer-low row) (* min-outer-low slider)) "red")
-     (bar slider (- (:inner-low row) (:outer-low row)) "cyan")
-     (bar slider (- (:inner-high row) (:inner-low row)) "blue")
-     (bar slider (- (:outer-high row) (:inner-high row)) "cyan")
-     (bar slider (- 100 (:outer-high row)) "orange")
+     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
+     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
+     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
+     (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
+     (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
      ])
   )
-
 
 (r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
   (let [ap @app
@@ -101,7 +138,7 @@
         column-keys (keys headers)]
     [:div.row
      [:div.col-md-12
-      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0" :width "100%"}
+      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
        [:thead {:key :thead}
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -109,7 +146,7 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width "10px"
+                   :style {:width "120px"
                            :vertical-align "top"
                            :cursor "pointer"}}
               (when sortable [:i {:key :icon
@@ -128,18 +165,33 @@
                      :aria-label "Hospital: activate to sort column descending"
                      :key [:th col]} (nth headers col)]))
          [:th
-          {:style {:width "300px"
+          {:key :axis
+           :style {:padding 0
+                   :margin 0
+                   :white-space "nowrap"
+                   :display "inline-block"
                    :vertical-align "top"
                    :cursor "pointer"}}
           "chart"]]]
 
-       [:tbody {:key :tbody}
+       [:tbody {:key :tbody
+                }
         (for [row rows]
-          [:tr {:key (:h-code row)}
+          [:tr {:key (:h-code row)
+                :style {:width "600px"}}
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
               (column-key row)])
            [:td
-            {:style {:background-color "white"}}
+            {:key :bars
+             :style {
+                     :padding 0
+                     :margin 0
+                     :width "100%"
+                     :position "static"
+                     :white-space "nowrap"
+                     :display "inline-block"
+                     :vertical-align "middle"
+                     :background-color "white"}}
             (bar-chart row)]])]]]])
   )
