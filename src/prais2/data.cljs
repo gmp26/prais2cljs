@@ -50,17 +50,15 @@
 
 (def chart-width 300)
 
-(defn min-outer-low
-  "the minimum outer-low value across all rows"
-  [data]
-  (apply min (map :outer-low (rest data))))
-;; (min-outer-low content/table1-data) => 94.8
+(def min-outer-low  (apply min (map :outer-low (rest content/table1-data))))
+;;  "the minimum outer-low value across all rows"
+;; => 94.8
 
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
   [slider]
-  (/ chart-width (- 100 (* (min-outer-low content/table1-data) slider))))
+  (/ chart-width (- 100 (* min-outer-low slider))))
 ;; (bar-scale 1) => 57.7 (a 5.2% range expanded to 300px)
 ;; (bar-scale 0) => 3 (a 100% range expanded to 300px)
 
@@ -72,9 +70,11 @@
   )
 
 (r/defc bar < r/static [slider value fill]
-  [:div {:style {:display "inline-block"
+  [:div {:style {:padding 0
+                 :margin 0
+                 :display "inline-block"
                  :background-color fill
-                 :height "20px"
+                 :height "22px"
                  :width (str (bar-width slider value) "px")}
          }])
 
@@ -82,10 +82,11 @@
 (r/defc bar-chart < r/static [row]
   (let [slider 1]
     [:div
-     #_(bar slider (:outer-low row) "red")
+     (bar slider (- (:outer-low row) (* min-outer-low slider)) "red")
      (bar slider (- (:inner-low row) (:outer-low row)) "cyan")
      (bar slider (- (:inner-high row) (:inner-low row)) "blue")
      (bar slider (- (:outer-high row) (:inner-high row)) "cyan")
+     (bar slider (- 100 (:outer-high row)) "orange")
      ])
   )
 
