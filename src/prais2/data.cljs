@@ -69,17 +69,6 @@
   (* value (bar-scale slider))
   )
 
-(r/defc bar < r/static [slider value fill]
-  [:div {:style {:padding 0
-                 :margin 0
-                 :vertical-align "middle"
-                 :display "inline-table"
-                 :background-color fill
-                 :height "22px"
-                 :width (str (bar-width slider value) "%")}
-         }])
-
-
 
 (def colour-map-options
   {:brewer-RdYlBu
@@ -116,6 +105,16 @@
 
 
 (def colour-map (:brewer-YlGnBu colour-map-options))
+
+
+(r/defc bar < r/static [slider value fill]
+  [:div {:style {:vertical-align "middle"
+                 :display "inline-table"
+                 :background-color fill
+                 :margin-top "5px"
+                 :height "25px"
+                 :width (str (bar-width slider value) "%")}
+         }])
 
 (r/defc bar-chart < r/static [row]
   (let [slider 0.9]
@@ -168,6 +167,9 @@
           {:key :axis
            :style {:padding 0
                    :margin 0
+                   :width "100%"
+                   :height "100%"
+                   :border "none"
                    :white-space "nowrap"
                    :display "inline-block"
                    :vertical-align "top"
@@ -178,7 +180,7 @@
                 }
         (for [row rows]
           [:tr {:key (:h-code row)
-                :style {:width "600px"}}
+                }
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
               (column-key row)])
@@ -188,10 +190,14 @@
                      :padding 0
                      :margin 0
                      :width "100%"
-                     :position "static"
+                     :height "100%"
+                     :border-left "none"
+                     :border-right "none"
+                     :border-bottom "none"
+                     :border-top "1px solid #dddddd"
+                     :position "relative"
                      :white-space "nowrap"
                      :display "inline-block"
-                     :vertical-align "middle"
-                     :background-color "white"}}
+                     :background-color "#EDF8B1"}}
             (bar-chart row)]])]]]])
   )
