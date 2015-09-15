@@ -24,7 +24,7 @@
 
               :figwheel { :on-jsload "prais2.core/on-js-reload" }
 
-              :compiler {:main prais2.scroll-demo ;prais2.main
+              :compiler {:main prais2.main
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -39,7 +39,7 @@
                          :externs ["resources/externs/svg.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false}
-                         :pretty-print false}}]}
+                         }}]}
 
   :figwheel {
              ;; :http-server-root "public" ;; default and assumes "resources"

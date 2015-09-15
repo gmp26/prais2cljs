@@ -1,6 +1,8 @@
 (ns ^:figwheel-always prais2.data
     (:require [rum :as r]
               [jayq.core :refer ($)]
+              [cljs.core.async :refer [put!]]
+              [prais2.core :as core]
               [prais2.content :as content
                ])
     (:require-macros [jayq.macros :refer [ready]]))
@@ -143,6 +145,34 @@
      ])
   )
 
+;;
+;;
+;;
+(r/defc slider [out-chan value min max step]
+  [:input {:type "range"
+           :value value
+           :min min
+           :max max
+           :step step
+           :on-change #(put! out-chan (.. % -target -value))
+           }]
+  )
+
+(r/defc slider-container < r/reactive []
+  (let [ap (r/react core/app)
+        ]
+    [:slider ]))
+
+(defn test-slider
+  "read slider values"
+  []
+  (let [value (:axis-slider @core/app)]
+
+    )
+  )
+
+
+
 (r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
   (let [ap @app
         headers (first data)
@@ -190,7 +220,8 @@
                    :display "inline-block"
                    :vertical-align "top"
                    :cursor "pointer"}}
-          "chart"]]]
+          [:axis-slider (:axis-slider ap)]
+          ]]]
 
        [:tbody {:key :tbody
                 }

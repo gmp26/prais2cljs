@@ -5,7 +5,7 @@
             [goog.events :as events]
             [cljsjs.react :as react]
             [prais2.fps :refer [fps]]
-            [prais2.scroll-chan :refer [scroll-chan-events scroll-chan-test]]
+            [prais2.chan :refer [scroll-chan-events scroll-chan-test]]
             [prais2.scroll-engine :refer [animation-container]]))
 
 (def cur-scroll-y (atom 0))

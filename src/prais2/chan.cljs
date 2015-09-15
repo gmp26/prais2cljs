@@ -1,4 +1,4 @@
-(ns prais2.scroll-chan
+(ns prais2.chan
   (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [cljs.core.async :refer [<! put! chan timeout]]
             [goog.events :as events]
@@ -11,6 +11,21 @@
 (defn- events->chan [el event-type c]
   (events/listen el event-type #(put! c %))
   c)
+
+
+;; using google closure events (but need to render a DOM slider element first)
+(defn slider-chan-events [slider]
+  (events->chan slider EventType/CHANGE (chan 1 (map (constantly (.-value slider))))))
+
+
+(defn handle-change
+  "transfer an axis slider change to a channel"
+  [param value]
+  (prn (str param value))
+  )
+
+
+;; using
 
 (defn scroll-chan-events []
   (events->chan js/window EventType/SCROLL (chan 1 (map get-scroll))))
