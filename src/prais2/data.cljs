@@ -154,6 +154,12 @@
   )
 
 
+(r/defc dot < r/static [slider value]
+  [:div {:class "dot"
+         :style {:left (str "calc("
+                            (percent->screen slider value)
+                            "% - 6px)")}}]  )
+
 (r/defc chart-cell < r/static [row]
   (let [slider 1]
     [:td {:class "chart-cell"}
@@ -164,11 +170,7 @@
       (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
       (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
       (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-      [:div {:key :dot
-             :class "dot"
-             :style {:left (str "calc("
-                                (percent->screen slider (:survival-rate row))
-                                "% - 6px)")}}]
+      (r/with-key (dot slider (:survival-rate row)) :dot)
       ]
      ])
   )
