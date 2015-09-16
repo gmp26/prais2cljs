@@ -31,9 +31,9 @@
     border-bottom: none;
     border-top: none; /*1px solid #dddddd;*/
     position: relative !important;
-    white-space: "nowrap";
-    display: "inline-block";
-    background-color: red;
+    white-space: nowrap;
+    display: inline-block;
+    background-color: white;
 }
 
 .chart-cell {
