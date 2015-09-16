@@ -32,6 +32,7 @@
                                        })))
                 state)})
 
+
 (defn sort-on-column
   "sort a column"
   [app column-key]
@@ -129,21 +130,11 @@
   [:div {:style {:vertical-align "middle"
                  :display "inline-table"
                  :background-color fill
-                 :margin-top "5px"
+                 :margin 0
+                 :padding 0
                  :height "25px"
                  :width (str (bar-width slider value) "%")}
          }])
-
-(r/defc bar-chart < r/static [row]
-  (let [slider 0.9]
-    [:div
-     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
-     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
-     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
-     (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
-     (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-     ])
-  )
 
 ;;
 ;;
@@ -158,19 +149,20 @@
            }]
   )
 
-(r/defc slider-container < r/reactive []
-  (let [ap (r/react core/app)
-        ]
-    [:slider ]))
+(r/defc chart-cell < r/static [row]
+  (let [slider 0.9]
+    [:td {:class "chart-cell"}
 
-(defn test-slider
-  "read slider values"
-  []
-  (let [value (:axis-slider @core/app)]
-
-    )
+     [:div      {:class "bar-chart"}
+      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
+      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
+      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
+      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
+      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
+      [:div {:key :dot :class "dot"}]
+      ]
+     ])
   )
-
 
 
 (r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
@@ -191,9 +183,11 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
+
                    :style {:width "120px"
                            :vertical-align "top"
                            :cursor "pointer"}}
+
               (when sortable [:i {:key :icon
                                   :class (str  "fa fa-sort"
                                                (if (= column-key (:sort-by ap))
@@ -201,14 +195,7 @@
                                   :style {:pointer-events "none"}}])
               [:span {:key :text
                       :style {:pointer-events "none"}}
-               (:title header)]]
-
-             #_[:th {:class "sorting_asc"
-                     :tab-index "0"
-                     :aria-controls "table1"
-                     :aria-sort "ascending"
-                     :aria-label "Hospital: activate to sort column descending"
-                     :key [:th col]} (nth headers col)]))
+               (:title header)]]))
          [:th
           {:key :axis
            :style {:padding 0
@@ -231,20 +218,5 @@
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
               (column-key row)])
-           [:td
-            {:key :bars
-             :style {
-                     :padding 0
-                     :margin 0
-                     :width "100%"
-                     :height "100%"
-                     :border-left "none"
-                     :border-right "none"
-                     :border-bottom "none"
-                     :border-top "1px solid #dddddd"
-                     :position "relative"
-                     :white-space "nowrap"
-                     :display "inline-block"
-                     :background-color "#EDF8B1"}}
-            (bar-chart row)]])]]]])
+           (r/with-key (chart-cell row) :bars)])]]]])
   )

@@ -9,11 +9,14 @@
               [prais2.data :as data]
               [jayq.core :refer ($)])
     (:require-macros [jayq.macros :refer [ready]])
-)
+    )
+
+
 
 (enable-console-print!)
 
 (defn el [id] (.getElementById js/document id))
+
 
 (defn select
   "Return the first matching DOM element selected by the CSS selector. "
@@ -24,6 +27,7 @@
   "Returns a NodeList object containing all matching DOM elements."
   [selector]
   (.querySelectorAll js/document selector))
+
 
 ;;
 ;; Put the app in here
@@ -41,8 +45,10 @@
 ;;
 (r/mount (app-container) (el "app"))
 
+
 ;;
 ;; optionally do something on app reload
 ;;
 (defn on-js-reload []
-  (swap! core/app update-in [:__figwheel_counter] inc))
+  (prn "Hi")
+)

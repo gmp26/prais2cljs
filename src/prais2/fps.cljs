@@ -1,4 +1,4 @@
-(ns prais2.fps
+(ns ^:figwheel-always prais2.fps
   "a simple frames-per-second calculator. Helpful when developing."
   )
 
@@ -25,3 +25,10 @@
       (.requestAnimationFrame js/window cb))))
 
 (measure! 2000)
+
+
+;;
+;; optionally do something on app reload
+;;
+(defn on-js-reload []
+  (prn "load fps"))

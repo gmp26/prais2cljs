@@ -11,31 +11,34 @@
                  [rum "0.3.0"]
                  [jayq "2.5.4"]]
 
-  :plugins [[lein-cljsbuild "1.0.5"]
-            [lein-figwheel "0.3.5"]]
+  :plugins [[lein-cljsbuild "1.1.0"]
+            [lein-figwheel "0.4.0-SNAPSHOT"]]
 
   :source-paths ["src"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["resources/public/js/out" "resources/public/js/compiled" "target"]
 
   :cljsbuild {
     :builds [{:id "dev"
               :source-paths ["src"]
 
-              :figwheel { :on-jsload "prais2.core/on-js-reload" }
+              :figwheel {:websocket-host "localhost"
+                         :on-jsload "prais2.main/on-js-reload"
+                         :debug true}
 
-              :compiler {:main prais2.main
+              :compiler {:main "prais2.main"
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"
                          :warnings {:single-segment-namespace false}
-                         :source-map-timestamp true }}
+                         :source-map-timestamp true
+                         :optimizations :none}}
              {:id "min"
               :source-paths ["src"]
               :compiler {:output-to "resources/public/js/compiled/prais2.js"
                          :asset-path "js/compiled/prod"
                          :output-dir "resources/public/js/compiled/prod"
-                         :main prais2.main
+                         :main "prais2.main"
                          :externs ["resources/externs/svg.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false}

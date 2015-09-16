@@ -17,6 +17,7 @@
                 :page "home"
                 :sort-by nil
                 :sort-ascending true
+
                 :survival-axis-minimum 0.5
                 :__figwheel_counter 0}))
 
@@ -29,20 +30,13 @@
 ;; application events
 ;;;
 
+;;;
+;; wait for a value to arrive on one of the chans. If it passes pred test return that value
 (defn select-chan [pred chans]
   (go-loop []
     (let [[value ch] (alts! chans)]
       (if (pred value) value (recur)))))
 
-
-;; controls the minimum value plotted on the survival axis  0..1 scale
-;; where 0 represents the smallest minimu value and
-;; 1 represents the largest minimum value.
-(defn listen-survival-axis-change! []
-  (go-loop [listener-chan (chan 1)]
-    (<! listener-chan)
-    )
-  listener)
 
 
 
