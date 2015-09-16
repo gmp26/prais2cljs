@@ -65,9 +65,16 @@
 ;; (bar-scale 1) => 57.7 (a 5.2% range expanded to 300px)
 ;; (bar-scale 0) => 3 (a 100% range expanded to 300px)
 
+(defn percent->screen
+  "percent-value to slider compensated value"
+  [slider value]
+  (let [origin (* min-outer-low slider)]
+    (* 100 (/ (- value origin) (- 100 origin))))
+  )
+
 
 (defn bar-width
-  "return pixel-width for a bar"
+  "return percentage-width for a bar"
   [slider value]
   (* value (bar-scale slider))
   )
@@ -127,12 +134,9 @@
 
 
 (r/defc bar < r/static [slider value fill]
-  [:div {:style {:vertical-align "middle"
-                 :display "inline-table"
-                 :background-color fill
-                 :margin 0
-                 :padding 0
-                 :height "25px"
+  [:div {
+         :class "a-bar"
+         :style {:background-color fill;
                  :width (str (bar-width slider value) "%")}
          }])
 
@@ -149,8 +153,9 @@
            }]
   )
 
+
 (r/defc chart-cell < r/static [row]
-  (let [slider 0.9]
+  (let [slider 1]
     [:td {:class "chart-cell"}
 
      [:div      {:class "bar-chart"}
@@ -159,7 +164,11 @@
       (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
       (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
       (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-      [:div {:key :dot :class "dot"}]
+      [:div {:key :dot
+             :class "dot"
+             :style {:left (str "calc("
+                                (percent->screen slider (:survival-rate row))
+                                "% - 6px)")}}]
       ]
      ])
   )
