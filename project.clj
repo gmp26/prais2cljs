@@ -24,7 +24,7 @@
 
               :figwheel {:websocket-host "localhost"
                          :on-jsload "prais2.main/on-js-reload"
-                         :debug true}
+                         :debug false}
 
               :compiler {:main "prais2.main"
                          :asset-path "js/compiled/out"

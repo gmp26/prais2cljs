@@ -54,7 +54,7 @@
      [:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
      [:h1 {:key :ap2} (:title ap)]
      (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
-     (r/with-key (debug) :ap4)]))
+     #_(r/with-key (debug) :ap4)]))
 
 ;;
 ;; mount main component on html app element

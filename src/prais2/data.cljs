@@ -150,16 +150,14 @@
 ;;
 ;;
 (r/defc slider < r/static [event-bus value min max step]
-  [:input {:type "range"
-           :value value
-           :min min
-           :max max
-           :step step
-           :on-change #(do
-                         (prn "slider-changed")
-                         (put! event-bus [:slider-axis-value (.. % -target -value)]))
-           }]
-  )
+  [:.slider
+   [:input {:type "range"
+            :value value
+            :min min
+            :max max
+            :step step
+            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}
+    ]])
 
 
 (r/defc dot < r/static [slider size value]
@@ -179,8 +177,7 @@
 
 (r/defc chart-cell < r/static [row slider]
   [:td {:class "chart-cell"}
-
-   [:div      {:class "bar-chart"}
+   [:div {:class "bar-chart"}
     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
@@ -192,7 +189,7 @@
   )
 
 
-(r/defc table1 < r/reactive r/static [app data event-bus]
+(r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
         sort-key (:sort-by ap)
         sort-direction (:sort-ascending ap)
@@ -226,17 +223,12 @@
                       :style {:pointer-events "none"}}
                (:title header)]]))
          [:th
-          {:key :axis
-           :style {:padding 0
-                   :margin 0
-                   :width "100%"
-                   :height "100%"
-                   :border "none"
-                   :white-space "nowrap"
-                   :display "inline-block"
-                   :vertical-align "top"
-                   :cursor "pointer"}}
-          (slider event-bus slider-axis-value 0 1 0.01)
+          [:.axis-container
+           {:key :axis
+            }
+           (slider event-bus slider-axis-value 0 1 0.01)
+           [:.tick]
+           [:#axis]]
           ]]]
 
        [:tbody {:key :tbody
