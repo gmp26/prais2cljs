@@ -17,8 +17,7 @@
                 :page "home"
                 :sort-by nil
                 :sort-ascending true
-
-                :survival-axis-minimum 0.5
+                :slider-axis-value 0.9
                 :__figwheel_counter 0}))
 
 

@@ -79,7 +79,6 @@
   (* value (bar-scale slider))
   )
 
-
 (def colour-map-options
   {:brewer-RdYlBu
    {:low "#91bfdb"
@@ -103,12 +102,19 @@
     :outer-high "#fc8d59"
     :high "white"
     :dot "black"}
-   :brewer-YlGnBu
-   {:low "#edf8b1"
-    :inner "#2c7fb8"
+   :brewer-BuGn
+   {:low "white"
+    :inner "#7fcdbb"
+    :outer-low "#2c7fb8"
+    :outer-high "#2c7fb8"
+    :high "white"
+    :dot "black"}
+   :brewer-GnBu
+   {:low "white"
+    :inner "#3c8fc8"
     :outer-low "#7fcdbb"
     :outer-high "#7fcdbb"
-    :high "#edf8b1"
+    :high "white"
     :dot "black"}
    :christina
    {:low "white"
@@ -130,7 +136,7 @@
 
 
 
-(def colour-map (:christina colour-map-options))
+(def colour-map (:brewer-BuGn colour-map-options))
 
 
 (r/defc bar < r/static [slider value fill]
@@ -143,13 +149,15 @@
 ;;
 ;;
 ;;
-(r/defc slider [out-chan value min max step]
+(r/defc slider < r/static [event-bus value min max step]
   [:input {:type "range"
            :value value
            :min min
            :max max
            :step step
-           :on-change #(put! out-chan (.. % -target -value))
+           :on-change #(do
+                         (prn "slider-changed")
+                         (put! event-bus [:slider-axis-value (.. % -target -value)]))
            }]
   )
 
@@ -158,7 +166,8 @@
   (let [px-size (str size "px")
         ]
     [:div {:class "dot"
-           :style {:width px-size
+           :style {:background-color (:dot colour-map)
+                   :width px-size
                    :height px-size
                    :top (str (/ (- 25 size) 2) "px")
                    :left (str "calc("
@@ -168,30 +177,32 @@
                               "px)"
                               )}}])  )
 
-(r/defc chart-cell < r/static [row]
-  (let [slider 1]
-    [:td {:class "chart-cell"}
+(r/defc chart-cell < r/static [row slider]
+  [:td {:class "chart-cell"}
 
-     [:div      {:class "bar-chart"}
-      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
-      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
-      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
-      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
-      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-      (r/with-key (dot slider 10 (:survival-rate row)) :dot)
-      ]
-     ])
+   [:div      {:class "bar-chart"}
+    (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
+    (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
+    (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
+    (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
+    (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
+    (r/with-key (dot slider 10 (:survival-rate row)) :dot)
+    ]
+   ]
   )
 
 
-(r/defc table1 < r/static #_(data-table-on :#table1) [app data sort-key sort-direction]
-  (let [ap @app
+(r/defc table1 < r/reactive r/static [app data event-bus]
+  (let [ap (r/react app)
+        sort-key (:sort-by ap)
+        sort-direction (:sort-ascending ap)
         headers (first data)
         rows  (if sort-key
                 (let [sorted (sort-by sort-key (rest data))]
                   (if sort-direction sorted (reverse sorted)))
                 (rest data))
-        column-keys (keys headers)]
+        column-keys (keys headers)
+        slider-axis-value (:slider-axis-value ap)  ]
     [:div.row
      [:div.col-md-12
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
@@ -202,7 +213,6 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
-
                    :style {:width "120px"
                            :vertical-align "top"
                            :cursor "pointer"}}
@@ -226,7 +236,7 @@
                    :display "inline-block"
                    :vertical-align "top"
                    :cursor "pointer"}}
-          [:axis-slider (:axis-slider ap)]
+          (slider event-bus slider-axis-value 0 1 0.01)
           ]]]
 
        [:tbody {:key :tbody
@@ -237,5 +247,5 @@
            (for [column-key column-keys :when (-> headers column-key :shown)]
              [:td {:key [column-key "r"]}
               (column-key row)])
-           (r/with-key (chart-cell row) :bars)])]]]])
+           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]])
   )

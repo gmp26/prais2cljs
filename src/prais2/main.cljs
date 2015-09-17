@@ -1,14 +1,16 @@
 (ns ^:figwheel-always prais2.main
+    (:require-macros [jayq.macros :refer [ready]]
+                     [cljs.core.async.macros :refer [go-loop]])
     (:require [rum :as r]
               [cljs.reader :as reader]
               [clojure.set :refer (intersection)]
               [cljsjs.react]
+              [cljs.core.async :refer [chan <! pub sub]]
               [prais2.core :as core]
               [prais2.routes]
               [prais2.content :as content]
               [prais2.data :as data]
               [jayq.core :refer ($)])
-    (:require-macros [jayq.macros :refer [ready]])
     )
 
 
@@ -28,22 +30,53 @@
   [selector]
   (.querySelectorAll js/document selector))
 
+;;;
+;;  "debug app-state"
+;;;
+(r/defc debug < r/reactive []
+  (prn r/react core/app)
+  )
+
+
+;;;
+;; Define an event bus carrying [topic message] data
+;; publication channels are based on topic - the first part of the data
+;;;
+(def event-bus (chan))
+(def event-bus-pub (pub event-bus first))
 
 ;;
-;; Put the app in here
+;; Contains the app user interface in here
 ;;
 (r/defc app-container < r/reactive []
   (let [ap (r/react core/app)]
     [:div#box
      [:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
      [:h1 {:key :ap2} (:title ap)]
-     (r/with-key (data/table1 core/app content/table1-data (:sort-by ap) (:sort-ascending ap)
-) :ap3)]))
+     (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
+     (r/with-key (debug) :ap4)]))
 
 ;;
 ;; mount main component on html app element
 ;;
 (r/mount (app-container) (el "app"))
+
+
+;;;
+;;
+;;;
+(defn dispatcher []
+  "Listen for events and dispatch to store, log etc."
+  (let [slider-chan (chan)]
+    (sub event-bus-pub :slider-axis-value slider-chan)
+    (go-loop []
+      (let [[_ slider-value] (<! slider-chan)]
+        ;;(prn (str "slider " slider-value))
+        (swap! core/app #(assoc % :slider-axis-value slider-value)))
+      (recur)))
+  )
+
+(dispatcher)
 
 
 ;;
