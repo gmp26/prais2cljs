@@ -199,8 +199,14 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div.row
      [:div.col-md-12
-      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
-       [:thead {:key :thead}
+      [:table#table1.table.table-striped.table-bordered
+       {:cell-spacing "0"
+        :style {:margin-bottom "200px"}}
+       [:thead {:key :thead
+                :style {:position "fixed"
+                        :z-index 2000
+                        }
+                }
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
            (let [header (column-key headers)
@@ -210,7 +216,47 @@
                    :style {:width (column-key headers)
                            :vertical-align "top"
                            :cursor "pointer"}}
+              (when sortable [:i {:key :icon
+                                  :class (str  "fa fa-sort pull-right"
+                                               (if (= column-key (:sort-by ap))
+                                                 (if (:sort-ascending ap) "-asc" "-desc") ""))
+                                  :style {:pointer-events "none"}}])
+              [:span {:key :text
+                      :style {:pointer-events "none"}}
+               (:title header)]]))
+         [:th.axis-container
+          {:key :axis
+           :style {:height (str (:height (:observed headers)) "px")
+                   }}
+          [:p "Observed survival rate %"]
+          [:span.slider-label
+           [:span.pull-left
+            [:i {:class "fa fa-long-arrow-left"}]
+            " full range"]
+           [:span.pull-right "full detail "
+            [:i {:class "fa fa-long-arrow-right"}]]
+           ]
+           (slider event-bus slider-axis-value 0 1 0.01)
+          [:.tick
+           [:div {:style {:height "0px"}}]
+           [:span.tick-label "50%"]
+           [:div {:style {:height "308px"}}]
+           [:span.tick-label "50%"]
+           [:div {:style {:height "308px"}}]
+           [:span.tick-label "50%"]]]]]]
 
+      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
+       #_[:thead {:key :thead
+                }
+        [:tr
+         (for [column-key column-keys :when (-> headers column-key :shown)]
+           (let [header (column-key headers)
+                 sortable (:sortable header)]
+             [:th {:key [column-key "head"]
+                   :on-click (when sortable #(handle-sort % app column-key))
+                   :style {:width (column-key headers)
+                           :vertical-align "top"
+                           :cursor "pointer"}}
               (when sortable [:i {:key :icon
                                   :class (str  "fa fa-sort"
                                                (if (= column-key (:sort-by ap))
@@ -219,13 +265,30 @@
               [:span {:key :text
                       :style {:pointer-events "none"}}
                (:title header)]]))
-         [:th
-          [:.axis-container
-           {:key :axis
-            }
-           (slider event-bus slider-axis-value 0 1 0.01)
-           [:.tick]
+         [:th.axis-container
+          {:key :axis
+           :style {:height (str (:height (:observed headers)) "px")
+                   }}
+          [:p "Observed survival rate %"]
+          [:span.slider-label
+           [:span.left
+            [:i {:class "fa fa-long-arrow-left"}]
+            " full range"]
+           [:span.right "full detail "
+            [:i {:class "fa fa-long-arrow-right"}]]
            ]
+           (slider event-bus slider-axis-value 0 1 0.01)
+          [:.tick
+           [:div {:style {:height "0px"}}]
+           [:span.tick-label "50%"]
+           [:div {:style {:height "308px"}}]
+           [:span.tick-label "50%"]
+           [:div {:style {:height "308px"}}]
+           [:span.tick-label "50%"]
+
+           ]
+
+
           ]]]
 
        [:tbody {:key :tbody}
