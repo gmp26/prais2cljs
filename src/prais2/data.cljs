@@ -62,8 +62,6 @@
   "value to pixel-width scale-factor controlled by slider in [0-1]"
   [slider]
   (/ chart-width (- 100 (* min-outer-low slider))))
-;; (bar-scale 1) => 57.7 (a 5.2% range expanded to 300px)
-;; (bar-scale 0) => 3 (a 100% range expanded to 300px)
 
 (defn percent->screen
   "percent-value to slider compensated value"
@@ -71,7 +69,6 @@
   (let [origin (* min-outer-low slider)]
     (* 100 (/ (- value origin) (- 100 origin))))
   )
-
 
 (defn bar-width
   "return percentage-width for a bar"
@@ -210,7 +207,7 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width "120px"
+                   :style {:width (column-key headers)
                            :vertical-align "top"
                            :cursor "pointer"}}
 
@@ -228,16 +225,18 @@
             }
            (slider event-bus slider-axis-value 0 1 0.01)
            [:.tick]
-           [:#axis]]
+           ]
           ]]]
 
-       [:tbody {:key :tbody
-                }
+       [:tbody {:key :tbody}
         (for [row rows]
-          [:tr {:key (:h-code row)
-                }
-           (for [column-key column-keys :when (-> headers column-key :shown)]
-             [:td {:key [column-key "r"]}
+          [:tr {:key (:h-code row)}
+           (for [column-key column-keys
+                 :let [column-header (column-key headers)]
+                 :when (:shown column-header)]
+             [:td {:key [column-key "r"]
+                   :style {:width (:width column-header)
+                           :height (:height column-header)}}
               (column-key row)])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]])
   )

@@ -9,6 +9,10 @@ th, td {
     padding: 5px !important;
 }
 
+.row {
+    height: 50px;
+}
+
 .axis-container {
     padding: 0 !important;
     margin: 0px 0px !important;
@@ -27,13 +31,18 @@ th, td {
     width: 50%;
     padding: 0px !important;
     vertical-align: top;
+    cursor: pointer;
 }
 
 .tick {
     width: 1px;
-    height: 5px;
-    padding-top: 2px;
-    margin-left: 99%;
+    height: 740px;
+    padding-top: 0px;
+    margin: 0;
+    top:0;
+    left: 0%;
+    position: relative;
+    z-index: 1000;
     background-color: red;
 }
 

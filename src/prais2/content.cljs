@@ -1,20 +1,20 @@
 (ns ^:figwheel-always prais2.content)
 
-(defrecord Header [title sortable shown])
+(defrecord Header [title sortable shown width height])
 
 (defrecord Row [h-name h-code n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high])
 
 (def table1-data
-  [(Row. (Header. "Hospital"              true       true)
-         (Header. "Hospital Code"         true       true)
-         (Header. "Number of Operations"  true       true)
-         (Header. "Number of Deaths"      true       true)
-         (Header. "Number of Survivors"   true       true)
-         (Header. "Survival Rate (%)"     false      true)
-         (Header. "Outer Low"             false      false)
-         (Header. "Inner Low"             false      false)
-         (Header. "Inner High"            false      false)
-         (Header. "Outer High"            false      false)
+  [(Row. (Header. "Hospital"              true       true    190   50)
+         (Header. "Hospital Code"         true       true    90   50)
+         (Header. "Number of Operations"  true       true    105   50)
+         (Header. "Number of Deaths"      true       true    100   50)
+         (Header. "Number of Survivors"   true       true    100   50)
+         (Header. "Survival Rate (%)"     false      true    120   50)
+         (Header. "Outer Low"             false      false   120   50)
+         (Header. "Inner Low"             false      false   120   50)
+         (Header. "Inner High"            false      false   120   50)
+         (Header. "Outer High"            false      false   120   50)
          )
 
    (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	204	2	202	99.0 	95.1	96.6  100     100.0)
