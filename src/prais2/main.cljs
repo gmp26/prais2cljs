@@ -51,8 +51,9 @@
 (r/defc app-container < r/reactive []
   (let [ap (r/react core/app)]
     [:div#box
-     [:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
-     [:h1 {:key :ap2} (:title ap)]
+     #_[:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
+     #_[:h1 {:key :ap2} (:title ap)]
+     "hi"
      (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
      #_(r/with-key (debug) :ap4)]))
 

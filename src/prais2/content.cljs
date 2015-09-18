@@ -5,7 +5,7 @@
 (defrecord Row [h-name h-code n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high observed])
 
 (def table1-data
-  [(Row. (Header. "Hospital"                    true       true    190   50)
+  [(Row. (Header. "Hospital"                    true       true    200   50)
          (Header. "Hospital Code"               true       true    105   50)
          (Header. "Number of Operations"        true       true    105   50)
          (Header. "Number of Deaths"            true       true    100   50)
@@ -15,7 +15,7 @@
          (Header. "Inner Low"                   false      false   120   50)
          (Header. "Inner High"                  false      false   120   50)
          (Header. "Outer High"                  false      false   120   50)
-         (Header. "Observed Survival Rate %"    false      false   120   100)
+         (Header. "Observed Survival Rate %"    false      false   400   100)
          )
 
    (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	204	2	202	99.0 	95.1	96.6  100     100.0 nil)

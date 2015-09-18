@@ -1,7 +1,15 @@
-/* some style */
-.fa {
-    /* float: right; */
-    /* padding-left: 10px; */
+.fixed {
+    position: fixed !important;
+    top: 0 !important;
+    z-index: 1 !important;
+}
+
+.content {
+    position: relative;
+    background: #fff;
+    z-index: 0;
+    padding: 50px;
+    margin-top: 30px;
 }
 
 th {
@@ -38,6 +46,14 @@ th {
 
 .slider-label {
     font-size: 12px;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
 }
 
 .tick {

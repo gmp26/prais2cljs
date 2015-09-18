@@ -185,6 +185,13 @@
    ]
   )
 
+(defn px
+  "value to pixel string"
+  [value]
+  (str value "px")
+  )
+
+
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
@@ -197,15 +204,12 @@
                 (rest data))
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
+
     [:div.row
-     [:div.col-md-12
-      [:table#table1.table.table-striped.table-bordered
-       {:cell-spacing "0"
-        :style {:margin-bottom "200px"}}
+
+     [:div.col-md-12 {:class "fixed"}
+      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
        [:thead {:key :thead
-                :style {:position "fixed"
-                        :z-index 2000
-                        }
                 }
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -213,11 +217,12 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width (column-key headers)
+                   :style {:width (px (:width header))
                            :vertical-align "top"
-                           :cursor "pointer"}}
+                           :cursor "pointer"
+                           }}
               (when sortable [:i {:key :icon
-                                  :class (str  "fa fa-sort pull-right"
+                                  :class (str  "fa fa-sort"
                                                (if (= column-key (:sort-by ap))
                                                  (if (:sort-ascending ap) "-asc" "-desc") ""))
                                   :style {:pointer-events "none"}}])
@@ -230,10 +235,10 @@
                    }}
           [:p "Observed survival rate %"]
           [:span.slider-label
-           [:span.pull-left
+           [:span.left
             [:i {:class "fa fa-long-arrow-left"}]
             " full range"]
-           [:span.pull-right "full detail "
+           [:span.right "full detail "
             [:i {:class "fa fa-long-arrow-right"}]]
            ]
            (slider event-bus slider-axis-value 0 1 0.01)
@@ -243,10 +248,20 @@
            [:div {:style {:height "308px"}}]
            [:span.tick-label "50%"]
            [:div {:style {:height "308px"}}]
-           [:span.tick-label "50%"]]]]]]
+           [:span.tick-label "50%"]
 
+           ]
+
+
+          ]]]
+
+]]
+
+
+     [:div.col-md-12 {:class "content"}
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
-       #_[:thead {:key :thead
+       [:thead {:key :thead
+                :style {:display "none"}
                 }
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -254,9 +269,10 @@
                  sortable (:sortable header)]
              [:th {:key [column-key "head"]
                    :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width (column-key headers)
+                   :style {:width (px (:width header))
                            :vertical-align "top"
-                           :cursor "pointer"}}
+                           :cursor "pointer"
+                           }}
               (when sortable [:i {:key :icon
                                   :class (str  "fa fa-sort"
                                                (if (= column-key (:sort-by ap))
@@ -298,8 +314,10 @@
                  :let [column-header (column-key headers)]
                  :when (:shown column-header)]
              [:td {:key [column-key "r"]
-                   :style {:width (:width column-header)
+                   :style {
                            :height (:height column-header)}}
               (column-key row)])
-           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]])
+           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]
+
+)
   )
