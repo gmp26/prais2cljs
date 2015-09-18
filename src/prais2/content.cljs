@@ -6,7 +6,7 @@
 
 (def table1-data
   [(Row. (Header. "Hospital"                    true       true    200   50)
-         (Header. "Hospital Code"               true       true    105   50)
+         (Header. "Hospital Code"               true       false    105   50)
          (Header. "Number of Operations"        true       true    105   50)
          (Header. "Number of Deaths"            true       true    100   50)
          (Header. "Number of Survivors"         true       true    100   50)
