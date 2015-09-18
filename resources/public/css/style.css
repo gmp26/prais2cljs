@@ -7,6 +7,37 @@
     margin: 0 !important;
 }
 
+@media print {
+
+    #table1 {
+        display:none;
+    }
+
+    #table2 thead i {
+        display:none;
+    }
+
+    #table2 thead .slider {
+        display:none;
+    }
+
+    #table2 thead .slider-label {
+        display:none;
+    }
+
+    #table2 thead * {
+        background-color: #7fcdbb !important;
+    }
+
+}
+
+@media screen {
+    #table2 thead {
+        display: none;
+    }
+}
+
+
 .fixed {
     width: 100%;
     position: fixed !important;
@@ -30,6 +61,11 @@
 th {
     padding: 10px 15px 0px !important;
     background-color: #BCE8DD;
+    color: red;
+}
+
+th:first-child {
+    width: 200px;
 }
 
 .axis-container {
@@ -138,5 +174,3 @@ th {
 .chart-cell {
     padding:15px !important; /*0px 15px !important;*/
     background-color: #FFffff;
-
-}
