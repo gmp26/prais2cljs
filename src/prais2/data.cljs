@@ -206,9 +206,11 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
 
-     [:div {:class "fixed"}
+     [:div {:class "fixed"
+            :style {}}
       [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
        [:thead {:key :thead
+
                 }
         [:tr
          (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -221,7 +223,7 @@
                            :cursor "pointer"
                            }}
               (when sortable [:i {:key :icon
-                                  :class (str  "fa fa-sort"
+                                  :class (str  "fa fa-sort right"
                                                (if (= column-key (:sort-by ap))
                                                  (if (:sort-ascending ap) "-asc" "-desc") ""))
                                   :style {:pointer-events "none"}}])
