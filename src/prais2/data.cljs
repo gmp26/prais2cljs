@@ -115,17 +115,17 @@
     :dot "black"}
    :christina
    {:low "white"
-    :inner "#7CA3DC"
-    :outer-low "#4579CA"
-    :outer-high "#4579CA"
+    :inner "#8FB4E1"
+    :outer-low "#578FD2"
+    :outer-high "#578FD2"
     :high "white"
     :dot "black"
     }
    :anitsirch
    {:low "white"
-    :inner "#4579CA"
-    :outer-low "#7CA3DC"
-    :outer-high "#7CA3DC"
+    :inner "#578FD2"
+    :outer-low "#8FB4E1"
+    :outer-high "#8FB4E1"
     :high "white"
     :dot "black"
     }
@@ -133,12 +133,11 @@
 
 
 
-(def colour-map (:brewer-BuGn colour-map-options))
+(def colour-map (:anitsirch colour-map-options))
 
 
 (r/defc bar < r/static [slider value fill]
-  [:div {
-         :class "a-bar"
+  [:div.bar {
          :style {:background-color (str fill " !important") ;
                  :width (str (bar-width slider value) "%")}
          }])
@@ -160,21 +159,21 @@
 (r/defc dot < r/static [slider size value]
   (let [px-size (str size "px")
         ]
-    [:div {:class "dot"
-           :style {:background-color (str (:dot colour-map) " !important")
-                   :width px-size
-                   :height px-size
-                   :top (str (/ (- 25 size) 2) "px")
-                   :left (str "calc("
-                              (percent->screen slider value)
-                              "% - "
-                              (/ size 2)
-                              "px)"
-                              )}}])  )
+    [:div.dot
+     {:style {:background-color (str (:dot colour-map) " !important")
+              :width px-size
+              :height px-size
+              :top (str (/ (- 25 size) 2) "px")
+              :left (str "calc("
+                         (percent->screen slider value)
+                         "% - "
+                         (/ size 2)
+                         "px)"
+                         )}}])  )
 
 (r/defc chart-cell < r/static [row slider]
-  [:td {:class "chart-cell"}
-   [:div {:class "bar-chart"}
+  [:td.chart-cell
+   [:div.bar-chart
     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
@@ -191,6 +190,46 @@
   (str value "px")
   )
 
+(r/defc table-head < r/static
+  [app headers column-keys event-bus slider-axis-value]
+  (let [ap @app]
+    [:thead {:key :thead}
+     [:tr
+      (for [column-key column-keys :when (-> headers column-key :shown)]
+        (let [header (column-key headers)
+              sortable (:sortable header)]
+          [:th {:key [column-key "head"]
+                :on-click (when sortable #(handle-sort % app column-key))
+                :style {:width (px (:width header))
+                        :vertical-align "top"
+                        :cursor "pointer"
+                        :background-color (str (:outer-low colour-map) "!important")
+                        :color "#ffffff !important"
+                        }}
+           (when sortable [:i {:key :icon
+                               :class (str  "fa fa-sort right"
+                                            (if (= column-key (:sort-by ap))
+                                              (if (:sort-ascending ap) "-asc" "-desc") ""))
+                               :style {:pointer-events "none"}}])
+           [:span {:key :text
+                   :style {:pointer-events "none"}}
+            (:title header)]]))
+      [:th
+       {:style {:width "auto"
+                :background-color (str (:outer-low colour-map) "!important")
+                :color "#ffffff !important"
+                }}
+       [:.axis-container
+        {:key :axis
+         :style {:height (px (:height (:observed headers)))}}
+        [:p "Observed survival rate %"]
+        [:div.slider-label
+         [:span.left [:i.fa.fa-long-arrow-left] " full range"]
+         [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
+        (slider event-bus slider-axis-value 0 1 0.01)
+        [:.tick
+         [:div {:style {:height (px 0)}}]
+         [:span.tick-label "50%"]]]]]]))
 
 
 (r/defc table1 < r/reactive [app data event-bus]
@@ -206,107 +245,16 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
 
-     [:div {:class "fixed"}
+     [:div.screenable
+      ;; fixed table header for @media screen, hidden in print
+      [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+       (table-head app headers column-keys event-bus slider-axis-value)]]
+     [:div.printable
+      ;; print header, hidden on screen
+      [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+       (table-head app headers column-keys event-bus slider-axis-value)
 
-      [:table#table1.table.table-striped.table-bordered {:cell-spacing "0"}
-       [:thead {:key :thead
-
-                }
-        [:tr
-         (for [column-key column-keys :when (-> headers column-key :shown)]
-           (let [header (column-key headers)
-                 sortable (:sortable header)]
-             [:th {:key [column-key "head"]
-                   :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width (px (:width header))
-                           :vertical-align "top"
-                           :cursor "pointer"
-                           }}
-              (when sortable [:i {:key :icon
-                                  :class (str  "fa fa-sort right"
-                                               (if (= column-key (:sort-by ap))
-                                                 (if (:sort-ascending ap) "-asc" "-desc") ""))
-                                  :style {:pointer-events "none"}}])
-              [:span {:key :text
-                      :style {:pointer-events "none"}}
-               (:title header)]]))
-         [:th
-          {:style {:width "auto"}}
-          [:.axis-container
-           {:key :axis
-            :style {:height (str (:height (:observed headers)) "px")
-                    }}
-           [:p "Observed survival rate %"]
-           [:div.slider-label
-            [:span.left
-             [:i {:class "fa fa-long-arrow-left"}]
-             " full range"]
-            [:span.right "full detail "
-             [:i {:class "fa fa-long-arrow-right"}]]
-            ]
-           (slider event-bus slider-axis-value 0 1 0.01)
-           [:.tick
-            [:div {:style {:height "0px"}}]
-            [:span.tick-label "50%"]
-            [:div {:style {:height "308px"}}]
-            [:span.tick-label "50%"]
-            [:div {:style {:height "308px"}}]
-            [:span.tick-label "50%"]
-
-            ]]
-
-          ]]]
-
-       ]]
-     [:div {:class "content"}
-      [:table#table2.table.table-striped.table-bordered {:cell-spacing "0"}
-       [:thead {:key :thead
-
-                }
-        [:tr
-         (for [column-key column-keys :when (-> headers column-key :shown)]
-           (let [header (column-key headers)
-                 sortable (:sortable header)]
-             [:th {:key [column-key "head"]
-                   :on-click (when sortable #(handle-sort % app column-key))
-                   :style {:width (px (:width header))
-                           :vertical-align "top"
-                           :cursor "pointer"
-                           }}
-              (when sortable [:i {:key :icon
-                                  :class (str  "fa fa-sort right"
-                                               (if (= column-key (:sort-by ap))
-                                                 (if (:sort-ascending ap) "-asc" "-desc") ""))
-                                  :style {:pointer-events "none"}}])
-              [:span {:key :text
-                      :style {:pointer-events "none"}}
-               (:title header)]]))
-         [:th
-          {:style {:width "auto"}}
-          [:.axis-container
-           {:key :axis
-            :style {:height (str (:height (:observed headers)) "px")
-                    }}
-           [:p "Observed survival rate %"]
-           [:div.slider-label
-            [:span.left
-             [:i {:class "fa fa-long-arrow-left"}]
-             " full range"]
-            [:span.right "full detail "
-             [:i {:class "fa fa-long-arrow-right"}]]
-            ]
-           (slider event-bus slider-axis-value 0 1 0.01)
-           [:.tick
-            [:div {:style {:height "0px"}}]
-            [:span.tick-label "50%"]
-            [:div {:style {:height "308px"}}]
-            [:span.tick-label "50%"]
-            [:div {:style {:height "308px"}}]
-            [:span.tick-label "50%"]
-
-            ]]
-
-          ]]]
+       ;; body for print and screen
        [:tbody {:key :tbody}
         (for [row rows]
           [:tr {:key (:h-code row)}

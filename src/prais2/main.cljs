@@ -30,12 +30,24 @@
   [selector]
   (.querySelectorAll js/document selector))
 
+
+(defn query-media?
+  "does a media query match on the current media query list."
+  [query]
+  (.-matches (.matchMedia js/window query)))
+
 ;;;
 ;;  "debug app-state"
 ;;;
 (r/defc debug < r/reactive []
-  (prn r/react core/app)
+  [:div
+   [:p (str (r/react core/app))]
+   (prn "print? " (query-media? "print"))
+   [:p (str "is-print-media: " (query-media? "print"))]
+   [:p (str "is-screen-media: " (query-media? "screen"))]]
   )
+
+(.addEventListener js/document "beforeprint" #(prn "beforeprint"))
 
 
 ;;;
@@ -54,7 +66,8 @@
      #_[:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
      #_[:h1 {:key :ap2} (:title ap)]
      (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
-     #_(r/with-key (debug) :ap4)]))
+
+     (r/with-key (debug) :ap4)]))
 
 ;;
 ;; mount main component on html app element

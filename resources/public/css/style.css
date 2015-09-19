@@ -9,36 +9,37 @@
 
 @media print {
 
-    #table1 {
+    .screenable {
         display:none;
     }
 
-    #table2 thead i {
+    .printable thead i {
         display:none;
     }
 
-    #table2 thead .slider {
+    .printable thead .slider {
         display:none;
     }
 
-    #table2 thead .slider-label {
+    .printable thead .slider-label {
         display:none;
     }
 
-    #table2 thead * {
-        background-color: #7fcdbb !important;
+    .printable thead * {
+        background-color: #2C7FB8 !important;
     }
 
 }
 
 @media screen {
-    #table2 thead {
+    .screenable thead * {
+    }
+    .printable thead {
         display: none;
     }
 }
 
-
-.fixed {
+.screenable {
     width: 100%;
     position: fixed !important;
     top: 0 !important;
@@ -46,12 +47,11 @@
     box-shadow: 0px 2px 2em 0px rgba(0,0,0,0.3);
 }
 
-.content {
+.printable {
     width: 100%;
     position: relative;
     background: #fff;
     z-index: 0;
-    /*    padding: 50px;*/
     padding: 0px;
     margin: 0;
     margin-top:110px;
@@ -148,7 +148,7 @@ th:first-child {
     margin:0;
 }
 
-.a-bar {
+.bar {
     vertical-align: middle;
     display: inline-table;
     margin: 0;

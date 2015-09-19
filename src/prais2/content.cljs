@@ -10,7 +10,7 @@
          (Header. "Number of Operations"        true       true    105   50)
          (Header. "Number of Deaths"            true       true    100   50)
          (Header. "Number of Survivors"         true       true    100   50)
-         (Header. "Survival Rate (%)"           false      true    130   50)
+         (Header. "Survival Rate (%)"           false      true    80   50)
          (Header. "Outer Low"                   false      false   130   50)
          (Header. "Inner Low"                   false      false   130   50)
          (Header. "Inner High"                  false      false   130   50)
