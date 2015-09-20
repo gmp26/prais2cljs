@@ -8,6 +8,25 @@
     (:require-macros [jayq.macros :refer [ready]]))
 
 ;;;
+;; utils
+;;;
+(defn px
+  "value to pixel string"
+  [value]
+  (str value "px"))
+
+(defn pc
+  "value to percent string"
+  [value]
+  (str value "%"))
+
+(defn important
+  "tack !important on a string value"
+  [str-val]
+  (str str-val " !important")
+  )
+
+;;;
 ;;
 ;; Sample jQuery usage:
 ;;  Attach the jQuery plugin only after React has mounted the selected element and jQuery has loaded.
@@ -136,15 +155,6 @@
 (def colour-map (:anitsirch colour-map-options))
 
 
-(r/defc bar < r/static [slider value fill]
-  [:div.bar {
-         :style {:background-color (str fill " !important") ;
-                 :width (str (bar-width slider value) "%")}
-         }])
-
-;;
-;;
-;;
 (r/defc slider < r/static [event-bus value min max step]
   [:.slider
    [:input {:type "range"
@@ -152,85 +162,91 @@
             :min min
             :max max
             :step step
-            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}
-    ]])
+            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}]])
 
 
-(r/defc dot < r/static [slider size value]
-  (let [px-size (str size "px")
-        ]
+(r/defc bar < r/static [slider value fill]
+  [:div.bar {:style {:background-color (important fill)
+                     :width (str (bar-width slider value) "%")}}])
+
+
+(r/defc dot < r/static
+
+  [slider size value & [relative]]
+  (let [px-size (px size)]
     [:div.dot
-     {:style {:background-color (str (:dot colour-map) " !important")
+     {:style {:background-color (important (:dot colour-map))
               :width px-size
               :height px-size
-              :top (str (/ (- 25 size) 2) "px")
+              :top (px (/ (- 25 size) 2))
+              :position (if relative "relative" "absolute")
               :left (str "calc("
                          (percent->screen slider value)
                          "% - "
                          (/ size 2)
                          "px)"
-                         )}}])  )
+                         )}}])
+  )
+
+(def last-pad-right (important (px 30)))
 
 (r/defc chart-cell < r/static [row slider]
-  [:td.chart-cell
+  [:td.chart-cell {:style {:padding-right last-pad-right}}
    [:div.bar-chart
     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
     (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
     (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-    (r/with-key (dot slider 10 (:survival-rate row)) :dot)
-    ]
-   ]
-  )
-
-(defn px
-  "value to pixel string"
-  [value]
-  (str value "px")
-  )
+    (r/with-key (dot slider 10 (:survival-rate row)) :dot)]])
 
 (r/defc table-head < r/static
-  [app headers column-keys event-bus slider-axis-value]
-  (let [ap @app]
-    [:thead {:key :thead}
-     [:tr
-      (for [column-key column-keys :when (-> headers column-key :shown)]
-        (let [header (column-key headers)
-              sortable (:sortable header)]
-          [:th {:key [column-key "head"]
-                :on-click (when sortable #(handle-sort % app column-key))
-                :style {:width (px (:width header))
-                        :vertical-align "top"
-                        :cursor "pointer"
-                        :background-color (str (:outer-low colour-map) "!important")
-                        :color "#ffffff !important"
-                        }}
-           (when sortable [:i {:key :icon
-                               :class (str  "fa fa-sort right"
-                                            (if (= column-key (:sort-by ap))
-                                              (if (:sort-ascending ap) "-asc" "-desc") ""))
-                               :style {:pointer-events "none"}}])
+  [app ap headers column-keys event-bus slider-axis-value]
+  [:thead {:key :thead}
+   [:tr
+    (for [column-key column-keys :when (-> headers column-key :shown)]
+      (let [header (column-key headers)
+            sortable (:sortable header)]
+        [:th {:key [column-key "head"]
+              :on-click (when sortable #(handle-sort % app column-key))
+              :style {:width (px (:width header))
+                      :vertical-align "top"
+                      :cursor "pointer"
+                      :background-color (str (:outer-low colour-map) "!important")
+                      :color "#ffffff !important"
+                      }}
+         (when sortable [:i {:key :icon
+                             :class (str  "right fa fa-sort"
+                                          (if (= column-key (:sort-by ap))
+                                            (if (:sort-ascending ap) "-asc" "-desc") ""))
+                             :style {:pointer-events "none"}}])
+         (let [title (:title header)]
            [:span {:key :text
                    :style {:pointer-events "none"}}
-            (:title header)]]))
-      [:th
-       {:style {:width "auto"
-                :background-color (str (:outer-low colour-map) "!important")
-                :color "#ffffff !important"
-                }}
-       [:.axis-container
-        {:key :axis
-         :style {:height (px (:height (:observed headers)))}}
-        [:p "Observed survival rate %"]
-        [:div.slider-label
-         [:span.left [:i.fa.fa-long-arrow-left] " full range"]
-         [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
-        (slider event-bus slider-axis-value 0 1 0.01)
-        [:.tick
-         [:div {:style {:height (px 0)}}]
-         [:span.tick-label "50%"]]]]]]))
-
+            title
+            [:span.right
+             (if (>=  (.indexOf title "%") 0) (dot nil 10 0 true))]
+            ])]))
+    [:th
+     {:style {:width "auto"
+              :background-color (str (:outer-low colour-map) "!important")
+              :color "#ffffff !important"
+              }}
+     [:.axis-container
+      {:key :axis
+       :style {:height (px (:height (:observed headers)))
+               }}
+      [:p (:title (:observed headers))]
+      [:.slider-label
+       [:span.left [:i.fa.fa-long-arrow-left] " full range"]
+       [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
+      (slider event-bus slider-axis-value 0 1 0.01)
+      [:.tick
+       {:style {:left (pc 100)
+                :padding-right last-pad-right}
+        }
+       [:div {:style {:height (px 0)}}]
+       [:span.tick-label (pc 100)]]]]]])
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
@@ -246,15 +262,15 @@
     [:div
 
      [:div.screenable
-      ;; fixed table header for @media screen, hidden in print
+      ;; fixed table with header only for @media screen, hidden in print
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       (table-head app headers column-keys event-bus slider-axis-value)]]
+       (table-head app ap headers column-keys event-bus slider-axis-value)]]
      [:div.printable
-      ;; print header, hidden on screen
+      ;; full table with print header, hidden on screen
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       (table-head app headers column-keys event-bus slider-axis-value)
+       (table-head app ap headers column-keys event-bus slider-axis-value)
 
-       ;; body for print and screen
+       ;; body for both print and screen
        [:tbody {:key :tbody}
         (for [row rows]
           [:tr {:key (:h-code row)}
@@ -263,8 +279,13 @@
                  :when (:shown column-header)]
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
-                           :height (px (:height column-header))}}
-              (column-key row)])
+                           :height (px (:height column-header))
+                           :vertical-align "middle"
+                           :text-align "center"}}
+              (str (column-key row)
+                   (if (= column-key :survival-rate)
+                     " %" ""))
+])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]
 
     )

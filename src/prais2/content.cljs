@@ -6,16 +6,16 @@
 
 (def table1-data
   [(Row. (Header. "Hospital"                    true       true    200   50)
-         (Header. "Hospital Code"               true       false    105   50)
+         (Header. "Hospital Code"               false       true    90   50)
          (Header. "Number of Operations"        true       true    105   50)
-         (Header. "Number of Deaths"            true       true    100   50)
-         (Header. "Number of Survivors"         true       true    100   50)
-         (Header. "Survival Rate (%)"           false      true    80   50)
+         (Header. "Number of Deaths"            false       true    85   50)
+         (Header. "Number of Survivors"         false       true    95   50)
+         (Header. "Observed Survival Rate %"    false      true    100   50)
          (Header. "Outer Low"                   false      false   130   50)
          (Header. "Inner Low"                   false      false   130   50)
          (Header. "Inner High"                  false      false   130   50)
          (Header. "Outer High"                  false      false   130   50)
-         (Header. "Observed Survival Rate %"    false      false   0   100)
+         (Header. "Predicted & observed survival rate"  false      false   0   100)
          )
 
    (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	204	2	202	99.0 	95.1	96.6  100     100.0 nil)
