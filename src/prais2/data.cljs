@@ -72,10 +72,9 @@
 
 (def chart-width 100)
 
-(def min-outer-low  (apply min (map :outer-low (rest content/table1-data))))
+(def min-outer-low  (* 2 (int (/ (apply min (map :outer-low (rest content/table1-data))) 2))))
 ;;  "the minimum outer-low value across all rows"
 ;; => 94.8
-
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
@@ -152,10 +151,22 @@
 
 
 
-(def colour-map (:anitsirch colour-map-options))
+(def colour-map (:christina colour-map-options))
 
 
-(r/defc slider < r/static [event-bus value min max step]
+(defn log-transform
+  "apply a log transform to the raw slider value"
+  [input]
+  (/ (Math.log10 (inc input)) 2)
+  )
+
+(defn exp-transform
+  "invert the log transform"
+  [output]
+  (dec (Math.pow 10 (* output 2)))
+  )
+
+(r/defc slider-control < r/static [event-bus value min max step]
   [:.slider
    [:input {:type "range"
             :value value
@@ -170,9 +181,7 @@
                      :width (str (bar-width slider value) "%")}}])
 
 
-(r/defc dot < r/static
-
-  [slider size value & [relative]]
+(r/defc dot < r/static [slider size value & [relative]]
   (let [px-size (px size)]
     [:div.dot
      {:style {:background-color (important (:dot colour-map))
@@ -188,10 +197,13 @@
                          )}}])
   )
 
-(def last-pad-right (important (px 30)))
+(def extra-right 40)
+(def last-pad-right (important (px extra-right)))
+(def axis-margin 25)
 
 (r/defc chart-cell < r/static [row slider]
-  [:td.chart-cell {:style {:padding-right last-pad-right}}
+  [:td.chart-cell {:style {:padding-left (px axis-margin)
+                           :padding-right last-pad-right}}
    [:div.bar-chart
     (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
     (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
@@ -232,7 +244,7 @@
               :background-color (str (:outer-low colour-map) "!important")
               :color "#ffffff !important"
               }}
-     [:.axis-container
+     [:.slider-container
       {:key :axis
        :style {:height (px (:height (:observed headers)))
                }}
@@ -240,13 +252,19 @@
       [:.slider-label
        [:span.left [:i.fa.fa-long-arrow-left] " full range"]
        [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
-      (slider event-bus slider-axis-value 0 1 0.01)
-      [:.tick
-       {:style {:left (pc 100)
-                :padding-right last-pad-right}
-        }
-       [:div {:style {:height (px 0)}}]
-       [:span.tick-label (pc 100)]]]]]])
+      (slider-control event-bus slider-axis-value 0 1 0.001)
+      [:.axis-container
+       {:style {:margin-left (px axis-margin)
+                :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+       [:.tick
+        {:style {:left (pc 0)}}
+        [:span.tick-label (pc (Math.round (* min-outer-low slider-axis-value)))]]
+       [:.tick
+        {:style {:left (pc 50)}}
+        [:span.tick-label (pc (.toFixed (- 100 (/ (- 100 (Math.round (* min-outer-low slider-axis-value))) 2)) 1) )]]
+       [:.tick
+        {:style {:left (pc 100)}}
+        [:span.tick-label (pc 100)]]]]]]])
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
@@ -280,8 +298,7 @@
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))
-                           :vertical-align "middle"
-                           :text-align "center"}}
+}}
               (str (column-key row)
                    (if (= column-key :survival-rate)
                      " %" ""))

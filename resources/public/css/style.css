@@ -2,10 +2,13 @@
     box-sizing: border-box !important;
 }
 
+i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
+    color: black;
+}
 
 .table {
     margin: 0 !important;
-    min-width: 911px;
+    min-width: 861px;
 }
 
 @media print {
@@ -59,21 +62,39 @@
     box-sizing: border-box;
 }
 
+
 th {
-    padding: 10px 15px 0px 15px !important;
+    padding: 10px 10px 0px 10px !important;
     background-color: #BCE8DD;
     color: red;
 }
 
 th:first-child {
-    width: 200px;
+    min-width: 200px;
 }
 
 th:last-child {
     padding: 0px !important;
 }
 
-.axis-container {
+td {
+    text-align: center;
+    vertical-align: middle !important;
+    position: relative;
+    margin: 0 !important;
+    padding-top: 20px !important;
+    padding: 0 !important;
+}
+
+td:first-child {
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.slider-container {
     position: relative;
     padding: 10px 0px 0px !important;
     margin: 0 !important;
@@ -86,15 +107,15 @@ th:last-child {
     vertical-align: top;
 }
 
-.axis-container p {
-    margin-bottom: 0
+.slider-container p {
+    margin-bottom: 0;
 }
 
 .slider {
     margin: 0 !important;
     margin-left: auto !important;
     margin-right: auto !important;
-    width: 80%;
+    max-width: 80% ;
     padding: 0px !important;
     vertical-align: top;
     cursor: pointer;
@@ -118,24 +139,30 @@ th:last-child {
     float: right;
 }
 
+.axis-container {
+    position: relative;
+    margin-left: 15px;
+    /*opacity: 0.2;*/
+    /*width: calc(100% - 45px);*/
+}
+
 .tick {
-    width: 2px;
-    height: 830px;
+    width: 1px;
+    height: 738px;
     padding-top: 0px;
     margin: 0;
     top: 10px;
-    left: 50%;
-    position: relative;
+    position: absolute;
     z-index: 1000;
-    background-color: #cccccc;
+    background-color: black;
 }
 
 .tick-label {
     position: relative;
-    height: 80px;
-    margin-left: -25px;
+    margin-left: -16px;
     z-index: 1001;
-    font-size: 20px;
+    font-weight: 200 !important;
+    font-size: 18px;
     color: #ffffff;
 }
 
@@ -150,7 +177,7 @@ th:last-child {
 .dot {
     width: 12px;
     height: 12px;
-    border-radius:100%;
+    border-radius: 100%;
     border: 1px solid white;
     background-color: black;
     position: absolute;
@@ -162,14 +189,15 @@ th:last-child {
 .bar {
     vertical-align: middle;
     display: inline-table;
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     height: 25px;
 }
 
 .bar-chart{
     padding: 0 !important;
-    margin: 0;
+    margin: 0 !important;
+    width: 100%;
     width: 100%;
     height: 100%;
     border-left: none;
@@ -183,5 +211,6 @@ th:last-child {
 }
 
 .chart-cell {
-    padding:15px !important; /*0px 15px !important;*/
-    background-color: #FFffff;
+    /*padding:15px !important; */ /*0px 15px !important;*/
+    background-color: #eeeeee;
+    height:;
