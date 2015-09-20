@@ -212,59 +212,79 @@
     (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
     (r/with-key (dot slider 10 (:survival-rate row)) :dot)]])
 
+
+(r/defc tick < r/static [baseline value]
+  (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
+    [:.tick
+     {:style {:left (pc percent)}}
+     [:span.tick-label (pc value)]]))
+
+(r/defc ticks < r/static [slider-axis-value tick-count]
+  (let [baseline (* min-outer-low slider-axis-value)
+        best-interval (/ (- 100 baseline) (inc tick-count))
+        interval (cond
+                   (> best-interval 50) 100
+                   (> best-interval 20) 50
+                   (> best-interval 10) 20
+                   (> best-interval 5) 10
+                   (> best-interval 2) 5
+                   (> best-interval 1) 2
+                   :else 1
+                   )
+        tick-values (range 100 (dec baseline) (- interval))]
+    [:div
+     (for [value tick-values]
+       (tick baseline value))]
+    )
+  )
+
 (r/defc table-head < r/static
   [app ap headers column-keys event-bus slider-axis-value]
-  [:thead {:key :thead}
-   [:tr
-    (for [column-key column-keys :when (-> headers column-key :shown)]
-      (let [header (column-key headers)
-            sortable (:sortable header)]
-        [:th {:key [column-key "head"]
-              :on-click (when sortable #(handle-sort % app column-key))
-              :style {:width (px (:width header))
-                      :vertical-align "top"
-                      :cursor "pointer"
-                      :background-color (str (:outer-low colour-map) "!important")
-                      :color "#ffffff !important"
-                      }}
-         (when sortable [:i {:key :icon
-                             :class (str  "right fa fa-sort"
-                                          (if (= column-key (:sort-by ap))
-                                            (if (:sort-ascending ap) "-asc" "-desc") ""))
-                             :style {:pointer-events "none"}}])
-         (let [title (:title header)]
-           [:span {:key :text
-                   :style {:pointer-events "none"}}
-            title
-            [:span.right
-             (if (>=  (.indexOf title "%") 0) (dot nil 10 0 true))]
-            ])]))
-    [:th
-     {:style {:width "auto"
-              :background-color (str (:outer-low colour-map) "!important")
-              :color "#ffffff !important"
-              }}
-     [:.slider-container
-      {:key :axis
-       :style {:height (px (:height (:observed headers)))
-               }}
-      [:p (:title (:observed headers))]
-      [:.slider-label
-       [:span.left [:i.fa.fa-long-arrow-left] " full range"]
-       [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
-      (slider-control event-bus slider-axis-value 0 1 0.001)
-      [:.axis-container
-       {:style {:margin-left (px axis-margin)
-                :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
-       [:.tick
-        {:style {:left (pc 0)}}
-        [:span.tick-label (pc (Math.round (* min-outer-low slider-axis-value)))]]
-       [:.tick
-        {:style {:left (pc 50)}}
-        [:span.tick-label (pc (.toFixed (- 100 (/ (- 100 (Math.round (* min-outer-low slider-axis-value))) 2)) 1) )]]
-       [:.tick
-        {:style {:left (pc 100)}}
-        [:span.tick-label (pc 100)]]]]]]])
+
+  (let [baseline (Math.round (* min-outer-low slider-axis-value))]
+    [:thead {:key :thead}
+     [:tr
+      (for [column-key column-keys :when (-> headers column-key :shown)]
+        (let [header (column-key headers)
+              sortable (:sortable header)]
+          [:th {:key [column-key "head"]
+                :on-click (when sortable #(handle-sort % app column-key))
+                :style {:width (px (:width header))
+                        :vertical-align "top"
+                        :cursor "pointer"
+                        :background-color (str (:outer-low colour-map) "!important")
+                        :color "#ffffff !important"
+                        }}
+           (when sortable [:i {:key :icon
+                               :class (str  "right fa fa-sort"
+                                            (if (= column-key (:sort-by ap))
+                                              (if (:sort-ascending ap) "-asc" "-desc") ""))
+                               :style {:pointer-events "none"}}])
+           (let [title (:title header)]
+             [:span {:key :text
+                     :style {:pointer-events "none"}}
+              title
+              [:span.right
+               (if (>=  (.indexOf title "%") 0) (dot nil 10 0 true))]
+              ])]))
+      [:th
+       {:style {:width "auto"
+                :background-color (str (:outer-low colour-map) "!important")
+                :color "#ffffff !important"
+                }}
+       [:.slider-container
+        {:key :axis
+         :style {:height (px (:height (:observed headers)))
+                 }}
+        [:p (:title (:observed headers))]
+        [:.slider-label
+         [:span.left [:i.fa.fa-long-arrow-left] " full range"]
+         [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
+        (slider-control event-bus slider-axis-value 0 1 0.001)
+        [:.axis-container
+         {:style {:margin-left (px axis-margin)
+                  :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+         (ticks slider-axis-value 3)]]]]]))
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
