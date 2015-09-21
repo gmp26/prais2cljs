@@ -65,7 +65,8 @@
 
 (defn handle-sort
   "handle sort click"
-  [app column-key]
+  [
+   app column-key]
   (let [ap @app]
     (prn column-key)
     (sort-on-column app column-key)))
@@ -166,16 +167,6 @@
   (dec (Math.pow 10 (* output 2)))
   )
 
-(r/defc slider-control < r/static [event-bus value min max step]
-  [:.slider
-   [:input {:type "range"
-            :value value
-            :min min
-            :max max
-            :step step
-            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}]])
-
-
 (r/defc bar < r/static [slider value fill]
   [:div.bar {:style {:background-color (important fill)
                      :width (str (bar-width slider value) "%")}}])
@@ -192,7 +183,7 @@
               :left (str "calc("
                          (percent->screen slider value)
                          "% - "
-                         (/ size 2)
+                         (Math.round (/ size 2))
                          "px)"
                          )}}])
   )
@@ -200,6 +191,9 @@
 (def extra-right 40)
 (def last-pad-right (important (px extra-right)))
 (def axis-margin 25)
+
+(defn dot-size [slider]
+  (Math.round (- 12 (* 4 (- 1 slider)))))
 
 (r/defc chart-cell < r/static [row slider]
   [:td.chart-cell {:style {:padding-left (px axis-margin)
@@ -210,7 +204,7 @@
     (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
     (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
     (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-    (r/with-key (dot slider 10 (:survival-rate row)) :dot)]])
+    (r/with-key (dot slider (dot-size slider) (:survival-rate row)) :dot)]])
 
 
 (r/defc tick < r/static [baseline value]
@@ -240,10 +234,19 @@
 
 (r/defc slider-labels []
   [:.slider-label
-   [:span.left {:key :left}
+   [:div.pull-left {:key :left}
     [:i.fa.fa-long-arrow-left {:key :full}] " full range"]
-   [:span.right {:key :right}
+   [:div.right {:key :right}
     "full detail " [:i.fa.fa-long-arrow-right {:key :detail}]]])
+
+(r/defc slider-control < r/static [event-bus value min max step]
+  [:.slider
+   [:input {:type "range"
+            :value value
+            :min min
+            :max max
+            :step step
+            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}]])
 
 (r/defc axis-container < r/static [slider-axis-value]
   [:.axis-container
