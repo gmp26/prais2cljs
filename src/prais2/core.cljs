@@ -24,6 +24,13 @@
 (def cur-scroll-y (atom 0))
 (def prev-scroll-y (atom 0))
 
+;;;
+;; media query support
+;;;
+(defn query-media?
+  "does a media query match on the current media query list."
+  [query]
+  (.-matches (.matchMedia js/window query)))
 
 ;;;
 ;; application events

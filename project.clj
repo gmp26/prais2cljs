@@ -39,7 +39,8 @@
                          :asset-path "js/compiled/prod"
                          :output-dir "resources/public/js/compiled/prod"
                          :main "prais2.main"
-                         :externs ["resources/externs/svg.js"]
+                         :externs ["resources/externs/svg.js"
+                                   "externs/jquery.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false}
                          }}]}

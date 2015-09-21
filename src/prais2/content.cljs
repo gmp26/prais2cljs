@@ -15,7 +15,7 @@
          (Header. "Inner Low"                   false      false   130   50)
          (Header. "Inner High"                  false      false   130   50)
          (Header. "Outer High"                  false      false   130   50)
-         (Header. "Predicted & observed survival rate"  false      false   0   100)
+         (Header. "Observed survival with predicted range"  false      false   0   100)
          )
 
    (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	204	2	202	99.0 	95.1	96.6  100     100.0 nil)

@@ -65,7 +65,7 @@
 
 (defn handle-sort
   "handle sort click"
-  [event app column-key]
+  [app column-key]
   (let [ap @app]
     (prn column-key)
     (sort-on-column app column-key)))
@@ -234,24 +234,44 @@
         tick-values (range 100 (dec baseline) (- interval))]
     [:div
      (for [value tick-values]
-       (tick baseline value))]
+       (r/with-key (tick baseline value) value))]
     )
   )
+
+(r/defc slider-labels []
+  [:.slider-label
+   [:span.left {:key :left}
+    [:i.fa.fa-long-arrow-left {:key :full}] " full range"]
+   [:span.right {:key :right}
+    "full detail " [:i.fa.fa-long-arrow-right {:key :detail}]]])
+
+(r/defc axis-container < r/static [slider-axis-value]
+  [:.axis-container
+   {:style {:margin-left (px axis-margin)
+            :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+   (r/with-key (ticks slider-axis-value 3) :ticks)])
+
+(r/defc slider-title [headers]
+  [:p {:key :p}
+   (:title (:observed headers)) ])
 
 (r/defc table-head < r/static
   [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
-    [:thead {:key :thead}
+    [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
         (let [header (column-key headers)
               sortable (:sortable header)]
           [:th {:key [column-key "head"]
-                :on-click (when sortable #(handle-sort % app column-key))
+                :on-click #(do (put! event-bus [:sort-toggle column-key])
+                               (.stopPropagation (.-nativeEvent %))
+                               (.preventDefault (.-nativeEvent %))
+                               )
                 :style {:width (px (:width header))
                         :vertical-align "top"
-                        :cursor "pointer"
+                        :cursor (if sortable "pointer" "auto")
                         :background-color (str (:outer-low colour-map) "!important")
                         :color "#ffffff !important"
                         }}
@@ -262,29 +282,30 @@
                                :style {:pointer-events "none"}}])
            (let [title (:title header)]
              [:span {:key :text
-                     :style {:pointer-events "none"}}
+                     :style {:pointer-events "none"
+                             :background-color "none !important"
+                             :color "white !important"}}
               title
-              [:span.right
-               (if (>=  (.indexOf title "%") 0) (dot nil 10 0 true))]
+              [:br {:key :br}]
+              [:span.right {:key :spr}
+               (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]
               ])]))
       [:th
-       {:style {:width "auto"
+       {:key :last
+        :style {:width "auto"
                 :background-color (str (:outer-low colour-map) "!important")
                 :color "#ffffff !important"
                 }}
        [:.slider-container
-        {:key :axis
-         :style {:height (px (:height (:observed headers)))
-                 }}
-        [:p (:title (:observed headers))]
-        [:.slider-label
-         [:span.left [:i.fa.fa-long-arrow-left] " full range"]
-         [:span.right "full detail " [:i.fa.fa-long-arrow-right]]]
-        (slider-control event-bus slider-axis-value 0 1 0.001)
-        [:.axis-container
-         {:style {:margin-left (px axis-margin)
-                  :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
-         (ticks slider-axis-value 3)]]]]]))
+        {:style {:height (px (:height (:observed headers)))}}
+        (map-indexed #(r/with-key %2 %1)
+                     [(slider-title headers)
+                      (slider-labels)
+                      (slider-control event-bus slider-axis-value 0 1 0.001)
+                      (axis-container slider-axis-value)])
+
+
+]]]]))
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
@@ -299,14 +320,17 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
 
-     [:div.screenable
-      ;; fixed table with header only for @media screen, hidden in print
+     (when (core/query-media? "screen")
+       [:div.screenable {:key :screen}
+        ;; fixed table with header only for @media screen, hidden in print
+        [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+         (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]])
+
+     [:div.printable {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       (table-head app ap headers column-keys event-bus slider-axis-value)]]
-     [:div.printable
-      ;; full table with print header, hidden on screen
-      [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       (table-head app ap headers column-keys event-bus slider-axis-value)
+      (when (core/query-media? "print")
+        ;; full table with print header, hidden on screen
+        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead))
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
@@ -318,11 +342,11 @@
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))
-}}
+                           }}
               (str (column-key row)
                    (if (= column-key :survival-rate)
                      " %" ""))
-])
+              ])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]
 
     )

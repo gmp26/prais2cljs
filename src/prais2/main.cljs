@@ -31,20 +31,14 @@
   (.querySelectorAll js/document selector))
 
 
-(defn query-media?
-  "does a media query match on the current media query list."
-  [query]
-  (.-matches (.matchMedia js/window query)))
-
 ;;;
 ;;  "debug app-state"
 ;;;
 (r/defc debug < r/reactive []
   [:div
    [:p (str (r/react core/app))]
-   (prn "print? " (query-media? "print"))
-   [:p (str "is-print-media: " (query-media? "print"))]
-   [:p (str "is-screen-media: " (query-media? "screen"))]]
+   [:p (str "is-print-media: " (core/query-media? "print"))]
+   [:p (str "is-screen-media: " (core/query-media? "screen"))]]
   )
 
 (.addEventListener js/document "beforeprint" #(prn "beforeprint"))
@@ -67,7 +61,7 @@
      #_[:h1 {:key :ap2} (:title ap)]
      (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
 
-     (r/with-key (debug) :ap4)]))
+     #_(r/with-key (debug) :ap4)]))
 
 ;;
 ;; mount main component on html app element
@@ -80,13 +74,22 @@
 ;;;
 (defn dispatcher []
   "Listen for events and dispatch to store, log etc."
-  (let [slider-chan (chan)]
+  (let [slider-chan (chan)
+        sort-chan (chan)]
     (sub event-bus-pub :slider-axis-value slider-chan)
+    (sub event-bus-pub :sort-toggle sort-chan)
+
     (go-loop []
       (let [[_ slider-value] (<! slider-chan)]
-        ;;(prn (str "slider " slider-value))
-        (swap! core/app #(assoc % :slider-axis-value slider-value)))
-      (recur)))
+         (swap! core/app #(assoc % :slider-axis-value slider-value)))
+      (recur))
+
+    (go-loop []
+      (let [[_ column-key] (<! sort-chan)]
+        (data/handle-sort core/app column-key))
+      (recur))
+    )
+
   )
 
 (dispatcher)
