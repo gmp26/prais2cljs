@@ -60,9 +60,7 @@
     #(r/with-key %2 %1)
     [(data/table1 core/app content/table1-data event-bus)
      (data/option-controls core/app event-bus)
-     (debug)
-     (data/square (:fill (r/react core/app)))])
-   ])
+     (debug)])])
 
 ;;
 ;; mount main component on html app element

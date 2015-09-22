@@ -160,7 +160,8 @@
                                      0
                                      (inc current-theme-index)))]
     (swap! core/app #(assoc % :theme next-theme
-                            :fill (if (= (:fill @core/app) "black") "red" "black"))))
+                            )))
+  ;:fill (if (= (:fill @core/app) "black") "red" "black")
   )
 
 
@@ -176,24 +177,27 @@
   (dec (Math.pow 10 (* output 2)))
   )
 
-(r/defc bar < r/static [slider value fill]
-  [:div.bar {:style {:background-color (important fill)
-                     :width (str (bar-width slider value) "%")}}])
-
-
-(r/defc square < r/static [fill]
-  [:div {:style
-      {:background-color fill
-       :height (px 100)
-       :width (px 100)
-       }}]
+(r/defc square < r/static [slider value fill]
+  [:div.bar {:style
+             {:background-color (important fill)
+              :height (px 10)
+              :width (px 10)
+          }}]
   )
+
+
+(r/defc bar < r/static [slider value fill]
+  [:div.bar {:style {:background-color fill
+                     :width (str (bar-width slider value) "%")}}
+   #_(square (:inner (colour-map (r/react core/app))))
+   ])
+
 
 
 (r/defc dot < r/static r/reactive [slider size value & [relative]]
   (let [px-size (px size)]
     [:div.dot
-     {:style {:background-color (important (:dot (colour-map (r/react core/app))))
+     {:style {:background-color (:dot (colour-map (r/react core/app)))
               :width px-size
               :height px-size
               :top (px (+ 10 (/ (- 25 size) 2)))
@@ -217,7 +221,11 @@
   (let [colours (colour-map (r/react core/app))]
     [:td.chart-cell {:style {:padding-left (px axis-margin)
                              :padding-right last-pad-right}}
+
+
+
      [:div.bar-chart
+      (r/with-key (square slider (- (:inner-low row) (:outer-low row)) (:inner colours)) :bar0)
       (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours)) :bar1)
       (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours)) :bar2)
       (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours)) :bar3)
@@ -298,15 +306,14 @@
       [:span.right {:key :spr}
        (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]])])
 
-(r/defc table-head
-  [app ap headers column-keys event-bus slider-axis-value]
+(r/defc table-head < r/static [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
     (prn "table-head called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
-        (r/with-key (table-header (str (:outer-low (colour-map ap)) " !important")
+        (r/with-key (table-header (:outer-low (colour-map ap))
                                   ap
                                   (column-key headers)
                                   column-key
@@ -315,7 +322,7 @@
       [:th
        {:key :last
         :style {:width "auto"
-                :background-color (str (:outer-low (colour-map ap)) "!important")
+                :background-color (:outer-low (colour-map ap))
                 :color "#ffffff !important"
                 }}
        [:.slider-container

@@ -19,7 +19,6 @@
                     :sort-ascending true
                     :slider-axis-value 0.9
                     :theme :christina
-                    :fill "red"
                     }))
 
 ;;;
