@@ -19,11 +19,8 @@
                     :sort-ascending true
                     :slider-axis-value 0.9
                     :theme :christina
-                    :__figwheel_counter 0}))
-
-
-(def cur-scroll-y (atom 0))
-(def prev-scroll-y (atom 0))
+                    :fill "red"
+                    }))
 
 ;;;
 ;; media query support
@@ -32,25 +29,3 @@
   "does a media query match on the current media query list."
   [query]
   (.-matches (.matchMedia js/window query)))
-
-;;;
-;; application events
-;;;
-
-;;;
-;; wait for a value to arrive on one of the chans. If it passes pred test return that value
-(defn select-chan [pred chans]
-  (go-loop []
-    (let [[value ch] (alts! chans)]
-      (if (pred value) value (recur)))))
-
-
-
-
-(defn listen! []
-  (let [chan (scroll-chan-events)]
-    (go-loop []
-             (let [new-y (<! chan)]
-               (reset! prev-scroll-y @cur-scroll-y)
-               (reset! cur-scroll-y (max 0 new-y)))
-               (recur))))

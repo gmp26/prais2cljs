@@ -54,14 +54,15 @@
 ;;
 ;; Contains the app user interface in here
 ;;
-(r/defc app-container []
+(r/defc app-container < r/reactive []
   [:.box
    (map-indexed
     #(r/with-key %2 %1)
     [(data/table1 core/app content/table1-data event-bus)
-     (data/option-controls core/app event-bus)])
-
-   #_(r/with-key (debug) :ap4)])
+     (data/option-controls core/app event-bus)
+     (debug)
+     (data/square (:fill (r/react core/app)))])
+   ])
 
 ;;
 ;; mount main component on html app element

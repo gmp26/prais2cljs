@@ -58,7 +58,6 @@
   (let [ap @app
         sort-column (:sort-by ap)
         sort-mode (:sort-ascending ap)]
-    (prn ap)
     (if (= sort-column column-key)
       (swap! app #(assoc % :sort-ascending (not sort-mode)))
       (swap! app #(assoc % :sort-ascending true :sort-by column-key)))))
@@ -68,7 +67,6 @@
   [
    app column-key]
   (let [ap @app]
-    (prn column-key)
     (sort-on-column app column-key)))
 
 (def chart-width 100)
@@ -150,9 +148,7 @@
     }
    })
 
-
-
-(defn theme [app] ((:theme app) colour-map-options))
+(defn colour-map [app] ((:theme app) colour-map-options))
 
 (defn change-theme
   "change color scheme"
@@ -163,8 +159,8 @@
         next-theme (nth theme-keys (if (= (inc current-theme-index) (count theme-keys))
                                      0
                                      (inc current-theme-index)))]
-    (swap! core/app #(assoc % :theme next-theme))
-    (prn (:theme @core/app)))
+    (swap! core/app #(assoc % :theme next-theme
+                            :fill (if (= (:fill @core/app) "black") "red" "black"))))
   )
 
 
@@ -185,10 +181,19 @@
                      :width (str (bar-width slider value) "%")}}])
 
 
+(r/defc square < r/static [fill]
+  [:div {:style
+      {:background-color fill
+       :height (px 100)
+       :width (px 100)
+       }}]
+  )
+
+
 (r/defc dot < r/static r/reactive [slider size value & [relative]]
   (let [px-size (px size)]
     [:div.dot
-     {:style {:background-color (important (:dot (theme (r/react core/app))))
+     {:style {:background-color (important (:dot (colour-map (r/react core/app))))
               :width px-size
               :height px-size
               :top (px (+ 10 (/ (- 25 size) 2)))
@@ -209,15 +214,15 @@
   (Math.round (- 12 (* 4 (- 1 slider)))))
 
 (r/defc chart-cell < r/reactive [row slider]
-  (let [colour-map (theme (r/react core/app))]
+  (let [colours (colour-map (r/react core/app))]
     [:td.chart-cell {:style {:padding-left (px axis-margin)
                              :padding-right last-pad-right}}
      [:div.bar-chart
-      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
-      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
-      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
-      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
-      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
+      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours)) :bar1)
+      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours)) :bar2)
+      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours)) :bar3)
+      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colours)) :bar4)
+      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colours)) :bar5)
       (r/with-key (dot slider (dot-size slider) (:survival-rate row)) :dot)]]))
 
 
@@ -266,45 +271,51 @@
   [:p {:key :p}
    (:title (:observed headers)) ])
 
-(r/defc table-head < r/static
+(r/defc table-header < r/static [background ap header column-key event-bus]
+  (prn "table-header called " background)
+  [:th {:on-click #(do (put! event-bus [:sort-toggle column-key])
+                       (.stopPropagation (.-nativeEvent %))
+                       (.preventDefault (.-nativeEvent %))
+                       )
+        :style {:width (px (:width header))
+                :vertical-align "top"
+                :cursor (if (:sortable header) "pointer" "auto")
+                :background-color background
+                :color "#ffffff !important"
+                }}
+   (when (:sortable header) [:i {:key :icon
+                                 :class (str  "right fa fa-sort"
+                                              (if (= column-key (:sort-by ap))
+                                                (if (:sort-ascending ap) "-asc" "-desc") ""))
+                                 :style {:pointer-events "none"}}])
+   (let [title (:title header)]
+     [:span {:key :text
+             :style {:pointer-events "none"
+                     :background-color "none !important"
+                     :color "white !important"}}
+      title
+      [:br {:key :br}]
+      [:span.right {:key :spr}
+       (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]])])
+
+(r/defc table-head
   [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
-    (prn "thead called")
+    (prn "table-head called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
-        (let [header (column-key headers)
-              sortable (:sortable header)]
-          [:th {:key [column-key "head"]
-                :on-click #(do (put! event-bus [:sort-toggle column-key])
-                               (.stopPropagation (.-nativeEvent %))
-                               (.preventDefault (.-nativeEvent %))
-                               )
-                :style {:width (px (:width header))
-                        :vertical-align "top"
-                        :cursor (if sortable "pointer" "auto")
-                        :background-color (str (:outer-low (theme ap)) "!important")
-                        :color "#ffffff !important"
-                        }}
-           (when sortable [:i {:key :icon
-                               :class (str  "right fa fa-sort"
-                                            (if (= column-key (:sort-by ap))
-                                              (if (:sort-ascending ap) "-asc" "-desc") ""))
-                               :style {:pointer-events "none"}}])
-           (let [title (:title header)]
-             [:span {:key :text
-                     :style {:pointer-events "none"
-                             :background-color "none !important"
-                             :color "white !important"}}
-              title
-              [:br {:key :br}]
-              [:span.right {:key :spr}
-               (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]])]))
+        (r/with-key (table-header (str (:outer-low (colour-map ap)) " !important")
+                                  ap
+                                  (column-key headers)
+                                  column-key
+                                  event-bus)
+          [column-key "head"]))
       [:th
        {:key :last
         :style {:width "auto"
-                :background-color (str (:outer-low (theme ap)) "!important")
+                :background-color (str (:outer-low (colour-map ap)) "!important")
                 :color "#ffffff !important"
                 }}
        [:.slider-container
@@ -351,13 +362,12 @@
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))}}
-              (str (column-key row)
-                   (if (= column-key :survival-rate)
-                     " %" ""))])
+              (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 
 (r/defc option-controls < r/reactive [app event-bus]
   [:button.btn.btn-default
-   {:on-click #(put! event-bus [:change-theme app])}
+   {:on-click #(do (put! event-bus [:change-theme app])
+                   (.preventDefault (.-nativeEvent %)))}
    "Change theme"])
