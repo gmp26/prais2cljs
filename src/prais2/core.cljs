@@ -12,13 +12,14 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(def app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
-                :logo "assets/logo-placeholder.png"
-                :page "home"
-                :sort-by nil
-                :sort-ascending true
-                :slider-axis-value 0.9
-                :__figwheel_counter 0}))
+(defonce app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
+                    :logo "assets/logo-placeholder.png"
+                    :page "home"
+                    :sort-by nil
+                    :sort-ascending true
+                    :slider-axis-value 0.9
+                    :theme :christina
+                    :__figwheel_counter 0}))
 
 
 (def cur-scroll-y (atom 0))

@@ -116,22 +116,32 @@ td:first-child {
 
 .slider {
     margin: 0 !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    max-width: 80% ;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    max-width: 100% !important;
+    width: 80% !important;
     padding: 0px !important;
     vertical-align: top;
     cursor: pointer;
 }
 
-.slider * {
+.slider input {
     cursor: pointer;
+    padding:0 !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    display: inline-block !important;
 }
 
 .slider-label {
     margin: auto auto;
     font-size: 12px;
     max-width: 80%;
+    width: 80%;
+    height: 15px;
+    display: block;
 }
 
 .left {
@@ -154,10 +164,10 @@ td:first-child {
     height: 738px;
     padding-top: 0px;
     margin: 0;
-    top: 10px;
+    top: 0px;
     position: absolute;
     z-index: 1000;
-    background-color: black;
+    border-left: 1px dashed black;
 }
 
 .tick-label {
@@ -192,7 +202,7 @@ td:first-child {
 .bar {
     vertical-align: middle;
     display: inline-table;
-    margin: 0 !important;
+    margin: 10px 0 0 !important;
     padding: 0 !important;
     height: 25px;
 }
@@ -210,10 +220,10 @@ td:first-child {
     position: relative !important;
     white-space: nowrap;
     display: inline-block;
-    background-color: white;
+    background-color: white !important;
 }
 
 .chart-cell {
     /*padding:15px !important; */ /*0px 15px !important;*/
     background-color: #eeeeee;
-    height:;
+    height: 50px;
