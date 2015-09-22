@@ -152,7 +152,20 @@
 
 
 
-(def colour-map (:christina colour-map-options))
+(defn theme [app] ((:theme app) colour-map-options))
+
+(defn change-theme
+  "change color scheme"
+  []
+  (let [current-theme (:theme @core/app)
+        theme-keys (keys colour-map-options)
+        current-theme-index (first (keep-indexed #(if (= %2 current-theme) %1 nil) theme-keys))
+        next-theme (nth theme-keys (if (= (inc current-theme-index) (count theme-keys))
+                                     0
+                                     (inc current-theme-index)))]
+    (swap! core/app #(assoc % :theme next-theme))
+    (prn (:theme @core/app)))
+  )
 
 
 (defn log-transform
@@ -172,10 +185,10 @@
                      :width (str (bar-width slider value) "%")}}])
 
 
-(r/defc dot < r/static [slider size value & [relative]]
+(r/defc dot < r/static r/reactive [slider size value & [relative]]
   (let [px-size (px size)]
     [:div.dot
-     {:style {:background-color (important (:dot colour-map))
+     {:style {:background-color (important (:dot (theme (r/react core/app))))
               :width px-size
               :height px-size
               :top (px (+ 10 (/ (- 25 size) 2)))
@@ -195,16 +208,17 @@
 (defn dot-size [slider]
   (Math.round (- 12 (* 4 (- 1 slider)))))
 
-(r/defc chart-cell < r/static [row slider]
-  [:td.chart-cell {:style {:padding-left (px axis-margin)
-                           :padding-right last-pad-right}}
-   [:div.bar-chart
-    (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
-    (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
-    (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
-    (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
-    (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
-    (r/with-key (dot slider (dot-size slider) (:survival-rate row)) :dot)]])
+(r/defc chart-cell < r/reactive [row slider]
+  (let [colour-map (theme (r/react core/app))]
+    [:td.chart-cell {:style {:padding-left (px axis-margin)
+                             :padding-right last-pad-right}}
+     [:div.bar-chart
+      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colour-map)) :bar1)
+      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colour-map)) :bar2)
+      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colour-map)) :bar3)
+      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colour-map)) :bar4)
+      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colour-map)) :bar5)
+      (r/with-key (dot slider (dot-size slider) (:survival-rate row)) :dot)]]))
 
 
 (r/defc tick < r/static [baseline value]
@@ -215,22 +229,16 @@
 
 (r/defc ticks < r/static [slider-axis-value tick-count]
   (let [baseline (* min-outer-low slider-axis-value)
-        best-interval (/ (- 100 baseline) (inc tick-count))
+        raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
-                   (> best-interval 50) 100
-                   (> best-interval 20) 50
-                   (> best-interval 10) 20
-                   (> best-interval 5) 10
-                   (> best-interval 2) 5
-                   (> best-interval 1) 2
-                   :else 1
-                   )
+                   (> raw-interval 10) 20
+                   (> raw-interval 5) 10
+                   (> raw-interval 2) 5
+                   :else 2)
         tick-values (range 100 (dec baseline) (- interval))]
     [:div
      (for [value tick-values]
-       (r/with-key (tick baseline value) value))]
-    )
-  )
+       (r/with-key (tick baseline value) value))]))
 
 (r/defc slider-labels []
   [:.slider-label
@@ -262,6 +270,7 @@
   [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
+    (prn "thead called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -275,7 +284,7 @@
                 :style {:width (px (:width header))
                         :vertical-align "top"
                         :cursor (if sortable "pointer" "auto")
-                        :background-color (str (:outer-low colour-map) "!important")
+                        :background-color (str (:outer-low (theme ap)) "!important")
                         :color "#ffffff !important"
                         }}
            (when sortable [:i {:key :icon
@@ -291,12 +300,11 @@
               title
               [:br {:key :br}]
               [:span.right {:key :spr}
-               (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]
-              ])]))
+               (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]])]))
       [:th
        {:key :last
         :style {:width "auto"
-                :background-color (str (:outer-low colour-map) "!important")
+                :background-color (str (:outer-low (theme ap)) "!important")
                 :color "#ffffff !important"
                 }}
        [:.slider-container
@@ -305,10 +313,8 @@
                      [(slider-title headers)
                       (slider-labels)
                       (slider-control event-bus slider-axis-value 0 1 0.001)
-                      (axis-container slider-axis-value)])
+                      (axis-container slider-axis-value)])]]]]))
 
-
-]]]]))
 
 (r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
@@ -344,13 +350,14 @@
                  :when (:shown column-header)]
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
-                           :height (px (:height column-header))
-                           }}
+                           :height (px (:height column-header))}}
               (str (column-key row)
                    (if (= column-key :survival-rate)
-                     " %" ""))
-              ])
-           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]
+                     " %" ""))])
+           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
-    )
-  )
+
+(r/defc option-controls < r/reactive [app event-bus]
+  [:button.btn.btn-default
+   {:on-click #(put! event-bus [:change-theme app])}
+   "Change theme"])

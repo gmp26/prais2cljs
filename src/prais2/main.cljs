@@ -54,14 +54,14 @@
 ;;
 ;; Contains the app user interface in here
 ;;
-(r/defc app-container < r/reactive []
-  (let [ap (r/react core/app)]
-    [:div#box
-     #_[:img {:key :ap1 :src (:logo ap) :style {:float "left" :padding "8px" :padding-right "20px" }}]
-     #_[:h1 {:key :ap2} (:title ap)]
-     (r/with-key (data/table1 core/app content/table1-data event-bus) :ap3)
+(r/defc app-container []
+  [:.box
+   (map-indexed
+    #(r/with-key %2 %1)
+    [(data/table1 core/app content/table1-data event-bus)
+     (data/option-controls core/app event-bus)])
 
-     #_(r/with-key (debug) :ap4)]))
+   #_(r/with-key (debug) :ap4)])
 
 ;;
 ;; mount main component on html app element
@@ -75,9 +75,11 @@
 (defn dispatcher []
   "Listen for events and dispatch to store, log etc."
   (let [slider-chan (chan)
-        sort-chan (chan)]
+        sort-chan (chan)
+        theme-chan (chan)]
     (sub event-bus-pub :slider-axis-value slider-chan)
     (sub event-bus-pub :sort-toggle sort-chan)
+    (sub event-bus-pub :change-theme theme-chan)
 
     (go-loop []
       (let [[_ slider-value] (<! slider-chan)]
@@ -87,6 +89,11 @@
     (go-loop []
       (let [[_ column-key] (<! sort-chan)]
         (data/handle-sort core/app column-key))
+      (recur))
+
+    (go-loop []
+      (let [[_ _] (<! theme-chan)]
+        (data/change-theme))
       (recur))
     )
 
