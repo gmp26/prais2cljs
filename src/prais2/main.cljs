@@ -70,7 +70,7 @@
 
 
 ;;;
-;;
+;; Read events off the event bus and handle them
 ;;;
 (defn dispatcher []
   "Listen for events and dispatch to store, log etc."
