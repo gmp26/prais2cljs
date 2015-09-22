@@ -202,7 +202,7 @@ td:first-child {
 .bar {
     vertical-align: middle;
     display: inline-table;
-    margin: 0 !important;
+    margin: 10px 0 0 !important;
     padding: 0 !important;
     height: 25px;
 }

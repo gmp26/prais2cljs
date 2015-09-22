@@ -178,7 +178,7 @@
      {:style {:background-color (important (:dot colour-map))
               :width px-size
               :height px-size
-              :top (px (/ (- 25 size) 2))
+              :top (px (+ 10 (/ (- 25 size) 2)))
               :position (if relative "relative" "absolute")
               :left (str "calc("
                          (percent->screen slider value)
