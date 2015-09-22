@@ -209,9 +209,9 @@
 
 (r/defc tick < r/static [baseline value]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
-    [:.tick
-     {:style {:left (pc (if (< percent 0) 0 percent))}}
-     [:span.tick-label (pc value)]]))
+    (when (>= percent 0)
+      [:.tick {:style {:left (pc percent)}}
+       [:span.tick-label (pc value)]])))
 
 (r/defc ticks < r/static [slider-axis-value tick-count]
   (let [baseline (* min-outer-low slider-axis-value)
