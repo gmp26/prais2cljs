@@ -444,7 +444,7 @@
       "Change"]]
 
     [:hr]
-    [:div {:class "form-group"}
+    [:.form-group
      [:label {:for "stateButton"} (str "Showing: " (:bars (r/react core/app))) ]
      [:.btn-group.pull-right
       [:button#stateButton.btn.btn-default
@@ -454,7 +454,40 @@
       [:button#stateButton.btn.btn-default
        {:on-click #(do (put! event-bus [:cycle-chart-state :next])
                        (.preventDefault (.-nativeEvent %)))}
-       "Next State"]
-]]
+       "Next State"]]]
 
-]])
+    [:hr]
+
+    [:.form-group
+     [:label {:for "modalButton"} "Modal test"]
+     [:button#modalButton.btn.btn-primary.pull-right
+      {:type "button"
+       :data-toggle "modal"
+       :data-target "#myModal"}
+      "Launch demo modal"]]]])
+
+;;;
+;; Modals
+;;;
+
+(r/defc modal []
+
+  [:#myModal.modal.fade {:tabindex -1
+                         :role "dialog"
+                         :aria-labelledby "myModalLabel"}
+   [:.modal-dialog {:role "document"}
+    [:.modal-content
+     [:.modal-header
+      [:button.close {:type"button"
+                      :data-dismiss "modal"
+                      :aria-label "Close"}
+       [:span {:aria-hidden "true"} "&times;"]]
+      [:h4#myModalLabel.modal-title "Modal title"]]
+     [:.modal-body
+      "Content goes here"]
+     [:.modal-footer
+      [:button.btn.btn-default {:type "button"
+                                :data-dismiss "modal"}
+       "Close"]
+      [:button.btn.btn-primary {:type "button"} "Save changes"]]]]
+   ])

@@ -56,7 +56,8 @@
   [:.box
    (map-indexed
     #(r/with-key %2 %1)
-    [(data/table1 core/app content/table1-data event-bus)
+    [(data/modal)
+     (data/table1 core/app content/table1-data event-bus)
      (data/option-controls event-bus)
      (para "")
      (debug)])])
