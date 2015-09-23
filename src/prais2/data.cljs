@@ -3,8 +3,8 @@
               [jayq.core :refer ($)]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
-              [prais2.content :as content
-               ])
+              [prais2.content :as content]
+)
     (:require-macros [jayq.macros :refer [ready]]))
 
 ;;;
@@ -25,6 +25,11 @@
   [str-val]
   (str str-val " !important")
   )
+
+
+(defn key-with
+  "useful for mapping react keys to a content vector"
+  [a b] (r/with-key b a))
 
 ;;;
 ;;
@@ -97,8 +102,8 @@
   {:brewer-RdYlBu
    {:low "#91bfdb"
     :inner "#fc8d59"
-    :outer-low "#ffffbf"
-    :outer-high "#ffffbf"
+    :outer-low "#efdf11"
+    :outer-high "#efdf11"
     :high "#91bfdb"
     :header "#91bfdb"
     :dot "black"
@@ -106,14 +111,14 @@
    :brewer-RdYl
    {:low "white"
     :inner "#fc8d59"
-    :outer-low "#ffffbf"
-    :outer-high "#ffffbf"
+    :outer-low "#efdf11"
+    :outer-high "#efdf11"
     :high "white"
     :header "#fc8d59"
     :dot "black"}
    :brewer-YlRd
    {:low "white"
-    :inner "#ffffbf"
+    :inner "#efdf11"
     :outer-low "#fc8d59"
     :outer-high "#fc8d59"
     :high "white"
@@ -205,10 +210,11 @@
                      :width (str (bar-width slider value) "%")}}])
 
 
-(r/defc dot < r/static r/reactive [slider size value & [relative]]
+(r/defc dot < r/static r/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot
      {:style {:background-color (:dot (colour-map (r/react core/app)))
+              :display (if dotty "inline-block" "none")
               :width px-size
               :height px-size
               :top (px (+ 10 (/ (- 25 size) 2)))
@@ -218,13 +224,11 @@
                          "% - "
                          (Math.round (/ size 2))
                          "px)"
-                         )}}])
-  )
-
+                         )}}]))
 
 (def extra-right 40)
 (def last-pad-right (important (px extra-right)))
-(def axis-margin 25)
+(def axis-margin 20)
 
 
 (defn dot-size [slider]
@@ -232,25 +236,57 @@
 
 
 (r/defc chart-cell < r/reactive [row slider]
-  (let [colours (colour-map (r/react core/app))]
+  (let [ap (r/react core/app)
+        colours (colour-map ap)
+        bars (:bars ap)
+        dotty (:dot bars)
+        dotless (disj bars :dot)]
+    (prn bars)
     [:td.chart-cell {:style {:padding-left (important (px axis-margin))
                              :padding-right last-pad-right}}
 
-
-
      [:div.bar-chart
-      (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours)) :bar1)
-      (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours)) :bar2)
-      (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours)) :bar3)
-      (r/with-key (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colours)) :bar4)
-      (r/with-key (bar slider (- 100 (:outer-high row)) (:high colours)) :bar5)
-      (r/with-key (dot slider (dot-size slider) (:survival-rate row)) :dot)]]))
+      (map-indexed key-with
+
+       (cond
+         (= dotless #{})
+         [(dot slider (dot-size slider) (:survival-rate row) dotty)]
+
+         (= dotless #{:inner})
+         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
+          (bar slider (- (:inner-low row) (:outer-low row)) (:low colours))
+          (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours))
+          (bar slider (- 100 (:inner-high row)) (:high colours))
+          (dot slider (dot-size slider) (:survival-rate row) dotty)
+          ]
+
+         (= dotless #{:outer})
+         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
+          (bar slider (- (:outer-high row) (:outer-low row)) (:outer-low colours))
+          (bar slider (- 100 (:outer-high row)) (:high colours))
+          (dot slider (dot-size slider) (:survival-rate row) dotty)
+          ]
+
+         (= dotless #{:inner :outer})
+         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
+          (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours))
+          (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours))
+          (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colours))
+          (bar slider (- 100 (:outer-high row)) (:high colours))
+          (dot slider (dot-size slider) (:survival-rate row) dotty)
+          ]))]]))
 
 
 (r/defc tick < r/static [baseline value]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
     (when (>= percent 0)
-      [:.tick {:style {:left (pc percent)}}
+      [:.tick {:style
+               {:left (pc percent)
+                :border-left (str "1px "
+                                  (if (or (= percent 100) (= value 0))
+                                      "solid "
+                                      "dashed ")
+                                  "black")}}
        [:span.tick-label (pc value)]])))
 
 (r/defc ticks < r/static [slider-axis-value tick-count]
@@ -316,8 +352,7 @@
                      :color "white !important"}}
       title
       [:br {:key :br}]
-      [:span.right {:key :spr}
-       (if (>=  (.indexOf title "%") 0) (r/with-key (dot nil 10 0 true) :dot))]])])
+      ])])
 
 (r/defc table-head < r/static [app ap headers column-keys event-bus slider-axis-value]
 
@@ -340,7 +375,7 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (map-indexed #(r/with-key %2 %1)
+        (map-indexed key-with
                      [(slider-title headers)
                       (slider-labels)
                       (slider-control event-bus slider-axis-value 0 1 0.001)
@@ -386,8 +421,35 @@
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 
-(r/defc option-controls < r/reactive [app event-bus]
-  [:button.btn.btn-default
-   {:on-click #(do (put! event-bus [:change-theme app])
-                   (.preventDefault (.-nativeEvent %)))}
-   "Change theme"])
+(defn next-chart-state [state]
+  (let [states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
+                #{:outer :dot} #{:outer} #{:inner :outer} #{:inner}]
+        ]
+    (second (drop-while #(not= state %) (conj states (first states))))
+    ))
+
+(r/defc option-controls < r/reactive [event-bus]
+  [:div.options
+   [:form
+
+    [:h3 "Options"]
+
+    [:hr]
+
+    [:div {:class "form-group"}
+     [:label {:for "themeButton"} (str "Theme: " (:theme (r/react core/app))) ]
+     [:button#themeButton.btn.btn-default.pull-right
+      {:on-click #(do (put! event-bus [:change-theme core/app])
+                      (.preventDefault (.-nativeEvent %)))}
+      "Change"]]
+
+    [:hr]
+
+    [:div {:class "form-group"}
+     [:label {:for "stateButton"} (str "Showing: " (:bars (r/react core/app))) ]
+     [:button#stateButton.btn.btn-default.pull-right
+      {:on-click #(do (put! event-bus [:cycle-chart-state core/app])
+                      (.preventDefault (.-nativeEvent %)))}
+      "Change"]]
+
+]])

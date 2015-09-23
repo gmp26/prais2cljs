@@ -36,13 +36,8 @@
 ;;;
 (r/defc debug < r/reactive []
   [:div
-   [:p (str (r/react core/app))]
-   [:p (str "is-print-media: " (core/query-media? "print"))]
-   [:p (str "is-screen-media: " (core/query-media? "screen"))]]
+   [:p (str (r/react core/app))]]
   )
-
-(.addEventListener js/document "beforeprint" #(prn "beforeprint"))
-
 
 ;;;
 ;; Define an event bus carrying [topic message] data
@@ -50,6 +45,9 @@
 ;;;
 (def event-bus (chan))
 (def event-bus-pub (pub event-bus first))
+
+(r/defc para < r/static [text]
+  [:p text])
 
 ;;
 ;; Contains the app user interface in here
@@ -59,7 +57,8 @@
    (map-indexed
     #(r/with-key %2 %1)
     [(data/table1 core/app content/table1-data event-bus)
-     (data/option-controls core/app event-bus)
+     (data/option-controls event-bus)
+     (para "")
      (debug)])])
 
 ;;
@@ -75,10 +74,12 @@
   "Listen for events and dispatch to store, log etc."
   (let [slider-chan (chan)
         sort-chan (chan)
-        theme-chan (chan)]
+        theme-chan (chan)
+        cycle-chart-chan (chan)]
     (sub event-bus-pub :slider-axis-value slider-chan)
     (sub event-bus-pub :sort-toggle sort-chan)
     (sub event-bus-pub :change-theme theme-chan)
+    (sub event-bus-pub :cycle-chart-state cycle-chart-chan)
 
     (go-loop []
       (let [[_ slider-value] (<! slider-chan)]
@@ -91,9 +92,16 @@
       (recur))
 
     (go-loop []
-      (let [[_ _] (<! theme-chan)]
+      (let [[_ app] (<! theme-chan)]
         (data/change-theme))
       (recur))
+
+    (go-loop []
+      (let [_ (<! cycle-chart-chan)]
+        (swap! core/app #(assoc % :bars (data/next-chart-state (:bars @core/app)))))
+      (recur))
+
+
     )
 
   )

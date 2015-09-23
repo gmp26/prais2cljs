@@ -224,6 +224,20 @@ td:first-child {
 }
 
 .chart-cell {
-    /*padding:15px !important; */ /*0px 15px !important;*/
-    background-color: #eeeeee;
+    background-color: #f9f9f9;
     height: 50px;
+}
+
+/* options */
+.options {
+    width: 400px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    border: 1px solid grey;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

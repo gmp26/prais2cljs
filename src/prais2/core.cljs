@@ -18,6 +18,7 @@
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 0.9
+                    :bars #{:dot :inner :outer}
                     :theme :christina
                     }))
 
