@@ -100,7 +100,8 @@
     :outer-low "#ffffbf"
     :outer-high "#ffffbf"
     :high "#91bfdb"
-    :dot "white"
+    :header "#91bfdb"
+    :dot "black"
     }
    :brewer-RdYl
    {:low "white"
@@ -108,6 +109,7 @@
     :outer-low "#ffffbf"
     :outer-high "#ffffbf"
     :high "white"
+    :header "#fc8d59"
     :dot "black"}
    :brewer-YlRd
    {:low "white"
@@ -115,6 +117,7 @@
     :outer-low "#fc8d59"
     :outer-high "#fc8d59"
     :high "white"
+    :header "#fc8d59"
     :dot "black"}
    :brewer-BuGn
    {:low "white"
@@ -122,6 +125,7 @@
     :outer-low "#2c7fb8"
     :outer-high "#2c7fb8"
     :high "white"
+    :header "#2c7fb8"
     :dot "black"}
    :brewer-GnBu
    {:low "white"
@@ -129,6 +133,7 @@
     :outer-low "#7fcdbb"
     :outer-high "#7fcdbb"
     :high "white"
+    :header "#3c8fc8"
     :dot "black"}
    :christina
    {:low "white"
@@ -136,6 +141,7 @@
     :outer-low "#578FD2"
     :outer-high "#578FD2"
     :high "white"
+    :header "#578FD2"
     :dot "black"
     }
    :anitsirch
@@ -144,6 +150,7 @@
     :outer-low "#8FB4E1"
     :outer-high "#8FB4E1"
     :high "white"
+    :header "#578FD2"
     :dot "black"
     }
    })
@@ -171,27 +178,31 @@
   (/ (Math.log10 (inc input)) 2)
   )
 
+
 (defn exp-transform
   "invert the log transform"
   [output]
   (dec (Math.pow 10 (* output 2)))
   )
 
+;; test square: insert to check mixin behviour
 (r/defc square < r/static [slider value fill]
   [:div.bar {:style
              {:background-color (important fill)
               :height (px 10)
-              :width (px 10)
-          }}]
-  )
+              :width (px 10)}}])
+
+
+(r/defc zero-bar < r/static [slider value]
+  [:div.bar {:style {:background-color "#eeeeee"
+                     :width "calc(25px - )"
+                     ;:width (str (bar-width slider value) "%")
+                     }}])
 
 
 (r/defc bar < r/static [slider value fill]
   [:div.bar {:style {:background-color fill
-                     :width (str (bar-width slider value) "%")}}
-   #_(square (:inner (colour-map (r/react core/app))))
-   ])
-
+                     :width (str (bar-width slider value) "%")}}])
 
 
 (r/defc dot < r/static r/reactive [slider size value & [relative]]
@@ -210,22 +221,24 @@
                          )}}])
   )
 
+
 (def extra-right 40)
 (def last-pad-right (important (px extra-right)))
 (def axis-margin 25)
 
+
 (defn dot-size [slider]
   (Math.round (- 12 (* 4 (- 1 slider)))))
 
+
 (r/defc chart-cell < r/reactive [row slider]
   (let [colours (colour-map (r/react core/app))]
-    [:td.chart-cell {:style {:padding-left (px axis-margin)
+    [:td.chart-cell {:style {:padding-left (important (px axis-margin))
                              :padding-right last-pad-right}}
 
 
 
      [:div.bar-chart
-      (r/with-key (square slider (- (:inner-low row) (:outer-low row)) (:inner colours)) :bar0)
       (r/with-key (bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours)) :bar1)
       (r/with-key (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours)) :bar2)
       (r/with-key (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours)) :bar3)
@@ -313,7 +326,7 @@
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
-        (r/with-key (table-header (:outer-low (colour-map ap))
+        (r/with-key (table-header (:header (colour-map ap))
                                   ap
                                   (column-key headers)
                                   column-key
@@ -322,7 +335,7 @@
       [:th
        {:key :last
         :style {:width "auto"
-                :background-color (:outer-low (colour-map ap))
+                :background-color (:header (colour-map ap))
                 :color "#ffffff !important"
                 }}
        [:.slider-container
