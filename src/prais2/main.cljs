@@ -97,8 +97,9 @@
       (recur))
 
     (go-loop []
-      (let [_ (<! cycle-chart-chan)]
-        (swap! core/app #(assoc % :bars (data/next-chart-state (:bars @core/app)))))
+      (let [[_ direction] (<! cycle-chart-chan)]
+        (swap! core/app
+               #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction))))
       (recur))
 
 

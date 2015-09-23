@@ -420,13 +420,13 @@
               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
+(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
+                   #{:inner :outer} #{:inner}])
 
-(defn next-chart-state [state]
-  (let [states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
-                #{:outer :dot} #{:outer} #{:inner :outer} #{:inner}]
-        ]
-    (second (drop-while #(not= state %) (conj states (first states))))
-    ))
+(defn cycle-chart-state [state direction]
+  (let [states (if (= direction :next) chart-states (reverse chart-states))]
+    (second (drop-while #(not= state %) (concat states states)))))
+
 
 (r/defc option-controls < r/reactive [event-bus]
   [:div.options
@@ -444,12 +444,17 @@
       "Change"]]
 
     [:hr]
-
     [:div {:class "form-group"}
      [:label {:for "stateButton"} (str "Showing: " (:bars (r/react core/app))) ]
-     [:button#stateButton.btn.btn-default.pull-right
-      {:on-click #(do (put! event-bus [:cycle-chart-state core/app])
-                      (.preventDefault (.-nativeEvent %)))}
-      "Change"]]
+     [:.btn-group.pull-right
+      [:button#stateButton.btn.btn-default
+       {:on-click #(do (put! event-bus [:cycle-chart-state :prev])
+                       (.preventDefault (.-nativeEvent %)))}
+       "Prev State"]
+      [:button#stateButton.btn.btn-default
+       {:on-click #(do (put! event-bus [:cycle-chart-state :next])
+                       (.preventDefault (.-nativeEvent %)))}
+       "Next State"]
+]]
 
 ]])
