@@ -472,16 +472,21 @@
 
 (r/defc modal []
 
-  [:#myModal.modal.fade {:tabindex -1
-                         :role "dialog"
-                         :aria-labelledby "myModalLabel"}
+  [:#myModal.modal {:tabindex -1
+                    :role "dialog"
+                    :aria-labelledby "myModalLabel"
+                    :style
+                    {:display "block"
+                     :right "50%"}}
    [:.modal-dialog {:role "document"}
     [:.modal-content
      [:.modal-header
       [:button.close {:type"button"
                       :data-dismiss "modal"
                       :aria-label "Close"}
-       [:span {:aria-hidden "true"} "&times;"]]
+       [:span {:aria-hidden "true"
+               :dangerouslySetInnerHTML
+               {:__html "&times;"}} ]]
       [:h4#myModalLabel.modal-title "Modal title"]]
      [:.modal-body
       "Content goes here"]
