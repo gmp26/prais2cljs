@@ -13,6 +13,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 
 @media print {
 
+
     .screenable {
         display:none;
     }
@@ -29,8 +30,13 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
         display:none;
     }
 
+    .printable thead th {
+        background-color: #578fd2 !important;
+    }
+
     .printable thead th .axis-container div {
-        background-color: black !important;
+        border-left: black 1px dashed;
+        /*background-color: #cccccc !important;*/
     }
 
     .printable thead th * {
@@ -53,6 +59,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     z-index: 0;
     padding: 0px;
     margin: 0;
+    display: block;
     box-sizing: border-box;
 }
 

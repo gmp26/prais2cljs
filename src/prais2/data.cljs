@@ -403,9 +403,10 @@
 
      [:div.printable {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-      (when (core/query-media? "print")
-        ;; full table with print header, hidden on screen
-        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead))
+       (prn (str "printing true?" (core/query-media? "print")))
+       ;;when (core/query-media? "print")
+       ;; full table with print header, hidden on screen
+       (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
