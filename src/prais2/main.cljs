@@ -71,62 +71,37 @@
 ;;;
 ;; Read events off the event bus and handle them
 ;;;
-(defn dispatcher []
-  "Listen for events and dispatch to store, log etc."
-  (let [slider-chan (chan)
-        sort-chan (chan)
-        theme-chan (chan)
-        cycle-chart-chan (chan)]
-    (sub event-bus-pub :slider-axis-value slider-chan)
-    (sub event-bus-pub :sort-toggle sort-chan)
-    (sub event-bus-pub :change-theme theme-chan)
-    (sub event-bus-pub :cycle-chart-state cycle-chart-chan)
-
+(defn dispatch
+  "listen on a published event feed, handling events with the given key"
+  [event-feed event-key handle]
+  (let [in-chan (chan)]
+    (sub event-feed event-key in-chan)
     (go-loop []
-      (let [[_ slider-value] (<! slider-chan)]
-         (swap! core/app #(assoc % :slider-axis-value slider-value)))
-      (recur))
-
-    (go-loop []
-      (let [[_ column-key] (<! sort-chan)]
-        (data/handle-sort core/app column-key))
-      (recur))
-
-    (go-loop []
-      (let [[_ app] (<! theme-chan)]
-        (data/change-theme))
-      (recur))
-
-    (go-loop []
-      (let [[_ direction] (<! cycle-chart-chan)]
-        (swap! core/app
-               #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction))))
-      (recur))
-
-
-    )
+      (let [event (<! in-chan)]
+        (handle event))
+      (recur)))
   )
 
-(dispatcher)
+(defn dispatch-central
+  "centralised dispatch of all events"
+  []
 
-(comment
-  (defn dispatch
-    "listen on a published event feed, handling events with the given key"
-    [event-feed event-key handle]
-    (let [in-chan (chan)]
-      (sub event-feed event-key in-chan)
-      (go-loop []
-        (let [event (<! in-chan)]
-          (handle event))
-        (recur)))
-    )
+  (dispatch event-bus-pub :slider-axis-value
+            (fn [[_ slider-value]] (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
-  (defn dispatch-central
-    "centralised dispatch of all events"
-    []
-    (dispatch event-bus-pub :slider-axis-value
-              (fn [[key value]] (swap! core/app #(assoc % key value))))
-    ))
+  (dispatch event-bus-pub :sort-toggle
+            (fn [[_ column-key]] (data/handle-sort core/app column-key)))
+
+  (dispatch event-bus-pub :change-theme data/change-theme)
+
+  (dispatch event-bus-pub :cycle-chart-state
+            (fn [[_ direction]]
+              (swap! core/app
+                     #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction)))))
+
+  )
+
+(dispatch-central)
 
 ;;
 ;; optionally do something on app reload
