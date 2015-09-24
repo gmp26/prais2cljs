@@ -105,11 +105,28 @@
 
 
     )
-
   )
 
 (dispatcher)
 
+(comment
+  (defn dispatch
+    "listen on a published event feed, handling events with the given key"
+    [event-feed event-key handle]
+    (let [in-chan (chan)]
+      (sub event-feed event-key in-chan)
+      (go-loop []
+        (let [event (<! in-chan)]
+          (handle event))
+        (recur)))
+    )
+
+  (defn dispatch-central
+    "centralised dispatch of all events"
+    []
+    (dispatch event-bus-pub :slider-axis-value
+              (fn [[key value]] (swap! core/app #(assoc % key value))))
+    ))
 
 ;;
 ;; optionally do something on app reload
