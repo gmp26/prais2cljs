@@ -114,7 +114,7 @@
     :outer-low "#efdf11"
     :outer-high "#efdf11"
     :high "white"
-    :header "#fc8d59"
+    :header "#91bfdb"
     :dot "black"}
    :brewer-YlRd
    {:low "white"
@@ -331,7 +331,8 @@
 
 (r/defc table-header < r/static [background ap header column-key event-bus]
   (prn "table-header called " background)
-  [:th {:on-click #(do (put! event-bus [:sort-toggle column-key])
+  [:th {:on-click #(do (when (:sortable header)
+                         (put! event-bus [:sort-toggle column-key]))
                        (.stopPropagation (.-nativeEvent %))
                        (.preventDefault (.-nativeEvent %))
                        )
@@ -348,11 +349,23 @@
                                  :style {:pointer-events "none"}}])
    (let [title (:title header)]
      [:span {:key :text
-             :style {:pointer-events "none"
+             :style {;:pointer-events "none"
                      :background-color "none !important"
                      :color "white !important"}}
-      title
+      [:a.btn.btn-primary.btn-xs
+       {:on-click #(.preventDefault (.-nativeEvent %))
+        :role "button"
+        :tabIndex -1
+        :data-trigger "focus"
+        :data-toggle "popover"
+        :title title
+        :data-content (:content header)
+        :data-placement "bottom"
+        :style {:cursor "pointer"}} [:i.fa.fa-info]]
       [:br {:key :br}]
+      title
+
+
       ])])
 
 (r/defc table-head < r/static [app ap headers column-keys event-bus slider-axis-value]

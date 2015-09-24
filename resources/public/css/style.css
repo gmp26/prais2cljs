@@ -30,6 +30,10 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
         display:none;
     }
 
+    thead .btn-xs {
+        display:none;
+    }
+
     .printable thead th {
         background-color: #578fd2 !important;
     }
@@ -43,9 +47,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
         color: #ffffff !important;
     }
 
-    div.bar-chart {
-        background-color: none !important;
-    }
 }
 
 
@@ -252,4 +253,13 @@ td:first-child {
     border-radius: 4px 4px 0 0;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+.popover-title {
+    background-color: #578fd2;
+    color: white;
+}
+
+.popover-content {
+    color: black;
 }
