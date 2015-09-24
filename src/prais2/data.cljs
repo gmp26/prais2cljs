@@ -359,7 +359,8 @@
         :data-trigger "focus"
         :data-toggle "popover"
         :title title
-        :data-content (:content header)
+        :data-html "true"
+        :data-content (str "<iframe src=\"h-name.html\" width=\"300px\" height-\"200px\">") ;(:content header)
         :data-placement "bottom"
         :style {:cursor "pointer"}} [:i.fa.fa-info]]
       [:br {:key :br}]
