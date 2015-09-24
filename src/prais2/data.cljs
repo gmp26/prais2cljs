@@ -205,7 +205,7 @@
                      }}])
 
 
-(r/defc bar < r/static [slider value fill]
+(r/defc bar < r/static  [slider value fill]
   [:div.bar {:style {:background-color fill
                      :width (str (bar-width slider value) "%")}}])
 
@@ -287,7 +287,8 @@
                                       "solid "
                                       "dashed ")
                                   "black")}}
-       [:span.tick-label (pc value)]])))
+       [:span.tick-label (pc value)]]
+      )))
 
 (r/defc ticks < r/static [slider-axis-value tick-count]
   (let [baseline (* min-outer-low slider-axis-value)
@@ -404,7 +405,6 @@
      [:div.printable {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        (prn (str "printing true?" (core/query-media? "print")))
-       ;;when (core/query-media? "print")
        ;; full table with print header, hidden on screen
        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 

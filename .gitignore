@@ -11,5 +11,6 @@ pom.xml
 .lein-plugins/
 .repl
 .nrepl-port
+bower_components
 *~
 .#*

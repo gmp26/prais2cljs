@@ -42,7 +42,12 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     .printable thead th * {
         color: #ffffff !important;
     }
+
+    div.bar-chart {
+        background-color: none !important;
+    }
 }
+
 
 .screenable {
     width: 100%;
