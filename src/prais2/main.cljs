@@ -49,10 +49,18 @@
 (r/defc para < r/static [text]
   [:p text])
 
+;; mixin to initialise bootstrap popover code
+(def bs-popover
+  {:did-mount (fn [state]
+                (ready
+                 (.popover ($ "[data-toggle=\"popover\"]")))
+                state)
+   })
+
 ;;
 ;; Contains the app user interface in here
 ;;
-(r/defc app-container < r/reactive []
+(r/defc app-container < bs-popover r/reactive []
   [:.box
    (map-indexed
     #(r/with-key %2 %1)
