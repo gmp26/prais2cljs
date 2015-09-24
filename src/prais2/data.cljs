@@ -470,14 +470,22 @@
 ;; Modals
 ;;;
 
-(r/defc modal []
+;; mixin to initialise bootstrap popover code
+(def bs-popover
+  {:did-mount (fn [state]
+                (prn "calling ready")
+                (ready
+                 (prn "calling popover")
+                 (.popover ($ :#myModal)))
+                state)
+   })
 
-  [:#myModal.modal {:tabindex -1
+(r/defc modal < bs-popover []
+
+  [:#myModal.modal {:tab-index -1
                     :role "dialog"
                     :aria-labelledby "myModalLabel"
-                    :style
-                    {:display "block"
-                     :right "50%"}}
+                    }
    [:.modal-dialog {:role "document"}
     [:.modal-content
      [:.modal-header
