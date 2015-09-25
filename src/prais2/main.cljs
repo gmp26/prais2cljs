@@ -5,7 +5,7 @@
               [cljs.reader :as reader]
               [clojure.set :refer (intersection)]
               [cljsjs.react]
-              [cljs.core.async :refer [chan <! pub sub]]
+              [cljs.core.async :refer [chan <! pub sub put!]]
               [prais2.core :as core]
               [prais2.routes]
               [prais2.content :as content]
@@ -61,14 +61,29 @@
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover r/reactive []
-  [:.box
+  [:.box #_{contenteditable="true"
+          :on-click #(.log js/console %)
+          :on-key-down #(do (put! event-bus [:pudding (.-keyCode %)])
+                            (.preventDefault (.-nativeEvent %)))}
+   #_[:textarea {:key 21
+               :style {:display "fixed"
+                       :margin 0
+                       :padding 0
+                       :border 0
+                       :width "100%"
+                       :height "100%"
+                       :position "absolute"
+                       :z-index 0
+                       :opacity 1}}]
    (map-indexed
     #(r/with-key %2 %1)
     [(data/modal)
      (data/table1 core/app content/table1-data event-bus)
+     (data/option-menu event-bus)
      (data/option-controls event-bus)
      (para "")
-     (debug)])])
+     (debug)])
+])
 
 ;;
 ;; mount main component on html app element
@@ -106,6 +121,9 @@
             (fn [[_ direction]]
               (swap! core/app
                      #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction)))))
+
+  (dispatch event-bus-pub :pudding
+            (fn [[_ key-code]] (prn (str "you pressed " key-code))))
 
   )
 

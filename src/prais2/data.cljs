@@ -171,24 +171,20 @@
         next-theme (nth theme-keys (if (= (inc current-theme-index) (count theme-keys))
                                      0
                                      (inc current-theme-index)))]
-    (swap! core/app #(assoc % :theme next-theme
-                            )))
-  ;:fill (if (= (:fill @core/app) "black") "red" "black")
-  )
+    (swap! core/app #(assoc % :theme next-theme))))
 
 
 (defn log-transform
   "apply a log transform to the raw slider value"
   [input]
-  (/ (Math.log10 (inc input)) 2)
-  )
+  (/ (Math.log10 (inc input)) 2))
 
 
 (defn exp-transform
   "invert the log transform"
   [output]
-  (dec (Math.pow 10 (* output 2)))
-  )
+  (dec (Math.pow 10 (* output 2))))
+
 
 ;; test square: insert to check mixin behviour
 (r/defc square < r/static [slider value fill]
@@ -225,6 +221,7 @@
                          (Math.round (/ size 2))
                          "px)"
                          )}}]))
+
 
 (def extra-right 40)
 (def last-pad-right (important (px extra-right)))
@@ -360,7 +357,7 @@
         :data-toggle "popover"
         :title title
         :data-html "true"
-        :data-content (str "<iframe src=\"h-name.html\" width=\"300px\" height-\"200px\">") ;(:content header)
+        :data-content (:content header)
         :data-placement "bottom"
         :style {:cursor "pointer"}} [:i.fa.fa-info]]
       [:br {:key :br}]
@@ -443,6 +440,44 @@
     (second (drop-while #(not= state %) (concat states states)))))
 
 
+(r/defc option-dropdown < r/reactive [event-bus]
+  [:span.dropdown
+   [:a#optdrop {:href "#"
+                :key 0
+                :aria-haspopup "true"
+                :aria-expanded "false"
+                :data-toggle "dropdown"}
+    "Options Menu "
+    [:span.fa.fa-caret-down]
+    [:span.fa.fa-caret-up]]
+   [:ul.dropdown-menu {:aria-labelledby "optdrop"}
+    [:li {:key 1} [:a {:href "#"
+                       :data-toggle "modal"
+                       :data-target "#myModal"} "open options"]]
+    [:li {:key 2} [:a {:href "#"} (str "Theme: " (:theme (r/react core/app)))]]
+]])
+
+(r/defc theme-item < r/reactive [theme-key]
+  [:li [:a {:href "#"}
+        (str theme-key " ")
+        (if (= theme-key (:theme (r/react core/app))) [:i.fa.fa-check] "")]])
+
+(r/defc theme-dropdown < r/reactive [event-bus]
+  [:span.dropdown
+   [:a#themedrop {:href "#"
+                  :key 0
+                  :aria-haspopup "true"
+                  :aria-expanded "false"
+                  :data-toggle "dropdown"}
+    "Themes "
+    [:span.fa.fa-caret-down]
+    [:span.fa.fa-caret-up]]
+   [:ul.dropdown-menu {:aria-labelledby "themedrop"}
+    (map-indexed key-with
+                    (for [theme-key (keys colour-map-options)]
+                      (theme-item theme-key)))
+    ]])
+
 (r/defc option-controls < r/reactive [event-bus]
   [:div.options
    [:form
@@ -480,6 +515,16 @@
        :data-toggle "modal"
        :data-target "#myModal"}
       "Launch demo modal"]]]])
+
+
+(r/defc option-menu [event-bus]
+  [:span {:display "inline"}
+   (map-indexed key-with
+                [(theme-dropdown event-bus)
+                 (option-dropdown event-bus)
+])
+   ])
+
 
 ;;;
 ;; Modals

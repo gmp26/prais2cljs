@@ -49,7 +49,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 
 }
 
-
 .screenable {
     width: 100%;
     position: fixed !important;
@@ -240,6 +239,25 @@ td:first-child {
     background-color: #f9f9f9;
     height: 50px;
 }
+
+.dropdown > ul {
+    display: none;
+}
+.dropdown .fa-caret-up {
+    display: none;
+}
+
+.dropdown.open > ul {
+    display: block;
+}
+
+.dropdown.open .fa-caret-down {
+    display: none;
+}
+.dropdown.open .fa-caret-up {
+    display: inline;
+}
+
 
 /* options */
 .options {
