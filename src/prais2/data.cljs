@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.data
     (:require [rum :as r]
-              [jayq.core :refer ($)]
+              [jayq.core :refer ($ on)]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]
@@ -380,7 +380,25 @@
                       (axis-container slider-axis-value)])]]]]))
 
 
-(r/defc table1 < r/reactive [app data event-bus]
+
+(def modal-mixin
+  "Rum component mixin to add parameter passing to bootstrap modals"
+  {:did-mount
+   (fn [state]
+     (ready
+      (on ($ "#rowModal") :show.bs.modal
+          (fn [event]
+            (let [h-code (.. event -relatedTarget -dataset -hCode)]
+              (.log js/console h-code)
+
+              (swap! core/app #(assoc % :modal-code h-code))))))
+     state
+     )
+   }
+  )
+
+
+(r/defc table1 < r/reactive modal-mixin [app data event-bus]
   (let [ap (r/react app)
         sort-key (:sort-by ap)
         sort-direction (:sort-ascending ap)
@@ -408,7 +426,10 @@
        ;; body for both print and screen
        [:tbody {:key :tbody}
         (for [row rows]
-          [:tr {:key (:h-code row)}
+          [:tr {:key (:h-code row)
+                :data-toggle "modal"
+                :data-target "#rowModal"
+                :data-h-code (:h-code row)}
            (for [column-key column-keys
                  :let [column-header (column-key headers)]
                  :when (:shown column-header)]
@@ -468,7 +489,7 @@
      [:button#modalButton.btn.btn-primary.pull-right
       {:type "button"
        :data-toggle "modal"
-       :data-target "#myModal"}
+       :data-target "#rowModal"}
       "Launch demo modal"]]]])
 
 
@@ -488,9 +509,10 @@
 ;;;
 
 
-(r/defc modal []
 
-  [:#myModal.modal.fade {:tab-index -1
+(r/defc modal  < r/reactive []
+
+  [:#rowModal.modal.fade {:tab-index -1
                     :role "dialog"
                     :aria-labelledby "myModalLabel"
                     }
@@ -503,7 +525,7 @@
        [:span {:aria-hidden "true"
                :dangerouslySetInnerHTML
                {:__html "&times;"}} ]]
-      [:h4#myModalLabel.modal-title "Modal title"]]
+      [:h4#myModalLabel.modal-title (str "Modal title for " (:modal-code (r/react core/app)))]]
      [:.modal-body
       "Content goes here"]
      [:.modal-footer
