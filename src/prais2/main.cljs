@@ -49,7 +49,7 @@
 (r/defc para < r/static [text]
   [:p text])
 
-;; mixin to initialise bootstrap popover code
+;; mixin to initialise bootstrap popover code code
 (def bs-popover
   {:did-mount (fn [state]
                 (ready
@@ -61,20 +61,8 @@
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover r/reactive []
-  [:.box #_{contenteditable="true"
-          :on-click #(.log js/console %)
-          :on-key-down #(do (put! event-bus [:pudding (.-keyCode %)])
-                            (.preventDefault (.-nativeEvent %)))}
-   #_[:textarea {:key 21
-               :style {:display "fixed"
-                       :margin 0
-                       :padding 0
-                       :border 0
-                       :width "100%"
-                       :height "100%"
-                       :position "absolute"
-                       :z-index 0
-                       :opacity 1}}]
+  [:.box
+
    (map-indexed
     #(r/with-key %2 %1)
     [(data/modal)
@@ -117,15 +105,17 @@
 
   (dispatch event-bus-pub :change-theme data/change-theme)
 
-  (dispatch event-bus-pub :cycle-chart-state
+  #_(dispatch event-bus-pub :cycle-chart-state
             (fn [[_ direction]]
               (swap! core/app
                      #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction)))))
 
-  (dispatch event-bus-pub :pudding
-            (fn [[_ key-code]] (prn (str "you pressed " key-code))))
+  (dispatch event-bus-pub :change-chart-state
+            (fn [[_ value]]
+              (swap! core/app #(assoc % :chart-state (int value)))))
 
-  )
+  (dispatch event-bus-pub :pudding
+            (fn [[_ key-code]] (prn (str "you pressed " key-code)))))
 
 (dispatch-central)
 

@@ -232,10 +232,13 @@
   (Math.round (- 12 (* 4 (- 1 slider)))))
 
 
+(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
+                   #{:inner :outer} #{:inner}])
+
 (r/defc chart-cell < r/reactive [row slider]
   (let [ap (r/react core/app)
         colours (colour-map ap)
-        bars (:bars ap)
+        bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
     (prn bars)
@@ -432,30 +435,32 @@
               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
-(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
-                   #{:inner :outer} #{:inner}])
 
-(defn cycle-chart-state [state direction]
+#_(defn cycle-chart-state [state direction]
   (let [states (if (= direction :next) chart-states (reverse chart-states))]
     (second (drop-while #(not= state %) (concat states states)))))
 
 
-(r/defc option-dropdown < r/reactive [event-bus]
-  [:span.dropdown
-   [:a#optdrop {:href "#"
-                :key 0
-                :aria-haspopup "true"
-                :aria-expanded "false"
-                :data-toggle "dropdown"}
-    "Options Menu "
-    [:span.fa.fa-caret-down]
-    [:span.fa.fa-caret-up]]
-   [:ul.dropdown-menu {:aria-labelledby "optdrop"}
-    [:li {:key 1} [:a {:href "#"
-                       :data-toggle "modal"
-                       :data-target "#myModal"} "open options"]]
-    [:li {:key 2} [:a {:href "#"} (str "Theme: " (:theme (r/react core/app)))]]
-]])
+(defn get-chart-state
+  [index]
+  (chart-states index)
+  )
+
+(r/defc chart-option [n]
+  [:option {:value n} n])
+
+(r/defc chart-state-dropdown < r/reactive [event-bus]
+  [:.form-group
+   [:label-for {:for "chart-selector"} "Chart State "]
+   [:select#chart-selector.form-control
+    {:style {:width (px 60)}
+     :value (:chart-state (r/react core/app))
+     :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
+    (map-indexed key-with
+                 (for [n (range (count chart-states))]
+                   (chart-option n)))
+    ]]
+  )
 
 (r/defc theme-item < r/reactive [theme-key]
   [:li [:a {:href "#"}
@@ -494,19 +499,6 @@
       "Change"]]
 
     [:hr]
-    [:.form-group
-     [:label {:for "stateButton"} (str "Showing: " (:bars (r/react core/app))) ]
-     [:.btn-group.pull-right
-      [:button#stateButton.btn.btn-default
-       {:on-click #(do (put! event-bus [:cycle-chart-state :prev])
-                       (.preventDefault (.-nativeEvent %)))}
-       "Prev State"]
-      [:button#stateButton.btn.btn-default
-       {:on-click #(do (put! event-bus [:cycle-chart-state :next])
-                       (.preventDefault (.-nativeEvent %)))}
-       "Next State"]]]
-
-    [:hr]
 
     [:.form-group
      [:label {:for "modalButton"} "Modal test"]
@@ -518,11 +510,11 @@
 
 
 (r/defc option-menu [event-bus]
-  [:span {:display "inline"}
+  [:form.form-inline
    (map-indexed key-with
                 [(theme-dropdown event-bus)
-                 (option-dropdown event-bus)
-])
+                 (chart-state-dropdown event-bus)
+                 ])
    ])
 
 
