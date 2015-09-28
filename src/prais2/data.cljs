@@ -99,8 +99,7 @@
   )
 
 (def colour-map-options
-  {:brewer-RdYlBu
-   {:low "#91bfdb"
+  [{:low "#91bfdb"
     :inner "#fc8d59"
     :outer-low "#efdf11"
     :outer-high "#efdf11"
@@ -108,7 +107,6 @@
     :header "#91bfdb"
     :dot "black"
     }
-   :brewer-RdYl
    {:low "white"
     :inner "#fc8d59"
     :outer-low "#efdf11"
@@ -116,7 +114,6 @@
     :high "white"
     :header "#91bfdb"
     :dot "black"}
-   :brewer-YlRd
    {:low "white"
     :inner "#efdf11"
     :outer-low "#fc8d59"
@@ -124,7 +121,6 @@
     :high "white"
     :header "#fc8d59"
     :dot "black"}
-   :brewer-BuGn
    {:low "white"
     :inner "#7fcdbb"
     :outer-low "#2c7fb8"
@@ -132,7 +128,6 @@
     :high "white"
     :header "#2c7fb8"
     :dot "black"}
-   :brewer-GnBu
    {:low "white"
     :inner "#3c8fc8"
     :outer-low "#7fcdbb"
@@ -140,16 +135,13 @@
     :high "white"
     :header "#3c8fc8"
     :dot "black"}
-   :christina
    {:low "white"
     :inner "#8FB4E1"
     :outer-low "#578FD2"
     :outer-high "#578FD2"
     :high "white"
     :header "#578FD2"
-    :dot "black"
-    }
-   :anitsirch
+    :dot "black"}
    {:low "white"
     :inner "#578FD2"
     :outer-low "#8FB4E1"
@@ -157,21 +149,10 @@
     :high "white"
     :header "#578FD2"
     :dot "black"
-    }
-   })
+    }])
 
-(defn colour-map [app] ((:theme app) colour-map-options))
 
-(defn change-theme
-  "change color scheme"
-  []
-  (let [current-theme (:theme @core/app)
-        theme-keys (keys colour-map-options)
-        current-theme-index (first (keep-indexed #(if (= %2 current-theme) %1 nil) theme-keys))
-        next-theme (nth theme-keys (if (= (inc current-theme-index) (count theme-keys))
-                                     0
-                                     (inc current-theme-index)))]
-    (swap! core/app #(assoc % :theme next-theme))))
+(defn colour-map [theme] (colour-map-options theme))
 
 
 (defn log-transform
@@ -209,7 +190,7 @@
 (r/defc dot < r/static r/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot
-     {:style {:background-color (:dot (colour-map (r/react core/app)))
+     {:style {:background-color (:dot (colour-map (:theme (r/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
               :height px-size
@@ -237,7 +218,7 @@
 
 (r/defc chart-cell < r/reactive [row slider]
   (let [ap (r/react core/app)
-        colours (colour-map ap)
+        colours (colour-map (:theme ap))
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
@@ -353,7 +334,9 @@
                      :background-color "none !important"
                      :color "white !important"}}
       [:a.btn.btn-primary.btn-xs
-       {:on-click #(.preventDefault (.-nativeEvent %))
+       {:on-click #(do
+                     (put! event-bus [:info-clicked column-key])
+                     (.preventDefault (.-nativeEvent %)))
         :role "button"
         :tabIndex -1
         :data-trigger "focus"
@@ -376,7 +359,7 @@
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
-        (r/with-key (table-header (:header (colour-map ap))
+        (r/with-key (table-header (:header (colour-map (:theme  ap)))
                                   ap
                                   (column-key headers)
                                   column-key
@@ -385,7 +368,7 @@
       [:th
        {:key :last
         :style {:width "auto"
-                :background-color (:header (colour-map ap))
+                :background-color (:header (colour-map (:theme ap)))
                 :color "#ffffff !important"
                 }}
        [:.slider-container
@@ -446,7 +429,7 @@
   (chart-states index)
   )
 
-(r/defc chart-option [n]
+(r/defc integer-option < r/static [n]
   [:option {:value n} n])
 
 (r/defc chart-state-dropdown < r/reactive [event-bus]
@@ -458,47 +441,27 @@
      :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count chart-states))]
-                   (chart-option n)))
+                   (integer-option n)))
     ]]
   )
 
-(r/defc theme-item < r/reactive [theme-key]
-  [:li [:a {:href "#"}
-        (str theme-key " ")
-        (if (= theme-key (:theme (r/react core/app))) [:i.fa.fa-check] "")]])
-
 (r/defc theme-dropdown < r/reactive [event-bus]
-  [:span.dropdown
-   [:a#themedrop {:href "#"
-                  :key 0
-                  :aria-haspopup "true"
-                  :aria-expanded "false"
-                  :data-toggle "dropdown"}
-    "Themes "
-    [:span.fa.fa-caret-down]
-    [:span.fa.fa-caret-up]]
-   [:ul.dropdown-menu {:aria-labelledby "themedrop"}
+  [:.form-group
+   [:label-for {:for "colour-map-selector"} "Theme "]
+   [:select#colour-map-selector.form-control
+    {:style {:width (px 60)}
+     :value (:theme (r/react core/app))
+     :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
-                    (for [theme-key (keys colour-map-options)]
-                      (theme-item theme-key)))
-    ]])
+                 (for [n (range (count colour-map-options))]
+                   (integer-option n)))]
+   ])
 
 (r/defc option-controls < r/reactive [event-bus]
   [:div.options
    [:form
 
     [:h3 "Options"]
-
-    [:hr]
-
-    [:div {:class "form-group"}
-     [:label {:for "themeButton"} (str "Theme: " (:theme (r/react core/app))) ]
-     [:button#themeButton.btn.btn-default.pull-right
-      {:on-click #(do (put! event-bus [:change-theme core/app])
-                      (.preventDefault (.-nativeEvent %)))}
-      "Change"]]
-
-    [:hr]
 
     [:.form-group
      [:label {:for "modalButton"} "Modal test"]

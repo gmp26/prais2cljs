@@ -103,12 +103,12 @@
   (dispatch event-bus-pub :sort-toggle
             (fn [[_ column-key]] (data/handle-sort core/app column-key)))
 
-  (dispatch event-bus-pub :change-theme data/change-theme)
+  (dispatch event-bus-pub :info-clicked
+            (fn [[_ column-key]] (prn (str "clicked on info for column " column-key))))
 
-  #_(dispatch event-bus-pub :cycle-chart-state
-            (fn [[_ direction]]
-              (swap! core/app
-                     #(assoc % :bars (data/cycle-chart-state (:bars @core/app) direction)))))
+  (dispatch event-bus-pub :change-colour-map
+            (fn [[_ value]]
+              (swap! core/app #(assoc % :theme (int value)))))
 
   (dispatch event-bus-pub :change-chart-state
             (fn [[_ value]]
