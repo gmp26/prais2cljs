@@ -68,9 +68,9 @@
     [(data/modal)
      (data/table1 core/app content/table1-data event-bus)
      (data/option-menu event-bus)
-     (data/option-controls event-bus)
-     (para "")
-     (debug)])
+     #_(data/option-controls event-bus)
+     #_(para "")
+     #_(debug)])
 ])
 
 ;;

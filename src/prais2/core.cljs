@@ -19,7 +19,7 @@
                     :sort-ascending true
                     :slider-axis-value 0.9
                     :chart-state 3
-                    :theme 0
+                    :theme 5
                     }))
 
 ;;;
