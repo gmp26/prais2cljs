@@ -57,10 +57,18 @@
                 state)
    })
 
+;; mixin to initialise bootstrap tooltip code code
+(def bs-tooltip
+  {:did-mount (fn [state]
+                (ready
+                 (.tooltip ($ "[data-toggle=\"tooltip\"]")))
+                state)
+   })
+
 ;;
 ;; Contains the app user interface in here
 ;;
-(r/defc app-container < bs-popover r/reactive []
+(r/defc app-container < bs-popover bs-tooltip r/reactive []
   [:.box
 
    (map-indexed

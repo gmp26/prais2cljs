@@ -9,6 +9,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 .table {
     margin: 0 !important;
     min-width: 883px;
+    overflow: visible;
 }
 
 @media print {
@@ -282,6 +283,23 @@ td:first-child {
     color: black;
 }
 
+.tooltip {
+    border-radius: 50%;
+}
+
 .tooltip-inner {
-    font-size: 100px;
+    font-size: 20px;
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid blue;
+}
+
+.tooltip-arrow {
+    font-size: 20px;
+    color: white;
+    background-color: #ffffff;
+}
+
+.navbar {
+    position: static;
 }

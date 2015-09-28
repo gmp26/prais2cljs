@@ -17,7 +17,7 @@
                     :page "home"
                     :sort-by nil
                     :sort-ascending true
-                    :slider-axis-value 0.9
+                    :slider-axis-value 1.0
                     :chart-state 3
                     :theme 5
                     :selected-row nil

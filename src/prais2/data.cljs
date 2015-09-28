@@ -183,10 +183,6 @@
                      }}])
 
 
-#_(r/defc bar < r/static  [slider value fill]
-  [:div.bar {:style {:background-color fill
-                     :width (str (bar-width slider value) "%")}}])
-
 (r/defc bar < r/static  [slider hi-val lo-val fill]
   (if (= fill "none")
     [:div.bar {:style {:background-color fill
@@ -194,32 +190,43 @@
                }]
     [:div.bar.btn {:style {:background-color fill
                            :border-radius 0
-                           :border "1px solid black"
                            :width (str (bar-width slider (- hi-val lo-val)) "%")}
-               :data-toggle "tooltip"
-               :title (str (pc lo-val) " - " (pc hi-val))
-               :data-delay 100
-               :data-placement "bottom"}]))
+                   :data-toggle "tooltip"
+                   :data-original-title (str (pc lo-val) " - " (pc hi-val))
+                   :data-delay 0
+                   :data-trigger "hover"
+                   :data-placement "bottom"}]))
+
+;; mixin to initialise bootstrap tooltip code code
+(def bs-tooltip
+  {:will-render (fn [state]
+                (ready
+                 (.tooltip ($ "[data-toggle=\"tooltip\"]")))
+                state)
+   })
 
 
-(r/defc dot < r/static r/reactive [slider size value dotty & [relative]]
+
+(r/defc dot < r/static r/reactive bs-tooltip [slider size value dotty & [relative]]
   (let [px-size (px size)]
-    [:a {:href "#"
-         :data-toggle "tooltip"
-         :title (pc value)}
-     [:div.dot
-      {:style {:background-color (:dot (colour-map (:theme (r/react core/app))))
-               :display (if dotty "inline-block" "none")
-               :width px-size
-               :height px-size
-               :top (px (+ 10 (/ (- 25 size) 2)))
-               :position (if relative "relative" "absolute")
-               :left (str "calc("
-                          (percent->screen slider value)
-                          "% - "
-                          (Math.round (/ size 2))
-                          "px)"
-                          )}}]]))
+    [:div.dot.btn
+     {:data-toggle "tooltip"
+      :data-placement "bottom"
+      :data-delay 0
+      :data-trigger "hover"
+      :data-original-title (pc value)
+      :style {:background-color (:dot (colour-map (:theme (r/react core/app))))
+              :display (if dotty "inline-block" "none")
+              :width px-size
+              :height px-size
+              :top (px (+ 10 (/ (- 25 size) 2)))
+              :position (if relative "relative" "absolute")
+              :left (str "calc("
+                         (percent->screen slider value)
+                         "% - "
+                         (Math.round (/ size 2))
+                         "px)"
+                         )}}]))
 
 
 (def extra-right 40)
@@ -234,7 +241,7 @@
 (def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
                    #{:inner :outer} #{:inner}])
 
-(r/defc chart-cell < r/reactive [row slider]
+(r/defc chart-cell < bs-tooltip r/reactive [row slider]
   (let [ap (r/react core/app)
         colours (colour-map (:theme ap))
         bars (chart-states (:chart-state ap))
@@ -511,7 +518,7 @@
 
 
 
-(r/defc modal  < r/reactive []
+(r/defc modal  < r/reactive bs-tooltip []
 
   (let [selected-row (:selected-row (r/react core/app))]
     [:#rowModal.modal.fade {:tab-index -1
