@@ -232,7 +232,7 @@ td:first-child {
     position: relative !important;
     white-space: nowrap;
     display: inline-block;
-    background-color: white !important;
+    /*background-color: white !important;*/
 }
 
 .chart-cell {
@@ -280,4 +280,8 @@ td:first-child {
 
 .popover-content {
     color: black;
+}
+
+.tooltip-inner {
+    font-size: 100px;
 }

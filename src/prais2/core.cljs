@@ -20,7 +20,7 @@
                     :slider-axis-value 0.9
                     :chart-state 3
                     :theme 5
-                    :modal-code "RVB"
+                    :selected-row nil
                     }))
 
 ;;;

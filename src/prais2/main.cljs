@@ -114,6 +114,10 @@
             (fn [[_ value]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
+  (dispatch event-bus-pub :row-clicked
+            (fn [[_ row]]
+              (swap! core/app #(assoc % :selected-row row))))
+
   (dispatch event-bus-pub :pudding
             (fn [[_ key-code]] (prn (str "you pressed " key-code)))))
 

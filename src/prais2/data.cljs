@@ -4,6 +4,7 @@
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]
+              [clojure.string :as str]
 )
     (:require-macros [jayq.macros :refer [ready]]))
 
@@ -18,7 +19,7 @@
 (defn pc
   "value to percent string"
   [value]
-  (str value "%"))
+  (when value (str/replace  (str (.toPrecision value 3) "%") ".0%" "%")))
 
 (defn important
   "tack !important on a string value"
@@ -99,54 +100,54 @@
   )
 
 (def colour-map-options
-  [{:low "#91bfdb"
+  [{:low "none"
     :inner "#fc8d59"
     :outer-low "#efdf11"
     :outer-high "#efdf11"
-    :high "#91bfdb"
+    :high "none"
     :header "#91bfdb"
     :dot "black"
     }
-   {:low "white"
+   {:low "none"
     :inner "#fc8d59"
     :outer-low "#efdf11"
     :outer-high "#efdf11"
-    :high "white"
+    :high "none"
     :header "#91bfdb"
     :dot "black"}
-   {:low "white"
+   {:low "none"
     :inner "#efdf11"
     :outer-low "#fc8d59"
     :outer-high "#fc8d59"
-    :high "white"
+    :high "none"
     :header "#fc8d59"
     :dot "black"}
-   {:low "white"
+   {:low "none"
     :inner "#7fcdbb"
     :outer-low "#2c7fb8"
     :outer-high "#2c7fb8"
-    :high "white"
+    :high "none"
     :header "#2c7fb8"
     :dot "black"}
-   {:low "white"
+   {:low "none"
     :inner "#3c8fc8"
     :outer-low "#7fcdbb"
     :outer-high "#7fcdbb"
-    :high "white"
+    :high "none"
     :header "#3c8fc8"
     :dot "black"}
-   {:low "white"
+   {:low "none"
     :inner "#8FB4E1"
     :outer-low "#578FD2"
     :outer-high "#578FD2"
-    :high "white"
+    :high "none"
     :header "#578FD2"
     :dot "black"}
-   {:low "white"
+   {:low "none"
     :inner "#578FD2"
     :outer-low "#8FB4E1"
     :outer-high "#8FB4E1"
-    :high "white"
+    :high "none"
     :header "#578FD2"
     :dot "black"
     }])
@@ -182,26 +183,43 @@
                      }}])
 
 
-(r/defc bar < r/static  [slider value fill]
+#_(r/defc bar < r/static  [slider value fill]
   [:div.bar {:style {:background-color fill
                      :width (str (bar-width slider value) "%")}}])
+
+(r/defc bar < r/static  [slider hi-val lo-val fill]
+  (if (= fill "none")
+    [:div.bar {:style {:background-color fill
+                       :width (str (bar-width slider (- hi-val lo-val)) "%")}
+               }]
+    [:div.bar.btn {:style {:background-color fill
+                           :border-radius 0
+                           :border "1px solid black"
+                           :width (str (bar-width slider (- hi-val lo-val)) "%")}
+               :data-toggle "tooltip"
+               :title (str (pc lo-val) " - " (pc hi-val))
+               :data-delay 100
+               :data-placement "bottom"}]))
 
 
 (r/defc dot < r/static r/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
-    [:div.dot
-     {:style {:background-color (:dot (colour-map (:theme (r/react core/app))))
-              :display (if dotty "inline-block" "none")
-              :width px-size
-              :height px-size
-              :top (px (+ 10 (/ (- 25 size) 2)))
-              :position (if relative "relative" "absolute")
-              :left (str "calc("
-                         (percent->screen slider value)
-                         "% - "
-                         (Math.round (/ size 2))
-                         "px)"
-                         )}}]))
+    [:a {:href "#"
+         :data-toggle "tooltip"
+         :title (pc value)}
+     [:div.dot
+      {:style {:background-color (:dot (colour-map (:theme (r/react core/app))))
+               :display (if dotty "inline-block" "none")
+               :width px-size
+               :height px-size
+               :top (px (+ 10 (/ (- 25 size) 2)))
+               :position (if relative "relative" "absolute")
+               :left (str "calc("
+                          (percent->screen slider value)
+                          "% - "
+                          (Math.round (/ size 2))
+                          "px)"
+                          )}}]]))
 
 
 (def extra-right 40)
@@ -222,7 +240,6 @@
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    (prn bars)
     [:td.chart-cell {:style {:padding-left (important (px axis-margin))
                              :padding-right last-pad-right}}
 
@@ -234,26 +251,26 @@
          [(dot slider (dot-size slider) (:survival-rate row) dotty)]
 
          (= dotless #{:inner})
-         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
-          (bar slider (- (:inner-low row) (:outer-low row)) (:low colours))
-          (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours))
-          (bar slider (- 100 (:inner-high row)) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
+          (bar slider (:inner-low row) (:outer-low row) (:low colours))
+          (bar slider (:inner-high row) (:inner-low row) (:inner colours))
+          (bar slider 100 (:inner-high row) (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]
 
          (= dotless #{:outer})
-         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
-          (bar slider (- (:outer-high row) (:outer-low row)) (:outer-low colours))
-          (bar slider (- 100 (:outer-high row)) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
+          (bar slider (:outer-high row) (:outer-low row) (:outer-low colours))
+          (bar slider 100 (:outer-high row) (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]
 
          (= dotless #{:inner :outer})
-         [(bar slider (- (:outer-low row) (* min-outer-low slider)) (:low colours))
-          (bar slider (- (:inner-low row) (:outer-low row)) (:outer-low colours))
-          (bar slider (- (:inner-high row) (:inner-low row)) (:inner colours))
-          (bar slider (- (:outer-high row) (:inner-high row)) (:outer-high colours))
-          (bar slider (- 100 (:outer-high row)) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
+          (bar slider (:inner-low row) (:outer-low row) (:outer-low colours))
+          (bar slider (:inner-high row) (:inner-low row) (:inner colours))
+          (bar slider (:outer-high row) (:inner-high row) (:outer-high colours))
+          (bar slider 100 (:outer-high row) (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]))]]))
 
@@ -380,25 +397,7 @@
                       (axis-container slider-axis-value)])]]]]))
 
 
-
-(def modal-mixin
-  "Rum component mixin to add parameter passing to bootstrap modals"
-  {:did-mount
-   (fn [state]
-     (ready
-      (on ($ "#rowModal") :show.bs.modal
-          (fn [event]
-            (let [h-code (.. event -relatedTarget -dataset -hCode)]
-              (.log js/console h-code)
-
-              (swap! core/app #(assoc % :modal-code h-code))))))
-     state
-     )
-   }
-  )
-
-
-(r/defc table1 < r/reactive modal-mixin [app data event-bus]
+(r/defc table1 < r/reactive [app data event-bus]
   (let [ap (r/react app)
         sort-key (:sort-by ap)
         sort-direction (:sort-ascending ap)
@@ -427,9 +426,11 @@
        [:tbody {:key :tbody}
         (for [row rows]
           [:tr {:key (:h-code row)
+                :on-click #(put! event-bus [:row-clicked row])
                 :data-toggle "modal"
                 :data-target "#rowModal"
-                :data-h-code (:h-code row)}
+                :data-h-code (:h-code row)
+                :class (if (= row (:selected-row ap)) "info" "")}
            (for [column-key column-keys
                  :let [column-header (column-key headers)]
                  :when (:shown column-header)]
@@ -512,25 +513,26 @@
 
 (r/defc modal  < r/reactive []
 
-  [:#rowModal.modal.fade {:tab-index -1
-                    :role "dialog"
-                    :aria-labelledby "myModalLabel"
-                    }
-   [:.modal-dialog {:role "document"}
-    [:.modal-content
-     [:.modal-header
-      [:button.close {:type"button"
-                      :data-dismiss "modal"
-                      :aria-label "Close"}
-       [:span {:aria-hidden "true"
-               :dangerouslySetInnerHTML
-               {:__html "&times;"}} ]]
-      [:h4#myModalLabel.modal-title (str "Modal title for " (:modal-code (r/react core/app)))]]
-     [:.modal-body
-      "Content goes here"]
-     [:.modal-footer
-      [:button.btn.btn-default {:type "button"
-                                :data-dismiss "modal"}
-       "Close"]
-      [:button.btn.btn-primary {:type "button"} "Save changes"]]]]
-   ])
+  (let [selected-row (:selected-row (r/react core/app))]
+    [:#rowModal.modal.fade {:tab-index -1
+                            :role "dialog"
+                            :aria-labelledby "myModalLabel"
+                            }
+     [:.modal-dialog {:role "document"}
+      [:.modal-content
+       [:.modal-header
+        [:button.close {:type"button"
+                        :data-dismiss "modal"
+                        :aria-label "Close"}
+         [:span {:aria-hidden "true"
+                 :dangerouslySetInnerHTML
+                 {:__html "&times;"}} ]]
+        [:h4#myModalLabel.modal-title (:h-name selected-row)]]
+       [:.modal-body
+        (chart-cell selected-row 1)]
+       [:.modal-footer
+        [:button.btn.btn-default {:type "button"
+                                  :data-dismiss "modal"}
+         "Close"]
+        [:button.btn.btn-primary {:type "button"} "Save changes"]]]]
+     ]))
