@@ -435,8 +435,8 @@
 (r/defc chart-state-dropdown < r/reactive [event-bus]
   [:.form-group
    [:label-for {:for "chart-selector"} "Chart State "]
-   [:select#chart-selector.form-control
-    {:style {:width (px 60)}
+   [:select#chart-selector.form-control.input-sm
+    {
      :value (:chart-state (r/react core/app))
      :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
     (map-indexed key-with
@@ -446,10 +446,10 @@
   )
 
 (r/defc theme-dropdown < r/reactive [event-bus]
-  [:.form-group
-   [:label-for {:for "colour-map-selector"} "Theme "]
-   [:select#colour-map-selector.form-control
-    {:style {:width (px 60)}
+  [:.form-group.col-md-2..col-md-offset-1
+   [:label-for{:for "colour-map-selector"} "Theme "]
+   [:select#colour-map-selector.form-control.input-sm
+    {
      :value (:theme (r/react core/app))
      :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
@@ -473,12 +473,14 @@
 
 
 (r/defc option-menu [event-bus]
-  [:form.form-inline
-   (map-indexed key-with
-                [(theme-dropdown event-bus)
-                 (chart-state-dropdown event-bus)
-                 ])
-   ])
+  [:nav.navbar.navbar-default
+   [:.container
+    [:navbar-form.form-inline.row
+     (map-indexed key-with
+                  [(theme-dropdown event-bus)
+                   (chart-state-dropdown event-bus)
+                   ])
+     ]]])
 
 
 ;;;
