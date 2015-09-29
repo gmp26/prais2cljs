@@ -291,7 +291,7 @@ td:first-child {
     font-size: 20px;
     background-color: #ffffff;
     color: black;
-    border: 1px solid blue;
+    border: 1px solid black;
 }
 
 .tooltip-arrow {
@@ -302,4 +302,9 @@ td:first-child {
 
 .navbar {
     position: static;
+}
+
+#map {
+    height: 200px;
+    width: 200px;
 }

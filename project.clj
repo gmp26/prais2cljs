@@ -27,6 +27,9 @@
                          :debug false}
 
               :compiler {:main "prais2.main"
+                         :externs ["externs/bootstrap.js"
+                                   "externs/jquery.js"
+                                   "externs/google-maps.js"]
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -40,7 +43,8 @@
                          :output-dir "resources/public/js/compiled/prod"
                          :main "prais2.main"
                          :externs ["externs/bootstrap.js"
-                                   "externs/jquery.js"]
+                                   "externs/jquery.js"
+                                   "externs/google-maps.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false}
                          }}]}

@@ -4,8 +4,9 @@
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]
+              [prais2.map :as google]
               [clojure.string :as str]
-)
+              )
     (:require-macros [jayq.macros :refer [ready]]))
 
 ;;;
@@ -100,54 +101,54 @@
   )
 
 (def colour-map-options
-  [{:low "none"
+  [{:low "rgba(255,255,255,0)"
     :inner "#fc8d59"
     :outer-low "#efdf11"
     :outer-high "#efdf11"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#91bfdb"
     :dot "black"
     }
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#fc8d59"
     :outer-low "#efdf11"
     :outer-high "#efdf11"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#91bfdb"
     :dot "black"}
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#efdf11"
     :outer-low "#fc8d59"
     :outer-high "#fc8d59"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#fc8d59"
     :dot "black"}
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#7fcdbb"
     :outer-low "#2c7fb8"
     :outer-high "#2c7fb8"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#2c7fb8"
     :dot "black"}
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#3c8fc8"
     :outer-low "#7fcdbb"
     :outer-high "#7fcdbb"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#3c8fc8"
     :dot "black"}
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#8FB4E1"
     :outer-low "#578FD2"
     :outer-high "#578FD2"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#578FD2"
     :dot "black"}
-   {:low "none"
+   {:low "rgba(255,255,255,0)"
     :inner "#578FD2"
     :outer-low "#8FB4E1"
     :outer-high "#8FB4E1"
-    :high "none"
+    :high "rgba(255,255,255,0)"
     :header "#578FD2"
     :dot "black"
     }])
@@ -184,7 +185,7 @@
 
 
 (r/defc bar < r/static  [slider hi-val lo-val fill]
-  (if (= fill "none")
+  (if (= fill "rgba(255,255,255,0)")
     [:div.bar {:style {:background-color fill
                        :width (str (bar-width slider (- hi-val lo-val)) "%")}
                }]
@@ -508,18 +509,13 @@
      (map-indexed key-with
                   [(theme-dropdown event-bus)
                    (chart-state-dropdown event-bus)
-                   ])
-     ]]])
-
+                   ])]]])
 
 ;;;
 ;; Modals
 ;;;
 
-
-
 (r/defc modal  < r/reactive bs-tooltip []
-
   (let [selected-row (:selected-row (r/react core/app))]
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"
@@ -532,14 +528,16 @@
                         :data-dismiss "modal"
                         :aria-label "Close"}
          [:span {:aria-hidden "true"
-                 :dangerouslySetInnerHTML
-                 {:__html "&times;"}} ]]
-        [:h4#myModalLabel.modal-title (:h-name selected-row)]]
+                 :dangerouslySetInnerHTML {:__html "&times;"}}]]
+        [:h4#myModalLabel.modal-title
+         (:h-name selected-row)
+         ;(google/g-map 54.5940 5.9530)
+         ]]
        [:.modal-body
         (chart-cell selected-row 1)]
        [:.modal-footer
         [:button.btn.btn-default {:type "button"
                                   :data-dismiss "modal"}
          "Close"]
-        [:button.btn.btn-primary {:type "button"} "Save changes"]]]]
+        ]]]
      ]))
