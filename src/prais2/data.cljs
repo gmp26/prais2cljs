@@ -100,61 +100,8 @@
   (* value (bar-scale slider))
   )
 
-(def colour-map-options
-  [{:low "rgba(255,255,255,0)"
-    :inner "#fc8d59"
-    :outer-low "#efdf11"
-    :outer-high "#efdf11"
-    :high "rgba(255,255,255,0)"
-    :header "#91bfdb"
-    :dot "black"
-    }
-   {:low "rgba(255,255,255,0)"
-    :inner "#fc8d59"
-    :outer-low "#efdf11"
-    :outer-high "#efdf11"
-    :high "rgba(255,255,255,0)"
-    :header "#91bfdb"
-    :dot "black"}
-   {:low "rgba(255,255,255,0)"
-    :inner "#efdf11"
-    :outer-low "#fc8d59"
-    :outer-high "#fc8d59"
-    :high "rgba(255,255,255,0)"
-    :header "#fc8d59"
-    :dot "black"}
-   {:low "rgba(255,255,255,0)"
-    :inner "#7fcdbb"
-    :outer-low "#2c7fb8"
-    :outer-high "#2c7fb8"
-    :high "rgba(255,255,255,0)"
-    :header "#2c7fb8"
-    :dot "black"}
-   {:low "rgba(255,255,255,0)"
-    :inner "#3c8fc8"
-    :outer-low "#7fcdbb"
-    :outer-high "#7fcdbb"
-    :high "rgba(255,255,255,0)"
-    :header "#3c8fc8"
-    :dot "black"}
-   {:low "rgba(255,255,255,0)"
-    :inner "#8FB4E1"
-    :outer-low "#578FD2"
-    :outer-high "#578FD2"
-    :high "rgba(255,255,255,0)"
-    :header "#578FD2"
-    :dot "black"}
-   {:low "rgba(255,255,255,0)"
-    :inner "#578FD2"
-    :outer-low "#8FB4E1"
-    :outer-high "#8FB4E1"
-    :high "rgba(255,255,255,0)"
-    :header "#578FD2"
-    :dot "black"
-    }])
 
-
-(defn colour-map [theme] (colour-map-options theme))
+(defn colour-map [theme] (content/colour-map-options theme))
 
 
 (defn log-transform
@@ -184,7 +131,8 @@
                      }}])
 
 
-(r/defc bar < r/static  [slider hi-val lo-val fill]
+
+#_(r/defc bar < r/static  [slider hi-val lo-val fill]
   (if (= fill "rgba(255,255,255,0)")
     [:div.bar {:style {:background-color fill
                        :width (str (bar-width slider (- hi-val lo-val)) "%")}
@@ -198,11 +146,28 @@
                    :data-trigger "hover"
                    :data-placement "bottom"}]))
 
+
+
+(r/defc bar < r/static  [slider hi-val lo-val bar-type fill]
+  (if (= fill "rgba(255,255,255,0)")
+    [:div.bar {:style {:background-color fill
+                       :width (str (bar-width slider (- hi-val lo-val)) "%")}
+               }]
+    [:div.bar.btn {:style {:background-color fill
+                           :border-radius 0
+                           :width (str (bar-width slider (- hi-val lo-val)) "%")}
+                   :data-toggle "tooltip"
+                   :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                   :data-delay 0
+                   :data-html true
+                   :data-trigger "hover"
+                   :data-placement "bottom"}]))
+
 ;; mixin to initialise bootstrap tooltip code code
 (def bs-tooltip
   {:will-render (fn [state]
                 (ready
-                 (.tooltip ($ "[data-toggle=\"tooltip\"]")))
+                 (.tooltip  (.tooltip ($ "[data-toggle=\"tooltip\"]"))) "show")
                 state)
    })
 
@@ -215,7 +180,9 @@
       :data-placement "bottom"
       :data-delay 0
       :data-trigger "hover"
-      :data-original-title (pc value)
+      :data-html true
+      :data-original-title (str (pc value) "<br>The observed survival rate"
+)
       :style {:background-color (:dot (colour-map (:theme (r/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
@@ -259,26 +226,31 @@
          [(dot slider (dot-size slider) (:survival-rate row) dotty)]
 
          (= dotless #{:inner})
-         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
-          (bar slider (:inner-low row) (:outer-low row) (:low colours))
-          (bar slider (:inner-high row) (:inner-low row) (:inner colours))
-          (bar slider 100 (:inner-high row) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+          (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
+          (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+          (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
+          (bar slider 100 (:outer-high row) :high (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]
+
 
          (= dotless #{:outer})
-         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
-          (bar slider (:outer-high row) (:outer-low row) (:outer-low colours))
-          (bar slider 100 (:outer-high row) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+          (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+          (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+          (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+          (bar slider 100 (:outer-high row) :high (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]
 
+
          (= dotless #{:inner :outer})
-         [(bar slider (:outer-low row) (* min-outer-low slider) (:low colours))
-          (bar slider (:inner-low row) (:outer-low row) (:outer-low colours))
-          (bar slider (:inner-high row) (:inner-low row) (:inner colours))
-          (bar slider (:outer-high row) (:inner-high row) (:outer-high colours))
-          (bar slider 100 (:outer-high row) (:high colours))
+         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+          (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+          (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+          (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+          (bar slider 100 (:outer-high row) :high (:high colours))
           (dot slider (dot-size slider) (:survival-rate row) dotty)
           ]))]]))
 
@@ -483,7 +455,7 @@
      :value (:theme (r/react core/app))
      :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
-                 (for [n (range (count colour-map-options))]
+                 (for [n (range (count content/colour-map-options))]
                    (integer-option n)))]
    ])
 
@@ -514,6 +486,67 @@
 ;;;
 ;; Modals
 ;;;
+(r/defc modal-tick < r/static [baseline value]
+  (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
+    (when (>= percent 0)
+      [:.modal.tick {:style
+               {:left (pc percent)
+                :border-left (str "1px "
+                                  (if (or (= percent 100) (= value 0))
+                                      "solid "
+                                      "dashed ")
+                                  "black")}}
+       [:span.modal.tick-label (pc value)]]
+      )))
+
+(r/defc modal-ticks < r/static [tick-count]
+  (let [baseline min-outer-low
+        raw-interval (/ (- 100 baseline) (inc tick-count))
+        interval (cond
+                   (> raw-interval 10) 20
+                   (> raw-interval 5) 10
+                   (> raw-interval 2) 5
+                   :else 2)
+        tick-values (range 100 (dec baseline) (- interval))]
+    [:div
+     (for [value tick-values]
+       (r/with-key (modal-tick baseline value) value))]))
+
+
+(r/defc modal-axis-container < r/static [slider-axis-value]
+  [:.axis-container
+   {:style {:margin-left 0 ;(px axis-margin)
+            :width (pc 100) ;(str "calc(100% - " (px (+ extra-right axis-margin)) ")")
+            }}
+   (r/with-key (modal-ticks 3) :ticks)])
+
+
+(defn interpretation
+  "return a text interpreting the results for the given hospital"
+  [row]
+  (let [survival-rate (:survival-rate row)]
+    (cond
+      (< survival-rate (:outer-low row))
+      (:low  content/dot-comments)
+
+      (< survival-rate (:inner-low row))
+      (:outer-low content/dot-comments)
+
+      (<= survival-rate (:inner-high row))
+      (:inner content/dot-comments)
+
+      (<= survival-rate (:outer-high row))
+      (:outer-high content/dot-comments)
+
+      (> survival-rate (:outer-high row))
+      (:outer-high content/dot-comments)
+
+      :else
+      "Oops - no text for this"
+      ))
+  )
+
+
 
 (r/defc modal  < r/reactive bs-tooltip []
   (let [selected-row (:selected-row (r/react core/app))]
@@ -531,10 +564,14 @@
                  :dangerouslySetInnerHTML {:__html "&times;"}}]]
         [:h4#myModalLabel.modal-title
          (:h-name selected-row)
-         ;(google/g-map 54.5940 5.9530)
+                                        ;(google/g-map 54.5940 5.9530)
          ]]
        [:.modal-body
-        (chart-cell selected-row 1)]
+        (modal-axis-container 1)
+        (chart-cell selected-row 1)
+        [:h3]
+        (interpretation selected-row)]
+
        [:.modal-footer
         [:button.btn.btn-default {:type "button"
                                   :data-dismiss "modal"}

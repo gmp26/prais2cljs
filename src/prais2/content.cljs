@@ -1,9 +1,15 @@
 (ns ^:figwheel-always prais2.content)
 
-
+;;;
+;; table structure
+;;;
 (defrecord Header [title sortable shown width height content])
 
 (defrecord Row [h-name h-code n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high observed])
+
+;;;
+;; Table headers with info texts
+;;;
 
 (def table1-data
   [(Row. (Header. "Hospital"                    true       true    200   50
@@ -30,6 +36,9 @@
                   nil)
          )
 
+;;;
+;; The results
+;;;
    (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	204	2	202	99.0 	95.1	96.6  100     100.0 nil)
    (Row. "London, Harley Street Clinic"	                        "HSC"	482	7	475	98.5	94.8	95.9  98.8    99.4 nil)
    (Row. "Leicester, Glenfield Hospital"	                "GRL"	582	11	571	98.1	95.4	96.2  98.8    99.3 nil)
@@ -45,3 +54,86 @@
    (Row.  "Birmingham Children’s Hospital"	                "BCH"	1481	30	1451	98.0	95.3	95.9  97.7    98.1 nil)
    (Row. "London, Great Ormond Street Hospital for Children"	"GOS"	1881	30	1851	98.4    96.5	97    98.4    98.7 nil)]
   )
+
+
+;;;
+;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
+;;;
+
+(def bar-comments
+  {:inner "A dot in this area means that there is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
+   :outer-high "A dot in this area means that there is some evidence that chances of survival in the hospital were higher than predicted [add link]"
+   :outer-low "A dot in this area means that there is some evidence that chances of survival in the hospital were lower than predicted. [add link]"
+   :low "A dot to the left of the bands means that there is strong evidence that chances of survival in the hospital were lower than predicted. [add link]"
+   :high "A dot to the right of the bands means that there is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
+   })
+
+;;;
+;; Comment on the meaning of the dot when it appears in the given range.
+;; These texts appear in a concluding remark in each hospital's popup.
+;;;
+
+(def dot-comments
+  {:inner "There is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
+   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted [add link]"
+   :outer-low "There is some evidence that chances of survival in the hospital were lower than predicted. [add link]"
+   :low "There is strong evidence that chances of survival in the hospital were lower than predicted. [add link]"
+   :high "There is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
+   })
+
+;;;
+;; These theme colours are selectable in the footer (at least till we decide on one)
+;;
+;; keep :low and :high invisible - anything else looks wrong.
+;;;
+(def colour-map-options
+  [;; theme 0
+   {:low "rgba(255,255,255,0)"
+    :inner "#fc8d59"
+    :outer-low "#efdf11"
+    :outer-high "#efdf11"
+    :high "rgba(255,255,255,0)"
+    :header "#91bfdb"
+    :dot "black"
+    }
+   ;; theme 2
+   {:low "rgba(255,255,255,0)"
+    :inner "#efdf11"
+    :outer-low "#fc8d59"
+    :outer-high "#fc8d59"
+    :high "rgba(255,255,255,0)"
+    :header "#fc8d59"
+    :dot "black"}
+   ;; theme 3
+   {:low "rgba(255,255,255,0)"
+    :inner "#7fcdbb"
+    :outer-low "#2c7fb8"
+    :outer-high "#2c7fb8"
+    :high "rgba(255,255,255,0)"
+    :header "#2c7fb8"
+    :dot "black"}
+   ;; theme 4
+   {:low "rgba(255,255,255,0)"
+    :inner "#3c8fc8"
+    :outer-low "#7fcdbb"
+    :outer-high "#7fcdbb"
+    :high "rgba(255,255,255,0)"
+    :header "#3c8fc8"
+    :dot "black"}
+   ;; theme 5
+   {:low "rgba(255,255,255,0)"
+    :inner "#8FB4E1"
+    :outer-low "#578FD2"
+    :outer-high "#578FD2"
+    :high "rgba(255,255,255,0)"
+    :header "#578FD2"
+    :dot "black"}
+   ;; theme 6
+   {:low "rgba(255,255,255,0)"
+    :inner "#578FD2"
+    :outer-low "#8FB4E1"
+    :outer-high "#8FB4E1"
+    :high "rgba(255,255,255,0)"
+    :header "#578FD2"
+    :dot "black"
+    }])
