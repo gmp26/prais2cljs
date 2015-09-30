@@ -1,18 +1,41 @@
 (ns ^:figwheel-always prais2.routes
     (:require [secretary.core :as secretary :refer-macros [defroute]]
               [goog.events :as events]
-              [goog.history.EventType :as EventType])
+              [goog.history.EventType :as EventType]
+              [prais2.core :as core]
+              )
     (:import goog.History))
 
 
-;;
-;; basic hashbang routing to configure some game options
-;;
+;;;
+;; basic hashbang routing to configure some options
+;;;
 (secretary/set-config! :prefix "#")
 
 
-(defroute "/users/:id" {:as params}
-  (js/console.log (str "User: " (:id params) " " (:foo (:query-params params)))))
+;;;
+;; client-side routes
+;;;
+(defroute faqs "/faq" []
+  (swap! core/app #(assoc % :page :faq :section :top)))
+
+(defroute faq "/faq/:id" [id]
+  (swap! core/app #(assoc % :page :faq :section id)))
+
+(defroute intro "/intro" []
+  (swap! core/app #(assoc % :page :intro :section :top)))
+
+(defroute intro "/intro/:id" [id]
+  (swap! core/app #(assoc % :page :intro :section id)))
+
+(defroute data "/data" []
+  (swap! core/app #(assoc % :page :data :section :top)))
+
+(defroute data "/data/:id" [id]
+  (swap! core/app #(assoc % :page :data :section id)))
+
+(defroute home "" []
+  (swap! core/app #(assoc % :page :home)))
 
 
 ;; history configuration.

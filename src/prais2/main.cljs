@@ -10,6 +10,8 @@
               [prais2.routes]
               [prais2.content :as content]
               [prais2.data :as data]
+              [prais2.chrome :as chrome]
+              [prais2.intro :refer [render-intro]]
               [jayq.core :refer ($)])
     )
 
@@ -65,13 +67,53 @@
                 state)
    })
 
+
+(r/defc render-home []
+  [:h1 "Home"])
+
+(r/defc render-table [id]
+  [:div
+   (map-indexed data/key-with
+                [(data/modal)
+                 (data/table1 core/app content/table1-data event-bus)
+                 (data/option-menu event-bus)])])
+
+(r/defc render-faq [id]
+  [:div
+   [:h1 "FAQ"]
+   [:h2 (str  "Section " id)]])
+
+;;;
+;; pager
+;;;
+(r/defc render-page < r/reactive []
+  (let [{:keys [page section]} (r/react core/app)]
+    (cond
+
+      (= page :intro)
+      (render-intro section)
+
+      (= page :data)
+      (render-table section)
+
+      (= page :faq)
+      (render-faq section)
+
+      :else
+      (render-home))
+
+    ))
+
 ;;
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
-  [:.box
+  [:.box.container
+   (map-indexed data/key-with
+                [(render-page)
+                 (chrome/footer)])
 
-   (map-indexed
+   #_(map-indexed
     #(r/with-key %2 %1)
     [(data/modal)
      (data/table1 core/app content/table1-data event-bus)

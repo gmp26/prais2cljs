@@ -4,7 +4,6 @@
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]
-              [prais2.map :as google]
               [clojure.string :as str]
               )
     (:require-macros [jayq.macros :refer [ready]]))
