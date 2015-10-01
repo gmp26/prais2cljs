@@ -20,11 +20,10 @@
            :top "40px"
            :background-image "url(assets/logo-placeholder.png)"
            :background-repeat "no-repeat"
-           :width "400px"
-           :height "360px"
+           :width "200px"
+           :height "180px"
            :border "none"
            :color "white"
-           :zoom 1.1
            :text-align "center"
            :padding-top "24px"
            :font-size "1.5em"}}
