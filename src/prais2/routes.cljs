@@ -16,8 +16,8 @@
 ;;;
 ;; client-side routes
 ;;;
-(defroute faqs "/faq" []
-  (swap! core/app #(assoc % :page :faq :section :top)))
+(defroute faqs "/faqs" []
+  (swap! core/app #(assoc % :page :faqs :section :top)))
 
 #_(defroute faq "/faq/:id" [id]
   (swap! core/app #(assoc % :page :faq :section id)))

@@ -12,6 +12,7 @@
               [prais2.data :as data]
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
+              [prais2.faqs :refer [render-faqs]]
               [jayq.core :refer ($)])
     )
 
@@ -78,10 +79,9 @@
                     :height "885px"
                     }}])
 
-(r/defc render-faq [id]
-  [:div
-   [:h1 "FAQ"]
-   [:h2 (str  "Section " id)]])
+
+#_(r/defc render-faqs [id]
+  [:div "dummy"])
 
 ;;;
 ;; pager
@@ -99,8 +99,8 @@
       (= page :table)
       (render-table section)
 
-      (= page :faq)
-      (render-faq section)
+      (= page :faqs)
+      (render-faqs section)
 
       :else
       (render-home))
