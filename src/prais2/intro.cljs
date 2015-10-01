@@ -163,7 +163,7 @@
      "30-day survival rate"]
     ". This is the percentage of operations where the child survived at least 30 days after their heart surgery (e.g. 100% would mean that every child survived). Every year or two there are some articles in the press about children’s heart surgery in the UK. Often, these articles compare one hospital to another or suggest that a hospital has more deaths than it “should have”."]
 
-   [:ul
+   [:ul.no-break
     [:li
      "Where do journalists get these numbers from?"]
     [:li
@@ -257,7 +257,7 @@
    [:p
     "Our research has shown that there are some consistent factors that hospitals routinely collect information about that do affect a child’s chance of survival. These things include:"]
 
-   [:ul
+   [:ul.no-break
     [:li
      "the age and weight of the child (other things being equal, the bigger and stronger a child is, the safer the surgery is);"]
     [:li

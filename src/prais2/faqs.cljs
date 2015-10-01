@@ -20,14 +20,14 @@
 
      [:.really-two-cols
       [:h2#section]
-      [:.faq
+      [:.no-break
        [:h2#q1.-why-do-some-children-need-heart-surgery
         "Q1. Why do some children need heart surgery?"]
        [:.well
         [:p
          "Each year in the UK, about 7000 babies are born with a heart defect (called congenital heart disease). Congenital heart disease covers a wide range of problems from the relatively minor (such as a small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also develop problems with their heart as they grow up (for instance, through an infection) and also require hospital care (called acquired heart disease)."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q2.-why-are-survival-rates-monitored-and-published
         "Q2. Why are survival rates monitored and published? "]
        [:.well
@@ -55,7 +55,7 @@
           "97% of children survive to at least one month after surgery"]
          "."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q3.-what-does-the-national-audit-body-do
         "Q3. What does the national audit body do? "]
        [:.well
@@ -73,7 +73,7 @@
           "NICOR’s patient information pages"]
          " and in our FAQ section. In this website, we explain how survival statistics are used to support this decision making."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q4.-why-is-a-different-survival-range-predicted-for-each-hospital
         "Q4. Why is a different survival range predicted for each hospital? "]
        [:.well
@@ -82,14 +82,14 @@
         [:p
          "If a hospital’s results are inside its range then this means that the actual survival is in line with what is predicted, given the complexity and number of surgeries that the hospital performed in that time period. Comparing only to each hospital’s predicted range helps to ensure that we do not draw unjustified conclusions about small differences between observe and predicted survival or between one hospital’s survival rate and another hospital’s survival rate."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q5.-why-do-the-hospitals-that-do-more-operations-have-narrower-ranges
         "Q5. Why do the hospitals that do more operations have narrower ranges? "]
        [:.well
         [:p
          "If a hospital does not carry out many operations, then chance factors can have a large impact on their overall survival rate, and so we need to allow more leeway between observed and predicted survival in order to rule out the influence of chance factors. The ranges get narrower as the hospitals do more operations."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q6.-what-does-it-mean-if-a-hospital-falls-outside-its-range
         "Q6. What does it mean if a hospital falls "
         [:em
@@ -134,7 +134,7 @@
           "[link to a hospital-specific report if relevant]"]
          " . Such reports for previous years can be found on the NICOR publications website."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q7.-which-hospital-should-i-go-to
         "Q7. Which hospital should I go to?"]
        [:.well
@@ -146,14 +146,14 @@
          "You should discuss your child’s care with their specialist cardiologist to determine what the best treatment option is for your child."]]]
 
 
-      [:.faq
+      [:.no-break
        [:h2#q8.-can-the-published-data-tell-me-about-the-risks-for-my-child
         "Q8. Can the published data tell me about the risks for my child?"]
        [:.well
         [:p
          "No, the published data cannot tell you about the risk for your child specifically – this will depend on other factors that are not necessarily captured in the national data. Your child’s specialist cardiologist and/or cardiac surgeon will be able to discuss this with you."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q9.-how-reliable-are-the-data
         "Q9. How reliable are the data?"]
        [:.well
@@ -162,7 +162,7 @@
         [:p
          "So, the data are of high quality. While no large dataset is perfect (e.g., it is inevitable that a few records will not be 100% accurate), this dataset is among the most detailed and complete in the world for children’s heart surgery."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q10.-what-are-the-limitations-of-the-data
         "Q10. What are the limitations of the data? "]
        [:.well
@@ -171,7 +171,7 @@
         [:p
          "These data are also snapshots in time of what happened at each specialist hospital. A number of particularly challenging patients one year (in ways not accounted for in our prediction) or a run of chance factors could cause a very good hospital to have worse outcomes than predicted. So we need to be careful about reading too much into any single time period."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q11-what-about-survival-after-30-days-and-quality-of-life
         "Q11 What about survival after 30 days? And quality of life? "]
        [:.well
@@ -184,7 +184,7 @@
         [:p
          "Neither can it tell us about how or why a hospital achieved the recorded results, so it cannot, by itself, tell us whether one hospital offers better or worse quality care than any other. These data cannot tell you what the results are likely to be next year. It also cannot tell us anything about what happens to children who never get operated on for whatever reason, since data on these children is not currently submitted to national audit."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q12.-what-is-the-risk-adjustment-method-used-by-national-audit
         "Q12. What is the risk adjustment method used by National Audit? "]
        [:.well
@@ -195,7 +195,7 @@
           "academic literature"]
          " if you are interested in learning more details."]]]
 
-      [:.faq
+      [:.no-break
        [:h2#q13.-are-there-any-limitations-to-risk-adjustment
         "Q13. Are there any limitations to risk adjustment? "]
        [:.well
