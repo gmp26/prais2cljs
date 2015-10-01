@@ -26,40 +26,38 @@
            :color "white"
            :text-align "center"
            :padding-top "24px"
-           :font-size "1.5em"}}
-    ]
+           :font-size "1.5em"}}]
    [:h1 {:style
          {:color "#ABABFF"
           :position "absolute"
           :font-size "2em"
-          :left "240px"
-          :top "0px"}} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
-
-   [:div {:style
-          {:position "absolute"
-           :bottom "20px"
-           :right "20px"
-           }}
-    [:nav {:style {:zoom 2
-                   :margin "auto auto"}}
-
-     [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
-                                                  (.stopPropagation (.-nativeEvent %)))
-                                      :style {:margin-right "10px"
-                                              :color "#CAF3FF"}}
-      "Intro"]
-     [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
+          :right "40px"
+          :top "20px"
+          }}  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
+  [:div {:style
+         {:position "absolute"
+          :bottom "20px"
+          :right "20px"
+          }}
+   [:nav {:style {:zoom 2
+                  :margin "auto auto"}}
+    [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
+                                                 (.stopPropagation (.-nativeEvent %)))
+                                  :style {:margin-right "10px"
+                                          :color "#CAF3FF"}}
+     "Intro"]
+    [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
+                                                   (.stopPropagation (.-nativeEvent %)))
+                                    :style {:margin-right "10px"
+                                            :color "#FFBCBA"}}
+     "Data"]
+    [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
                                                     (.stopPropagation (.-nativeEvent %)))
                                      :style {:margin-right "10px"
-                                             :color "#FFBCBA"}}
-      "Data"]
-     [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
-                                                     (.stopPropagation (.-nativeEvent %)))
-                                      :style {:margin-right "10px"
-                                              :color "#C0FFC0"}}
-      "FAQs"]
-          ]]
-   ]
+                                             :color "#C0FFC0"}}
+     "FAQs"]
+    ]]
+  ]
   )
 
 

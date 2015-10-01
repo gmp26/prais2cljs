@@ -387,9 +387,30 @@ td:first-child {
 }
 
 */
-#intro .two-col {
+.two-col {
     /*-webkit-columns: 2 !important;
     -webkit-column-count: 2 !important; */
     column-width: 24em;
     -webkit-column-width: 24em;
+}
+
+.really-two-cols {
+/*    -webkit-columns: 2;
+    columns: 2; */
+    column-width: 24em;
+    -webkit-column-width: 24em;
+}
+
+.well.blue {
+    background-color: #DDDDFF;
+}
+
+
+
+.faq {
+    -webkit-column-break-inside:avoid;
+    -moz-column-break-inside:avoid;
+    -o-column-break-inside:avoid;
+    -ms-column-break-inside:avoid;
+    column-break-inside:avoid;
 }
