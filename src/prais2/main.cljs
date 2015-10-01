@@ -6,7 +6,7 @@
               [clojure.set :refer (intersection)]
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put!]]
-              [prais2.core :as core]
+              [prais2.core :as core :refer [event-bus event-bus-pub]]
               [prais2.routes]
               [prais2.content :as content]
               [prais2.data :as data]
@@ -41,13 +41,6 @@
    [:p (str (r/react core/app))]]
   )
 
-;;;
-;; Define an event bus carrying [topic message] data
-;; publication channels are based on topic - the first part of the data
-;;;
-(def event-bus (chan))
-(def event-bus-pub (pub event-bus first))
-
 (r/defc para < r/static [text]
   [:p text])
 
@@ -74,9 +67,9 @@
 (r/defc render-table [id]
   [:div
    (map-indexed data/key-with
-                [(data/modal)
-                 (data/table1 core/app content/table1-data event-bus)
-                 (data/option-menu event-bus)])])
+                  [(data/modal)
+                   (data/table1 core/app content/table1-data event-bus)
+                   (data/option-menu event-bus)])])
 
 (r/defc render-faq [id]
   [:div
@@ -108,7 +101,7 @@
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
-  [:.box.container
+  [:div
    (map-indexed data/key-with
                 [(render-page)
                  (chrome/footer)])
@@ -169,7 +162,27 @@
               (swap! core/app #(assoc % :selected-row row))))
 
   (dispatch event-bus-pub :pudding
-            (fn [[_ key-code]] (prn (str "you pressed " key-code)))))
+            (fn [[_ key-code]] (prn (str "you pressed " key-code))))
+
+
+  (dispatch event-bus-pub :nav-intro
+            (fn [_]
+              (prn "nav to intro")
+              (swap! core/app #(assoc % :page :intro))))
+
+  (dispatch event-bus-pub :nav-data
+            (fn [_]
+              (prn "nav to data")
+              (swap! core/app #(assoc % :page :data))))
+
+
+  (dispatch event-bus-pub :nav-faqs
+            (fn [_]
+              (prn "nav to faqs")
+              (swap! core/app #(assoc % :page :faqs)))))
+
+
+
 
 (dispatch-central)
 

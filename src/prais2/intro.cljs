@@ -1,5 +1,6 @@
 (ns ^:figwheel-always prais2.intro
-    (:require [rum :as r]))
+    (:require [rum :as r]
+              [prais2.chrome :as chrome]))
 
 (declare section)
 
@@ -9,19 +10,23 @@
 (declare section-4-content)
 
 (r/defc render-intro [section-id]
-  [:#intro.row
+  [:.container
+   [:.row
+    [:#intro
 
-   [:h1  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
+     (chrome/header)
 
-   (section 1 "What is this site for?" section-1-content)
+     [:h1  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
 
-   (section 2 "Which hospitals perform heart surgery in children?" section-2-content)
+     (section 1 "What is this site for?" section-1-content)
 
-   (section 3 "What can published survival rates tell you without extra information?" section-3-content)
+     (section 2 "Which hospitals perform heart surgery in children?" section-2-content)
 
-   (section 4 "How do we put survival rates into context?" section-4-content)
+     (section 3 "What can published survival rates tell you without extra information?" section-3-content)
 
-   ])
+     (section 4 "How do we put survival rates into context?" section-4-content)
+
+     ]]])
 
 (r/defc hospital-charities []
   [:.table-responsive

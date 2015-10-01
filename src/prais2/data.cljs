@@ -388,8 +388,8 @@
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
-
      (when (core/query-media? "screen")
+
        [:div.screenable {:key :screen}
         ;; fixed table with header only for @media screen, hidden in print
         [:table.table.table-striped.table-bordered {:cell-spacing "0"}
@@ -420,6 +420,61 @@
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 
+
+(comment
+;; This is right for md and lg, but goes wrong in xs and sm sizes
+;; You need  .screenable position not to be fixed to enable it again.
+(r/defc table1 < r/reactive [app data event-bus]
+  (let [ap (r/react app)
+        sort-key (:sort-by ap)
+        sort-direction (:sort-ascending ap)
+        headers (first data)
+        rows  (if sort-key
+                (let [sorted (sort-by sort-key (rest data))]
+                  (if sort-direction sorted (reverse sorted)))
+                (rest data))
+        column-keys (keys headers)
+        slider-axis-value (:slider-axis-value ap)  ]
+    [:div
+     (when (core/query-media? "screen")
+
+       [:div.container {:style {
+                                :position "fixed"
+                                :z-index 2}}
+        [:.row
+         [:.col-sm-12.col-md-12
+          [:div.screenable {:key :screen}
+           ;; fixed table with header only for @media screen, hidden in print
+           [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+            (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]]]]])
+
+     [:div.col-sm-12.col-md-12
+      [:div.printable {:key :print}
+       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+        (prn (str "printing true?" (core/query-media? "print")))
+        ;; full table with print header, hidden on screen
+        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
+
+        ;; body for both print and screen
+        [:tbody {:key :tbody}
+         (for [row rows]
+           [:tr {:key (:h-code row)
+                 :on-click #(put! event-bus [:row-clicked row])
+                 :data-toggle "modal"
+                 :data-target "#rowModal"
+                 :data-h-code (:h-code row)
+                 :class (if (= row (:selected-row ap)) "info" "")}
+            (for [column-key column-keys
+                  :let [column-header (column-key headers)]
+                  :when (:shown column-header)]
+              [:td {:key [column-key "r"]
+                    :style {:width (px (:width column-header))
+                            :height (px (:height column-header))}}
+               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
+            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]]))
+)
+
+
 #_(defn cycle-chart-state [state direction]
   (let [states (if (= direction :next) chart-states (reverse chart-states))]
     (second (drop-while #(not= state %) (concat states states)))))
@@ -447,7 +502,7 @@
   )
 
 (r/defc theme-dropdown < r/reactive [event-bus]
-  [:.form-group.col-md-2..col-md-offset-1
+  [:.form-group.col-md-2.col-md-offset-1
    [:label-for{:for "colour-map-selector"} "Theme "]
    [:select#colour-map-selector.form-control.input-sm
     {
@@ -474,13 +529,16 @@
 
 
 (r/defc option-menu [event-bus]
-  [:nav.navbar.navbar-default
-   [:.container
-    [:navbar-form.form-inline.row
-     (map-indexed key-with
-                  [(theme-dropdown event-bus)
-                   (chart-state-dropdown event-bus)
-                   ])]]])
+  [:.container
+   [:.row
+    [:.col-sm-12.col-md-12
+     [:nav.navbar.navbar-default
+      [:.container
+       [:navbar-form.form-inline.row
+        (map-indexed key-with
+                     [(theme-dropdown event-bus)
+                      (chart-state-dropdown event-bus)
+                      ])]]]]]])
 
 ;;;
 ;; Modals

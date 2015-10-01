@@ -2,7 +2,9 @@
     box-sizing: border-box !important;
 }
 
-
+.box {
+    margin: 0 20px;
+}
 
 i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     color: black;
@@ -348,7 +350,7 @@ td:first-child {
   background-color: #475E63;
   padding: 20px 60px;
   font-size: 14px;
-  margin: 5px 0px 0px 0px !important;
+  margin: 50px 0px 0px 0px !important;
 }
 
 #intro td, #intro th {
