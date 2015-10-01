@@ -14,8 +14,6 @@
    [:.row
     [:#intro
 
-     (chrome/header)
-
      [:h1  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
 
      (section 1 "What is this site for?" section-1-content)

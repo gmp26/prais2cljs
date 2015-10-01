@@ -19,24 +19,26 @@
 (defroute faqs "/faq" []
   (swap! core/app #(assoc % :page :faq :section :top)))
 
-(defroute faq "/faq/:id" [id]
+#_(defroute faq "/faq/:id" [id]
   (swap! core/app #(assoc % :page :faq :section id)))
 
 (defroute intro "/intro" []
   (swap! core/app #(assoc % :page :intro :section :top)))
 
-(defroute intro "/intro/:id" [id]
+#_(defroute intro "/intro/:id" [id]
   (swap! core/app #(assoc % :page :intro :section id)))
 
 (defroute data "/data" []
   (swap! core/app #(assoc % :page :data :section :top)))
 
-(defroute data "/data/:id" [id]
+#_(defroute data "/data/:id" [id]
   (swap! core/app #(assoc % :page :data :section id)))
 
 (defroute home "" []
   (swap! core/app #(assoc % :page :home)))
 
+(defroute table "/table" []
+  (swap! core/app #(assoc % :page :table :section :top)))
 
 ;; history configuration.
 ;;

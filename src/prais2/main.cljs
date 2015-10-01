@@ -71,6 +71,13 @@
                    (data/table1 core/app content/table1-data event-bus)
                    (data/option-menu event-bus)])])
 
+
+(r/defc render-data [id]
+  [:iframe {:src "/#/table"
+            :style {:width "100%"
+                    :height "885px"
+                    }}])
+
 (r/defc render-faq [id]
   [:div
    [:h1 "FAQ"]
@@ -87,6 +94,9 @@
       (render-intro section)
 
       (= page :data)
+      (render-data section)
+
+      (= page :table)
       (render-table section)
 
       (= page :faq)
@@ -103,8 +113,12 @@
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
   [:div
    (map-indexed data/key-with
-                [(render-page)
-                 (chrome/footer)])
+                (if (= (:page (r/react core/app)) :table)
+                  [(render-page)]
+                  [(chrome/header)
+                   (render-page)
+                   (chrome/footer)]
+                  ))
 
    #_(map-indexed
     #(r/with-key %2 %1)
@@ -174,7 +188,6 @@
             (fn [_]
               (prn "nav to data")
               (swap! core/app #(assoc % :page :data))))
-
 
   (dispatch event-bus-pub :nav-faqs
             (fn [_]

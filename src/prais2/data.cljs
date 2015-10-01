@@ -529,16 +529,13 @@
 
 
 (r/defc option-menu [event-bus]
-  [:.container
-   [:.row
-    [:.col-sm-12.col-md-12
-     [:nav.navbar.navbar-default
-      [:.container
-       [:navbar-form.form-inline.row
-        (map-indexed key-with
-                     [(theme-dropdown event-bus)
-                      (chart-state-dropdown event-bus)
-                      ])]]]]]])
+  [:nav.navbar.navbar-default
+   [:.container
+    [:navbar-form.form-inline.row
+     (map-indexed key-with
+                  [(theme-dropdown event-bus)
+                   (chart-state-dropdown event-bus)
+                   ])]]])
 
 ;;;
 ;; Modals
