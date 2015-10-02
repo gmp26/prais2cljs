@@ -1,6 +1,7 @@
 (ns ^:figwheel-always prais2.intro
     (:require [rum :as r]
-              [prais2.chrome :as chrome]))
+              [prais2.chrome :as chrome]
+              [prais2.open-layers-map :as map]))
 
 (declare section)
 
@@ -222,7 +223,9 @@
    [:p
     "The hospitals are listed below alongside links to their local family charities. (CAN WE PUT IN A MAP?)"]
 
-   (hospital-charities)])
+   (hospital-charities)
+
+   (map/hospitals)])
 
 
 (r/defc section-3-content []
