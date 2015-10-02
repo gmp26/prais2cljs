@@ -28,12 +28,13 @@
            :padding-top "24px"
            :font-size "1.5em"}}]
    [:h1 {:style
-         {:color "#ABABFF"
+         {:color "#CCDDFF"
           :position "absolute"
           :font-size "2em"
           :right "40px"
           :top "20px"
-          }}  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
+          :padding-left "40px"
+          }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
   [:div {:style
          {:position "absolute"
           :bottom "20px"
@@ -45,17 +46,17 @@
                                                  (.stopPropagation (.-nativeEvent %)))
                                   :style {:margin-right "10px"
                                           :color "#CAF3FF"}}
-     "Intro"]
+     [:i.fa.fa-home] " Intro"]
     [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
                                                    (.stopPropagation (.-nativeEvent %)))
                                     :style {:margin-right "10px"
                                             :color "#FFBCBA"}}
-     "Data"]
+     [:i.fa.fa-table] " Data"]
     [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
                                                     (.stopPropagation (.-nativeEvent %)))
                                      :style {:margin-right "10px"
                                              :color "#C0FFC0"}}
-     "FAQs"]
+     [:i.fa.fa-question] " FAQs"]
     ]]
   ]
   )
