@@ -97,6 +97,11 @@ th:last-child {
     min-width: 266px;
 }
 
+#intro th:last-child {
+    padding: 10px 10px 0px 10px !important;
+    min-width: 266px;
+}
+
 td {
     text-align: center;
     vertical-align: middle !important;
