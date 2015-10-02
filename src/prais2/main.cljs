@@ -74,7 +74,7 @@
 
 
 (r/defc render-data [id]
-  [:iframe {:src "/#/table"
+  [:iframe {:src "#table"
             :style {:width "100%"
                     :height "885px"
                     }}])
@@ -103,7 +103,7 @@
       (render-faqs section)
 
       :else
-      (render-home))
+      (render-intro nil))
 
     ))
 
