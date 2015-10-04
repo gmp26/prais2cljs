@@ -34,11 +34,11 @@
 #_(defroute data "data/:id" [id]
   (swap! core/app #(assoc % :page :data :section id)))
 
-(defroute home "" []
-  (swap! core/app #(assoc % :page :home)))
-
 (defroute table "table" []
   (swap! core/app #(assoc % :page :table :section :top)))
+
+(defroute home "" []
+  (swap! core/app #(assoc % :page :table)))
 
 ;; history configuration.
 ;;

@@ -14,7 +14,7 @@
 ;;;
 (defonce app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
                     :logo "assets/logo-placeholder.png"
-                    :page "home"
+                    :page :wombat
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0

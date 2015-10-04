@@ -58,8 +58,7 @@
   {:did-mount (fn [state]
                 (ready
                  (.tooltip ($ "[data-toggle=\"tooltip\"]")))
-                state)
-   })
+                state)})
 
 
 (r/defc render-home []
@@ -97,20 +96,28 @@
 
       (= page :intro)
       (do
-        (aset js/location "href" (routes/intro))
+        (aset js/location "href" (str "" (routes/intro)))
         (render-intro section))
 
       (= page :data)
-      (render-data section)
+      (do
+        (aset js/location "href" (str "" (routes/data)))
+        (render-data section))
 
       (= page :table)
-      (render-table section)
+      (do
+        (aset js/location "href" (str "" (routes/table)))
+        (render-table section))
 
       (= page :faqs)
-      (render-faqs section)
+      (do
+        (aset js/location "href" (str "" (routes/faqs)))
+        (render-faqs section))
 
       :else
-      (render-intro nil))
+      (do
+        (prn "Page = " page)
+        (render-home nil)))
 
     ))
 
@@ -120,12 +127,14 @@
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
   [:div
    (map-indexed data/key-with
-                (if (= (:page (r/react core/app)) :table)
-                  [(render-page)]
-                  [(chrome/header)
-                   (render-page)
-                   (chrome/footer)]
-                  ))
+                (do
+                  (prn (str "rendering " (:page (r/react core/app))))
+                  (if (= (:page (r/react core/app)) :table)
+                    [(render-page)]
+                    [(chrome/header)
+                     (render-page)
+                     (chrome/footer)]
+                    )))
 ])
 
 ;;
