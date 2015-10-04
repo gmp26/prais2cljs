@@ -7,7 +7,7 @@
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put!]]
               [prais2.core :as core :refer [event-bus event-bus-pub]]
-              [prais2.routes]
+              [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
               [prais2.chrome :as chrome]
@@ -74,10 +74,15 @@
 
 
 (r/defc render-data [id]
-  [:iframe {:src "#table"
-            :style {:width "100%"
-                    :height "885px"
-                    }}])
+  [:div {:style {:width "100%"}}
+   [:p]
+   [:iframe {:src "#table"
+             :style {:width "80%"
+                     :display "block"
+                     :margin "auto auto"
+                     :min-width "885px"
+                     :height "885px"
+                     }}]])
 
 
 #_(r/defc render-faqs [id]
@@ -91,7 +96,9 @@
     (cond
 
       (= page :intro)
-      (render-intro section)
+      (do
+        (aset js/location "href" (routes/intro))
+        (render-intro section))
 
       (= page :data)
       (render-data section)
@@ -119,15 +126,6 @@
                    (render-page)
                    (chrome/footer)]
                   ))
-
-   #_(map-indexed
-    #(r/with-key %2 %1)
-    [(data/modal)
-     (data/table1 core/app content/table1-data event-bus)
-     (data/option-menu event-bus)
-     #_(data/option-controls event-bus)
-     #_(para "")
-     #_(debug)])
 ])
 
 ;;

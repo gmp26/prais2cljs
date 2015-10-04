@@ -84,8 +84,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 
 th {
     padding: 10px 10px 0px 10px !important;
-   /* background-color: #BCE8DD;
-    color: red; */
 }
 
 th:first-child {
@@ -97,9 +95,10 @@ th:last-child {
     min-width: 266px;
 }
 
-#intro th:last-child {
-    padding: 10px 10px 0px 10px !important;
+#intro th {
+    padding: 10px 10px 10px 10px !important;
     min-width: 266px;
+    font-size: 1.2em;
 }
 
 td {
@@ -356,6 +355,12 @@ td:first-child {
   padding: 20px 60px;
   font-size: 14px;
   margin: 50px 0px 0px 0px !important;
+}
+
+#intro th {
+    background-color: #343456;
+    color: rgba(255,255,255,0.7);
+    padding: 20px;
 }
 
 #intro td, #intro th {

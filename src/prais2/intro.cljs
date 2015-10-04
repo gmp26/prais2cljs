@@ -50,7 +50,7 @@
        [:a {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]]
       [:td
        [:a {:href "http://www.youngatheart.org.uk/"} "Young at Heart"]
-       [:a {:href "http://www.bch.org.uk/letusplay?utm_source=Trust%20web%20ad&utm_medium=web&utm_campaign=donate"} "Birmingham Children’s Hospital Charity"]]]
+       [:a {:href "http://www.bch.org.uk"} "Birmingham Children’s Hospital Charity"]]]
 
      [:tr
       [:td
@@ -221,11 +221,12 @@
    [:p
     "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]
    [:p
-    "The hospitals are listed below alongside links to their local family charities. (CAN WE PUT IN A MAP?)"]
+    "The hospitals are listed below alongside links to their local family charities. "]
 
    (hospital-charities)
 
-   (map/hospitals)])
+   ;(map/hospitals)
+   ])
 
 
 (r/defc section-3-content []
