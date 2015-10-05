@@ -65,20 +65,24 @@
   [:h1 "Page not found"])
 
 
+;;
+;; Code snippet to remove columns from table
+;;
+(comment headers
+         (assoc (first data')
+                                :n-deaths false
+                                :n-survivors false
+                                :h-code false)
+         data (conj (rest data') headers))
+
 (r/defc render-table [id]
-  (let [data' content/table1-data
-        mq (core/query-media? "(min-width: 800px)")
-        headers (assoc (first data')
-                       :n-deaths false
-                       :n-survivors false
-                       :h-code false)
-        data (conj (rest data') headers)]
-       [:div
-        [:h1 mq]
-        (map-indexed data/key-with
-                     [(data/modal)
-                      (data/table1 core/app data event-bus)
-                      (data/option-menu event-bus)])]))
+  (let [data content/table1-data
+        ]
+    [:div
+     (map-indexed data/key-with
+                  [(data/modal)
+                   (data/table1 core/app data event-bus)
+                   (data/option-menu event-bus)])]))
 
 
 (r/defc render-data [id]

@@ -388,17 +388,17 @@
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
-     (when (core/query-media? "screen")
+     #_(when (core/query-media? "screen")
 
        [:div.screenable {:key :screen}
         ;; fixed table with header only for @media screen, hidden in print
         [:table.table.table-striped.table-bordered {:cell-spacing "0"}
          (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]])
 
-     [:div.printable {:key :print}
+     [:div {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       (prn (str "printing true?" (core/query-media? "print")))
-       (prn headers)
+       #_(prn (str "printing true?" (core/query-media? "print")))
+       #_(prn headers)
        ;; full table with print header, hidden on screen
        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 
@@ -438,22 +438,22 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
      (when (core/query-media? "screen")
-       (prn column-keys)
+       #_(prn column-keys)
 
-       [:div.container {:style {
-                                :position "fixed"
-                                :z-index 2}}
-        [:.row
-         [:.col-sm-12.col-md-12
-          [:div.screenable {:key :screen}
-           ;; fixed table with header only for @media screen, hidden in print
-           [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-            (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]]]]])
+         [:div.container {:style {
+                                  :position "fixed"
+                                  :z-index 2}}
+          [:.row
+           [:.col-sm-12.col-md-12
+            [:div.screenable {:key :screen}
+             ;; fixed table with header only for @media screen, hidden in print
+             [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+              (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]]]]])
 
      [:div.col-sm-12.col-md-12
       [:div.printable {:key :print}
        [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-        (prn (str "printing true?" (core/query-media? "print")))
+        #_(prn (str "printing true?" (core/query-media? "print")))
         ;; full table with print header, hidden on screen
         (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 

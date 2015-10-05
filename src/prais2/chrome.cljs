@@ -40,8 +40,7 @@
           :bottom "20px"
           :right "20px"
           }}
-   [:nav {:style {:zoom 2
-                  :margin "auto auto"}}
+   [:nav {:style {:margin "auto auto"}}
     [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
                                                  (.stopPropagation (.-nativeEvent %)))
                                   :style {:margin-right "10px"
