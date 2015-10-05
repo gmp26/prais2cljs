@@ -93,10 +93,22 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     border-color:  #7FCDBB;
 }
 
+.well.intro {
+    background-color: rgba(44, 127, 184, 0.3);
+}
+
+.well.data {
+    background-color:  rgba(252, 141, 89, 0.3);
+}
+
+.well.faqs {
+    background-color: rgba(127, 205, 187, 0.3);
+}
+
 
 .simple-navbar {
     display: block;
-    border-bottom: 3px solid #CCCCCC;
+    border-bottom: 3px solid #275F55;
     width: 100%;
     padding-left: 30px;
 }
@@ -476,10 +488,6 @@ td:first-child {
     columns: 2; */
     column-width: 24em;
     -webkit-column-width: 24em;
-}
-
-.well.blue {
-    background-color: rgba(127, 205, 187, 0.3);
 }
 
 

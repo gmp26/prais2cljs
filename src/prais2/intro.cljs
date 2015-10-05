@@ -157,7 +157,7 @@
 
 
 (r/defc section-1-content []
-  [:section.two-col
+  [:section.two-col.well.intro
    [:p
     "The main outcome measure that the NHS uses to monitor children’s heart surgery in the UK is the "
     [:em

@@ -13,19 +13,19 @@
   )
 
 
-(defrecord  Nav-item [long-title short-title class])
+(defrecord  Nav-item [long-title short-title class icon])
 
 
-(def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-intro")
-                :data  (Nav-item. "Results Table" "Data" "nav-data")
-                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-faqs")})
+(def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-intro" "home")
+                :data  (Nav-item. "Results Table" "Data" "nav-data" "table")
+                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-faqs" "question")})
 
 (r/defc nav-link [active-key key]
   (let [nav-item (key nav-items)]
     [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
                     :on-click #(do (put! event-bus [key nil])
                                                    (.stopPropagation (.-nativeEvent %)))}
-     (:short-title nav-item)]))
+     [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))]))
 
 (r/defc nav-bar [active-key]
 
@@ -41,62 +41,65 @@
   )
 
 
-(r/defc header < r/reactive []
-  #_[:div
+(r/defc header < r/reactive [& deep]
+  [:div
    {:style
     {:width "100%"
-     :height "250px"
+     :height (if deep "250px" "80px")
      :background-color "#343456"
      :color "#B3B3DE"
      :position "relative"
      }}
-   [:div {:style
-          {:position "absolute"
-           :left "37px"
-           :top "40px"
-           :background-image "url(assets/logo-placeholder.png)"
-           :background-repeat "no-repeat"
-           :width "200px"
-           :height "180px"
-           :border "none"
-           :color "white"
-           :text-align "center"
-           :padding-top "24px"
-           :font-size "1.5em"}}]
-   [:h1 {:style
-         {:color "#CCDDFF"
-          :position "absolute"
-          :font-size "2em"
-          :right "40px"
-          :top "20px"
-          :padding-left "40px"
-          }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
-  [:div {:style
-         {:position "absolute"
-          :bottom "20px"
-          :right "20px"
-          }}
-   [:nav {:style {:margin "auto auto"}}
-    [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
-                                                 (.stopPropagation (.-nativeEvent %)))
-                                  :style {:margin-right "10px"
-                                          :color "#CAF3FF"}}
-     [:i.fa.fa-home] " Intro"]
-    [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
-                                                   (.stopPropagation (.-nativeEvent %)))
-                                    :style {:margin-right "10px"
-                                            :color "#FFBCBA"}}
-     [:i.fa.fa-table] " Data"]
-    [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
-                                                    (.stopPropagation (.-nativeEvent %)))
-                                     :style {:margin-right "10px"
-                                             :color "#C0FFC0"}}
-     [:i.fa.fa-question] " FAQs"]
-    ]
-   ]
-     ]
-   (prn (r/react core/app))
+   (when deep
+     [:div {:style
+            {:position "absolute"
+             :z-index 1;
+             :left "37px"
+             :top "60px"
+             :background-image "url(assets/logo-placeholder.png)"
+             :background-repeat "no-repeat"
+             :width "200px"
+             :height "180px"
+             :border "none"
+             :color "white"
+             :text-align "center"
+             :padding-top "24px"
+             :font-size "1.5em"}}])
    (nav-bar (:page (r/react core/app)))
+   (when deep
+     [:h1 {:style
+           {:color "#CCDDFF"
+            :position "relative"
+            :font-size "2em"
+            :top "5px"
+            :right "25px"
+            :text-align "right"
+            :padding-left "300px"
+            }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
+     #_[:div {:style
+            {:position "absolute"
+             :bottom "20px"
+             :right "20px"
+             }}
+      #_[:nav {:style {:margin "auto auto"}}
+         [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
+                                                      (.stopPropagation (.-nativeEvent %)))
+                                       :style {:margin-right "10px"
+                                               :color "#CAF3FF"}}
+          [:i.fa.fa-home] " Intro"]
+         [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
+                                                        (.stopPropagation (.-nativeEvent %)))
+                                         :style {:margin-right "10px"
+                                                 :color "#FFBCBA"}}
+          [:i.fa.fa-table] " Data"]
+         [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
+                                                         (.stopPropagation (.-nativeEvent %)))
+                                          :style {:margin-right "10px"
+                                                  :color "#C0FFC0"}}
+          [:i.fa.fa-question] " FAQs"]
+         ]
+      ])
+     ]
   )
 
 

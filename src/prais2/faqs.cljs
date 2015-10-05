@@ -10,7 +10,7 @@
      [:h1
        "Generic FAQs about the chart"]
 
-     [:.well.blue
+     [:.well.faqs
       [:h3 "Terminology"]
       [:dl
        [:dt "Survival rate"]

@@ -102,32 +102,38 @@
 ;;;
 (r/defc render-page < r/reactive []
   (let [{:keys [page section]} (r/react core/app)]
-    (cond
+    [:div
+     (cond
 
-      (= page :intro)
-      (do
-        (aset js/location "href" (routes/intro))
-        (render-intro section))
+       (= page :intro)
+       (do
+         (aset js/location "href" (routes/intro))
+         (map-indexed data/key-with
+                      [(chrome/header true)
+                       (render-intro section)
+                       (chrome/footer)])
+)
 
-      (= page :data)
-      (do
-        (aset js/location "href" (routes/data))
-        (render-data section))
+       (= page :data)
+       (do
+         (aset js/location "href" (routes/data))
+         (map-indexed data/key-with
+                      [(chrome/header)
+                       (render-table section)
+                       (chrome/footer)]))
 
-      (= page :table)
-      (do
-        (aset js/location "href" (routes/table))
-        (render-table section))
+       (= page :faqs)
+       (do
+         (aset js/location "href" (routes/faqs))
+         (map-indexed data/key-with
+                      [(chrome/header)
+                       (render-faqs section)
+                       (chrome/footer)]))
 
-      (= page :faqs)
-      (do
-        (aset js/location "href" (routes/faqs))
-        (render-faqs section))
-
-      :else
-      (do
-        (prn "Route mismatch" page)
-        (render-404 nil)))
+       :else
+       (do
+         (prn "Route mismatch" page)
+         (render-404 nil)))]
 
     ))
 
@@ -135,7 +141,8 @@
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
-  [:div
+  (render-page)
+  #_[:div
    (map-indexed data/key-with
                 (do
                   (prn (str "rendering " (:page (r/react core/app))))
