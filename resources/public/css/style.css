@@ -10,12 +10,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     color: black;
 }
 
-.table {
-    margin: 0 !important;
-    min-width: 883px;
-    overflow: visible;
-}
-
 @media print {
 
 
@@ -86,45 +80,74 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
  * Chrome
  */
 
+.nav-intro {
+    border-bottom: 5px solid  rgba(44, 127, 184, 1);
+}
+
+.nav-data {
+    border-bottom: 5px solid rgba(252, 141, 89, 1);
+}
+
+.nav-faqs {
+    border-bottom: 5px solid rgba(127, 205, 187, 1);
+    border-color:  #7FCDBB;
+}
+
+
 .simple-navbar {
     display: block;
-    border-bottom: 1px solid #CCCCCC;
-    padding-left: 40px;
+    border-bottom: 3px solid #CCCCCC;
+    width: 100%;
+    padding-left: 30px;
 }
 
 .simple-navbar h1 {
     display: inline-block;
-    padding-top: 0px;
-    font-size: 20px;
+    padding: 7px 0 0 0;
+    margin: 10px 5px -4px 5px;
+    height: 43px;
+    font-size: 22px;
 }
 
 .simple-buttons {
-    margin-right: 40px;
+    margin-right: 25px;
 }
 
 .simple-link {
-    border: 1px solid red;
+    cursor: pointer;
+    border: 1px solid
+    border-style: solid;
+    border-bottom-width: 5px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
     display: inline-block;
-    margin-left: 5px;
+    margin: 13px 5px 0px 5px;
     text-align: center;
-    padding-top: 15px;
+    height: 40px;
+    padding: 5px 0 0 0;
     width: 100px;
     font-size: 18px;
-    border-color: rgba(255,0,0,0.2);
 }
 
-.simple-link.intro {
-    border-bottom: 5px solid red;
+.simple-link:hover {
+    border-bottom-width: 8px;
+    vertical-align: bottom;
 }
 
 .simple-link.active {
-    vertical-align: middle;
-    border-bottom-width: 15px;
+    font-style: bold;
+    vertical-align: bottom;
 }
 
 /**
  * Data table
  */
+
+.table {
+    margin: 0 !important;
+    min-width: 883px;
+    overflow: visible;
+}
 
 th {
     padding: 10px 10px 0px 10px !important;
@@ -456,7 +479,7 @@ td:first-child {
 }
 
 .well.blue {
-    background-color: #DDDDFF;
+    background-color: rgba(127, 205, 187, 0.3);
 }
 
 

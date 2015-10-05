@@ -196,17 +196,17 @@
             (fn [[_ key-code]] (prn (str "you pressed " key-code))))
 
 
-  (dispatch event-bus-pub :nav-intro
+  (dispatch event-bus-pub :intro
             (fn [_]
               (prn "nav to intro")
               (swap! core/app #(assoc % :page :intro))))
 
-  (dispatch event-bus-pub :nav-data
+  (dispatch event-bus-pub :data
             (fn [_]
               (prn "nav to data")
               (swap! core/app #(assoc % :page :data))))
 
-  (dispatch event-bus-pub :nav-faqs
+  (dispatch event-bus-pub :faqs
             (fn [_]
               (prn "nav to faqs")
               (swap! core/app #(assoc % :page :faqs)))))

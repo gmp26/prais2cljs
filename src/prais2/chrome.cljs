@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.chrome
     (:require [rum :as r]
-              [prais2.core :refer [event-bus]]
+              [prais2.core :as core :refer [event-bus]]
               [cljs.core.async :refer [put!]]
               [cljs.core.async :refer [put!]]))
 
@@ -13,30 +13,35 @@
   )
 
 
-(defrecord  Nav-item [long-title short-title rgba])
+(defrecord  Nav-item [long-title short-title class])
 
-(def nav-items [(Nav-item. "Introduction" "Intro" [255 0 0 0.5])
-                (Nav-item. "Results Table" "Data" [0 128 0 0.5])
-                (Nav-item. "Frequently Asked Questions" "FAQs" [0 80 200 0.5])])
 
-(r/defc nav-link [active-index index]
-  [:.simple-link {:class (str "simple-link " (if (= active-index index) "active" ""))}
-   (:short-title (nav-items index))])
+(def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-intro")
+                :data  (Nav-item. "Results Table" "Data" "nav-data")
+                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-faqs")})
 
-(r/defc nav-bar [active-index]
+(r/defc nav-link [active-key key]
+  (let [nav-item (key nav-items)]
+    [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
+                    :on-click #(do (put! event-bus [key nil])
+                                                   (.stopPropagation (.-nativeEvent %)))}
+     (:short-title nav-item)]))
 
-  (let [nav-item (nav-items active-index)]
+(r/defc nav-bar [active-key]
+
+  (let [nav-item (active-key nav-items)]
     [:div.simple-navbar
-     [:h1.simple-title (:long-title nav-item)]
-     [:span.simple-buttons.pull-right
-      (for [i (range (count nav-items))]
-        (nav-link active-index i))
+     [:h1 {:class (str "simple-title " (:class nav-item))}
+      (:long-title nav-item)]
+     [:div.simple-buttons.pull-right
+      (for [k (keys nav-items)]
+        (nav-link active-key k))
       ]
      ])
   )
 
 
-(r/defc header []
+(r/defc header < r/reactive []
   #_[:div
    {:style
     {:width "100%"
@@ -89,8 +94,9 @@
      [:i.fa.fa-question] " FAQs"]
     ]
    ]
-  ]
-   (nav-bar 0)
+     ]
+   (prn (r/react core/app))
+   (nav-bar (:page (r/react core/app)))
   )
 
 
