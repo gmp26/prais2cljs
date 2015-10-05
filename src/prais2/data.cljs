@@ -307,7 +307,7 @@
    (:title (:observed headers)) ])
 
 (r/defc table-header < r/static [background ap header column-key event-bus]
-  (prn "table-header called " background)
+  #_(prn "table-header called " background)
   [:th {:on-click #(do (when (:sortable header)
                          (put! event-bus [:sort-toggle column-key]))
                        (.stopPropagation (.-nativeEvent %))
@@ -351,7 +351,7 @@
 (r/defc table-head < r/static [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
-    (prn "table-head called")
+    #_(prn "table-head called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -398,6 +398,7 @@
      [:div.printable {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        (prn (str "printing true?" (core/query-media? "print")))
+       (prn headers)
        ;; full table with print header, hidden on screen
        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 
@@ -428,7 +429,7 @@
   (let [ap (r/react app)
         sort-key (:sort-by ap)
         sort-direction (:sort-ascending ap)
-        headers (first data)
+        headers (dissoc (first data) :n-deaths)
         rows  (if sort-key
                 (let [sorted (sort-by sort-key (rest data))]
                   (if sort-direction sorted (reverse sorted)))
@@ -437,6 +438,7 @@
         slider-axis-value (:slider-axis-value ap)  ]
     [:div
      (when (core/query-media? "screen")
+       (prn column-keys)
 
        [:div.container {:style {
                                 :position "fixed"
@@ -475,11 +477,6 @@
 )
 
 
-#_(defn cycle-chart-state [state direction]
-  (let [states (if (= direction :next) chart-states (reverse chart-states))]
-    (second (drop-while #(not= state %) (concat states states)))))
-
-
 (defn get-chart-state
   [index]
   (chart-states index)
@@ -512,20 +509,6 @@
                  (for [n (range (count content/colour-map-options))]
                    (integer-option n)))]
    ])
-
-(r/defc option-controls < r/reactive [event-bus]
-  [:div.options
-   [:form
-
-    [:h3 "Options"]
-
-    [:.form-group
-     [:label {:for "modalButton"} "Modal test"]
-     [:button#modalButton.btn.btn-primary.pull-right
-      {:type "button"
-       :data-toggle "modal"
-       :data-target "#rowModal"}
-      "Launch demo modal"]]]])
 
 
 (r/defc option-menu [event-bus]

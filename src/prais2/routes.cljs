@@ -16,28 +16,28 @@
 ;;;
 ;; client-side routes
 ;;;
-(defroute faqs "faqs" []
+(defroute faqs "/faqs" []
   (swap! core/app #(assoc % :page :faqs :section :top)))
 
-#_(defroute faq "faq/:id" [id]
+#_(defroute faq "/faq/:id" [id]
   (swap! core/app #(assoc % :page :faq :section id)))
 
-(defroute intro "intro" []
+(defroute intro "/intro" []
   (swap! core/app #(assoc % :page :intro :section :top)))
 
-#_(defroute intro "intro/:id" [id]
+#_(defroute intro "/intro/:id" [id]
   (swap! core/app #(assoc % :page :intro :section id)))
 
-(defroute data "data" []
+(defroute data "/data" []
   (swap! core/app #(assoc % :page :data :section :top)))
 
-#_(defroute data "data/:id" [id]
+#_(defroute data "/data/:id" [id]
   (swap! core/app #(assoc % :page :data :section id)))
 
-(defroute table "table" []
+(defroute table "/table" []
   (swap! core/app #(assoc % :page :table :section :top)))
 
-(defroute home "" []
+(defroute home "/home" []
   (swap! core/app #(assoc % :page :table)))
 
 ;; history configuration.

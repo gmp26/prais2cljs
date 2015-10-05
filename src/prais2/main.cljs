@@ -61,21 +61,30 @@
                 state)})
 
 
-(r/defc render-home []
-  [:h1 "Home"])
+(r/defc render-404 []
+  [:h1 "Page not found"])
+
 
 (r/defc render-table [id]
-  [:div
-   (map-indexed data/key-with
-                  [(data/modal)
-                   (data/table1 core/app content/table1-data event-bus)
-                   (data/option-menu event-bus)])])
+  (let [data' content/table1-data
+        mq (core/query-media? "(min-width: 800px)")
+        headers (assoc (first data')
+                       :n-deaths false
+                       :n-survivors false
+                       :h-code false)
+        data (conj (rest data') headers)]
+       [:div
+        [:h1 mq]
+        (map-indexed data/key-with
+                     [(data/modal)
+                      (data/table1 core/app data event-bus)
+                      (data/option-menu event-bus)])]))
 
 
 (r/defc render-data [id]
   [:div {:style {:width "100%"}}
    [:p]
-   [:iframe {:src "#table"
+   [:iframe {:src "#/table"
              :style {:width "80%"
                      :display "block"
                      :margin "auto auto"
@@ -83,9 +92,6 @@
                      :height "885px"
                      }}]])
 
-
-#_(r/defc render-faqs [id]
-  [:div "dummy"])
 
 ;;;
 ;; pager
@@ -96,28 +102,28 @@
 
       (= page :intro)
       (do
-        (aset js/location "href" (str "" (routes/intro)))
+        (aset js/location "href" (routes/intro))
         (render-intro section))
 
       (= page :data)
       (do
-        (aset js/location "href" (str "" (routes/data)))
+        (aset js/location "href" (routes/data))
         (render-data section))
 
       (= page :table)
       (do
-        (aset js/location "href" (str "" (routes/table)))
+        (aset js/location "href" (routes/table))
         (render-table section))
 
       (= page :faqs)
       (do
-        (aset js/location "href" (str "" (routes/faqs)))
+        (aset js/location "href" (routes/faqs))
         (render-faqs section))
 
       :else
       (do
-        (prn "Page = " page)
-        (render-home nil)))
+        (prn "Route mismatch" page)
+        (render-404 nil)))
 
     ))
 
