@@ -5,8 +5,39 @@
               [cljs.core.async :refer [put!]]))
 
 
+
+(defn rgba-string
+  "return CSS rgba string"
+  [[r g b a]]
+  (str "rgba(" r "," g "," b "," a)
+  )
+
+
+(defrecord  Nav-item [long-title short-title rgba])
+
+(def nav-items [(Nav-item. "Introduction" "Intro" [255 0 0 0.5])
+                (Nav-item. "Results Table" "Data" [0 128 0 0.5])
+                (Nav-item. "Frequently Asked Questions" "FAQs" [0 80 200 0.5])])
+
+(r/defc nav-link [active-index index]
+  [:.simple-link {:class (str "simple-link " (if (= active-index index) "active" ""))}
+   (:short-title (nav-items index))])
+
+(r/defc nav-bar [active-index]
+
+  (let [nav-item (nav-items active-index)]
+    [:div.simple-navbar
+     [:h1.simple-title (:long-title nav-item)]
+     [:span.simple-buttons.pull-right
+      (for [i (range (count nav-items))]
+        (nav-link active-index i))
+      ]
+     ])
+  )
+
+
 (r/defc header []
-  [:div
+  #_[:div
    {:style
     {:width "100%"
      :height "250px"
@@ -56,9 +87,12 @@
                                      :style {:margin-right "10px"
                                              :color "#C0FFC0"}}
      [:i.fa.fa-question] " FAQs"]
-    ]]
+    ]
+   ]
   ]
+   (nav-bar 0)
   )
+
 
 
 (r/defc footer []

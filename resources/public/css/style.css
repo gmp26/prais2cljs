@@ -82,6 +82,50 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     }
 }
 
+/**
+ * Chrome
+ */
+
+.simple-navbar {
+    display: block;
+    border-bottom: 1px solid #CCCCCC;
+    padding-left: 40px;
+}
+
+.simple-navbar h1 {
+    display: inline-block;
+    padding-top: 0px;
+    font-size: 20px;
+}
+
+.simple-buttons {
+    margin-right: 40px;
+}
+
+.simple-link {
+    border: 1px solid red;
+    display: inline-block;
+    margin-left: 5px;
+    text-align: center;
+    padding-top: 15px;
+    width: 100px;
+    font-size: 18px;
+    border-color: rgba(255,0,0,0.2);
+}
+
+.simple-link.intro {
+    border-bottom: 5px solid red;
+}
+
+.simple-link.active {
+    vertical-align: middle;
+    border-bottom-width: 15px;
+}
+
+/**
+ * Data table
+ */
+
 th {
     padding: 10px 10px 0px 10px !important;
 }
