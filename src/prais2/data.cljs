@@ -19,7 +19,7 @@
 (defn pc
   "value to percent string"
   [value]
-  (when value (str/replace  (str (.toPrecision value 3) "%") ".0%" "%")))
+  (when value (str/replace  (str (.toPrecision value 3) "%") #"[.]0?0" "")))
 
 (defn important
   "tack !important on a string value"

@@ -179,7 +179,9 @@
   []
 
   (dispatch event-bus-pub :slider-axis-value
-            (fn [[_ slider-value]] (swap! core/app #(assoc % :slider-axis-value slider-value))))
+            (fn [[_ slider-value]]
+              (prn (str "slider -> " slider-value))
+              (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :sort-toggle
             (fn [[_ column-key]] (data/handle-sort core/app column-key)))
