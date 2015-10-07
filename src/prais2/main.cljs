@@ -141,18 +141,9 @@
 ;; Contains the app user interface in here
 ;;
 (r/defc app-container < bs-popover bs-tooltip r/reactive []
-  (render-page)
-  #_[:div
-   (map-indexed data/key-with
-                (do
-                  (prn (str "rendering " (:page (r/react core/app))))
-                  (if (= (:page (r/react core/app)) :table)
-                    [(render-page)]
-                    [(chrome/header)
-                     (render-page)
-                     (chrome/footer)]
-                    )))
-])
+  [:div
+   (map-indexed data/key-with [(render-page) (debug)])]
+)
 
 ;;
 ;; mount main component on html app element

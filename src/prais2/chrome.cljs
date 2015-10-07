@@ -75,32 +75,7 @@
             :right "25px"
             :text-align "right"
             :padding-left "300px"
-            }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
-     #_[:div {:style
-            {:position "absolute"
-             :bottom "20px"
-             :right "20px"
-             }}
-      #_[:nav {:style {:margin "auto auto"}}
-         [:button.btn.btn-info.btn-lg {:on-click #(do (put! event-bus [:nav-intro :intro])
-                                                      (.stopPropagation (.-nativeEvent %)))
-                                       :style {:margin-right "10px"
-                                               :color "#CAF3FF"}}
-          [:i.fa.fa-home] " Intro"]
-         [:button.btn.btn-danger.btn-lg {:on-click #(do (put! event-bus [:nav-data :intro])
-                                                        (.stopPropagation (.-nativeEvent %)))
-                                         :style {:margin-right "10px"
-                                                 :color "#FFBCBA"}}
-          [:i.fa.fa-table] " Data"]
-         [:button.btn.btn-success.btn-lg {:on-click #(do (put! event-bus [:nav-faqs :intro])
-                                                         (.stopPropagation (.-nativeEvent %)))
-                                          :style {:margin-right "10px"
-                                                  :color "#C0FFC0"}}
-          [:i.fa.fa-question] " FAQs"]
-         ]
-      ])
-     ]
-  )
+            }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"])])
 
 
 

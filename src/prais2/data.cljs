@@ -169,6 +169,14 @@
                 state)
    })
 
+;; mixin to initialise bootstrap t code code
+(def bs-popover
+  {:did-mount (fn [state]
+                (ready
+                 (.popover ($ "[data-toggle=\"popover\"]")))
+                state)
+   })
+
 
 
 (r/defc dot < r/static r/reactive bs-tooltip [slider size value dotty & [relative]]
@@ -305,7 +313,7 @@
   [:p {:key :p}
    (:title (:observed headers)) ])
 
-(r/defc table-header < r/static bs-tooltip [background ap header column-key event-bus]
+(r/defc table-header < r/static bs-tooltip bs-popover [background ap header column-key event-bus]
   #_(prn "table-header called " background)
   [:th {:on-click #(do (when (:sortable header)
                          (put! event-bus [:sort-toggle column-key]))
