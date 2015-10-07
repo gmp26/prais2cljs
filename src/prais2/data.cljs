@@ -27,7 +27,6 @@
   (str str-val " !important")
   )
 
-
 (defn key-with
   "useful for mapping react keys to a content vector"
   [a b] (r/with-key b a))
@@ -164,7 +163,7 @@
 
 ;; mixin to initialise bootstrap tooltip code code
 (def bs-tooltip
-  {:will-render (fn [state]
+  {:did-mount (fn [state]
                 (ready
                  (.tooltip  (.tooltip ($ "[data-toggle=\"tooltip\"]"))) "show")
                 state)
@@ -306,7 +305,7 @@
   [:p {:key :p}
    (:title (:observed headers)) ])
 
-(r/defc table-header < r/static [background ap header column-key event-bus]
+(r/defc table-header < r/static bs-tooltip [background ap header column-key event-bus]
   #_(prn "table-header called " background)
   [:th {:on-click #(do (when (:sortable header)
                          (put! event-bus [:sort-toggle column-key]))
@@ -330,9 +329,12 @@
                      :background-color "none !important"
                      :color "white !important"}}
       [:a.btn.btn-primary.btn-xs
-       {:on-click #(do
+       {
+        :on-click #(do
                      (put! event-bus [:info-clicked column-key])
-                     (.preventDefault (.-nativeEvent %)))
+                     (.preventDefault (.-nativeEvent %))
+                     (.stopPropagation (.-nativeEvent %))
+                     )
         :role "button"
         :tabIndex -1
         :data-trigger "focus"

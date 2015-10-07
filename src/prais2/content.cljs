@@ -23,7 +23,7 @@
          (Header. "Number of Survivors"         false       true    85   50
                   "The number of operations where the child survived at least 30 days after their operation")
          (Header. "Observed Survival Rate %"    false      true     86   50
-                  "The percentage of operations where the child survived at least 30 days after their operation")
+                  "The percentage of operations where the child survived at least 30 days after their operation. Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on children with a lower chance of survival. It would be unfair to then expect all hospitals to have the same survival rates each year")
          (Header. "Outer Low"                   false      false   130   50
                   "A dot within the right hand dark blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
          (Header. "Inner Low"                   false      false   130   50
