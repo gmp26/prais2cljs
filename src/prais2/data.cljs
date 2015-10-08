@@ -287,12 +287,13 @@
                                                                  :tooltip "hide"
                                                                  :min 0
                                                                  :max 1
-                                                                 :step 0.001
-                                                                 :value 50
+                                                                 :step 0.01
+                                                                 :value (:slider-axis-value @core/app)
                                                                  }))
                       state' (assoc state :slider slider)]
-                  (.on slider "slide"
-                                     #(put! event-bus [:slider-axis-value (.getValue slider)]))
+                  (.on slider
+                       "slide"
+                       #(put! event-bus [:slider-axis-value (.getValue slider)]))
                   (prn state')
                   state'))
 
@@ -303,6 +304,7 @@
                      (dissoc state :slider)))})
 
 (r/defcs slider-control < r/static bs-slider [state event-bus value min max step]
+  (when (:slider state) (.setValue (:slider state) value))
   [:#slider.slider
    [:input {:type "text"
             :data-slider-value value

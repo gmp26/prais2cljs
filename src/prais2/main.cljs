@@ -171,7 +171,6 @@
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]
-              (prn (str "slider -> " slider-value))
               (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :sort-toggle
@@ -194,7 +193,6 @@
 
   (dispatch event-bus-pub :pudding
             (fn [[_ key-code]] (prn (str "you pressed " key-code))))
-
 
   (dispatch event-bus-pub :intro
             (fn [_]
