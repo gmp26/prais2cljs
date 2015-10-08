@@ -29,6 +29,7 @@
               :compiler {:main "prais2.main"
                          :externs ["externs/bootstrap.js"
                                    "externs/jquery.js"
+                                   "externs/sliders.js"
                                    "externs/google-maps.js"]
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
@@ -44,9 +45,12 @@
                          :main "prais2.main"
                          :externs ["externs/bootstrap.js"
                                    "externs/jquery.js"
+                                   "externs/sliders.js"
                                    "externs/google-maps.js"]
                          :optimizations :advanced
-                         :warnings {:single-segment-namespace false}
+                         :warnings {:single-segment-namespace false
+                                    :externs-validation :off
+                                    :non-standard-jsdoc :off}
                          }}]}
 
   :figwheel {

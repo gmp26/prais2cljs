@@ -2,7 +2,7 @@
     (:require [rum :as r]
               [jayq.core :refer ($ on)]
               [cljs.core.async :refer [put!]]
-              [prais2.core :as core]
+              [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
               [clojure.string :as str]
               )
@@ -127,23 +127,6 @@
                      :width "calc(25px - )"
                      ;:width (str (bar-width slider value) "%")
                      }}])
-
-
-
-#_(r/defc bar < r/static  [slider hi-val lo-val fill]
-  (if (= fill "rgba(255,255,255,0)")
-    [:div.bar {:style {:background-color fill
-                       :width (str (bar-width slider (- hi-val lo-val)) "%")}
-               }]
-    [:div.bar.btn {:style {:background-color fill
-                           :border-radius 0
-                           :width (str (bar-width slider (- hi-val lo-val)) "%")}
-                   :data-toggle "tooltip"
-                   :data-original-title (str (pc lo-val) " - " (pc hi-val))
-                   :data-delay 0
-                   :data-trigger "hover"
-                   :data-placement "bottom"}]))
-
 
 
 (r/defc bar < r/static  [slider hi-val lo-val bar-type fill]
@@ -294,14 +277,40 @@
    [:div.right {:key :right}
     "full detail " [:i.fa.fa-long-arrow-right {:key :detail}]]])
 
-(r/defc slider-control < r/static [event-bus value min max step]
-  [:.slider
-   [:input {:type "range"
-            :value value
-            :min min
-            :max max
-            :step step
-            :on-change #(put! event-bus [:slider-axis-value (.. % -target -value)])}]])
+
+;; returns a bootstrap slider mixin
+(def bs-slider
+  {:did-mount (fn [state]
+                (prn "mounting-slider")
+                (let [slider (new js/Slider "#slider"
+                                                       (clj->js {
+                                                                 :tooltip "hide"
+                                                                 :min 0
+                                                                 :max 1
+                                                                 :step 0.001
+                                                                 :value 50
+                                                                 }))
+                      state' (assoc state :slider slider)]
+                  (.on slider "slide"
+                                     #(put! event-bus [:slider-axis-value (.getValue slider)]))
+                  (prn state')
+                  state'))
+
+   :will-unmount (fn [state]
+                   (let [slider (:slider state)]
+                     (prn "unmounting slider")
+                     (when  slider (.destroy slider))
+                     (dissoc state :slider)))})
+
+(r/defcs slider-control < r/static bs-slider [state event-bus value min max step]
+  [:#slider.slider
+   [:input {:type "text"
+            :data-slider-value value
+            :data-slider-min min
+            :data-slider-max max
+            :data-slider-step step
+            }]])
+
 
 (r/defc axis-container < r/static [slider-axis-value]
   [:.axis-container
