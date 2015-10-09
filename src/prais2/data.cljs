@@ -306,8 +306,9 @@
                                                                  :step 0.01
                                                                  :value (:slider-axis-value @core/app)
                                                                  }))
-                      handler #(put! event-bus [:slider-axis-value (.getValue slider)])
+                      handler #((do (put! event-bus [:slider-axis-value (.getValue slider)])))
                       state' (assoc state :slider slider :handler handler)]
+
                   (.on slider "slide" handler)
                   (.on slider "change" handler)
                   (prn state')
@@ -322,8 +323,9 @@
                        (.destroy slider))
                      (dissoc state :slider :handler)))})
 
-(rum/defcs slider-control < rum/static bs-slider [state event-bus value min max step]
-  (when (:slider state) (.setValue (:slider state) ))
+(rum/defc slider-control < rum/static bs-slider [value event-bus min max step]
+  (prn "called slider-control with " value)
+
   [:#slider.slider
    [:input {:type "text"
             :data-slider-value value
@@ -414,7 +416,9 @@
         (map-indexed key-with
                      [(slider-title headers)
                       (slider-labels)
-                      (slider-control event-bus slider-axis-value 0 1 0.01)
+                      (do
+                        (prn "calling slider-control with " slider-axis-value)
+                        (slider-control slider-axis-value event-bus 0 1 0.01))
                       (axis-container slider-axis-value)])]]]]))
 
 
@@ -429,6 +433,7 @@
                 (rest data))
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
+    (prn "calling table-head with " slider-axis-value)
     [:div
      #_(when (core/query-media? "screen")
 
