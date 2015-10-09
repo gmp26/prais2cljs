@@ -304,9 +304,10 @@
                                                                  :min 0
                                                                  :max 1
                                                                  :step 0.01
-                                                                 :value (:slider-axis-value @core/app)
+                                                                ; :value (:slider-axis-value @core/app)
                                                                  }))
-                      handler #((do (put! event-bus [:slider-axis-value (.getValue slider)])))
+                      handler #(do
+                                 (put! event-bus [:slider-axis-value (.getValue slider)]))
                       state' (assoc state :slider slider :handler handler)]
 
                   (.on slider "slide" handler)
