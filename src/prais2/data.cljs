@@ -192,7 +192,7 @@
 
 
 (defn dot-size [slider]
-  (Math.round (- 12 (* 4 (- 1 slider)))))
+  (Math.round (- 12 (* 7 (- 1 slider)))))
 
 
 (def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
@@ -204,44 +204,45 @@
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    [:td.chart-cell {:style {:padding-left (important (px axis-margin))
-                             :padding-right last-pad-right}}
+    [:td
+     [:.chart-cell {:style {:padding-left (important (px axis-margin))
+                            :padding-right last-pad-right}}
 
-     [:div.bar-chart
-      (map-indexed key-with
+      [:div.bar-chart
+       (map-indexed key-with
 
-       (cond
-         (= dotless #{})
-         [(dot slider (dot-size slider) (:survival-rate row) dotty)]
+                    (cond
+                      (= dotless #{})
+                      [(dot slider (dot-size slider) (:survival-rate row) dotty)]
 
-         (= dotless #{:inner})
-         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
-          (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
-          (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-          (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
-          (bar slider 100 (:outer-high row) :high (:high colours))
-          (dot slider (dot-size slider) (:survival-rate row) dotty)
-          ]
-
-
-         (= dotless #{:outer})
-         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
-          (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-          (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
-          (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-          (bar slider 100 (:outer-high row) :high (:high colours))
-          (dot slider (dot-size slider) (:survival-rate row) dotty)
-          ]
+                      (= dotless #{:inner})
+                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
+                       (bar slider 100 (:outer-high row) :high (:high colours))
+                       (dot slider (dot-size slider) (:survival-rate row) dotty)
+                       ]
 
 
-         (= dotless #{:inner :outer})
-         [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
-          (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-          (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-          (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-          (bar slider 100 (:outer-high row) :high (:high colours))
-          (dot slider (dot-size slider) (:survival-rate row) dotty)
-          ]))]]))
+                      (= dotless #{:outer})
+                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                       (bar slider 100 (:outer-high row) :high (:high colours))
+                       (dot slider (dot-size slider) (:survival-rate row) dotty)
+                       ]
+
+
+                      (= dotless #{:inner :outer})
+                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                       (bar slider 100 (:outer-high row) :high (:high colours))
+                       (dot slider (dot-size slider) (:survival-rate row) dotty)
+                       ]))]]]))
 
 
 (r/defc tick < r/static [baseline value]
@@ -290,18 +291,21 @@
                                                                  :step 0.01
                                                                  :value (:slider-axis-value @core/app)
                                                                  }))
-                      state' (assoc state :slider slider)]
-                  (.on slider
-                       "slide"
-                       #(put! event-bus [:slider-axis-value (.getValue slider)]))
+                      handler #(put! event-bus [:slider-axis-value (.getValue slider)])
+                      state' (assoc state :slider slider :handler handler)]
+                  (.on slider "slide" handler)
+                  (.on slider "change" handler)
                   (prn state')
                   state'))
 
    :will-unmount (fn [state]
-                   (let [slider (:slider state)]
+                   (let [slider (:slider state)
+                         handler (:handler state)]
                      (prn "unmounting slider")
-                     (when  slider (.destroy slider))
-                     (dissoc state :slider)))})
+                     (when  slider
+                       (when handler (.off slider "slide" handler))
+                       (.destroy slider))
+                     (dissoc state :slider :handler)))})
 
 (r/defcs slider-control < r/static bs-slider [state event-bus value min max step]
   (when (:slider state) (.setValue (:slider state) value))
@@ -440,62 +444,6 @@
                            :height (px (:height column-header))}}
               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
-
-
-
-(comment
-;; This is right for md and lg, but goes wrong in xs and sm sizes
-;; You need  .screenable position not to be fixed to enable it again.
-(r/defc table1 < r/reactive [app data event-bus]
-  (let [ap (r/react app)
-        sort-key (:sort-by ap)
-        sort-direction (:sort-ascending ap)
-        headers (dissoc (first data) :n-deaths)
-        rows  (if sort-key
-                (let [sorted (sort-by sort-key (rest data))]
-                  (if sort-direction sorted (reverse sorted)))
-                (rest data))
-        column-keys (keys headers)
-        slider-axis-value (:slider-axis-value ap)  ]
-    [:div
-     (when (core/query-media? "screen")
-       #_(prn column-keys)
-
-         [:div.container {:style {
-                                  :position "fixed"
-                                  :z-index 2}}
-          [:.row
-           [:.col-sm-12.col-md-12
-            [:div.screenable {:key :screen}
-             ;; fixed table with header only for @media screen, hidden in print
-             [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-              (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]]]]])
-
-     [:div.col-sm-12.col-md-12
-      [:div.printable {:key :print}
-       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-        #_(prn (str "printing true?" (core/query-media? "print")))
-        ;; full table with print header, hidden on screen
-        (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
-
-        ;; body for both print and screen
-        [:tbody {:key :tbody}
-         (for [row rows]
-           [:tr {:key (:h-code row)
-                 :on-click #(put! event-bus [:row-clicked row])
-                 :data-toggle "modal"
-                 :data-target "#rowModal"
-                 :data-h-code (:h-code row)
-                 :class (if (= row (:selected-row ap)) "info" "")}
-            (for [column-key column-keys
-                  :let [column-header (column-key headers)]
-                  :when (:shown column-header)]
-              [:td {:key [column-key "r"]
-                    :style {:width (px (:width column-header))
-                            :height (px (:height column-header))}}
-               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
-            (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]]))
-)
 
 
 (defn get-chart-state
