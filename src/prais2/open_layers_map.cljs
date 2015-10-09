@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.open-layers-map
-    (:require [rum :as r]
+    (:require [rum.core :as r]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]))
@@ -43,6 +43,6 @@
                                                                  :zoom 10}))})))
                 state)})
 
-(r/defcs hospitals < map-view [state]
+(rum/defcs hospitals < map-view [state]
   [:#open-map {:style {:width "200px" :height "200px"}}]
   )

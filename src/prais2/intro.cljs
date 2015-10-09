@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.intro
-    (:require [rum :as r]
+    (:require [rum.core :as rum]
               [prais2.chrome :as chrome]
               [prais2.open-layers-map :as map]))
 
@@ -10,7 +10,7 @@
 (declare section-3-content)
 (declare section-4-content)
 
-(r/defc render-intro [section-id]
+(rum/defc render-intro [section-id]
   [:.container
    [:.row
     [:#intro
@@ -27,7 +27,7 @@
 
      ]]])
 
-(r/defc hospital-charities []
+(rum/defc hospital-charities []
   [:.table-responsive
    [:table.table.table-striped.table-bordered
 
@@ -156,7 +156,7 @@
         "Heart Children Ireland"]]]]]])
 
 
-(r/defc section-1-content []
+(rum/defc section-1-content []
   [:section.two-col.well.intro
    [:p
     "The main outcome measure that the NHS uses to monitor children’s heart surgery in the UK is the "
@@ -216,7 +216,7 @@
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data (more in the FAQs)."]])
 
 
-(r/defc section-2-content []
+(rum/defc section-2-content []
   [:section
    [:p
     "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]
@@ -229,7 +229,7 @@
    ])
 
 
-(r/defc section-3-content []
+(rum/defc section-3-content []
   [:section.two-col
    [:p
     "Currently, about 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland. Overall, the survival rate is 97%, telling us that the UK has very high survival rates for this difficult speciality."]
@@ -254,7 +254,7 @@
    ])
 
 
-(r/defc section-4-content []
+(rum/defc section-4-content []
   [:section.two-col
    [:p
     "Every individual is unique and may respond differently to treatment (surgery, drugs, postoperative care)."]
@@ -295,7 +295,7 @@
    ])
 
 
-(r/defc section [section-id section-title section-content]
+(rum/defc section [section-id section-title section-content]
   [:section {:id section-id}
    [:h2 section-title]
    (section-content)])

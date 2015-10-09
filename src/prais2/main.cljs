@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.main
     (:require-macros [jayq.macros :refer [ready]]
                      [cljs.core.async.macros :refer [go-loop]])
-    (:require [rum :as r]
+    (:require [rum.core :as rum]
               [cljs.reader :as reader]
               [clojure.set :refer (intersection)]
               [cljsjs.react]
@@ -37,12 +37,12 @@
 ;;;
 ;;  "debug app-state"
 ;;;
-(r/defc debug < r/reactive []
+(rum/defc debug < rum/reactive []
   [:div
-   [:p (str (r/react core/app))]]
+   [:p (str (rum/react core/app))]]
   )
 
-(r/defc para < r/static [text]
+(rum/defc para < rum/static [text]
   [:p text])
 
 ;; mixin to initialise bootstrap popover code code
@@ -61,7 +61,7 @@
                 state)})
 
 
-(r/defc render-404 []
+(rum/defc render-404 []
   [:h1 "Page not found"])
 
 
@@ -75,7 +75,7 @@
                                 :h-code false)
          data (conj (rest data') headers))
 
-(r/defc render-table [id]
+(rum/defc render-table [id]
   (let [data content/table1-data
         ]
     [:div
@@ -85,7 +85,7 @@
                    (data/option-menu event-bus)])]))
 
 
-(r/defc render-data [id]
+(rum/defc render-data [id]
   [:div {:style {:width "100%"}}
    [:p]
    [:iframe {:src "#/table"
@@ -100,8 +100,8 @@
 ;;;
 ;; pager
 ;;;
-(r/defc render-page < r/reactive []
-  (let [{:keys [page section]} (r/react core/app)]
+(rum/defc render-page < rum/reactive []
+  (let [{:keys [page section]} (rum/react core/app)]
     [:div
      (cond
 
@@ -140,7 +140,7 @@
 ;;
 ;; Contains the app user interface in here
 ;;
-(r/defc app-container < bs-popover bs-tooltip r/reactive []
+(rum/defc app-container < bs-popover bs-tooltip rum/reactive []
   [:div
    (map-indexed data/key-with [(render-page) (debug)])]
 )
@@ -148,7 +148,7 @@
 ;;
 ;; mount main component on html app element
 ;;
-(r/mount (app-container) (el "app"))
+(rum/mount (app-container) (el "app"))
 
 
 ;;;
@@ -191,8 +191,12 @@
             (fn [[_ row]]
               (swap! core/app #(assoc % :selected-row row))))
 
-  (dispatch event-bus-pub :pudding
-            (fn [[_ key-code]] (prn (str "you pressed " key-code))))
+
+  (dispatch event-bus-pub :morph-full-range
+            (fn [_]
+              (prn (str "morph to full range"))
+              (swap! core/app #(assoc % :slider-axis-value 0))))
+
 
   (dispatch event-bus-pub :intro
             (fn [_]

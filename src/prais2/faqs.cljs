@@ -1,8 +1,8 @@
 (ns ^:figwheel-always prais2.faqs
-    (:require [rum :as r]
+    (:require [rum.core :as rum]
               [prais2.chrome :as chrome]))
 
-(r/defc render-faqs [section-id]
+(rum/defc render-faqs [section-id]
   [:.container
    [:.row
     [:#faqs
@@ -61,7 +61,7 @@
        [:.well
         [:p
          [:a
-          {:href "http://www.ucl.ac.uk/nicor/patients"}
+          {:href "http://www.ucl.ac.uk/nicorum/patients"}
           "NICOR "]
          "(The National Institute for Cardiovascular Outcomes Research) collects data and produces analysis to enable hospitals and healthcare improvement bodies to monitor and improve the quality of care and outcomes of children who need heart surgery. Data on every surgery or intervention performed on a child for heart problems is submitted to NICOR every 3 months, and each hospital undergoes independent checks of the quality of their submitted data."]
         [:p

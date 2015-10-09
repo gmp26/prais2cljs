@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.core
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
-  (:require [rum :as r]
+  (:require [rum.core :as r]
             [cljs.core.async :refer [chan <! pub]]
             [goog.events :as events]
             [cljsjs.react :as react]

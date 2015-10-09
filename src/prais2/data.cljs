@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.data
-    (:require [rum :as r]
+    (:require [rum.core :as rum]
               [jayq.core :refer ($ on)]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core :refer [event-bus]]
@@ -29,7 +29,7 @@
 
 (defn key-with
   "useful for mapping react keys to a content vector"
-  [a b] (r/with-key b a))
+  [a b] (rum/with-key b a))
 
 ;;;
 ;;
@@ -115,21 +115,21 @@
 
 
 ;; test square: insert to check mixin behviour
-(r/defc square < r/static [slider value fill]
+(rum/defc square < rum/static [slider value fill]
   [:div.bar {:style
              {:background-color (important fill)
               :height (px 10)
               :width (px 10)}}])
 
 
-(r/defc zero-bar < r/static [slider value]
+(rum/defc zero-bar < rum/static [slider value]
   [:div.bar {:style {:background-color "#eeeeee"
                      :width "calc(25px - )"
                      ;:width (str (bar-width slider value) "%")
                      }}])
 
 
-(r/defc bar < r/static  [slider hi-val lo-val bar-type fill]
+(rum/defc bar < rum/static  [slider hi-val lo-val bar-type fill]
   (if (= fill "rgba(255,255,255,0)")
     [:div.bar {:style {:background-color fill
                        :width (str (bar-width slider (- hi-val lo-val)) "%")}
@@ -162,7 +162,7 @@
 
 
 
-(r/defc dot < r/static r/reactive bs-tooltip [slider size value dotty & [relative]]
+(rum/defc dot < rum/static rum/reactive bs-tooltip [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot.btn
      {:data-toggle "tooltip"
@@ -172,7 +172,7 @@
       :data-html true
       :data-original-title (str (pc value) "<br>The observed survival rate"
 )
-      :style {:background-color (:dot (colour-map (:theme (r/react core/app))))
+      :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
               :height px-size
@@ -198,16 +198,31 @@
 (def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
                    #{:inner :outer} #{:inner}])
 
-(r/defc chart-cell < bs-tooltip r/reactive [row slider]
-  (let [ap (r/react core/app)
+
+(def put-morph-full-range #(do
+                             (put! event-bus [:morph-full-range :data])
+                             (.preventDefault (.-nativeEvent %))
+                             ))
+
+(rum/defc chart-cell < bs-tooltip rum/reactive [row slider]
+  (let [ap (rum/react core/app)
         colours (colour-map (:theme ap))
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
     [:td
+     (when (> slider 0) [:div {:on-click put-morph-full-range
+                               :style
+                               {:position "absolute"
+                                :width (px 20)
+                                :height (px 50)
+                                :color "#149BDF"
+                                :background-color "#ffffff"
+                                :padding-top (px 16)
+                                :cursor "pointer"
+                                }} [:i.fa.fa-chevron-left]])
      [:.chart-cell {:style {:padding-left (important (px axis-margin))
                             :padding-right last-pad-right}}
-
       [:div.bar-chart
        (map-indexed key-with
 
@@ -245,7 +260,7 @@
                        ]))]]]))
 
 
-(r/defc tick < r/static [baseline value]
+(rum/defc tick < rum/static [baseline value]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
     (when (>= percent 0)
       [:.tick {:style
@@ -258,7 +273,7 @@
        [:span.tick-label (pc value)]]
       )))
 
-(r/defc ticks < r/static [slider-axis-value tick-count]
+(rum/defc ticks < rum/static [slider-axis-value tick-count]
   (let [baseline (* min-outer-low slider-axis-value)
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
@@ -269,9 +284,9 @@
         tick-values (range 100 (dec baseline) (- interval))]
     [:div
      (for [value tick-values]
-       (r/with-key (tick baseline value) value))]))
+       (rum/with-key (tick baseline value) value))]))
 
-(r/defc slider-labels []
+(rum/defc slider-labels []
   [:.slider-label
    [:div.pull-left {:key :left}
     [:i.fa.fa-long-arrow-left {:key :full}] " full range"]
@@ -307,8 +322,8 @@
                        (.destroy slider))
                      (dissoc state :slider :handler)))})
 
-(r/defcs slider-control < r/static bs-slider [state event-bus value min max step]
-  (when (:slider state) (.setValue (:slider state) value))
+(rum/defcs slider-control < rum/static bs-slider [state event-bus value min max step]
+  (when (:slider state) (.setValue (:slider state) ))
   [:#slider.slider
    [:input {:type "text"
             :data-slider-value value
@@ -318,17 +333,19 @@
             }]])
 
 
-(r/defc axis-container < r/static [slider-axis-value]
+()
+
+(rum/defc axis-container < rum/static [slider-axis-value]
   [:.axis-container
    {:style {:margin-left (px axis-margin)
             :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
-   (r/with-key (ticks slider-axis-value 3) :ticks)])
+   (rum/with-key (ticks slider-axis-value 3) :ticks)])
 
-(r/defc slider-title [headers]
+(rum/defc slider-title [headers]
   [:p {:key :p}
    (:title (:observed headers)) ])
 
-(r/defc table-header < r/static bs-tooltip bs-popover [background ap header column-key event-bus]
+(rum/defc table-header < rum/static bs-tooltip bs-popover [background ap header column-key event-bus]
   #_(prn "table-header called " background)
   [:th {:on-click #(do (when (:sortable header)
                          (put! event-bus [:sort-toggle column-key]))
@@ -373,14 +390,14 @@
 
       ])])
 
-(r/defc table-head < r/static [app ap headers column-keys event-bus slider-axis-value]
+(rum/defc table-head < rum/static [app ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* min-outer-low slider-axis-value))]
     #_(prn "table-head called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
-        (r/with-key (table-header (:header (colour-map (:theme  ap)))
+        (rum/with-key (table-header (:header (colour-map (:theme  ap)))
                                   ap
                                   (column-key headers)
                                   column-key
@@ -397,12 +414,12 @@
         (map-indexed key-with
                      [(slider-title headers)
                       (slider-labels)
-                      (slider-control event-bus slider-axis-value 0 1 0.001)
+                      (slider-control event-bus slider-axis-value 0 1 0.01)
                       (axis-container slider-axis-value)])]]]]))
 
 
-(r/defc table1 < r/reactive [app data event-bus]
-  (let [ap (r/react app)
+(rum/defc table1 < rum/reactive [app data event-bus]
+  (let [ap (rum/react app)
         sort-key (:sort-by ap)
         sort-direction (:sort-ascending ap)
         headers (first data)
@@ -418,14 +435,14 @@
        [:div.screenable {:key :screen}
         ;; fixed table with header only for @media screen, hidden in print
         [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-         (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]])
+         (rum/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]])
 
      [:div {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        #_(prn (str "printing true?" (core/query-media? "print")))
        #_(prn headers)
        ;; full table with print header, hidden on screen
-       (r/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
+       (rum/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
@@ -443,7 +460,7 @@
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))}}
               (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
-           (r/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
+           (rum/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 
 (defn get-chart-state
@@ -451,15 +468,15 @@
   (chart-states index)
   )
 
-(r/defc integer-option < r/static [n]
+(rum/defc integer-option < rum/static [n]
   [:option {:value n} n])
 
-(r/defc chart-state-dropdown < r/reactive [event-bus]
+(rum/defc chart-state-dropdown < rum/reactive [event-bus]
   [:.form-group
    [:label-for {:for "chart-selector"} "Chart State "]
    [:select#chart-selector.form-control.input-sm
     {
-     :value (:chart-state (r/react core/app))
+     :value (:chart-state (rum/react core/app))
      :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count chart-states))]
@@ -467,12 +484,12 @@
     ]]
   )
 
-(r/defc theme-dropdown < r/reactive [event-bus]
+(rum/defc theme-dropdown < rum/reactive [event-bus]
   [:.form-group.col-md-2.col-md-offset-1
    [:label-for{:for "colour-map-selector"} "Theme "]
    [:select#colour-map-selector.form-control.input-sm
     {
-     :value (:theme (r/react core/app))
+     :value (:theme (rum/react core/app))
      :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count content/colour-map-options))]
@@ -480,7 +497,7 @@
    ])
 
 
-(r/defc option-menu [event-bus]
+(rum/defc option-menu [event-bus]
   [:nav.navbar.navbar-default
    [:.container
     [:navbar-form.form-inline.row
@@ -492,7 +509,7 @@
 ;;;
 ;; Modals
 ;;;
-(r/defc modal-tick < r/static [baseline value]
+(rum/defc modal-tick < rum/static [baseline value]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
     (when (>= percent 0)
       [:.modal.tick {:style
@@ -505,7 +522,7 @@
        [:span.modal.tick-label (pc value)]]
       )))
 
-(r/defc modal-ticks < r/static [tick-count]
+(rum/defc modal-ticks < rum/static [tick-count]
   (let [baseline min-outer-low
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
@@ -516,15 +533,15 @@
         tick-values (range 100 (dec baseline) (- interval))]
     [:div
      (for [value tick-values]
-       (r/with-key (modal-tick baseline value) value))]))
+       (rum/with-key (modal-tick baseline value) value))]))
 
 
-(r/defc modal-axis-container < r/static [slider-axis-value]
+(rum/defc modal-axis-container < rum/static [slider-axis-value]
   [:.axis-container
    {:style {:margin-left 0 ;(px axis-margin)
             :width (pc 100) ;(str "calc(100% - " (px (+ extra-right axis-margin)) ")")
             }}
-   (r/with-key (modal-ticks 3) :ticks)])
+   (rum/with-key (modal-ticks 3) :ticks)])
 
 
 (defn interpretation
@@ -554,8 +571,8 @@
 
 
 
-(r/defc modal  < r/reactive bs-tooltip []
-  (let [selected-row (:selected-row (r/react core/app))]
+(rum/defc modal  < rum/reactive bs-tooltip []
+  (let [selected-row (:selected-row (rum/react core/app))]
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"
                             :aria-labelledby "myModalLabel"

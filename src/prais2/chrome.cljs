@@ -1,7 +1,6 @@
 (ns ^:figwheel-always prais2.chrome
-    (:require [rum :as r]
+    (:require [rum.core :as rum]
               [prais2.core :as core :refer [event-bus]]
-              [cljs.core.async :refer [put!]]
               [cljs.core.async :refer [put!]]))
 
 
@@ -20,14 +19,14 @@
                 :data  (Nav-item. "Results Table" "Data" "nav-data" "table")
                 :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-faqs" "question")})
 
-(r/defc nav-link [active-key key]
+(rum/defc nav-link [active-key key]
   (let [nav-item (key nav-items)]
     [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
                     :on-click #(do (put! event-bus [key nil])
                                                    (.stopPropagation (.-nativeEvent %)))}
      [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))]))
 
-(r/defc nav-bar [active-key]
+(rum/defc nav-bar [active-key]
 
   (let [nav-item (active-key nav-items)]
     [:div.simple-navbar
@@ -41,7 +40,7 @@
   )
 
 
-(r/defc header < r/reactive [& deep]
+(rum/defc header < rum/reactive [& deep]
   [:div
    {:style
     {:width "100%"
@@ -65,7 +64,7 @@
              :text-align "center"
              :padding-top "24px"
              :font-size "1.5em"}}])
-   (nav-bar (:page (r/react core/app)))
+   (nav-bar (:page (rum/react core/app)))
    (when deep
      [:h1 {:style
            {:color "#CCDDFF"
@@ -79,7 +78,7 @@
 
 
 
-(r/defc footer []
+(rum/defc footer []
   [:.footer
    [:h3
     "Funding acknowledgement"]
