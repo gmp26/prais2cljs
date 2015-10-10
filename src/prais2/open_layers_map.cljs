@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.open-layers-map
-    (:require [rum.core :as r]
+    (:require [rum.core :as rum]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]))

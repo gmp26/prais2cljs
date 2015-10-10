@@ -303,40 +303,46 @@
                                                                  :tooltip "hide"
                                                                  :min 0
                                                                  :max 1
-                                                                 :step 0.01
-                                                                ; :value (:slider-axis-value @core/app)
+                                                                 :step 0.1
+                                                                 :value (:slider-axis-value @core/app)
                                                                  }))
                       handler #(do
                                  (put! event-bus [:slider-axis-value (.getValue slider)]))
-                      state' (assoc state :slider slider :handler handler)]
+                      state' (assoc state ::slider slider ::handler handler)]
 
                   (.on slider "slide" handler)
                   (.on slider "change" handler)
                   (prn state')
                   state'))
 
+   :transfer-state (fn [old new]
+                     (assoc new ::slider (::slider old)))
+
    :will-unmount (fn [state]
-                   (let [slider (:slider state)
-                         handler (:handler state)]
+                   (let [slider (::slider state)
+                         handler (::handler state)]
                      (prn "unmounting slider")
                      (when  slider
                        (when handler (.off slider "slide" handler))
+                       (when handler (.off slider "change" handler))
                        (.destroy slider))
-                     (dissoc state :slider :handler)))})
+                     (dissoc state ::slider ::handler)))})
 
-(rum/defc slider-control < rum/static bs-slider [value event-bus min max step]
+(rum/defcs slider-control < bs-slider rum/static [state value event-bus min max step]
   (prn "called slider-control with " value)
+  (.log js/console state)
+  (let [s [:#slider.slider
+           [:input {:type "text"
+                                        ;:data-slider-value value
+                    :data-slider-min min
+                    :data-slider-max max
+                    :data-slider-step step
+                    }]]
+        slider (::slider state)]
+    (when slider
+      (.setValue slider value))
+    s))
 
-  [:#slider.slider
-   [:input {:type "text"
-            :data-slider-value value
-            :data-slider-min min
-            :data-slider-max max
-            :data-slider-step step
-            }]])
-
-
-()
 
 (rum/defc axis-container < rum/static [slider-axis-value]
   [:.axis-container
