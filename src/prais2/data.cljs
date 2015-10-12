@@ -352,7 +352,7 @@
 
 (rum/defc slider-title [headers]
   [:p {:key :p}
-   (:title (:observed headers)) ])
+   (:title (:observed headers))])
 
 (rum/defc table-header < rum/static bs-tooltip bs-popover [background ap header column-key event-bus]
   #_(prn "table-header called " background)
@@ -379,20 +379,20 @@
                      :color "white !important"}}
       [:a.btn.btn-primary.btn-xs
        {
-        :on-click #(do
-                     (put! event-bus [:info-clicked column-key])
-                     (.preventDefault (.-nativeEvent %))
-                     (.stopPropagation (.-nativeEvent %))
-                     )
-        :role "button"
-        :tabIndex -1
-        :data-trigger "focus"
-        :data-toggle "popover"
-        :title title
-        :data-html "true"
-        :data-content (:content header)
+        :on-click       (fn [event]
+                          (put! event-bus [:info-clicked column-key])
+                          (.preventDefault (.-nativeEvent event))
+                          (.stopPropagation (.-nativeEvent event))
+                          )
+        :role           "button"
+        :tabIndex       -1
+        :data-trigger   "focus"
+        :data-toggle    "popover"
+        :title          title
+        :data-html      "true"
+        :data-content   (:content header)
         :data-placement "bottom"
-        :style {:cursor "pointer"}} [:i.fa.fa-info]]
+        :style          {:cursor "pointer"}} [:i.fa.fa-info]]
       [:br {:key :br}]
       title
 

@@ -15,9 +15,9 @@
 (defrecord  Nav-item [long-title short-title class icon])
 
 
-(def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-intro" "home")
-                :data  (Nav-item. "Results Table" "Data" "nav-data" "table")
-                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-faqs" "question")})
+(def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-item intro" "home")
+                :data  (Nav-item. "Results Table" "Data" "nav-item data" "table")
+                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-item faqs" "question")})
 
 (rum/defc nav-link [active-key key]
   (let [nav-item (key nav-items)]
@@ -30,7 +30,7 @@
 
   (let [nav-item (active-key nav-items)]
     [:div.simple-navbar
-     [:h1 {:class (str "simple-title " (:class nav-item))}
+     [:h1 {:class (str "simple-title " (:class (active-key nav-items)))}
       (:long-title nav-item)]
      [:div.simple-buttons.pull-right
       (for [k (keys nav-items)]
@@ -45,8 +45,8 @@
    {:style
     {:width "100%"
      :height (if deep "250px" "80px")
-     :background-color "#343456"
-     :color "#B3B3DE"
+     :background-color "#475E63"
+     :color "rgba(255,255,255,0.5)"
      :position "relative"
      }}
    (when deep
