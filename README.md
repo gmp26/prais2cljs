@@ -2,11 +2,15 @@
 
 Communicating the risks of infant surgery.
 
-## Development setup
+## Development builds
+
+
+There are two development builds - one for [devcards](https://github.com/bhauman/devcards) and one for the PRAIS2 site. The devcards build is good for testing and visualising code and site components. You can switch between these two options at run time.
+
 
 This is a ClojureScript project. To create a development environment from scratch you will need to install:
 
-* A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
+* A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
 * Leiningen. Follow [these installation instructions](http://leiningen.org/), which will provide the `lein` command.
 * A suitable text editor. I use emacs with an [emacs-live set up](http://overtone.github.io/emacs-live/) for clojurescript development. You may prefer Sublime or LightTable or IntelliJ with the Cursive plugin for Clojure. 
 >
@@ -16,9 +20,22 @@ git clone https://github.com/gmp26/prais2cljs.git prais2
 cd prais2
 lein figwheel
 ```
-in a terminal or command line window. This will download and install all other dependencies and launch a local developemnt server. Open your browser at http://localhost:3449 to view. Once a browser connects you will have a REPL executing there allowing you to test cljs functions in situ. Use clojure's `in-ns` function to switch namespace to the source file you are working on. Source maps are provided so you are able to step through clojurescript code in Chrome Developer Tools.
+in a terminal or command line window. This will download and install all other dependencies and launch a local development server. 
 
-[Figwheel](https://github.com/bhauman/lein-figwheel) gives you live reloading into the browser. It's brilliant.
+### Switching builds
+
+In a REPL, say `(switch-to-build :devcards)` or `(switch-to-build :dev)`.
+
+### To work with devcards
+
+Open your browser at http://localhost:3449/cards.html to view. Once a browser connects you will have a REPL executing there allowing you to test cljs functions in situ. Use clojure's `in-ns` function to switch namespace to the source file you are working on. Source maps are provided so you are able to step through clojurescript code in Chrome Developer Tools.
+
+### To work with the site
+Open your browser at http://localhost:3449/index.html to view.
+
+In both development builds, 
+[Figwheel](https://github.com/bhauman/lein-figwheel) gives you live reloading into the browser. 
+
 
 Production build
 ----------------
