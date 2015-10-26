@@ -12,7 +12,7 @@
 ;;;
 
 (def table1-data
-  [(Row. (Header. "Hospital"                    true       true    200   50
+  [(Row. (Header. "Hospital"                    true       true    300   50
                   "The hospital name")
          (Header. "Hospital Code"               false      true    77   50
                   "Hospital code as used by NICOR")

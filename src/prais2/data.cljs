@@ -395,10 +395,7 @@
             :data-placement "bottom"
             :style          {:cursor "pointer"}} [:i.fa.fa-info]]))
       [:br {:key :br}]
-      title
-
-
-      ])])
+      title])])
 
 (rum/defc table-head < rum/static [app ap headers column-keys event-bus slider-axis-value]
 
@@ -472,7 +469,22 @@
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))}}
-              (str (column-key row) (if (= column-key :survival-rate) " %" ""))])
+
+              (if (= column-key :h-name)
+                [:button.btn.btn-primary.btn-xs.info
+                 {:style  {:cursor "pointer"
+                           :margin "5px 10px 0px 0px"
+                           :display "inline-block"
+                           :height "100%"
+                           }}
+                 [:i.fa.fa-info]
+                 " "
+                 (:h-code row)
+                 ])
+              [:div {:style {:display "inline"}}
+               (str
+                (column-key row)
+                (if (= column-key :survival-rate) " %" ""))]])
            (rum/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 

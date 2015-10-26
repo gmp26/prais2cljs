@@ -31,7 +31,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 * Add annotated (with key) example of a data bar to introductory page
 
 ####Data page
-* Worry about smal devices.
+* Worry about small devices
 * Two end-colour theme
 * Add summary sentence at end of table
 * Move row cick to Hospital i icon click
@@ -42,11 +42,13 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 * EB-test Darker shade on inner or outer bar
 * EB-test Colour fade out at edges of the outer bars
 * Consider merging Hospital and Hospital Code column and add details of location: eg Hospital, Location (Hospital code)
-* Remove hospital name ‘i’
 * Add information to ‘i’ of each column explaining why ‘Number of Deaths’, ‘Number of Survivors’ or ‘Observed Survival Rate’ are not order able
 * MP to experiment with reducing table size & embedding it with surrounding text
 * EB to test this
 * EJ & JT to test with further user-testing
+
+* <s>Remove hospital name ‘i’</s>
+
 
 ###Faqs -> Understanding the data
 * Layout changes to FAQs:
