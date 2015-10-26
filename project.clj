@@ -1,26 +1,39 @@
-(defproject prais2 "0.1.0"
-  :description "FIXME: write this!"
-  :url "http://example.com/FIXME"
+(defproject prais2 "0.5.1"
+  :description "Communicating the risks of infant surgery"
+  :url "http://understandinguncertainty.org/files/animations/standalone/PRAIS2v0-5/index.html"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122"]
                  [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [devcards "0.2.0-8"] ; devcards only
+                 [sablono "0.3.6"]    ; devcards only
                  [secretary "1.2.3"]
                  [cljsjs/react "0.13.3-1"]
+                 ; [cljsjs/react "0.14.0-0"] released, but Rum is not using it yet
                  [rum "0.5.0"]
                  [jayq "2.5.4"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-figwheel "0.4.0-SNAPSHOT"]]
+            [lein-figwheel "0.4.1"]]
 
   :source-paths ["src"]
 
-  :clean-targets ^{:protect false} ["resources/public/js/out" "resources/public/js/compiled" "target"]
+  :clean-targets ^{:protect false} ["resources/public/js/compiled"
+                                    "target"]
 
   :cljsbuild {
-    :builds [{:id "dev"
+    :builds [{:id "devcards"
+              :source-paths ["src"]
+              :figwheel { :devcards true }
+              :compiler { :main       "prais2.devcards"
+                         :asset-path "js/compiled/devcards_out"
+                         :output-to  "resources/public/js/compiled/devcards.js"
+                         :output-dir "resources/public/js/compiled/devcards_out"
+                         :source-map-timestamp true }}
+
+             {:id "dev"
               :source-paths ["src"]
 
               :figwheel {:websocket-host "localhost"
@@ -38,6 +51,7 @@
                          :warnings {:single-segment-namespace false}
                          :source-map-timestamp true
                          :optimizations :none}}
+
              {:id "min"
               :source-paths ["src"]
               :compiler {:output-to "resources/public/js/compiled/prais2.js"

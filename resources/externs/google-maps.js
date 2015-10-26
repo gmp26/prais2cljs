@@ -95,6 +95,7 @@ google.maps.Circle.prototype.getDraggable = function() {};
 
 /**
  * @nosideeffects
+
  * @return {boolean}
  */
 google.maps.Circle.prototype.getEditable = function() {};
