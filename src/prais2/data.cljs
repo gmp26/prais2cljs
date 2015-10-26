@@ -217,7 +217,8 @@
                                 :width (px 20)
                                 :height (px 50)
                                 :color "#149BDF"
-                                :background-color "#ffffff"
+                                :background-color "rgba(200, 200, 200, 0.3)"
+                                :box-shadow "2px 0px 5px #000000"
                                 :padding-top (px 16)
                                 :cursor "pointer"
                                 }} [:i.fa.fa-chevron-left]])
@@ -333,7 +334,6 @@
   (.log js/console state)
   (let [s [:#slider.slider
            [:input {:type "text"
-                                        ;:data-slider-value value
                     :data-slider-min min
                     :data-slider-max max
                     :data-slider-step step
@@ -377,7 +377,7 @@
              :style {;:pointer-events "none"
                      :background-color "none !important"
                      :color "white !important"}}
-      [:a.btn.btn-primary.btn-xs
+      [:a.btn.btn-primary.btn-xs.info
        {
         :on-click       (fn [event]
                           (put! event-bus [:info-clicked column-key])

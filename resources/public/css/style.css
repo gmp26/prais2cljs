@@ -175,6 +175,12 @@ th {
     padding: 10px 10px 0px 10px !important;
 }
 
+/* header info buttons */
+a.btn.btn-primary.btn-xs.info {
+    color: white;
+}
+
+
 th:first-child {
     min-width: 200px;
 }
