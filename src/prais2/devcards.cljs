@@ -31,7 +31,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 * Add annotated (with key) example of a data bar to introductory page
 
 ####Data page
-
+* Worry about smal devices.
 * Two end-colour theme
 * Add summary sentence at end of table
 * Move row cick to Hospital i icon click
