@@ -8,19 +8,27 @@
    [prais2.chrome :as chrome]
    [prais2.intro :refer [render-intro]]
    [prais2.faqs :refer [render-faqs]]
+   [prais2.main :refer [render-404
+                        debug
+                        render-table
+                        ]]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
 
 (enable-console-print!)
 
-
-(rum/defc rum-test []
-  [:div
-   [:h1 "This is your first devcard!"]])
-
+(defcard tests
+  "#Test suite
+This is based on Bruce Hauman's devcards package so we can interleave REPL tests with visual test cards with markdown notes.")
 
 
-(defcard test-rum
-  (rum-test)
+(defcard show-404
+  (render-404)
   )
+
+(defcard show-app-state
+  (debug))
+
+(defcard render-table
+  (render-table "data"))

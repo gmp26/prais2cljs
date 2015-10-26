@@ -148,7 +148,8 @@
 ;;
 ;; mount main component on html app element
 ;;
-(rum/mount (app-container) (el "app"))
+(if-let [mount-point (el "app")]
+  (rum/mount (app-container) mount-point))
 
 
 ;;;
