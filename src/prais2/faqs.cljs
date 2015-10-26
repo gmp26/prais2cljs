@@ -18,7 +18,7 @@
       [:dt "Chance factors"]
       [:dd "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “chance factors”."]]
 
-     [:.really-two-cols
+     [:.two-col
       [:h2#section]
       [:.no-break
        [:h2#q1.-why-do-some-children-need-heart-surgery

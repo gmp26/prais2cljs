@@ -358,8 +358,8 @@
   #_(prn "table-header called " background)
   [:th {:on-click #(do (when (:sortable header)
                          (put! event-bus [:sort-toggle column-key]))
-                       (.stopPropagation (.-nativeEvent %))
-                       (.preventDefault (.-nativeEvent %))
+                       (.stopPropagation %)
+                       (.preventDefault %)
                        )
         :style {:width (px (:width header))
                 :vertical-align "top"
@@ -374,25 +374,26 @@
                                  :style {:pointer-events "none"}}])
    (let [title (:title header)]
      [:span {:key :text
-             :style {;:pointer-events "none"
-                     :background-color "none !important"
+             :style {:background-color "none !important"
                      :color "white !important"}}
-      [:a.btn.btn-primary.btn-xs.info
-       {
-        :on-click       (fn [event]
-                          (put! event-bus [:info-clicked column-key])
-                          (.preventDefault (.-nativeEvent event))
-                          (.stopPropagation (.-nativeEvent event))
-                          )
-        :role           "button"
-        :tabIndex       -1
-        :data-trigger   "focus"
-        :data-toggle    "popover"
-        :title          title
-        :data-html      "true"
-        :data-content   (:content header)
-        :data-placement "bottom"
-        :style          {:cursor "pointer"}} [:i.fa.fa-info]]
+      (when (not= column-key :h-name)
+        (let [info-handler (fn [event]
+                            (put! event-bus [:info-clicked column-key])
+                            (.preventDefault event)
+                            (.stopPropagation event)
+                            )]
+          [:a.btn.btn-primary.btn-xs.info
+           {:on-click       info-handler
+            :on-touch-end   info-handler
+            :role           "button"
+            :tabIndex       -1
+            :data-trigger   "focus"
+            :data-toggle    "popover"
+            :title          title
+            :data-html      "true"
+            :data-content   (:content header)
+            :data-placement "bottom"
+            :style          {:cursor "pointer"}} [:i.fa.fa-info]]))
       [:br {:key :br}]
       title
 

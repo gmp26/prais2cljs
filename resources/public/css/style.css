@@ -476,22 +476,7 @@ td:first-child {
     width: 500px;
 }
 
-/*
-#intro {
-    margin: 0 50px;
-}
 
-#intro tr {
-    height: 40px;
-}
-
-#intro td a {
-    text-align: left !important;
-    margin: 30px;
-    padding: 20px;
-}
-
-*/
 .two-col {
     /*-webkit-columns: 2 !important;
     -webkit-column-count: 2 !important; */
@@ -499,15 +484,6 @@ td:first-child {
     -webkit-column-width: 24em;
     -moz-column-width: 24em;
 }
-
-.really-two-cols {
-/*    -webkit-columns: 2;
-    columns: 2; */
-    column-width: 24em;
-    -webkit-column-width: 24em;
-    -moz-column-width: 24em;
-}
-
 
 .no-break {
     -webkit-column-break-inside:avoid;
