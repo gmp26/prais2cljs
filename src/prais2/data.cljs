@@ -211,7 +211,7 @@
         dotty (:dot bars)
         dotless (disj bars :dot)]
     [:td
-     (when (> slider 0) [:div {:on-click put-morph-full-range
+     #_(when (> slider 0) [:div {:on-click #(core/click->event-bus % :morph-full-range :slider)
                                :style
                                {:position "absolute"
                                 :width (px 20)
@@ -356,11 +356,9 @@
 
 (rum/defc table-header < rum/static bs-tooltip bs-popover [background ap header column-key event-bus]
   #_(prn "table-header called " background)
-  [:th {:on-click #(do (when (:sortable header)
-                         (put! event-bus [:sort-toggle column-key]))
-                       (.stopPropagation %)
-                       (.preventDefault %)
-                       )
+  [:th {:on-click #(when (:sortable header)
+                     (core/click->event-bus % :sort-toggle column-key))
+
         :style {:width (px (:width header))
                 :vertical-align "top"
                 :cursor (if (:sortable header) "pointer" "auto")
@@ -458,10 +456,7 @@
        [:tbody {:key :tbody}
         (for [row rows]
           [:tr {:key (:h-code row)
-                :on-click #(put! event-bus [:row-clicked row])
-                :data-toggle "modal"
-                :data-target "#rowModal"
-                :data-h-code (:h-code row)
+
                 :class (if (= row (:selected-row ap)) "info" "")}
            (for [column-key column-keys
                  :let [column-header (column-key headers)]
@@ -469,22 +464,20 @@
              [:td {:key [column-key "r"]
                    :style {:width (px (:width column-header))
                            :height (px (:height column-header))}}
-
-              (if (= column-key :h-name)
-                [:button.btn.btn-primary.btn-xs.info
-                 {:style  {:cursor "pointer"
-                           :margin "5px 10px 0px 0px"
-                           :display "inline-block"
-                           :height "100%"
-                           }}
-                 [:i.fa.fa-info]
-                 " "
-                 (:h-code row)
-                 ])
-              [:div {:style {:display "inline"}}
+              [:div {:style {:display "inline-block"
+                             :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
                (str
                 (column-key row)
-                (if (= column-key :survival-rate) " %" ""))]])
+                (when (= column-key :survival-rate) " %" ""))]
+
+              (when (= column-key :h-name)
+                [:button.btn.btn-link.btn-xs.h-info
+                 {:on-click #(core/click->event-bus % :open-hospital-modal row)
+                  }
+                 (:h-code row)
+                 " "
+                 [:i.fa.fa-chevron-right]
+                 ])])
            (rum/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
 
 
@@ -595,6 +588,15 @@
   )
 
 
+(defn open-hospital-modal
+  [row]
+  (swap! core/app #(assoc % :selected-row row))
+  (.modal ($ "#rowModal")))
+
+(defn close-hospital-modal
+  []
+  (swap! core/app #(assoc % :selected-row nil))
+  (.modal ($ "#rowModal") "hide")  )
 
 (rum/defc modal  < rum/reactive bs-tooltip []
   (let [selected-row (:selected-row (rum/react core/app))]
@@ -621,8 +623,9 @@
         (interpretation selected-row)]
 
        [:.modal-footer
-        [:button.btn.btn-default {:type "button"
-                                  :data-dismiss "modal"}
+        [:button.btn.btn-default
+         {:type "button"
+          :on-click #(core/click->event-bus % :close-hospital-modal selected-row)}
          "Close"]
         ]]]
      ]))

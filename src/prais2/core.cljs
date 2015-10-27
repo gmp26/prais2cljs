@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.core
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
   (:require [rum.core :as r]
-            [cljs.core.async :refer [chan <! pub]]
+            [cljs.core.async :refer [chan <! pub put!]]
             [goog.events :as events]
             [cljsjs.react :as react]
             [prais2.fps :refer [fps]]
@@ -38,3 +38,18 @@
 ;;;
 (def event-bus (chan))
 (def event-bus-pub (pub event-bus first))
+
+;;;
+;; generic click handler
+;; we may need to add some touch handling here too
+;;;
+(defn click->event-bus
+  [event dispatch-key dispatch-value]
+  (prn "dispatch")
+  (put! event-bus [dispatch-key dispatch-value])
+  (.preventDefault event)
+  (.stopPropagation event)
+  )
+
+;; get element by id
+(defn el [id] (.getElementById js/document id))

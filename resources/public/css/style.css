@@ -295,6 +295,23 @@ td:first-child {
     color: #ffffff;
 }
 
+/* button which opens hospital info modal */
+.h-info {
+    cursor: pointer;
+    float: right;
+    display: inline-block;
+    width: 45px;
+    height: 100%;
+    border: 1px solid #2e6da4;;
+    border-radius: 5px;
+    padding: 2px 0;
+}
+.h-info:hover {
+    background-color: #337ab7;
+    color: white;
+    text-decoration: none;
+}
+
 .modal-open .modal {
     overflow-x: visible;
     overflow-y: visible;

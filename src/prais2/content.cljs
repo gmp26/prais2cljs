@@ -14,7 +14,7 @@
 (def table1-data
   [(Row. (Header. "Hospital"                    true       true    300   50
                   "The hospital name")
-         (Header. "Hospital Code"               false      true    77   50
+         (Header. "Hospital Code"               false      false    77   50
                   "Hospital code as used by NICOR")
          (Header. "Number of Operations"        true       true     95   50
                   "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014")

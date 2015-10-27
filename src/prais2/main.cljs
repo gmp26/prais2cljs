@@ -20,9 +20,6 @@
 
 (enable-console-print!)
 
-(defn el [id] (.getElementById js/document id))
-
-
 (defn select
   "Return the first matching DOM element selected by the CSS selector. "
   [selector]
@@ -148,7 +145,7 @@
 ;;
 ;; mount main component on html app element
 ;;
-(if-let [mount-point (el "app")]
+(if-let [mount-point (core/el "app")]
   (rum/mount (app-container) mount-point))
 
 
@@ -188,9 +185,14 @@
             (fn [[_ value]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
-  (dispatch event-bus-pub :row-clicked
+  (dispatch event-bus-pub :open-hospital-modal
             (fn [[_ row]]
-              (swap! core/app #(assoc % :selected-row row))))
+              (prn "dispatching")
+              (data/open-hospital-modal row)))
+
+  (dispatch event-bus-pub :close-hospital-modal
+            (fn [_]
+              (data/close-hospital-modal)))
 
 
   (dispatch event-bus-pub :morph-full-range
