@@ -20,10 +20,11 @@
                 :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-item faqs" "question")})
 
 (rum/defc nav-link [active-key key]
-  (let [nav-item (key nav-items)]
+  (let [nav-item (key nav-items)
+        click-handler #(core/click->event-bus % key nil)]
     [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
-                    :on-click #(do (put! event-bus [key nil])
-                                                   (.stopPropagation (.-nativeEvent %)))}
+                    :on-click click-handler
+                    :on-touch-end click-handler}
      [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))]))
 
 (rum/defc nav-bar [active-key]

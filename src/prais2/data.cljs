@@ -330,8 +330,7 @@
                      (dissoc state ::slider ::handler)))})
 
 (rum/defcs slider-control < bs-slider rum/static [state value event-bus min max step]
-  (prn "called slider-control with " value)
-  (.log js/console state)
+  #_(prn "called slider-control with " value)
   (let [s [:#slider.slider
            [:input {:type "text"
                     :data-slider-min min
@@ -356,44 +355,41 @@
 
 (rum/defc table-header < rum/static bs-tooltip bs-popover [background ap header column-key event-bus]
   #_(prn "table-header called " background)
-  [:th {:on-click #(when (:sortable header)
-                     (core/click->event-bus % :sort-toggle column-key))
-
-        :style {:width (px (:width header))
-                :vertical-align "top"
-                :cursor (if (:sortable header) "pointer" "auto")
-                :background-color background
-                :color "#ffffff !important"
-                }}
-   (when (:sortable header) [:i {:key :icon
-                                 :class (str  "right fa fa-sort"
-                                              (if (= column-key (:sort-by ap))
-                                                (if (:sort-ascending ap) "-asc" "-desc") ""))
-                                 :style {:pointer-events "none"}}])
-   (let [title (:title header)]
-     [:span {:key :text
-             :style {:background-color "none !important"
-                     :color "white !important"}}
-      (when (not= column-key :h-name)
-        (let [info-handler (fn [event]
-                            (put! event-bus [:info-clicked column-key])
-                            (.preventDefault event)
-                            (.stopPropagation event)
-                            )]
-          [:a.btn.btn-primary.btn-xs.info
-           {:on-click       info-handler
-            :on-touch-end   info-handler
-            :role           "button"
-            :tabIndex       -1
-            :data-trigger   "focus"
-            :data-toggle    "popover"
-            :title          title
-            :data-html      "true"
-            :data-content   (:content header)
-            :data-placement "bottom"
-            :style          {:cursor "pointer"}} [:i.fa.fa-info]]))
-      [:br {:key :br}]
-      title])])
+  (let [sort-handler #(when (:sortable header)
+                        (core/click->event-bus % :sort-toggle column-key))]
+    [:th {:on-click sort-handler
+          :on-touch-end sort-handler
+          :style {:width (px (:width header))
+                  :vertical-align "top"
+                  :cursor (if (:sortable header) "pointer" "auto")
+                  :background-color background
+                  :color "#ffffff !important"
+                  }}
+     (when (:sortable header) [:i {:key :icon
+                                   :class (str  "right fa fa-sort"
+                                                (if (= column-key (:sort-by ap))
+                                                  (if (:sort-ascending ap) "-asc" "-desc") ""))
+                                   :style {:pointer-events "none"}}])
+     (let [title (:title header)]
+       [:span {:key :text
+               :style {:background-color "none !important"
+                       :color "white !important"}}
+        (when (not= column-key :h-name)
+          (let [info-handler #(core/click->event-bus % :info-clicked column-key)]
+            [:a.btn.btn-primary.btn-xs.info
+             {:on-click       info-handler
+              :on-touch-end   info-handler
+              :role           "button"
+              :tabIndex       -1
+              :data-trigger   "focus"
+              :data-toggle    "popover"
+              :title          title
+              :data-html      "true"
+              :data-content   (:content header)
+              :data-placement "bottom"
+              :style          {:cursor "pointer"}} [:i.fa.fa-info]]))
+        [:br {:key :br}]
+        title])]))
 
 (rum/defc table-head < rum/static [app ap headers column-keys event-bus slider-axis-value]
 
@@ -454,7 +450,8 @@
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
-        (for [row rows]
+        (for [row rows
+              :let [info-handler #(core/click->event-bus % :open-hospital-modal row)]]
           [:tr {:key (:h-code row)
 
                 :class (if (= row (:selected-row ap)) "info" "")}
@@ -472,8 +469,8 @@
 
               (when (= column-key :h-name)
                 [:button.btn.btn-link.btn-xs.h-info
-                 {:on-click #(core/click->event-bus % :open-hospital-modal row)
-                  }
+                 {:on-click info-handler
+                  :on-touch-end info-handler}
                  (:h-code row)
                  " "
                  [:i.fa.fa-chevron-right]
@@ -599,7 +596,8 @@
   (.modal ($ "#rowModal") "hide")  )
 
 (rum/defc modal  < rum/reactive bs-tooltip []
-  (let [selected-row (:selected-row (rum/react core/app))]
+  (let [selected-row (:selected-row (rum/react core/app))
+        close-handler #(core/click->event-bus % :close-hospital-modal selected-row)]
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"
                             :aria-labelledby "myModalLabel"
@@ -608,7 +606,8 @@
       [:.modal-content
        [:.modal-header
         [:button.close {:type"button"
-                        :data-dismiss "modal"
+                        :on-click close-handler
+                        :on-touch-end close-handler
                         :aria-label "Close"}
          [:span {:aria-hidden "true"
                  :dangerouslySetInnerHTML {:__html "&times;"}}]]
@@ -625,7 +624,8 @@
        [:.modal-footer
         [:button.btn.btn-default
          {:type "button"
-          :on-click #(core/click->event-bus % :close-hospital-modal selected-row)}
+          :on-click close-handler
+          :on-touch-end close-handler}
          "Close"]
         ]]]
      ]))
