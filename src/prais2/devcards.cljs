@@ -26,6 +26,11 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   "##For November
 
 
+###General
+* Addressable content - esp FAQs
+* * *
+* <s>use touch-start rather than touch-end with on-click</s>
+
 ###Intro page
 * Include option to click out to further information to ensure content is not lost (ie highlight relevant FAQ)
 * Add annotated (with key) example of a data bar to introductory page
@@ -34,24 +39,25 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 * Worry about small devices
 * Two end-colour theme
 * Add summary sentence at end of table
-* Move row cick to Hospital i icon click
 * Add click to bar chart hover
 * Some kind of fade-out indicator on left side of bar charts
 * Sample data (uploadable data)
 * EB-test Colour of bars
 * EB-test Darker shade on inner or outer bar
 * EB-test Colour fade out at edges of the outer bars
-* Consider merging Hospital and Hospital Code column and add details of location: eg Hospital, Location (Hospital code)
 * Add information to ‘i’ of each column explaining why ‘Number of Deaths’, ‘Number of Survivors’ or ‘Observed Survival Rate’ are not order able
 * MP to experiment with reducing table size & embedding it with surrounding text
 * EB to test this
 * EJ & JT to test with further user-testing
-
-* <s>Remove hospital name ‘i’</s>
+* * *
+- <s>Consider merging Hospital and Hospital Code column and add details of location: eg Hospital, Location (Hospital code)</s>
+- <s>Remove hospital name ‘i’</s>
+- <s>Move row cick to Hospital i icon click</s>
 
 
 ###Faqs -> Understanding the data
 * Layout changes to FAQs:
+* FAQs should be addressable somehow - maybe in popovers/accordions...
 * Remove columns to ensure clear, chronological layout
 * Add concertina or index list
 * Update the title of FAQ section to ‘Understanding the data’

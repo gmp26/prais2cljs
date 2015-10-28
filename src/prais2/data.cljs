@@ -4,58 +4,10 @@
               [cljs.core.async :refer [put!]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
+              [prais2.utils :as u :refer [px pc important key-with]]
               [clojure.string :as str]
               )
     (:require-macros [jayq.macros :refer [ready]]))
-
-;;;
-;; utils
-;;;
-(defn px
-  "value to pixel string"
-  [value]
-  (str value "px"))
-
-(defn pc
-  "value to percent string"
-  [value]
-  (when value (str/replace  (str (.toPrecision value 3) "%") #"[.]0?0" "")))
-
-(defn important
-  "tack !important on a string value"
-  [str-val]
-  (str str-val " !important")
-  )
-
-(defn key-with
-  "useful for mapping react keys to a content vector"
-  [a b] (rum/with-key b a))
-
-;;;
-;;
-;; Sample jQuery usage:
-;;  Attach the jQuery plugin only after React has mounted the selected element and jQuery has loaded.
-;;
-;; This indicates how we can use an off-the shelf DataTable fro jQuerey if it does what we want. It's likely
-;; that we will create our own however.
-;;
-;;;
-
-(defn data-table-on
-  "returns a rum mixin to add jQuery DataTable to a table element once it is mounted"
-  [selector]
-  {:did-mount (fn [state]
-                (ready
-                 (.DataTable ($ selector)
-                             (clj->js {:paging false
-                                       :autoWidth false
-                                       :columnDefs [{
-                                                 :width "50%"
-                                                 :target "0"
-                                                 }]
-                                       })))
-                state)})
-
 
 (defn sort-on-column
   "sort a column"
@@ -69,8 +21,7 @@
 
 (defn handle-sort
   "handle sort click"
-  [
-   app column-key]
+  [app column-key]
   (let [ap @app]
     (sort-on-column app column-key)))
 
@@ -98,20 +49,8 @@
   (* value (bar-scale slider))
   )
 
-
 (defn colour-map [theme] (content/colour-map-options theme))
 
-
-(defn log-transform
-  "apply a log transform to the raw slider value"
-  [input]
-  (/ (Math.log10 (inc input)) 2))
-
-
-(defn exp-transform
-  "invert the log transform"
-  [output]
-  (dec (Math.pow 10 (* output 2))))
 
 
 ;; test square: insert to check mixin behviour
@@ -358,7 +297,7 @@
   (let [sort-handler #(when (:sortable header)
                         (core/click->event-bus % :sort-toggle column-key))]
     [:th {:on-click sort-handler
-          :on-touch-end sort-handler
+          :on-touch-start sort-handler
           :style {:width (px (:width header))
                   :vertical-align "top"
                   :cursor (if (:sortable header) "pointer" "auto")
@@ -378,7 +317,7 @@
           (let [info-handler #(core/click->event-bus % :info-clicked column-key)]
             [:a.btn.btn-primary.btn-xs.info
              {:on-click       info-handler
-              :on-touch-end   info-handler
+              :on-touch-start   info-handler
               :role           "button"
               :tabIndex       -1
               :data-trigger   "focus"
@@ -470,7 +409,7 @@
               (when (= column-key :h-name)
                 [:button.btn.btn-link.btn-xs.h-info
                  {:on-click info-handler
-                  :on-touch-end info-handler}
+                  :on-touch-start info-handler}
                  (:h-code row)
                  " "
                  [:i.fa.fa-chevron-right]
@@ -607,7 +546,7 @@
        [:.modal-header
         [:button.close {:type"button"
                         :on-click close-handler
-                        :on-touch-end close-handler
+                        :on-touch-start close-handler
                         :aria-label "Close"}
          [:span {:aria-hidden "true"
                  :dangerouslySetInnerHTML {:__html "&times;"}}]]
@@ -625,7 +564,7 @@
         [:button.btn.btn-default
          {:type "button"
           :on-click close-handler
-          :on-touch-end close-handler}
+          :on-touch-start close-handler}
          "Close"]
         ]]]
      ]))

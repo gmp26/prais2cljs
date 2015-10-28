@@ -41,7 +41,7 @@
 
 ;;;
 ;; generic click handler
-;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-end to click
+;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
 ;;;
 (defn click->event-bus
   [event dispatch-key dispatch-value]

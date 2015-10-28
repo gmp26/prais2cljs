@@ -24,7 +24,7 @@
         click-handler #(core/click->event-bus % key nil)]
     [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
                     :on-click click-handler
-                    :on-touch-end click-handler}
+                    :on-touch-start click-handler}
      [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))]))
 
 (rum/defc nav-bar [active-key]

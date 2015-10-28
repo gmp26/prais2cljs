@@ -13,6 +13,7 @@
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.faqs :refer [render-faqs]]
+              [prais2.utils :refer [key-with]]
               [jayq.core :refer ($)])
     )
 
@@ -47,8 +48,7 @@
   {:did-mount (fn [state]
                 (ready
                  (.popover ($ "[data-toggle=\"popover\"]")))
-                state)
-   })
+                state)})
 
 ;; mixin to initialise bootstrap tooltip code code
 (def bs-tooltip
@@ -57,10 +57,8 @@
                  (.tooltip ($ "[data-toggle=\"tooltip\"]")))
                 state)})
 
-
 (rum/defc render-404 []
   [:h1 "Page not found"])
-
 
 ;;
 ;; Code snippet to remove columns from table
@@ -76,7 +74,7 @@
   (let [data content/table1-data
         ]
     [:div
-     (map-indexed data/key-with
+     (map-indexed key-with
                   [(data/modal)
                    (data/table1 core/app data event-bus)
                    (data/option-menu event-bus)])]))
@@ -105,7 +103,7 @@
        (= page :intro)
        (do
          (aset js/location "href" (routes/intro))
-         (map-indexed data/key-with
+         (map-indexed key-with
                       [(chrome/header true)
                        (render-intro section)
                        (chrome/footer)])
@@ -114,7 +112,7 @@
        (= page :data)
        (do
          (aset js/location "href" (routes/data))
-         (map-indexed data/key-with
+         (map-indexed key-with
                       [(chrome/header)
                        (render-table section)
                        (chrome/footer)]))
@@ -122,7 +120,7 @@
        (= page :faqs)
        (do
          (aset js/location "href" (routes/faqs))
-         (map-indexed data/key-with
+         (map-indexed key-with
                       [(chrome/header)
                        (render-faqs section)
                        (chrome/footer)]))
@@ -139,7 +137,7 @@
 ;;
 (rum/defc app-container < bs-popover bs-tooltip rum/reactive []
   [:div
-   (map-indexed data/key-with [(render-page) (debug)])]
+   (map-indexed key-with [(render-page) (debug)])]
 )
 
 ;;
