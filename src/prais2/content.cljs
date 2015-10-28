@@ -81,6 +81,46 @@
    :high "There is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
    })
 
+(def faqs
+  [
+   {:id :faq1
+    :title "Why do some children need heart surgery?"
+    :body [:.well
+           [:p
+            "Each year in the UK, about 7000 babies are born with a heart defect (called congenital heart disease). Congenital heart disease covers a wide range of problems from the relatively minor (such as a small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also develop problems with their heart as they grow up (for instance, through an infection) and also require hospital care (called acquired heart disease)."
+            ]
+           ]
+    }
+
+   {:id :faq2
+    :title "Why are survival rates monitored and published?"
+    :body [:.well
+        [:p
+         "In the 1990s, there were found to be problems with the standard of care for children having heart surgery at the Bristol Royal Infirmary with the proportion of children who died after surgery at Bristol being much higher than in other UK hospitals. The formal inquiry into the what happened ("
+         [:a
+          {:href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"}
+          "The Bristol Inquiry 2001"]
+         ") led to a number of changes, including a new compulsory national reporting system so that the proportion of children surviving to 30 days after surgery for all hospitals were published every year. Results that appear unusual compared to the rest of the UK are then checked further by the national audit body (NICOR)."]
+        [:p
+         "Until 2013, NICOR only published survival rates for certain types of procedure because there was not a good way of putting overall survival rates into context (see above). But recent "
+         [:a
+          {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"}
+          "research "]
+         "has made this possible, and since 2013 NICOR has been publishing overall survival rates along with the “predicted range” for survival using the statistical model (see above). The calculation of the predicted range uses the same statistical method for all hospitals and is calculated without knowing what the survival rate at a hospital actually was."]
+        [:p
+         "The UK now has one of the strongest monitoring programmes in the world. Also,since reporting started, "
+         [:a
+          {:href "http://www.bbc.co.uk/news/health-32162803"}
+          "survival rates have been improving"]
+         " and now "
+         [:strong
+          "over"]
+         [:strong
+          "97% of children survive to at least one month after surgery"]
+         "."]]
+    }
+   ]
+  )
 
 
 
