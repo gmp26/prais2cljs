@@ -12,6 +12,14 @@
                         debug
                         render-table
                         ]]
+   [com.rpl.specter :as sp :refer [transform
+                                   select
+                                   filterer
+                                   collect-one
+                                   ALL
+                                   ODD
+                                   FIRST
+                                   LAST]]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -86,3 +94,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard render-table
   (render-table "data"))
+
+(defcard try-specter
+
+  )

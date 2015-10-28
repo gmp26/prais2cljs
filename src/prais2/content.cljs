@@ -81,6 +81,9 @@
    :high "There is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
    })
 
+
+
+
 ;;;
 ;; These theme colours are selectable in the footer (at least till we decide on one)
 ;;

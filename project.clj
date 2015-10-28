@@ -13,7 +13,8 @@
                  [cljsjs/react "0.13.3-1"]
                  ; [cljsjs/react "0.14.0-0"] released, but Rum is not using it yet
                  [rum "0.5.0"]
-                 [jayq "2.5.4"]]
+                 [jayq "2.5.4"]
+                 [com.rpl/specter "0.8.0"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
             [lein-figwheel "0.4.1"]]

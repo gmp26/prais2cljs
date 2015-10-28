@@ -1,6 +1,7 @@
 (ns ^:figwheel-always prais2.faqs
     (:require [rum.core :as rum]
-              [prais2.chrome :as chrome]))
+              [prais2.chrome :as chrome]
+              [prais2.content :as content :refer []]))
 
 (rum/defc render-faqs [section-id]
   [:.container
