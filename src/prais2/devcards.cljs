@@ -100,14 +100,23 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard render-table
   (render-table "data"))
 
-(defcard text-faq1
-  (rum-wrap (faq-content :faq1))
+(defcard faq-7-only
+  (rum-wrap (faq-content :faq7))
 )
 
-(defcard some-faqs
+(defcard basic-grouped-faqs
   (rum-wrap
    (faq-content :faq1)
    (faq-content :faq2)
    (faq-content :faq3)
    (faq-content :faq4)
+   (faq-content :faq5)
+   (faq-content :faq6)
+   (faq-content :faq7)
+   (faq-content :faq8)
+   (faq-content :faq9)
+   (faq-content :faq10)
+   (faq-content :faq11)
+   (faq-content :faq12)
+   (faq-content :faq13)
    ))
