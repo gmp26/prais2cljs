@@ -223,9 +223,10 @@
    [:p
     "The hospitals are listed below alongside links to their local family charities. "]
 
+   (map/hospitals)
+
    (hospital-charities)
 
-   ;(map/hospitals)
    ])
 
 

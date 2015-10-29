@@ -17,7 +17,7 @@
 
 (def nav-items {:intro (Nav-item. "Introduction" "Intro" "nav-item intro" "home")
                 :data  (Nav-item. "Results Table" "Data" "nav-item data" "table")
-                :faqs  (Nav-item. "Frequently Asked Questions" "FAQs" "nav-item faqs" "question")})
+                :faqs  (Nav-item. "Understanding the Data" "FAQs" "nav-item faqs" "question")})
 
 (rum/defc nav-link [active-key key]
   (let [nav-item (key nav-items)

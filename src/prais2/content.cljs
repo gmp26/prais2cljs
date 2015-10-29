@@ -81,8 +81,21 @@
    :high "There is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
    })
 
+(def terminology
+  ;;
+  ;; Appears at the top of the FAQs page in v0.5
+  ;;
+  [:.well.faqs
+      [:h3 "Terminology"]
+      [:dl
+       [:dt "Survival rate"]
+       [:dd "The percentage of operations where the child survived at least 30 days after their operation."]]
+      [:dt "Chance factors"]
+      [:dd "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “chance factors”."]])
+
 (def faqs
-  {:faq1 {:title "Why do some children need heart surgery?"
+  {:title "Understanding the Data"
+   :faq1 {:title "Why do some children need heart surgery?"
           :body [:div
                  [:p
                   "Each year in the UK, about 7000 babies are born with a heart defect (called congenital heart disease). Congenital heart disease covers a wide range of problems from the relatively minor (such as a small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also develop problems with their heart as they grow up (for instance, through an infection) and also require hospital care (called acquired heart disease)."
@@ -117,7 +130,7 @@
                   "."]]
           }
 
-   :faq3 {:title "What does the national audit body do?"
+   :faq3 {:title "Where is this data from?"
           :body [:div
                  [:p
                   [:a
@@ -266,7 +279,7 @@
     :header "#91bfdb"
     :dot "black"
     }
-   ;; theme 2
+   ;; theme 1
    {:low "rgba(255,255,255,0)"
     :inner "#efdf11"
     :outer-low "#fc8d59"
@@ -274,7 +287,7 @@
     :high "rgba(255,255,255,0)"
     :header "#fc8d59"
     :dot "black"}
-   ;; theme 3
+   ;; theme 2
    {:low "rgba(255,255,255,0)"
     :inner "#7fcdbb"
     :outer-low "#2c7fb8"
@@ -282,7 +295,7 @@
     :high "rgba(255,255,255,0)"
     :header "#2c7fb8"
     :dot "black"}
-   ;; theme 4
+   ;; theme 3
    {:low "rgba(255,255,255,0)"
     :inner "#3c8fc8"
     :outer-low "#7fcdbb"
@@ -290,7 +303,7 @@
     :high "rgba(255,255,255,0)"
     :header "#3c8fc8"
     :dot "black"}
-   ;; theme 5
+   ;; theme 4
    {:low "rgba(255,255,255,0)"
     :inner "#8FB4E1"
     :outer-low "#578FD2"
@@ -298,7 +311,7 @@
     :high "rgba(255,255,255,0)"
     :header "#578FD2"
     :dot "black"}
-   ;; theme 6
+   ;; theme 5
    {:low "rgba(255,255,255,0)"
     :inner "#578FD2"
     :outer-low "#8FB4E1"
@@ -306,4 +319,54 @@
     :high "rgba(255,255,255,0)"
     :header "#578FD2"
     :dot "black"
-    }])
+    }
+   {:low "rgba(255,255,255,0)"
+    :inner "#fc8d59"
+    :outer-low "#efdf11"
+    :outer-high "#92DEDB"
+    :high "rgba(255,255,255,0)"
+    :header "#91bfdb"
+    :dot "black"
+   }
+   ;; theme 6
+   {:low "rgba(255,255,255,0)"
+    :inner "#efdf11"
+    :outer-low "#fc8d59"
+    :outer-high "#7FCDBB"
+    :high "rgba(255,255,255,0)"
+    :header "#fc8d59"
+    :dot "black"}
+   ;; theme 7
+   {:low "rgba(255,255,255,0)"
+    :inner "#7fcdbb"
+    :outer-low "#2c7fb8"
+    :outer-high "#319470"
+    :high "rgba(255,255,255,0)"
+    :header "#2c7fb8"
+    :dot "black"}
+   ;; theme 8
+   {:low "rgba(255,255,255,0)"
+    :inner "#8FB4E1"
+    :outer-low "#578FD2"
+    :outer-high "#599464"
+    :high "rgba(255,255,255,0)"
+    :header "#578FD2"
+    :dot "black"}
+   ;; theme 3
+   {:low "rgba(255,255,255,0)"
+    :inner "#3c8fc8"
+    :outer-low "#7fcdbb"
+    :outer-high "#9BE45C"
+    :high "rgba(255,255,255,0)"
+    :header "#3c8fc8"
+    :dot "black"}
+      ;; theme 5
+   {:low "rgba(255,255,255,0)"
+    :inner "#578FD2"
+    :outer-low "#8FB4E1"
+    :outer-high "#9AE1A7"
+    :high "rgba(255,255,255,0)"
+    :header "#578FD2"
+    :dot "black"
+    }
+])
