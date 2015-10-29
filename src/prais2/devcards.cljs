@@ -1,29 +1,30 @@
 (ns prais2.devcards
   (:require
    [rum.core :as rum]
-   [prais2.core :as core :refer [event-bus event-bus-pub]]
+   [clojure.string :as str]
+   [prais2.core :as core :refer [event-bus event-bus-pub rum-wrap]]
    [prais2.routes :as routes]
    [prais2.content :as content :refer [faqs]]
    [prais2.data :as data]
    [prais2.chrome :as chrome]
    [prais2.intro :refer [render-intro]]
-   [prais2.faqs :refer [render-faqs
-                        ]]
+   [prais2.faqs :refer [faq-content
+                        render-faqs]]
    [prais2.main :refer [render-404
                         debug
                         render-table
                         ]]
-   [com.rpl.specter :as sp :refer [transform
-                                   select
-                                   filterer
-                                   collect
-                                   collect-one
-                                   putval
-                                   ALL
-                                   FIRST
-                                   LAST
-                                   VAL
-                                   ]]
+   ;; [com.rpl.specter :as sp :refer [transform
+   ;;                                 select
+   ;;                                 filterer
+   ;;                                 collect
+   ;;                                 collect-one
+   ;;                                 putval
+   ;;                                 ALL
+   ;;                                 FIRST
+   ;;                                 LAST
+   ;;                                 VAL
+   ;;                                 ]]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -99,6 +100,14 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard render-table
   (render-table "data"))
 
-(defcard try-specter
+(defcard text-faq1
+  (rum-wrap (faq-content :faq1))
+)
 
-  )
+(defcard some-faqs
+  (rum-wrap
+   (faq-content :faq1)
+   (faq-content :faq2)
+   (faq-content :faq3)
+   (faq-content :faq4)
+   ))

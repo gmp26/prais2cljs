@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.core
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
-  (:require [rum.core :as r]
+  (:require [rum.core :as rum]
             [cljs.core.async :refer [chan <! pub put!]]
             [goog.events :as events]
             [cljsjs.react :as react]
@@ -31,6 +31,12 @@
   [query]
   (.-matches (.matchMedia js/window query)))
 
+
+;;;
+;; wraps raw content in a div and returns a rum react element
+;;;
+(rum/defc rum-wrap [& content]
+  (apply conj [:div] content))
 
 ;;;
 ;; Define an event bus carrying [topic message] data

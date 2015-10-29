@@ -1,7 +1,25 @@
 (ns ^:figwheel-always prais2.faqs
     (:require [rum.core :as rum]
+              [clojure.string :as str]
               [prais2.chrome :as chrome]
-              [prais2.content :as content :refer []]))
+              [prais2.content :as content :refer [faqs]]))
+
+
+(defn faq-content [faq-key]
+  (let [faq (faq-key faqs)
+        faq-name (name faq-key)
+        faq-number (str/replace faq-name #"\D" "")]
+    [:div {:id faq-name}
+     [:h2
+      (str "Q" faq-number ": " (:title faq))]
+     [:.well
+      (:body faq)
+      ]]))
+
+(rum/defc faq-item [faq]
+  (faq-content faq)
+)
+
 
 (rum/defc render-faqs [section-id]
   [:.container

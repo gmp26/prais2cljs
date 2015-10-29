@@ -6,6 +6,7 @@
               [clojure.set :refer (intersection)]
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put!]]
+              [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus event-bus-pub]]
               [prais2.routes :as routes]
               [prais2.content :as content]
@@ -13,7 +14,6 @@
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.faqs :refer [render-faqs]]
-              [prais2.utils :refer [key-with]]
               [jayq.core :refer ($)])
     )
 
