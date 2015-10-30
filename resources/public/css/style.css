@@ -513,3 +513,13 @@ td:first-child {
 .bg-danger {
     padding: 10px;
 }
+
+
+/***
+ * MAP CSS
+ **/
+.ol-rotate {
+    opacity: 0 !important;
+
+    cursor: inherit !important;
+}
