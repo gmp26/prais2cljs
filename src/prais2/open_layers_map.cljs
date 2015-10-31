@@ -1,5 +1,6 @@
 (ns ^:figwheel-always prais2.open-layers-map
     (:require [rum.core :as rum]
+              [jayq.core :refer ($)]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               [prais2.content :as content]))
@@ -85,16 +86,131 @@
                            :layers [tileLayer vectorLayer]
                            :view mapView})))
 
+
+
+;; popup processing
+
+
+
+;; var element = document.getElementById('popup');
+
+;; var popup = new ol.Overlay({
+;;   element: element,
+;;   positioning: 'bottom-center',
+;;   stopEvent: false
+;; });
+;; map.addOverlay(popup);
+
+;; // display popup on click
+;; map.on('click', function(evt) {
+;;   var feature = map.forEachFeatureAtPixel(evt.pixel,
+;;       function(feature, layer) {
+;;         return feature;
+;;       });
+;;   if (feature) {
+;;     popup.setPosition(evt.coordinate);
+;;     $(element).popover({
+;;       'placement': 'top',
+;;       'html': true,
+;;       'content': feature.get('name')
+;;     });
+;;     $(element).popover('show');
+;;   } else {
+;;     $(element).popover('destroy');
+;;   }
+;; });
+
+;; // change mouse cursor when over marker
+;; map.on('pointermove', function(e) {
+;;   if (e.dragging) {
+;;     $(element).popover('destroy');
+;;     return;
+;;   }
+;;   var pixel = map.getEventPixel(e.originalEvent);
+;;   var hit = map.hasFeatureAtPixel(pixel);
+;;   map.getTarget().style.cursor = hit ? 'pointer' : '';
+;; });
+
+
+
 ;;
 ;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
 ;;
-(def map-view
-  {:did-mount #(assoc % :map (hospital-map))
-   :will-unmount #(dissoc % :map)})
+(defn popup []
+  (new js/ol.Overlay
+       (clj->js {:element (core/el "popup")
+                 :positioning "bottom-center"
+                 :stopEvent false
+                 }) ))
 
-(rum/defcs hospitals < map-view [state]
+(defn map-click-handler
+  [event]
+  (let [nev (.-nativeEvent event)
+        map (:map @core/app)
+        popup (:popup @core/app)
+        element ($ "#popup")
+        feature (.forEachFeatureAtPixel map
+                                         (.-pixel event)
+                                         (fn [a b] b)
+                                         )
+        ]
+    (.log js/console event)
+    (if feature
+      (do
+        (.setPosition popup (.-coordinate event))
+        (.popover element
+                  {:placement "top"
+                   :html true
+                   :content "hello";(.get feature "name")
+                   })
+        (.popover element "show")
+        )
+      (.popover element "destroy"))
+    )
+  )
+
+;   var feature = map.forEachFeatureAtPixel(evt.pixel,
+;;       function(feature, layer) {
+;;         return feature;
+;;       });
+;;   if (feature) {
+;;     popup.setPosition(evt.coordinate);
+;;     $(element).popover({
+;;       'placement': 'top',
+;;       'html': true,
+;;       'content': feature.get('name')
+;;     });
+;;     $(element).popover('show');
+;;   } else {
+;;     $(element).popover('destroy');
+;;   }
+
+
+(defn map-move-handler
+  [event]
+  (let [map (:map @core/app)
+        popup (:popup @core/app)]
+    )
+)
+
+(def map-view
+  {:did-mount (fn [state]
+                (swap! core/app #(assoc %
+                                         :map (hospital-map)
+                                         :popup (popup)))
+                (.on (:map @core/app) "click" map-click-handler)
+                state)
+
+   :will-unmount (fn [state]
+                   (swap! core/app #(dissoc % :map :popup))
+                   state)})
+
+(rum/defc hospitals < map-view []
   [:div
-   [:#open-map {:style {:width "400px" :height "600px" :border "1px solid red"}}]
+
+   [:#open-map {:style {:width "400px"
+                        :height "600px"
+                        :border "1px solid red"}}]
    [:#popup]])
 
 ;;;
