@@ -11,7 +11,7 @@
 (declare section-4-content)
 
 (rum/defc render-intro [section-id]
-  [:.container
+  [:.containe
    [:.row
     [:#intro
 

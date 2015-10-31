@@ -2,6 +2,7 @@
   (:require
    [rum.core :as rum]
    [clojure.string :as str]
+   [prais2.open-layers-map :as map]
    [prais2.core :as core :refer [event-bus event-bus-pub rum-wrap]]
    [prais2.routes :as routes]
    [prais2.content :as content :refer [faqs]]
@@ -121,3 +122,6 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
    (faq-content :faq12)
    (faq-content :faq13)
    ))
+
+(defcard map
+  (map/hospitals))

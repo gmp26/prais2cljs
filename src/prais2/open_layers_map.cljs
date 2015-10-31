@@ -23,31 +23,79 @@
     ;; </script>
 ;;;
 
+;;;
+;; See js version in http://openlayers.org/en/v3.9.0/examples/icon.html
+;;;
+
+(def iconStyle
+  (new js/ol.style.Style
+       (clj->js
+        {:image (new js/ol.style.Icon
+                     (clj->js {:anchor (clj->js [0.5 33])
+                               :anchorXUnits "fraction"
+                               :anchorYUnits "pixels"
+                               :opacity 0.6
+                               :src "assets/icon.png"
+                               }))
+         })))
+
+(defn map-point
+  "Generate map coordinates given longitude and latitude in degrees"
+  [lat lon]
+  (.transform (.-proj js/ol)
+              (clj->js [lon lat])  ; stet lon, then lat
+              "EPSG:4326"
+              "EPSG:3857"
+              ))
+
+
+(defn hospital-marker
+  [lat lon]
+  (let [marker (new js/ol.Feature (clj->js
+                                   {:geometry (new js/ol.geom.Point (map-point lat lon))
+                                    :name "Null Island"
+                                    :population 4000
+                                    :rainfall 500
+                                    }))]
+    (.setStyle marker iconStyle)
+    marker))
+
+(def hospital-markers
+  (let [rows (rest content/table1-data)]
+    (clj->js
+     (map (fn [row] (hospital-marker (:h-lat row) (:h-lon row))) rows))))
+
+(def vectorSource
+  (new js/ol.source.Vector
+       (clj->js {:features hospital-markers})))
+
+(def vectorLayer
+  (new js/ol.layer.Vector
+       (clj->js {:source vectorSource})))
+
+(def tileLayer
+  (new js/ol.layer.Tile
+       (clj->js {:source (new js/ol.source.OSM)})))
+
+(def mapView
+  (new js/ol.View (clj->js {:center (map-point 54.5 -3)
+                            :zoom 5.7})))
+(defn hospital-map []
+  (new js/ol.Map (clj->js {:target "open-map"
+                           :layers [tileLayer vectorLayer]
+                           :view mapView})))
+
+;;
+;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
+;;
 (def map-view
-  {:did-mount (fn [state]
-                ;; (swap! map-state (assoc % :map-element (.findDOMNode js/React (:rum/react-component state))))
-                (assoc state :map (new js/ol.Map
-                                       (clj->js
-                                        {:target "open-map"
-                                         :layers
-                                         [
-                                          (new js/ol.layer.Tile
-                                               (clj->js
-                                                {:source (new js/ol.source.OSM
-                                                              )}))
-                                          ]
-                                         :view (new js/ol.View (clj->js
-                                                                {:center (.transform (.-proj js/ol)
-                                                                                     (clj->js [-3 54.5])
-                                                                                     "EPSG:4326"
-                                                                                     "EPSG:3857"
-                                                                                     )
-                                                                 :zoom 5.7}))})))
-                state)})
+  {:did-mount #(assoc % :map (hospital-map))
+   :will-unmount #(dissoc % :map)})
 
 (rum/defcs hospitals < map-view [state]
-  [:#open-map {:style {:width "400px" :height "600px" :border "1px solid red"}}
-   ])
+  [:div
+   [:#open-map {:style {:width "400px" :height "600px" :border "1px solid red"}}]
+   [:#popup]])
 
 ;;;
 ;; cut from Tile :source ne OSM argument: (clj->js {:layer "osm"})
