@@ -31,7 +31,6 @@
               "EPSG:3857"
               ))
 
-
 (defn hospital-marker
   [row]
   (let [marker (new js/ol.Feature (clj->js
@@ -59,7 +58,8 @@
 
 (def tileLayer
   (new js/ol.layer.Tile
-       (clj->js {:source (new js/ol.source.OSM)})))
+       (clj->js {:preload 4
+                 :source (new js/ol.source.OSM)})))
 
 (def mapView
   (new js/ol.View (clj->js {:center (map-point 54.5 -3)
@@ -67,7 +67,8 @@
 (defn hospital-map []
   (new js/ol.Map (clj->js {:target "open-map"
                            :layers [tileLayer vectorLayer]
-                           :view mapView})))
+                           :view mapView
+                           :loadTilesWhileAnimating true})))
 
 ;;
 ;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
@@ -106,24 +107,8 @@
         element ($ "#popup")
         pixel (.getEventPixel the-map (.-originalEvent event))
         hit (.hasFeatureAtPixel the-map pixel)]
-    (.log js/console hit)
-    (if hit
+    (when (not hit)
       (.popover element "destroy"))))
-
-;; (defn map-move-handler
-;;   [event]
-;;   (let [the-map (:map @core/app)
-;;         the-popup (:popup @core/app)
-;;         element ($ "#popup")]
-;;     (if (.-dragging event)
-;;       (.popover element "destroy")
-;;       (let [pixel (.getEventPixel the-map (.-originalEvent event))
-;;             hit (.hasFeatureAtPixel the-map pixel)]
-;;         (prn "target")
-;;         (.log js/console (.getTarget the-map))
-;;         (if (= hit (.-cursor (.-style (.getTarget the-map))))
-;;           "pointer"
-;;           "")))))
 
 (def map-view
   {:did-mount (fn [state]
@@ -135,20 +120,52 @@
                                           :popup the-popup))
                   (.addOverlay the-map the-popup)
                   (.on the-map "click" map-click-handler)
-                  (.on the-map "pointermove" map-click-handler))
+                  (.on the-map "pointermove" map-move-handler))
                 state)
 
    :will-unmount (fn [state]
                    (swap! core/app #(dissoc % :map :popup))
                    state)})
 
+
+(defn project [lat lon]
+  (.fromLonLat js/ol.proj (clj->js [lon lat])))
+
+(defn panHandler [event lat lon]
+  (let [dt 7000
+        start (new js/Date.)
+
+        pan (.pan ol.animation (clj->js {:duration dt
+                                         :source (.getCenter mapView)
+                                         :resolution 512
+                                         ;:start start
+                                         }))
+        bounce (.bounce js/ol.animation (clj->js {:duration dt
+                                                  :resolution 512
+                                                  ;:start start
+                                                  }))]
+    (prn start)
+    (.beforeRender (:map @core/app) pan bounce)
+    (.setCenter mapView (project lat lon))
+    (.setResolution mapView 16)))
+
+
+(rum/defc hospital-button [row]
+  [:button.btn-primary.h-button
+   {:on-click #(panHandler % (:h-lat row) (:h-lon row))}
+   (:h-code row)])
+
 (rum/defc hospitals < map-view []
   [:div
-
-   [:#open-map {:style {:width "400px"
-                        :height "600px"
-                        :border "1px solid red"}}]
-   [:#popup]])
+   [:div.map-buttons {:key 1}
+    (map #(hospital-button %) (rest content/table1-data))
+    ]
+   [:div {:key 2}
+    [:#open-map {:style {:width "350px"
+                         :height "500px"
+                         :border "1px solid red"}}]
+    [:#popup]
+    ]])
 
 ;;;
 ;; cut from Tile :source ne OSM argument: (clj->js {:layer "osm"})

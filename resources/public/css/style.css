@@ -527,3 +527,13 @@ td:first-child {
     pointer-events: none;
     width: 200px;
 }
+
+.map-buttons {
+    width: 350px;
+    height: 100%;
+}
+
+.h-button {
+    width:50px;
+    height: 7%;
+}
