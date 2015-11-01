@@ -7,25 +7,7 @@
 
 
 ;;;
-;; Open layers map of hospitals
-    ;; <script type="text/javascript">
-    ;;   var map = new ol.Map({
-    ;;     target: 'map',
-    ;;     layers: [
-    ;;       new ol.layer.Tile({
-    ;;         source: new ol.source.MapQuest({layer: 'sat'})
-    ;;       })
-    ;;     ],
-    ;;     view: new ol.View({
-    ;;       center: ol.proj.transform([37.41, 8.82], 'EPSG:4326', 'EPSG:3857'),
-    ;;       zoom: 4
-    ;;     })
-    ;;   });
-    ;; </script>
-;;;
-
-;;;
-;; See js version in http://openlayers.org/en/v3.9.0/examples/icon.html
+;; See js example in http://openlayers.org/en/v3.9.0/examples/icon.html
 ;;;
 
 (def iconStyle
@@ -51,10 +33,11 @@
 
 
 (defn hospital-marker
-  [lat lon]
+  [row]
   (let [marker (new js/ol.Feature (clj->js
-                                   {:geometry (new js/ol.geom.Point (map-point lat lon))
-                                    :name "Null Island"
+                                   {:geometry (new js/ol.geom.Point
+                                                   (map-point (:h-lat row) (:h-lon row)))
+                                    :name (:h-name row)
                                     :population 4000
                                     :rainfall 500
                                     }))]
@@ -64,7 +47,7 @@
 (def hospital-markers
   (let [rows (rest content/table1-data)]
     (clj->js
-     (map (fn [row] (hospital-marker (:h-lat row) (:h-lon row))) rows))))
+     (map hospital-marker rows))))
 
 (def vectorSource
   (new js/ol.source.Vector
@@ -86,53 +69,6 @@
                            :layers [tileLayer vectorLayer]
                            :view mapView})))
 
-
-
-;; popup processing
-
-
-
-;; var element = document.getElementById('popup');
-
-;; var popup = new ol.Overlay({
-;;   element: element,
-;;   positioning: 'bottom-center',
-;;   stopEvent: false
-;; });
-;; map.addOverlay(popup);
-
-;; // display popup on click
-;; map.on('click', function(evt) {
-;;   var feature = map.forEachFeatureAtPixel(evt.pixel,
-;;       function(feature, layer) {
-;;         return feature;
-;;       });
-;;   if (feature) {
-;;     popup.setPosition(evt.coordinate);
-;;     $(element).popover({
-;;       'placement': 'top',
-;;       'html': true,
-;;       'content': feature.get('name')
-;;     });
-;;     $(element).popover('show');
-;;   } else {
-;;     $(element).popover('destroy');
-;;   }
-;; });
-
-;; // change mouse cursor when over marker
-;; map.on('pointermove', function(e) {
-;;   if (e.dragging) {
-;;     $(element).popover('destroy');
-;;     return;
-;;   }
-;;   var pixel = map.getEventPixel(e.originalEvent);
-;;   var hit = map.hasFeatureAtPixel(pixel);
-;;   map.getTarget().style.cursor = hit ? 'pointer' : '';
-;; });
-
-
-
 ;;
 ;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
 ;;
@@ -141,64 +77,65 @@
        (clj->js {:element (core/el "popup")
                  :positioning "bottom-center"
                  :stopEvent false
-                 }) ))
+                 })))
 
 (defn map-click-handler
   [event]
   (let [nev (.-nativeEvent event)
-        map (:map @core/app)
-        popup (:popup @core/app)
+        the-map (:map @core/app)
+        the-popup (:popup @core/app)
         element ($ "#popup")
-        feature (.forEachFeatureAtPixel map
+        feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
-                                         (fn [a b] b)
-                                         )
-        ]
-    (.log js/console event)
+                                         (fn [a b] a))]
     (if feature
       (do
-        (.setPosition popup (.-coordinate event))
-        (.popover element
-                  {:placement "top"
-                   :html true
-                   :content "hello";(.get feature "name")
-                   })
-        (.popover element "show")
-        )
-      (.popover element "destroy"))
-    )
-  )
-
-;   var feature = map.forEachFeatureAtPixel(evt.pixel,
-;;       function(feature, layer) {
-;;         return feature;
-;;       });
-;;   if (feature) {
-;;     popup.setPosition(evt.coordinate);
-;;     $(element).popover({
-;;       'placement': 'top',
-;;       'html': true,
-;;       'content': feature.get('name')
-;;     });
-;;     $(element).popover('show');
-;;   } else {
-;;     $(element).popover('destroy');
-;;   }
-
+        (.setPosition the-popup (.-coordinate event))
+        (.popover element (clj->js
+                           {:placement "top"
+                            :html true
+                            :content (.get feature "name")
+                            }))
+        (.popover element "show"))
+      (.popover element "destroy"))))
 
 (defn map-move-handler
   [event]
-  (let [map (:map @core/app)
-        popup (:popup @core/app)]
-    )
-)
+  (let [the-map (:map @core/app)
+        the-popup (:popup @core/app)
+        element ($ "#popup")
+        pixel (.getEventPixel the-map (.-originalEvent event))
+        hit (.hasFeatureAtPixel the-map pixel)]
+    (.log js/console hit)
+    (if hit
+      (.popover element "destroy"))))
+
+;; (defn map-move-handler
+;;   [event]
+;;   (let [the-map (:map @core/app)
+;;         the-popup (:popup @core/app)
+;;         element ($ "#popup")]
+;;     (if (.-dragging event)
+;;       (.popover element "destroy")
+;;       (let [pixel (.getEventPixel the-map (.-originalEvent event))
+;;             hit (.hasFeatureAtPixel the-map pixel)]
+;;         (prn "target")
+;;         (.log js/console (.getTarget the-map))
+;;         (if (= hit (.-cursor (.-style (.getTarget the-map))))
+;;           "pointer"
+;;           "")))))
 
 (def map-view
   {:did-mount (fn [state]
-                (swap! core/app #(assoc %
-                                         :map (hospital-map)
-                                         :popup (popup)))
-                (.on (:map @core/app) "click" map-click-handler)
+                (let [the-map (hospital-map)
+                      the-popup (popup)
+                      ]
+                  (swap! core/app #(assoc %
+                                          :map the-map
+                                          :popup the-popup))
+                  (.addOverlay the-map the-popup)
+                  (.on the-map "click" map-click-handler)
+                  (.on the-map "pointermove" map-click-handler))
                 state)
 
    :will-unmount (fn [state]

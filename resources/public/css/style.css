@@ -520,6 +520,10 @@ td:first-child {
  **/
 .ol-rotate {
     opacity: 0 !important;
-
     cursor: inherit !important;
+}
+
+#popup {
+    pointer-events: none;
+    width: 200px;
 }
