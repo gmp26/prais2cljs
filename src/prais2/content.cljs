@@ -60,6 +60,16 @@
   )
 
 
+(defn index-by
+  "create an index on a table"
+  [table key-fn]
+    (into {} (map (juxt key-fn identity) table)))
+
+;;;
+;; hospital results  indexed by by hospital code
+;;;
+(def rows-by-code (index-by table1-data #(keyword (:h-code %))))
+
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
 ;;;

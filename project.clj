@@ -11,13 +11,15 @@
                  [sablono "0.3.6"]    ; devcards only
                  [secretary "1.2.3"]
                  [cljsjs/react "0.13.3-1"]
-                 ; [cljsjs/react "0.14.0-0"] released, but Rum is not using it yet
+                 ; [cljsjs/react "0.14.0-0"] is released, but Rum is not using it yet
                  [rum "0.5.0"]
                  [jayq "2.5.4"]
-                 [com.rpl/specter "0.8.0"]]
+                 ; experimental
+                 [cljsjs/openlayers "3.5.0-1"]]
 
   :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-figwheel "0.4.1"]]
+            [lein-figwheel "0.4.1"]
+            [lein-npm "0.6.1"]]
 
   :source-paths ["src"]
 
@@ -45,7 +47,7 @@
                          :externs ["externs/bootstrap.js"
                                    "externs/jquery.js"
                                    "externs/sliders.js"
-                                   "externs/google-maps.js"]
+                                   ]
                          :asset-path "js/compiled/out"
                          :output-to "resources/public/js/compiled/prais2.js"
                          :output-dir "resources/public/js/compiled/out"
@@ -61,8 +63,7 @@
                          :main "prais2.main"
                          :externs ["externs/bootstrap.js"
                                    "externs/jquery.js"
-                                   "externs/sliders.js"
-                                   "externs/google-maps.js"]
+                                   "externs/sliders.js"]
                          :optimizations :advanced
                          :warnings {:single-segment-namespace false
                                     :externs-validation :off

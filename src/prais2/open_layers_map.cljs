@@ -1,10 +1,24 @@
 (ns ^:figwheel-always prais2.open-layers-map
     (:require [rum.core :as rum]
               [jayq.core :refer ($)]
-              [cljs.core.async :refer [put!]]
+              [cljs.core.async :refer [<! put! timeout]]
               [prais2.core :as core]
-              [prais2.content :as content]))
-
+              [prais2.content :as content]
+              [ol.Map]
+              [ol.layer.Tile]
+              [ol.layer.Vector]
+              [ol.View]
+              [ol.proj]
+              [ol.source.OSM]
+              [ol.source.Vector]
+              [ol.style.Style]
+              [ol.style.Icon]
+              [ol.Feature]
+              [ol.Overlay]
+              [ol.geom.Point]
+              [ol.animation]
+              )
+    (:require-macros [cljs.core.async.macros :refer [go]]))
 
 ;;;
 ;; See js example in http://openlayers.org/en/v3.9.0/examples/icon.html
@@ -36,9 +50,9 @@
   (let [marker (new js/ol.Feature (clj->js
                                    {:geometry (new js/ol.geom.Point
                                                    (map-point (:h-lat row) (:h-lon row)))
+                                    :code (keyword (:h-code row))
                                     :name (:h-name row)
-                                    :population 4000
-                                    :rainfall 500
+                                    :count (:n-ops row)
                                     }))]
     (.setStyle marker iconStyle)
     marker))
@@ -80,29 +94,43 @@
                  :stopEvent false
                  })))
 
+(declare panHandler)
+
+(def dt 5000)
+
 (defn map-click-handler
   [event]
-  (let [nev (.-nativeEvent event)
+  (let [
         the-map (:map @core/app)
         the-popup (:popup @core/app)
         element ($ "#popup")
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
-                                         (fn [a b] a))]
+                                         (fn [a b] a))
+        ]
     (if feature
-      (do
-        (.setPosition the-popup (.-coordinate event))
-        (.popover element (clj->js
-                           {:placement "top"
-                            :html true
-                            :content (.get feature "name")
-                            }))
-        (.popover element "show"))
-      (.popover element "destroy"))))
+      (let [h-code (keyword (.get feature "code"))
+            row (h-code content/rows-by-code)
+            geometry (.getGeometry feature)
+            coord (.getCoordinates geometry)]
+
+        (prn "feature " coord )
+        (panHandler (:h-lat row) (:h-lon row))
+        (go (<! (timeout dt))
+            (.setPosition the-popup (clj->js [(first coord) (+ 450 (second coord))]))
+            (.popover element (clj->js
+                               {:placement "top"
+                                :html true
+                                :content (str "<h4>"(.get feature "name") "</h4>" (.get feature "count") " operations")
+                                }))
+            (.popover element "show")
+            (go (<! (timeout 2500))
+                (.popover element "destroy"))))
+      (.popover element "hide"))))
 
 (defn map-move-handler
   [event]
-  (let [the-map (:map @core/app)
+  #_(let [the-map (:map @core/app)
         the-popup (:popup @core/app)
         element ($ "#popup")
         pixel (.getEventPixel the-map (.-originalEvent event))
@@ -131,9 +159,8 @@
 (defn project [lat lon]
   (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
-(defn panHandler [event lat lon]
-  (let [dt 7000
-        start (new js/Date.)
+(defn panHandler [lat lon]
+  (let [start (new js/Date.)
 
         pan (.pan ol.animation (clj->js {:duration dt
                                          :source (.getCenter mapView)
@@ -152,7 +179,7 @@
 
 (rum/defc hospital-button [row]
   [:button.btn-primary.h-button
-   {:on-click #(panHandler % (:h-lat row) (:h-lon row))}
+   {:on-click #(panHandler (:h-lat row) (:h-lon row))}
    (:h-code row)])
 
 (rum/defc hospitals < map-view []
@@ -161,7 +188,8 @@
     (map #(hospital-button %) (rest content/table1-data))
     ]
    [:div {:key 2}
-    [:#open-map {:style {:width "350px"
+    [:#open-map {;:tab-index 0
+                 :style {:width "350px"
                          :height "500px"
                          :border "1px solid red"}}]
     [:#popup]

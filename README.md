@@ -69,3 +69,7 @@ of [tonsky/rum](https://github.com/tonsky/rum) to drive React. To create an init
 Copyright © 2014 FIXME
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+
+### Reference
+
+For the production optimised build of openlayers from cljsjs see [the condense example](https://github.com/condense/example_openlayers_cljsjs). 
