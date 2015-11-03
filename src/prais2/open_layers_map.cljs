@@ -11,7 +11,7 @@
 ;              [ol.layer.Vector]
 ;              [ol.View]
 ;              [ol.proj]
-;              [ol.source.OSM]
+              [ol.source.OSM]
 ;              [ol.source.Vector]
 ;              [ol.style.Style]
 ;              [ol.style.Icon]
@@ -180,7 +180,7 @@
 (rum/defc home-button []
   [:button.btn-primary
    {:on-click #(panHandler -3 54.5 512)}
-   Home])
+   "Home"])
 
 (rum/defc hospitals < map-view []
   [:div
