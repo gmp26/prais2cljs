@@ -65,8 +65,8 @@
                                    "externs/jquery.js"
                                    "externs/sliders.js"]
                          :optimizations :advanced
-                         :warnings {:single-segment-namespace false
-                                    :externs-validation :off
+                         :closure-warnings {:non-standard-jsdoc :off}
+                         :warnings {:externs-validation :off
                                     :non-standard-jsdoc :off}
                          }}]}
 
