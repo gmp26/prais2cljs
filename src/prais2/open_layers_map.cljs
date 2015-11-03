@@ -4,19 +4,19 @@
               [cljs.core.async :refer [<! put! timeout]]
               [prais2.core :as core]
               [prais2.content :as content]
-              [ol.Map]
-              [ol.layer.Tile]
-              [ol.layer.Vector]
-              [ol.View]
-              [ol.proj]
-              [ol.source.OSM]
-              [ol.source.Vector]
-              [ol.style.Style]
-              [ol.style.Icon]
               [ol.Feature]
               [ol.Overlay]
-              [ol.geom.Point]
-              [ol.animation]
+;              [ol.Map]
+;              [ol.layer.Tile]
+;              [ol.layer.Vector]
+;              [ol.View]
+;              [ol.proj]
+;              [ol.source.OSM]
+;              [ol.source.Vector]
+;              [ol.style.Style]
+;              [ol.style.Icon]
+;              [ol.geom.Point]
+;              [ol.animation]
               )
     (:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -128,9 +128,9 @@
                 (.popover element "destroy"))))
       (.popover element "hide"))))
 
-(defn map-move-handler
+#_(defn map-move-handler
   [event]
-  #_(let [the-map (:map @core/app)
+  (let [the-map (:map @core/app)
         the-popup (:popup @core/app)
         element ($ "#popup")
         pixel (.getEventPixel the-map (.-originalEvent event))
@@ -148,7 +148,8 @@
                                           :popup the-popup))
                   (.addOverlay the-map the-popup)
                   (.on the-map "click" map-click-handler)
-                  (.on the-map "pointermove" map-move-handler))
+                  ;(.on the-map "pointermove" map-move-handler)
+                  )
                 state)
 
    :will-unmount (fn [state]
@@ -159,28 +160,27 @@
 (defn project [lat lon]
   (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
-(defn panHandler [lat lon]
-  (let [start (new js/Date.)
-
-        pan (.pan ol.animation (clj->js {:duration dt
+(defn panHandler [lat lon & {:keys [resolution] :or {resolution 16}}]
+  (let [pan (.pan ol.animation (clj->js {:duration dt
                                          :source (.getCenter mapView)
                                          :resolution 512
-                                         ;:start start
                                          }))
         bounce (.bounce js/ol.animation (clj->js {:duration dt
                                                   :resolution 512
-                                                  ;:start start
                                                   }))]
-    (prn start)
     (.beforeRender (:map @core/app) pan bounce)
     (.setCenter mapView (project lat lon))
-    (.setResolution mapView 16)))
-
+    (.setResolution mapView resolution)))
 
 (rum/defc hospital-button [row]
   [:button.btn-primary.h-button
    {:on-click #(panHandler (:h-lat row) (:h-lon row))}
    (:h-code row)])
+
+(rum/defc home-button []
+  [:button.btn-primary
+   {:on-click #(panHandler -3 54.5 512)}
+   Home])
 
 (rum/defc hospitals < map-view []
   [:div
@@ -188,13 +188,9 @@
     (map #(hospital-button %) (rest content/table1-data))
     ]
    [:div {:key 2}
-    [:#open-map {;:tab-index 0
+    [:#open-map {:tab-index 0
                  :style {:width "350px"
                          :height "500px"
-                         :border "1px solid red"}}]
+                         :border "1px solid grey"}}]
     [:#popup]
     ]])
-
-;;;
-;; cut from Tile :source ne OSM argument: (clj->js {:layer "osm"})
-;;;
