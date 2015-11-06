@@ -534,6 +534,10 @@ td:first-child {
 }
 
 .h-button {
-    width:50px;
-    height: 7%;
+    display: block;
+    position: absolute;
+    z-index: 10000;
+    top: 18px;
+    left: 50px;
+    opacity: 0.6 !important;
 }

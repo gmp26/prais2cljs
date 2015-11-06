@@ -11,8 +11,8 @@
 ;; Table headers with info texts
 ;;;
 
-(def table1-data
-  [(Row. (Header. "Hospital"                    true       true    300   50
+(def header-row
+     (Row. (Header. "Hospital"                    true       true    300   50
                   "The hospital name")
          (Header. "Hospital Code"               false      false    77   50
                   "Hospital code as used by NICOR")
@@ -38,148 +38,179 @@
                   nil)
          (Header. "Observed survival with predicted range"  false      false   0   100
                   nil)
-         )
+         ))
 
 ;;;
-;; The results
+;; The 2014 results
 ;;;
-   (Row. "Belfast, Royal Victoria Hospital"	                "RVB"	54.594167 -5.953666 204	        2 	202	99.0 	95.1	96.6  100     100.0 nil)
-   (Row. "London, Harley Street Clinic"	                        "HSC"	51.520348 -0.147726 482	        7 	475	98.5	94.8	95.9  98.8    99.4 nil)
-   (Row. "Leicester, Glenfield Hospital"	                "GRL"	52.654229 -1.179836 582	        11	571	98.1	95.4	96.2  98.8    99.3 nil)
-   (Row. "Newcastle, Freeman Hospital"	                        "FRE"	55.002386 -1.593643 678	        15	663	97.8	95.1	96    98.4    99.0 nil)
-   (Row. "Glasgow, Royal Hospital for Children"	                "RHS"	55.862745 -4.342357 787	        28	759	96.4	95.7	96.3  98.5    99.0 nil)
-   (Row. "Bristol Royal Hospital for Children"	                "BRC"	51.457899 -2.597014 835	        19	816	97.7	96.0	96.8  98.7    99.2 nil)
-   (Row. "Southampton, Wessex Cardiothoracic Centre"	        "SGH"	50.932846 -1.432731 890	        17	873	98.1	95.5	96.2  98.3    98.8 nil)
-   (Row.  "Leeds General Infirmary"	                        "LGI"	53.802109 -1.550870 976	        23	953	97.6	96.5	97.1  98.9    99.2 nil)
-   (Row.  "Dublin, Our Lady's Children's Hospital"	        "OLS"	53.326005 -6.317399 1056	23	1033	97.8	96.3	96.9  98.7    99.1 nil)
-   (Row.  "London, Royal Brompton Hospital"	                "NHB"	51.489012 -0.170759 1107	12	1095	98.9	96.5	97    98.7    99.1 nil)
-   (Row.  "Liverpool, Alder Hey Hospital"	                "ACH"	53.419566 -2.900560 1146	28	1118	97.6	95.8	96.4  98.3    98.7 nil)
-   (Row. "London, Evelina London Children's Hospital"	        "GUY"	51.498044 -0.118835 1204	39	1165	96.8	95.6	96.3  98.1    98.6 nil)
-   (Row.  "Birmingham Children’s Hospital"	                "BCH"	52.484946 -1.894566 1481	30	1451	98.0	95.3	95.9  97.7    98.1 nil)
-   (Row. "London, Great Ormond Street Hospital for Children"	"GOS"	51.522549 -0.120923 1881	30	1851	98.4    96.5	97    98.4    98.7 nil)]
-  )
 
-(def baseline
-  [(Row. "Hospital A"	"A"	204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
-   (Row. "Hospital E"	"E"	787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
-   (Row. "Hospital F"	"F"	835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
-   (Row. "Hospital H"	"H"	976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
-   (Row. "Hospital I"	"I"	1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
-   (Row. "Hospital J"	"J"	1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
-   (Row. "Hospital K"	"K"	1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
-   (Row. "Hospital L"	"L"	1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
-   (Row. "Hospital M"	"M"	1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
-   (Row. "Hospital N"	"N"	1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)])
+(def datasources
+  {:2014
+   [(Row. "Belfast, Royal Victoria Hospital"	                "RVB"	54.594167 -5.953666 204	        2 	202	99.0 	95.1	96.6  100     100.0 nil)
+    (Row. "London, Harley Street Clinic"	                        "HSC"	51.520348 -0.147726 482	        7 	475	98.5	94.8	95.9  98.8    99.4 nil)
+    (Row. "Leicester, Glenfield Hospital"	                "GRL"	52.654229 -1.179836 582	        11	571	98.1	95.4	96.2  98.8    99.3 nil)
+    (Row. "Newcastle, Freeman Hospital"	                        "FRE"	55.002386 -1.593643 678	        15	663	97.8	95.1	96    98.4    99.0 nil)
+    (Row. "Glasgow, Royal Hospital for Children"	                "RHS"	55.862745 -4.342357 787	        28	759	96.4	95.7	96.3  98.5    99.0 nil)
+    (Row. "Bristol Royal Hospital for Children"	                "BRC"	51.457899 -2.597014 835	        19	816	97.7	96.0	96.8  98.7    99.2 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre"	        "SGH"	50.932846 -1.432731 890	        17	873	98.1	95.5	96.2  98.3    98.8 nil)
+    (Row.  "Leeds General Infirmary"	                        "LGI"	53.802109 -1.550870 976	        23	953	97.6	96.5	97.1  98.9    99.2 nil)
+    (Row.  "Dublin, Our Lady's Children's Hospital"	        "OLS"	53.326005 -6.317399 1056	23	1033	97.8	96.3	96.9  98.7    99.1 nil)
+    (Row.  "London, Royal Brompton Hospital"	                "NHB"	51.489012 -0.170759 1107	12	1095	98.9	96.5	97    98.7    99.1 nil)
+    (Row.  "Liverpool, Alder Hey Hospital"	                "ACH"	53.419566 -2.900560 1146	28	1118	97.6	95.8	96.4  98.3    98.7 nil)
+    (Row. "London, Evelina London Children's Hospital"	        "GUY"	51.498044 -0.118835 1204	39	1165	96.8	95.6	96.3  98.1    98.6 nil)
+    (Row.  "Birmingham Children’s Hospital"	                "BCH"	52.484946 -1.894566 1481	30	1451	98.0	95.3	95.9  97.7    98.1 nil)
+    (Row. "London, Great Ormond Street Hospital for Children"	"GOS"	51.522549 -0.120923 1881	30	1851	98.4    96.5	97    98.4    98.7 nil)]
 
-(def variation-1
-  [(Row. "Hospital A"	"A"     204	4	200	98.04	95.10	96.57	100.00	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.72	94.81	95.85	98.76	99.38 nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.59	95.36	96.22	98.80	99.31 nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.35	95.13	96.02	98.38	98.97 nil)
-   (Row. "Hospital E"	"E"	787	35	752	95.55	95.68	96.32	98.48	98.98 nil)
-   (Row. "Hospital F"	"F"	835	22	813	97.37	96.05	96.77	98.68	99.16 nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.53	95.51	96.18	98.31	98.76 nil)
-   (Row. "Hospital H"	"H"	976	24	952	97.54	96.52	97.13	98.87	99.18 nil)
-   (Row. "Hospital I"	"I"	1056	26	1030	97.54	96.31	96.88	98.67	99.05 nil)
-   (Row. "Hospital J"	"J"	1107	17	1090	98.46	96.48	97.02	98.74	99.10 nil)
-   (Row. "Hospital K"	"K"	1146	31	1115	97.29	95.81	96.42	98.25	98.69 nil)
-   (Row. "Hospital L"	"L"	1204	41	1163	96.59	95.60	96.26	98.09	98.59 nil)
-   (Row. "Hospital M"	"M"	1481	36	1445	97.57	95.34	95.88	97.70	98.11 nil)
-   (Row. "Hospital N"	"N"	1881	38	1843	97.98	96.54	97.02	98.35	98.67 nil)])
+   ;;
+   ;; followed by sample datasources
+   ;;
 
-(def variation-2a
-  [(Row. "Hospital A"	"A"     204	3	201	98.5	95.1	96.6	100.0	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
-   (Row. "Hospital E"	"E"	787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
-   (Row. "Hospital F"	"F"	835	17	818	98.0	96.0	96.8	98.7	99.2  nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
-   (Row. "Hospital H"	"H"	976	19	957	98.1	96.5	97.1	98.9	99.2  nil)
-   (Row. "Hospital I"	"I"	1056	20	1036	98.1	96.3	96.9	98.7	99.1  nil)
-   (Row. "Hospital J"	"J"	1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
-   (Row. "Hospital K"	"K"	1146	24	1122	97.9	95.8	96.4	98.3	98.7  nil)
-   (Row. "Hospital L"	"L"	1204	34	1170	97.2	95.6	96.3	98.1	98.6  nil)
-   (Row. "Hospital M"	"M"	1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
-   (Row. "Hospital N"	"N"	1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)])
+   :baseline
+   [(Row. "Hospital A"	"A"	0 0     204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)]
 
-(def variation-2b
-  [(Row. "Hospital A"	"A"     204     3       201     98.5   95.1   96.6   100.0  100.0 nil)
-   (Row. "Hospital B"	"B"	482     8       474     98.3   94.8   95.9   98.8   99.4  nil)
-   (Row. "Hospital C"	"C"	582     11      571     98.1   95.4   96.2   98.8   99.3  nil)
-   (Row. "Hospital D"	"D"	678     15      663     97.8   95.1   96.0   98.4   99.0  nil)
-   (Row. "Hospital E"	"E"	787     28      759     96.4   95.7   96.3   98.5   99.0  nil)
-   (Row. "Hospital F"	"F"	835     17      818     98.0   96.0   96.8   98.7   99.2  nil)
-   (Row. "Hospital G"	"G"	890     17      873     98.1   95.5   96.2   98.3   98.8  nil)
-   (Row. "Hospital H"	"H"	976     19      957     98.1   96.5   97.1   98.9   99.2  nil)
-   (Row. "Hospital I"	"I"	1056    20      1036    98.1   96.3   96.9   98.7   99.1  nil)
-   (Row. "Hospital J"	"J"	1107    10      1097    99.1   96.5   97.0   98.7   99.1  nil)
-   (Row. "Hospital K"	"K"	1146    24      1122    97.9   95.8   96.4   98.3   98.7  nil)
-   (Row. "Hospital L"	"L"	1204    34      1170    97.2   95.6   96.3   98.1   98.6  nil)
-   (Row. "Hospital M"	"M"	1481    27      1454    98.2   95.3   95.9   97.7   98.1  nil)
-   (Row. "Hospital N"	"N"	1881    27      1854    98.6   96.5   97.0   98.4   98.7  nil)])
+   :variation-1
+   [(Row. "Hospital A"	"A"     0 0     204	4	200	98.04	95.10	96.57	100.00	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.72	94.81	95.85	98.76	99.38 nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.59	95.36	96.22	98.80	99.31 nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.35	95.13	96.02	98.38	98.97 nil)
+    (Row. "Hospital E"	"E"	0 0     787	35	752	95.55	95.68	96.32	98.48	98.98 nil)
+    (Row. "Hospital F"	"F"	0 0     835	22	813	97.37	96.05	96.77	98.68	99.16 nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.53	95.51	96.18	98.31	98.76 nil)
+    (Row. "Hospital H"	"H"	0 0     976	24	952	97.54	96.52	97.13	98.87	99.18 nil)
+    (Row. "Hospital I"	"I"	0 0     1056	26	1030	97.54	96.31	96.88	98.67	99.05 nil)
+    (Row. "Hospital J"	"J"	0 0     1107	17	1090	98.46	96.48	97.02	98.74	99.10 nil)
+    (Row. "Hospital K"	"K"	0 0     1146	31	1115	97.29	95.81	96.42	98.25	98.69 nil)
+    (Row. "Hospital L"	"L"	0 0     1204	41	1163	96.59	95.60	96.26	98.09	98.59 nil)
+    (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.57	95.34	95.88	97.70	98.11 nil)
+    (Row. "Hospital N"	"N"	0 0     1881	38	1843	97.98	96.54	97.02	98.35	98.67 nil)]
 
-(def variation-3
-  [(Row. "Hospital A"	"A"     204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
-   (Row. "Hospital E"	"E"	787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
-   (Row. "Hospital F"	"F"	835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
-   (Row. "Hospital H"	"H"	976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
-   (Row. "Hospital I"	"I"	1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
-   (Row. "Hospital J"	"J"	1107	11	1096	99.0	96.5	97.0	98.7	99.1  nil)
-   (Row. "Hospital K"	"K"	1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
-   (Row. "Hospital L"	"L"	1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
-   (Row. "Hospital M"	"M"	1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
-   (Row. "Hospital N"	"N"	1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)])
+   :variation-2a
+   [(Row. "Hospital A"	"A"     0 0     204	3	201	98.5	95.1	96.6	100.0	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835	17	818	98.0	96.0	96.8	98.7	99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976	19	957	98.1	96.5	97.1	98.9	99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056	20	1036	98.1	96.3	96.9	98.7	99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146	24	1122	97.9	95.8	96.4	98.3	98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204	34	1170	97.2	95.6	96.3	98.1	98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)]
 
-(def variation-4
-  [(Row. "Hospital A"	"A"     204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
-   (Row. "Hospital E"	"E"	787	35	752	95.6	95.7	96.3	98.5	99.0  nil)
-   (Row. "Hospital F"	"F"	835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
-   (Row. "Hospital H"	"H"	976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
-   (Row. "Hospital I"	"I"	1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
-   (Row. "Hospital J"	"J"	1107	13	1094	98.8	96.5	97.0	98.7	99.1  nil)
-   (Row. "Hospital K"	"K"	1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
-   (Row. "Hospital L"	"L"	1204	47	1157	96.1	95.6	96.3	98.1	98.6  nil)
-   (Row. "Hospital M"	"M"	1481	27	1454	98.2	95.3	95.9	97.7	98.1  nil)
-   (Row. "Hospital N"	"N"	1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)])
+   :variation-2b
+   [(Row. "Hospital A"	"A"     0 0     204     3       201     98.5   95.1   96.6   100.0  100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482     8       474     98.3   94.8   95.9   98.8   99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582     11      571     98.1   95.4   96.2   98.8   99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678     15      663     97.8   95.1   96.0   98.4   99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787     28      759     96.4   95.7   96.3   98.5   99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835     17      818     98.0   96.0   96.8   98.7   99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890     17      873     98.1   95.5   96.2   98.3   98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976     19      957     98.1   96.5   97.1   98.9   99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056    20      1036    98.1   96.3   96.9   98.7   99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107    10      1097    99.1   96.5   97.0   98.7   99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146    24      1122    97.9   95.8   96.4   98.3   98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204    34      1170    97.2   95.6   96.3   98.1   98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481    27      1454    98.2   95.3   95.9   97.7   98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881    27      1854    98.6   96.5   97.0   98.4   98.7  nil)]
 
-(def variation-5
-  [(Row. "Hospital A"	"A"     200	6	194	97.0	95.0	96.5	100.0	100.0 nil)
-   (Row. "Hospital B"	"B"	482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
-   (Row. "Hospital C"	"C"	582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
-   (Row. "Hospital D"	"D"	678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
-   (Row. "Hospital E"	"E"	787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
-   (Row. "Hospital F"	"F"	835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
-   (Row. "Hospital G"	"G"	890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
-   (Row. "Hospital H"	"H"	976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
-   (Row. "Hospital I"	"I"	1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
-   (Row. "Hospital J"	"J"	1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
-   (Row. "Hospital K"	"K"	1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
-   (Row. "Hospital L"	"L"	1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
-   (Row. "Hospital M"	"M"	1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
-   (Row. "Hospital N"	"N"	1881	67	1814	96.4	96.5	97.0	98.4	98.7  nil)])
+   :variation-3
+   [(Row. "Hospital A"	"A"     0 0     204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107	11	1096	99.0	96.5	97.0	98.7	99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)]
+
+   :variation-4
+   [(Row. "Hospital A"	"A"     0 0     204	4	200	98.0	95.1	96.6	100.0	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787	35	752	95.6	95.7	96.3	98.5	99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107	13	1094	98.8	96.5	97.0	98.7	99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204	47	1157	96.1	95.6	96.3	98.1	98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481	27	1454	98.2	95.3	95.9	97.7	98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881	38	1843	98.0	96.5	97.0	98.4	98.7  nil)]
+
+   :variation-5
+   [(Row. "Hospital A"	"A"     0 0     200	6	194	97.0	95.0	96.5	100.0	100.0 nil)
+    (Row. "Hospital B"	"B"	0 0     482	11	471	97.7	94.8	95.9	98.8	99.4  nil)
+    (Row. "Hospital C"	"C"	0 0     582	14	568	97.6	95.4	96.2	98.8	99.3  nil)
+    (Row. "Hospital D"	"D"	0 0     678	18	660	97.3	95.1	96.0	98.4	99.0  nil)
+    (Row. "Hospital E"	"E"	0 0     787	28	759	96.4	95.7	96.3	98.5	99.0  nil)
+    (Row. "Hospital F"	"F"	0 0     835	22	813	97.4	96.0	96.8	98.7	99.2  nil)
+    (Row. "Hospital G"	"G"	0 0     890	22	868	97.5	95.5	96.2	98.3	98.8  nil)
+    (Row. "Hospital H"	"H"	0 0     976	24	952	97.5	96.5	97.1	98.9	99.2  nil)
+    (Row. "Hospital I"	"I"	0 0     1056	26	1030	97.5	96.3	96.9	98.7	99.1  nil)
+    (Row. "Hospital J"	"J"	0 0     1107	17	1090	98.5	96.5	97.0	98.7	99.1  nil)
+    (Row. "Hospital K"	"K"	0 0     1146	31	1115	97.3	95.8	96.4	98.3	98.7  nil)
+    (Row. "Hospital L"	"L"	0 0     1204	41	1163	96.6	95.6	96.3	98.1	98.6  nil)
+    (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
+    (Row. "Hospital N"	"N"	0 0     1881	67	1814	96.4	96.5	97.0	98.4	98.7  nil)]})
 
 (defn index-by
   "create an index on a table"
   [table key-fn]
     (into {} (map (juxt key-fn identity) table)))
 
+(defn add-markers [table-rows]
+  (map-indexed
+   (fn [index row]
+     (let [lat (+ 50.7 (/ index 3))
+           lon (+ -2.6 (* 0.8 (mod index 3)))
+           ]
+       (assoc row :h-lat lat :h-lon lon)))
+   table-rows
+   ))
+
+
+(defn make-datasource [datasource]
+  (into []
+        (concat [header-row]
+                (if (= datasource :2014)
+                  (:2014 datasources)
+                  (add-markers (datasource datasources))
+                  ))))
+
+(defn table-data [datasource]
+  (memoize (fn []
+             (make-datasource datasource))))
+
 ;;;
-;; hospital results  indexed by by hospital code
+;; hospital results  indexed by hospital code
 ;;;
-(def rows-by-code (index-by table1-data #(keyword (:h-code %))))
+(defn rows-by-code [datasource]
+  (memoize (fn []
+             (index-by ((table-data datasource)) #(keyword (:h-code %))))))
 
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips

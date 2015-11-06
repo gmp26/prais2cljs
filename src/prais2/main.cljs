@@ -70,26 +70,13 @@
                                 :h-code false)
          data (conj (rest data') headers))
 
-(rum/defc render-table [id]
-  (let [data content/table1-data
-        ]
+(rum/defc render-table < rum/reactive [id]
+  (let [data ((content/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
                   [(data/modal)
                    (data/table1 core/app data event-bus)
                    (data/option-menu event-bus)])]))
-
-
-(rum/defc render-data [id]
-  [:div {:style {:width "100%"}}
-   [:p]
-   [:iframe {:src "#/table"
-             :style {:width "80%"
-                     :display "block"
-                     :margin "auto auto"
-                     :min-width "885px"
-                     :height "885px"
-                     }}]])
 
 
 ;;;
@@ -198,6 +185,11 @@
               (prn (str "morph to full range"))
               (swap! core/app #(assoc % :slider-axis-value 0))))
 
+  (dispatch event-bus-pub :change-datasource
+            (fn [[_ new-source] ]
+              (prn (str "datasource now " new-source))
+              (swap! core/app #(assoc % :datasource new-source))))
+
 
   (dispatch event-bus-pub :intro
             (fn [_]
@@ -213,6 +205,7 @@
             (fn [_]
               (prn "nav to faqs")
               (swap! core/app #(assoc % :page :faqs)))))
+
 
 
 

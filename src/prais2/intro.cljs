@@ -1,5 +1,7 @@
 (ns ^:figwheel-always prais2.intro
     (:require [rum.core :as rum]
+              [prais2.core :as core]
+              [prais2.content :as content]
               [prais2.chrome :as chrome]
               [prais2.open-layers-map :as map]))
 
@@ -26,6 +28,18 @@
      (section 4 "How do we put survival rates into context?" section-4-content)
 
      ]]])
+
+(rum/defc hospital-item < rum/reactive [h-key]
+  [:li
+   (map/hospital-button (:BCH ((content/rows-by-code (:datasource (rum/react core/app))))))
+   [:a.btn-link {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]])
+
+
+(rum/defc hospital-list < rum/reactive []
+  [:ul
+   (hospital-item :BCH)
+
+])
 
 (rum/defc hospital-charities []
   [:.table-responsive
@@ -224,6 +238,8 @@
     "The hospitals are listed below alongside links to their local family charities. "]
 
    (map/hospitals)
+
+   (hospital-list)
 
    (hospital-charities)
 

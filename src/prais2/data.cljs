@@ -27,19 +27,21 @@
 
 (def chart-width 100)
 
-(def min-outer-low  (* 2 (int (/ (apply min (map :outer-low (rest content/table1-data))) 2))))
+;;(def min-outer-low  (* 2 (int (/ (apply min (map :outer-low (rest content/table1-data))) 2))))
+
 ;;  "the minimum outer-low value across all rows"
-;; => 94.8
+(defn min-outer-low []
+  (* 2 (int (/ (apply min (map :outer-low (rest ((content/table-data (:datasource @core/app)))))) 2))))
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
   [slider]
-  (/ chart-width (- 100 (* min-outer-low slider))))
+  (/ chart-width (- 100 (* (min-outer-low) slider))))
 
 (defn percent->screen
   "percent-value to slider compensated value"
   [slider value]
-  (let [origin (* min-outer-low slider)]
+  (let [origin (* (min-outer-low) slider)]
     (* 100 (/ (- value origin) (- 100 origin))))
   )
 
@@ -171,7 +173,7 @@
                       [(dot slider (dot-size slider) (:survival-rate row) dotty)]
 
                       (= dotless #{:inner})
-                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
                        (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
                        (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
                        (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
@@ -181,7 +183,7 @@
 
 
                       (= dotless #{:outer})
-                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
                        (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
                        (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
                        (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
@@ -191,7 +193,7 @@
 
 
                       (= dotless #{:inner :outer})
-                      [(bar slider (:outer-low row) (* min-outer-low slider) :low (:low colours))
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
                        (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
                        (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
                        (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
@@ -214,7 +216,7 @@
       )))
 
 (rum/defc ticks < rum/static [slider-axis-value tick-count]
-  (let [baseline (* min-outer-low slider-axis-value)
+  (let [baseline (* (min-outer-low) slider-axis-value)
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
                    (> raw-interval 10) 20
@@ -330,9 +332,9 @@
         [:br {:key :br}]
         title])]))
 
-(rum/defc table-head < rum/static [app ap headers column-keys event-bus slider-axis-value]
+(rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
 
-  (let [baseline (Math.round (* min-outer-low slider-axis-value))]
+  (let [baseline (Math.round (* (min-outer-low) slider-axis-value))]
     #_(prn "table-head called")
     [:thead
      [:tr
@@ -378,14 +380,14 @@
        [:div.screenable {:key :screen}
         ;; fixed table with header only for @media screen, hidden in print
         [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-         (rum/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)]])
+         (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)]])
 
      [:div {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        #_(prn (str "printing true?" (core/query-media? "print")))
        #_(prn headers)
        ;; full table with print header, hidden on screen
-       (rum/with-key (table-head app ap headers column-keys event-bus slider-axis-value) :thead)
+       (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
@@ -439,7 +441,7 @@
   )
 
 (rum/defc theme-dropdown < rum/reactive [event-bus]
-  [:.form-group.col-md-2.col-md-offset-1
+  [:.form-group.col-md-2
    [:label-for{:for "colour-map-selector"} "Theme "]
    [:select#colour-map-selector.form-control.input-sm
     {
@@ -450,13 +452,27 @@
                    (integer-option n)))]
    ])
 
+(rum/defc key-option < rum/static [key]
+  [:option {:value key} (name key)])
 
-(rum/defc option-menu [event-bus]
+(rum/defc datasource-dropdown < rum/reactive [event-bus]
+  [:.form-group.col-md-3
+   [:label-for{:for "data-selector"} "Datasource "]
+   [:select#data-selector.form-control.input-sm
+    {:value (name (:datasource (rum/react core/app)))
+     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
+    (map-indexed key-with
+                 (for [key (keys content/datasources)]
+                   (key-option key)))]
+   ])
+
+(rum/defc option-menu < rum/reactive [event-bus]
   [:nav.navbar.navbar-default
    [:.container
     [:navbar-form.form-inline.row
      (map-indexed key-with
-                  [(theme-dropdown event-bus)
+                  [(datasource-dropdown event-bus)
+                   (theme-dropdown event-bus)
                    (chart-state-dropdown event-bus)
                    ])]]])
 
@@ -477,7 +493,7 @@
       )))
 
 (rum/defc modal-ticks < rum/static [tick-count]
-  (let [baseline min-outer-low
+  (let [baseline (min-outer-low)
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
                    (> raw-interval 10) 20
@@ -516,7 +532,7 @@
       (:outer-high content/dot-comments)
 
       (> survival-rate (:outer-high row))
-      (:outer-high content/dot-comments)
+      (:high content/dot-comments)
 
       :else
       "Oops - no text for this"

@@ -58,7 +58,7 @@
     marker))
 
 (def hospital-markers
-  (let [rows (rest content/table1-data)]
+  (let [rows (rest ((content/table-data (:datasource @core/app))))]
     (clj->js
      (map hospital-marker rows))))
 
@@ -96,13 +96,14 @@
 
 (declare panHandler)
 
-(def dt 5000)
+(def dt 1000)
 
 (defn map-click-handler
   [event]
   (let [
         the-map (:map @core/app)
         the-popup (:popup @core/app)
+        the-datasource (:datasource @core/app)
         element ($ "#popup")
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
@@ -110,14 +111,14 @@
         ]
     (if feature
       (let [h-code (keyword (.get feature "code"))
-            row (h-code content/rows-by-code)
+            row (h-code ((content/rows-by-code the-datasource)))
             geometry (.getGeometry feature)
             coord (.getCoordinates geometry)]
 
         (prn "feature " coord )
         (panHandler (:h-lat row) (:h-lon row))
         (go (<! (timeout dt))
-            (.setPosition the-popup (clj->js [(first coord) (+ 450 (second coord))]))
+            (.setPosition the-popup (clj->js [(first coord) (+ 150 (second coord))]))
             (.popover element (clj->js
                                {:placement "top"
                                 :html true
@@ -160,37 +161,70 @@
 (defn project [lat lon]
   (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
-(defn panHandler [lat lon & {:keys [resolution] :or {resolution 16}}]
-  (let [pan (.pan ol.animation (clj->js {:duration dt
-                                         :source (.getCenter mapView)
-                                         :resolution 512
-                                         }))
-        bounce (.bounce js/ol.animation (clj->js {:duration dt
-                                                  :resolution 512
-                                                  }))]
-    (.beforeRender (:map @core/app) pan bounce)
-    (.setCenter mapView (project lat lon))
-    (.setResolution mapView resolution)))
+
+;; (defn panHandler
+;;   ([lat lon]
+;;    (panHandler lat lon 16))
+
+;;   ([lat lon resolution]
+;;    (prn (str "resolution = " resolution))
+;;    (let [pan (.pan ol.animation (clj->js {:duration dt
+;;                                           :source (.getCenter mapView)
+;;                                           }))
+;;          bounce (.bounce js/ol.animation (clj->js {:duration dt
+;;                                                    :resolution (.getResolution mapView)
+;;                                                    }))]
+;;      (.setCenter mapView (project lat lon))
+;;      (.setResolution mapView resolution)
+;;      (.beforeRender (:map @core/app) pan bounce)
+;;      )))
+
+(defn homeHandler
+  ([lat lon]
+   (panHandler lat lon 4))
+
+  ([lat lon resolution]
+   (prn (str "resolution = " resolution))
+   (let [pan (.pan ol.animation (clj->js {:duration dt
+                                          :source (.getCenter mapView)
+                                          :resolution (.getResolution mapView)
+                                          }))
+         zoom (.zoom js/ol.animation (clj->js {:duration dt
+                                               :source (.getCenter mapView)
+                                               :resolution (.getResolution mapView)
+                                               }))
+         ]
+     (.setCenter mapView (project lat lon))
+     (.setResolution mapView resolution)
+     (.beforeRender (:map @core/app) pan zoom)
+     )))
+
+
+
+(def panHandler homeHandler)
 
 (rum/defc hospital-button [row]
-  [:button.btn-primary.h-button
-   {:on-click #(panHandler (:h-lat row) (:h-lon row))}
-   (:h-code row)])
+  [:button
+   {:style {:color "#337AB7"
+            }
+    :on-click #(homeHandler (:h-lat row) (:h-lon row))}
+   [:span.fa.fa-map-marker ]])
 
 (rum/defc home-button []
-  [:button.btn-primary
-   {:on-click #(panHandler -3 54.5 512)}
+  [:button.btn-primary.h-button
+   {:on-click #(homeHandler 54.5 -3 4000)
+    :tab-index 0}
    "Home"])
 
-(rum/defc hospitals < map-view []
+(rum/defc hospitals < map-view rum/reactive []
   [:div
-   [:div.map-buttons {:key 1}
-    (map #(hospital-button %) (rest content/table1-data))
-    ]
    [:div {:key 2}
     [:#open-map {:tab-index 0
                  :style {:width "350px"
                          :height "500px"
-                         :border "1px solid grey"}}]
+                         :position "relative"
+                         :border "1px solid grey"}}
+
+     (home-button)]
     [:#popup]
     ]])
