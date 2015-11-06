@@ -11,6 +11,7 @@
               [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
+              [prais2.open-layers-map :as map]
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.faqs :refer [render-faqs]]
@@ -71,7 +72,7 @@
          data (conj (rest data') headers))
 
 (rum/defc render-table < rum/reactive [id]
-  (let [data ((content/table-data (:datasource (rum/react core/app))))]
+  (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
                   [(data/modal)
@@ -190,6 +191,11 @@
               (prn (str "datasource now " new-source))
               (swap! core/app #(assoc % :datasource new-source))))
 
+  (dispatch event-bus-pub :click-on-map-marker
+            (fn [[_ [h-code feature]] ]
+              (prn (str "clicked on marker " (name h-code)))
+              (map/zoom-to-feature h-code feature)))
+
 
   (dispatch event-bus-pub :intro
             (fn [_]
@@ -216,5 +222,5 @@
 ;; optionally do something on app reload
 ;;
 (defn on-js-reload []
-  (prn "Hi")
+  (prn "Reloaded")
 )

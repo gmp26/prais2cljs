@@ -9,6 +9,47 @@
               )
     (:require-macros [jayq.macros :refer [ready]]))
 
+
+;;;
+;; datasource utilities
+;;;
+(defn colour-map [theme] (content/colour-map-options theme))
+
+(defn index-by
+  "create an index on a table"
+  [table key-fn]
+    (into {} (map (juxt key-fn identity) table)))
+
+(defn add-markers [table-rows]
+  (map-indexed
+   (fn [index row]
+     (let [lat (+ 50.7 (/ index 3))
+           lon (+ -2.6 (* 0.8 (mod index 3)))
+           ]
+       (assoc row :h-lat lat :h-lon lon)))
+   table-rows
+   ))
+
+(defn make-datasource [datasource]
+  (into []
+        (concat [content/header-row]
+                (if (= datasource :2014)
+                  (:2014  content/datasources)
+                  (add-markers (datasource content/datasources))
+                  ))))
+
+(defn table-data
+  "datasource switchable hospital results table"
+  [datasource]
+  (memoize (fn []
+             (make-datasource datasource))))
+
+(defn rows-by-code
+  "datasource switchable hospital results indexed by hospital code"
+  [datasource]
+  (memoize (fn []
+             (index-by ((table-data datasource)) #(keyword (:h-code %))))))
+
 (defn sort-on-column
   "sort a column"
   [app column-key]
@@ -27,11 +68,9 @@
 
 (def chart-width 100)
 
-;;(def min-outer-low  (* 2 (int (/ (apply min (map :outer-low (rest content/table1-data))) 2))))
-
 ;;  "the minimum outer-low value across all rows"
 (defn min-outer-low []
-  (* 2 (int (/ (apply min (map :outer-low (rest ((content/table-data (:datasource @core/app)))))) 2))))
+  (* 2 (int (/ (apply min (map :outer-low (rest ((table-data (:datasource @core/app)))))) 2))))
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
@@ -51,9 +90,10 @@
   (* value (bar-scale slider))
   )
 
-(defn colour-map [theme] (content/colour-map-options theme))
 
-
+;;;
+;; graphics
+;;;
 
 ;; test square: insert to check mixin behviour
 (rum/defc square < rum/static [slider value fill]
@@ -139,11 +179,6 @@
 (def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
                    #{:inner :outer} #{:inner}])
 
-
-(def put-morph-full-range #(do
-                             (put! event-bus [:morph-full-range :data])
-                             (.preventDefault (.-nativeEvent %))
-                             ))
 
 (rum/defc chart-cell < bs-tooltip rum/reactive [row slider]
   (let [ap (rum/react core/app)
@@ -357,7 +392,7 @@
                      [(slider-title headers)
                       (slider-labels)
                       (do
-                        (prn "calling slider-control with " slider-axis-value)
+                        #_(prn "calling slider-control with " slider-axis-value)
                         (slider-control slider-axis-value event-bus 0 1 0.01))
                       (axis-container slider-axis-value)])]]]]))
 
@@ -373,7 +408,7 @@
                 (rest data))
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
-    (prn "calling table-head with " slider-axis-value)
+    #_(prn "calling table-head with " slider-axis-value)
     [:div
      #_(when (core/query-media? "screen")
 

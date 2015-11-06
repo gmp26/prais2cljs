@@ -2,21 +2,23 @@
     (:require [rum.core :as rum]
               [jayq.core :refer ($)]
               [cljs.core.async :refer [<! put! timeout]]
-              [prais2.core :as core]
+              [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
+              [prais2.data :as data]
               [ol.Feature]
               [ol.Overlay]
-;              [ol.Map]
-;              [ol.layer.Tile]
-;              [ol.layer.Vector]
-;              [ol.View]
-;              [ol.proj]
               [ol.source.OSM]
-;              [ol.source.Vector]
-;              [ol.style.Style]
-;              [ol.style.Icon]
-;              [ol.geom.Point]
-;              [ol.animation]
+              ;; This lot appears to be pulled in by the above anyway
+              ;;              [ol.Map]
+              ;;              [ol.layer.Tile]
+              ;;              [ol.layer.Vector]
+              ;;              [ol.View]
+              ;;              [ol.proj]
+              ;;              [ol.source.Vector]
+              ;;              [ol.style.Style]
+              ;;              [ol.style.Icon]
+              ;;              [ol.geom.Point]
+              ;;              [ol.animation]
               )
     (:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -59,7 +61,7 @@
 
 (defn hospital-markers
   []
-  (let [rows (rest ((content/table-data (:datasource @core/app))))]
+  (let [rows (rest ((data/table-data (:datasource @core/app))))]
     (clj->js
      (map hospital-marker rows))))
 
@@ -99,48 +101,43 @@
 
 (declare panHandler)
 
-(def dt 1000)
+; map zoom animation time
+(def zoom-time 1000)
 
 (defn map-click-handler
   [event]
-  (let [
-        the-map (:map @core/app)
-        the-popup (:popup @core/app)
-        the-datasource (:datasource @core/app)
-        element ($ "#popup")
+  (let [the-map (:map @core/app)
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
-                                         (fn [a b] a))
-        ]
-    (if feature
-      (let [h-code (keyword (.get feature "code"))
-            row (h-code ((content/rows-by-code the-datasource)))
-            geometry (.getGeometry feature)
-            coord (.getCoordinates geometry)]
+                                         (fn [a b] a))]
+    (when feature
+      (put! event-bus [:click-on-map-marker [(keyword (.get feature "code")) feature]]))))
 
-        (prn "feature " coord )
-        (panHandler (:h-lat row) (:h-lon row))
-        (go (<! (timeout dt))
-            (.setPosition the-popup (clj->js [(first coord) (+ 150 (second coord))]))
-            (.popover element (clj->js
-                               {:placement "top"
-                                :html true
-                                :content (str "<h4>"(.get feature "name") "</h4>" (.get feature "count") " operations")
-                                }))
-            (.popover element "show")
-            (go (<! (timeout 2500))
-                (.popover element "destroy"))))
-      (.popover element "hide"))))
 
-#_(defn map-move-handler
-  [event]
-  (let [the-map (:map @core/app)
-        the-popup (:popup @core/app)
+(defn zoom-to-feature
+  "handle a click on a map feature"
+  [h-code feature]
+  (let [the-popup (:popup @core/app)
         element ($ "#popup")
-        pixel (.getEventPixel the-map (.-originalEvent event))
-        hit (.hasFeatureAtPixel the-map pixel)]
-    (when (not hit)
-      (.popover element "destroy"))))
+        the-datasource (:datasource @core/app)
+        row (h-code ((data/rows-by-code the-datasource)))
+        geometry (.getGeometry feature)
+        coord (.getCoordinates geometry)]
+
+    #_(prn "feature " coord )
+    (panHandler (:h-lat row) (:h-lon row))
+    (go (<! (timeout zoom-time))
+        (.setPosition the-popup (clj->js [(first coord) (+ 150 (second coord))]))
+        (.popover element (clj->js
+                           {:placement "top"
+                            :html true
+                            :content (str "<h4>"(.get feature "name") "</h4>" (.get feature "count") " operations")
+                            }))
+        (.popover element "show")
+        (go (<! (timeout 2500))
+            (.popover element "destroy")))
+    (.popover element "hide")))
+
 
 (def map-view
   {:did-mount (fn [state]
@@ -152,7 +149,6 @@
                                           :popup the-popup))
                   (.addOverlay the-map the-popup)
                   (.on the-map "click" map-click-handler)
-                  ;(.on the-map "pointermove" map-move-handler)
                   )
                 state)
 
@@ -188,11 +184,11 @@
 
   ([lat lon resolution]
    (prn (str "resolution = " resolution))
-   (let [pan (.pan ol.animation (clj->js {:duration dt
+   (let [pan (.pan ol.animation (clj->js {:duration zoom-time
                                           :source (.getCenter mapView)
                                           :resolution (.getResolution mapView)
                                           }))
-         zoom (.zoom js/ol.animation (clj->js {:duration dt
+         zoom (.zoom js/ol.animation (clj->js {:duration zoom-time
                                                :source (.getCenter mapView)
                                                :resolution (.getResolution mapView)
                                                }))

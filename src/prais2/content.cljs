@@ -177,41 +177,6 @@
     (Row. "Hospital M"	"M"	0 0     1481	36	1445	97.6	95.3	95.9	97.7	98.1  nil)
     (Row. "Hospital N"	"N"	0 0     1881	67	1814	96.4	96.5	97.0	98.4	98.7  nil)]})
 
-(defn index-by
-  "create an index on a table"
-  [table key-fn]
-    (into {} (map (juxt key-fn identity) table)))
-
-(defn add-markers [table-rows]
-  (map-indexed
-   (fn [index row]
-     (let [lat (+ 50.7 (/ index 3))
-           lon (+ -2.6 (* 0.8 (mod index 3)))
-           ]
-       (assoc row :h-lat lat :h-lon lon)))
-   table-rows
-   ))
-
-
-(defn make-datasource [datasource]
-  (into []
-        (concat [header-row]
-                (if (= datasource :2014)
-                  (:2014 datasources)
-                  (add-markers (datasource datasources))
-                  ))))
-
-(defn table-data [datasource]
-  (memoize (fn []
-             (make-datasource datasource))))
-
-;;;
-;; hospital results  indexed by hospital code
-;;;
-(defn rows-by-code [datasource]
-  (memoize (fn []
-             (index-by ((table-data datasource)) #(keyword (:h-code %))))))
-
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
 ;;;

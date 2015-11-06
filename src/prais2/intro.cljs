@@ -2,6 +2,7 @@
     (:require [rum.core :as rum]
               [prais2.core :as core]
               [prais2.content :as content]
+              [prais2.data :as data]
               [prais2.chrome :as chrome]
               [prais2.open-layers-map :as map]))
 
@@ -31,7 +32,7 @@
 
 (rum/defc hospital-item < rum/reactive [h-key]
   [:li
-   (map/hospital-button (:BCH ((content/rows-by-code (:datasource (rum/react core/app))))))
+   (map/hospital-button (:BCH ((data/rows-by-code (:datasource (rum/react core/app))))))
    [:a.btn-link {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]])
 
 
