@@ -53,7 +53,7 @@
 ;;;
 (defn click->event-bus
   [event dispatch-key dispatch-value]
-  (prn "dispatch")
+  (prn "dispatch" dispatch-key)
   (put! event-bus [dispatch-key dispatch-value event])
   (.preventDefault event)
   (.stopPropagation event)

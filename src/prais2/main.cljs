@@ -200,6 +200,12 @@
 
   (dispatch event-bus-pub :click-on-hospital-map-link zoom-to-hospital)
 
+  (dispatch event-bus-pub :reset-map-to-home
+            (fn [_]
+              (prn "reset map to home")
+              (swap! core/app #(assoc % :map-h-code :home))
+              (map/go-home)))
+
   (dispatch event-bus-pub :intro
             (fn [_]
               (prn "nav to intro")

@@ -137,6 +137,10 @@
      (.beforeRender (:map @core/app) pan zoom)
      )))
 
+(defn go-home
+  "revert to map home location and zoom"
+  []
+  (zoom-to-location 54.5 -3 4000))
 
 (defn zoom-to-feature
   "Handle a click on a map feature.
@@ -192,14 +196,15 @@
   [:button
    {:style {:color "#337AB7"}
     :on-click #(put! event-bus [:click-on-hospital-map-link (keyword (:h-code row)) %])
-    ;:on-click #(zoom-to-location (:h-lat row) (:h-lon row))
     }
 
    [:span.fa.fa-map-marker ]])
 
 (rum/defc home-button []
   [:button.btn-primary.h-button
-   {:on-click #(zoom-to-location 54.5 -3 4000)
+   {:on-click #(core/click->event-bus % :reset-map-to-home :home)
+                                        ;:on-click #(put! event-bus [:reset-map-to-home :home %])
+    ;:on-click #(zoom-to-location 54.5 -3 4000)
     :tab-index 0}
    "Home"])
 
