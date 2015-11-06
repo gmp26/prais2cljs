@@ -149,6 +149,12 @@
       (recur)))
   )
 
+(defn zoom-to-hospital
+  [[_ h-code _] ]
+  (prn (str "clicked on marker " (name h-code)))
+  (swap! core/app #(assoc % :map-h-code h-code))
+  (map/zoom-to-feature))
+
 (defn dispatch-central
   "centralised dispatch of all events"
   []
@@ -180,7 +186,6 @@
             (fn [_]
               (data/close-hospital-modal)))
 
-
   (dispatch event-bus-pub :morph-full-range
             (fn [_]
               (prn (str "morph to full range"))
@@ -191,12 +196,9 @@
               (prn (str "datasource now " new-source))
               (swap! core/app #(assoc % :datasource new-source))))
 
-  (dispatch event-bus-pub :click-on-map-marker
-            (fn [[_ h-code event] ]
-              (prn (str "clicked on marker " (name h-code)))
-              (swap! core/app #(assoc % :map-h-code h-code))
-              (map/zoom-to-feature)))
+  (dispatch event-bus-pub :click-on-map-marker zoom-to-hospital)
 
+  (dispatch event-bus-pub :click-on-hospital-map-link zoom-to-hospital)
 
   (dispatch event-bus-pub :intro
             (fn [_]
@@ -213,10 +215,7 @@
               (prn "nav to faqs")
               (swap! core/app #(assoc % :page :faqs)))))
 
-
-
-
-
+;; start the event dispatcher
 (dispatch-central)
 
 ;;

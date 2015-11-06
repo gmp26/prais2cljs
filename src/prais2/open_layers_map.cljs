@@ -144,7 +144,6 @@
   bypasses React. We should render from map-state stored in the app atom."
 
   []
-  (prn  "h-code = " (:map-h-code @core/app))
   (let [ap @core/app
         h-code (:map-h-code ap)
         the-popup (:popup ap)
@@ -189,12 +188,13 @@
                    state)})
 
 
-
 (rum/defc hospital-button [row]
   [:button
-   {:style {:color "#337AB7"
-            }
-    :on-click #(zoom-to-location (:h-lat row) (:h-lon row))}
+   {:style {:color "#337AB7"}
+    :on-click #(put! event-bus [:click-on-hospital-map-link (keyword (:h-code row)) %])
+    ;:on-click #(zoom-to-location (:h-lat row) (:h-lon row))
+    }
+
    [:span.fa.fa-map-marker ]])
 
 (rum/defc home-button []
