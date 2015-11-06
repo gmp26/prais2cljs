@@ -154,25 +154,25 @@
   []
 
   (dispatch event-bus-pub :slider-axis-value
-            (fn [[_ slider-value]]
+            (fn [[_ slider-value _]]
               (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :sort-toggle
-            (fn [[_ column-key]] (data/handle-sort core/app column-key)))
+            (fn [[_ column-key _]] (data/handle-sort core/app column-key)))
 
   (dispatch event-bus-pub :info-clicked
-            (fn [[_ column-key]] (prn (str "clicked on info for column " column-key))))
+            (fn [[_ column-key _]] (prn (str "clicked on info for column " column-key))))
 
   (dispatch event-bus-pub :change-colour-map
-            (fn [[_ value]]
+            (fn [[_ value _]]
               (swap! core/app #(assoc % :theme (int value)))))
 
   (dispatch event-bus-pub :change-chart-state
-            (fn [[_ value]]
+            (fn [[_ value _]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
   (dispatch event-bus-pub :open-hospital-modal
-            (fn [[_ row]]
+            (fn [[_ row _]]
               (prn "dispatching")
               (data/open-hospital-modal row)))
 
@@ -187,14 +187,15 @@
               (swap! core/app #(assoc % :slider-axis-value 0))))
 
   (dispatch event-bus-pub :change-datasource
-            (fn [[_ new-source] ]
+            (fn [[_ new-source _] ]
               (prn (str "datasource now " new-source))
               (swap! core/app #(assoc % :datasource new-source))))
 
   (dispatch event-bus-pub :click-on-map-marker
-            (fn [[_ [h-code feature]] ]
+            (fn [[_ h-code event] ]
               (prn (str "clicked on marker " (name h-code)))
-              (map/zoom-to-feature h-code feature)))
+              (swap! core/app #(assoc % :map-h-code h-code))
+              (map/zoom-to-feature)))
 
 
   (dispatch event-bus-pub :intro

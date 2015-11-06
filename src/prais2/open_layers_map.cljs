@@ -99,10 +99,9 @@
                  :stopEvent false
                  })))
 
-(declare panHandler)
 
-; map zoom animation time
-(def zoom-time 1000)
+(defn project [lat lon]
+  (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
 (defn map-click-handler
   [event]
@@ -111,27 +110,60 @@
                                          (.-pixel event)
                                          (fn [a b] a))]
     (when feature
-      (put! event-bus [:click-on-map-marker [(keyword (.get feature "code")) feature]]))))
+      ;(core/click->event-bus event :click-on-map-marker (keyword (.get feature "code")))
+      (put! event-bus [:click-on-map-marker (keyword (.get feature "code")) event])
+      )))
+
+; map zoom animation time
+(def zoom-time 1000)
+
+(defn zoom-to-location
+  ([lat lon]
+   (zoom-to-location lat lon 4))
+
+  ([lat lon resolution]
+   (prn (str "resolution = " resolution))
+   (let [pan (.pan ol.animation (clj->js {:duration zoom-time
+                                          :source (.getCenter mapView)
+                                          :resolution (.getResolution mapView)
+                                          }))
+         zoom (.zoom js/ol.animation (clj->js {:duration zoom-time
+                                               :source (.getCenter mapView)
+                                               :resolution (.getResolution mapView)
+                                               }))
+         ]
+     (.setCenter mapView (project lat lon))
+     (.setResolution mapView resolution)
+     (.beforeRender (:map @core/app) pan zoom)
+     )))
 
 
 (defn zoom-to-feature
-  "handle a click on a map feature"
-  [h-code feature]
-  (let [the-popup (:popup @core/app)
-        element ($ "#popup")
-        the-datasource (:datasource @core/app)
-        row (h-code ((data/rows-by-code the-datasource)))
-        geometry (.getGeometry feature)
-        coord (.getCoordinates geometry)]
+  "Handle a click on a map feature.
+  This should behave like a react render even though it uses open-layers map software and so
+  bypasses React. We should render from map-state stored in the app atom."
 
-    #_(prn "feature " coord )
-    (panHandler (:h-lat row) (:h-lon row))
+  []
+  (prn  "h-code = " (:map-h-code @core/app))
+  (let [ap @core/app
+        h-code (:map-h-code ap)
+        the-popup (:popup ap)
+        element ($ "#popup")
+        the-datasource (:datasource ap)
+        row (h-code ((data/rows-by-code the-datasource)))
+        lat (:h-lat row)
+        lon (:h-lon row)
+        coord (map-point lat lon)
+        ]
+
+    (zoom-to-location lat lon)
     (go (<! (timeout zoom-time))
+
         (.setPosition the-popup (clj->js [(first coord) (+ 150 (second coord))]))
         (.popover element (clj->js
                            {:placement "top"
                             :html true
-                            :content (str "<h4>"(.get feature "name") "</h4>" (.get feature "count") " operations")
+                            :content (str "<h4>"(:h-name row) "</h4>" (:n-ops row) " operations")
                             }))
         (.popover element "show")
         (go (<! (timeout 2500))
@@ -157,61 +189,17 @@
                    state)})
 
 
-(defn project [lat lon]
-  (.fromLonLat js/ol.proj (clj->js [lon lat])))
-
-
-;; (defn panHandler
-;;   ([lat lon]
-;;    (panHandler lat lon 16))
-
-;;   ([lat lon resolution]
-;;    (prn (str "resolution = " resolution))
-;;    (let [pan (.pan ol.animation (clj->js {:duration dt
-;;                                           :source (.getCenter mapView)
-;;                                           }))
-;;          bounce (.bounce js/ol.animation (clj->js {:duration dt
-;;                                                    :resolution (.getResolution mapView)
-;;                                                    }))]
-;;      (.setCenter mapView (project lat lon))
-;;      (.setResolution mapView resolution)
-;;      (.beforeRender (:map @core/app) pan bounce)
-;;      )))
-
-(defn homeHandler
-  ([lat lon]
-   (panHandler lat lon 4))
-
-  ([lat lon resolution]
-   (prn (str "resolution = " resolution))
-   (let [pan (.pan ol.animation (clj->js {:duration zoom-time
-                                          :source (.getCenter mapView)
-                                          :resolution (.getResolution mapView)
-                                          }))
-         zoom (.zoom js/ol.animation (clj->js {:duration zoom-time
-                                               :source (.getCenter mapView)
-                                               :resolution (.getResolution mapView)
-                                               }))
-         ]
-     (.setCenter mapView (project lat lon))
-     (.setResolution mapView resolution)
-     (.beforeRender (:map @core/app) pan zoom)
-     )))
-
-
-
-(def panHandler homeHandler)
 
 (rum/defc hospital-button [row]
   [:button
    {:style {:color "#337AB7"
             }
-    :on-click #(homeHandler (:h-lat row) (:h-lon row))}
+    :on-click #(zoom-to-location (:h-lat row) (:h-lon row))}
    [:span.fa.fa-map-marker ]])
 
 (rum/defc home-button []
   [:button.btn-primary.h-button
-   {:on-click #(homeHandler 54.5 -3 4000)
+   {:on-click #(zoom-to-location 54.5 -3 4000)
     :tab-index 0}
    "Home"])
 

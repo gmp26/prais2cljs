@@ -1,7 +1,6 @@
 (ns ^:figwheel-always prais2.chrome
     (:require [rum.core :as rum]
-              [prais2.core :as core :refer [event-bus]]
-              [cljs.core.async :refer [put!]]))
+              [prais2.core :as core :refer [event-bus]]))
 
 
 

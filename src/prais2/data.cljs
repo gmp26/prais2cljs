@@ -284,7 +284,7 @@
                                                                  :value (:slider-axis-value @core/app)
                                                                  }))
                       handler #(do
-                                 (put! event-bus [:slider-axis-value (.getValue slider)]))
+                                 (put! event-bus [:slider-axis-value (.getValue slider) %]))
                       state' (assoc state ::slider slider ::handler handler)]
 
                   (.on slider "slide" handler)
@@ -468,7 +468,7 @@
    [:select#chart-selector.form-control.input-sm
     {
      :value (:chart-state (rum/react core/app))
-     :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
+     :on-change #(put! event-bus [:change-chart-state (.. % -target -value) %])}
     (map-indexed key-with
                  (for [n (range (count chart-states))]
                    (integer-option n)))
@@ -481,7 +481,7 @@
    [:select#colour-map-selector.form-control.input-sm
     {
      :value (:theme (rum/react core/app))
-     :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
+     :on-change #(put! event-bus [:change-colour-map (.. % -target -value) %])}
     (map-indexed key-with
                  (for [n (range (count content/colour-map-options))]
                    (integer-option n)))]
@@ -495,7 +495,7 @@
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
-     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
+     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value)) %])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
                    (key-option key)))]

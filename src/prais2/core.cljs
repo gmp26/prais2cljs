@@ -22,6 +22,7 @@
                     :theme 1
                     :selected-row nil
                     :datasource :2014
+                    :map-h-code "foo"
                     }))
 
 ;;;
@@ -53,7 +54,7 @@
 (defn click->event-bus
   [event dispatch-key dispatch-value]
   (prn "dispatch")
-  (put! event-bus [dispatch-key dispatch-value])
+  (put! event-bus [dispatch-key dispatch-value event])
   (.preventDefault event)
   (.stopPropagation event)
   )
