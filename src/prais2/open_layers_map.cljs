@@ -57,18 +57,21 @@
     (.setStyle marker iconStyle)
     marker))
 
-(def hospital-markers
+(defn hospital-markers
+  []
   (let [rows (rest ((content/table-data (:datasource @core/app))))]
     (clj->js
      (map hospital-marker rows))))
 
-(def vectorSource
+(defn vectorSource
+  []
   (new js/ol.source.Vector
-       (clj->js {:features hospital-markers})))
+       (clj->js {:features (hospital-markers)})))
 
-(def vectorLayer
+(defn vectorLayer
+  []
   (new js/ol.layer.Vector
-       (clj->js {:source vectorSource})))
+       (clj->js {:source (vectorSource)})))
 
 (def tileLayer
   (new js/ol.layer.Tile
@@ -80,7 +83,7 @@
                             :zoom 5.7})))
 (defn hospital-map []
   (new js/ol.Map (clj->js {:target "open-map"
-                           :layers [tileLayer vectorLayer]
+                           :layers [tileLayer (vectorLayer)]
                            :view mapView
                            :loadTilesWhileAnimating true})))
 
