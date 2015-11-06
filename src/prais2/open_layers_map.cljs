@@ -5,6 +5,7 @@
               [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
               [prais2.data :as data]
+              [prais2.utils :refer [key-with]]
               [ol.Feature]
               [ol.Overlay]
               [ol.source.OSM]
@@ -81,13 +82,14 @@
                  :source (new js/ol.source.OSM)})))
 
 (def mapView
-  (new js/ol.View (clj->js {:center (map-point 54.5 -3)
-                            :zoom 5.7})))
+  (new js/ol.View (clj->js {:center (map-point 53.7 -3.4)
+                            :zoom 5.5})))
 (defn hospital-map []
   (new js/ol.Map (clj->js {:target "open-map"
                            :layers [tileLayer (vectorLayer)]
                            :view mapView
                            :loadTilesWhileAnimating true})))
+
 
 ;;
 ;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
@@ -203,20 +205,37 @@
 (rum/defc home-button []
   [:button.btn-primary.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home :home)
-                                        ;:on-click #(put! event-bus [:reset-map-to-home :home %])
-    ;:on-click #(zoom-to-location 54.5 -3 4000)
     :tab-index 0}
    "Home"])
+
+(rum/defc menu-button []
+  [:button#drop1.btn-primary.h-button.map-menu.dropdown-toggle
+   {:type "button"
+    :data-toggle "dropdown"
+    :aria-haspopup "true"
+    :aria-expanded "true"
+    :tab-index 0}
+   "Menu " [:i.fa.fa-caret-down]])
+
+(rum/defc hospital-item [row]
+  [:li [:a {:href "#"} (:h-name row)]])
+
+(rum/defc hospital-list < rum/reactive []
+  (let [rows (rest ((:datasource (rum/react core/app)) content/datasources))]
+    [:ul.dropdown-menu
+     {:aria-labelled-by "drop1"}
+     (map-indexed key-with (map hospital-item rows))]))
+
+(rum/defc hospital-dropdown []
+  [:.dropdown
+   (map-indexed key-with [(menu-button) (hospital-list)])
+   ])
 
 (rum/defc hospitals < map-view rum/reactive []
   [:div
    [:div {:key 2}
-    [:#open-map {:tab-index 0
-                 :style {:width "350px"
-                         :height "500px"
-                         :position "relative"
-                         :border "1px solid grey"}}
-
-     (home-button)]
-    [:#popup]
+    [:#open-map.hospital-map {:tab-index 0 :key 1}
+     (home-button)
+     (hospital-dropdown)]
+    [:#popup {:key 2}]
     ]])
