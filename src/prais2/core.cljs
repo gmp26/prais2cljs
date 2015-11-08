@@ -18,6 +18,7 @@
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0
+                    :detail-slider-axis-value 1.0
                     :chart-state 3
                     :theme 1
                     :selected-row nil

@@ -271,8 +271,10 @@ td:first-child {
 .axis-container {
     position: relative;
     margin-left: 15px;
-    /*opacity: 0.2;*/
-    /*width: calc(100% - 45px);*/
+}
+
+#detail .axis-container {
+    height: 20px;
 }
 
 .tick {
@@ -293,6 +295,14 @@ td:first-child {
     font-weight: 200 !important;
     font-size: 18px;
     color: #ffffff;
+}
+
+#detail .tick {
+    height: 69px;
+}
+
+#detail .tick-label {
+    color: #000000;
 }
 
 /* button which opens hospital info modal */

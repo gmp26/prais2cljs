@@ -187,17 +187,6 @@
         dotty (:dot bars)
         dotless (disj bars :dot)]
     [:td
-     #_(when (> slider 0) [:div {:on-click #(core/click->event-bus % :morph-full-range :slider)
-                               :style
-                               {:position "absolute"
-                                :width (px 20)
-                                :height (px 50)
-                                :color "#149BDF"
-                                :background-color "rgba(200, 200, 200, 0.3)"
-                                :box-shadow "2px 0px 5px #000000"
-                                :padding-top (px 16)
-                                :cursor "pointer"
-                                }} [:i.fa.fa-chevron-left]])
      [:.chart-cell {:style {:padding-left (important (px axis-margin))
                             :padding-right last-pad-right}}
       [:div.bar-chart
@@ -318,8 +307,8 @@
       (.setValue slider value))
     s))
 
-(rum/defcs slider2-control < (bs-slider "#slider2" :slider2-axis-value) rum/static [state value min max step]
-  (let [s [:#slider2.slider
+(rum/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
+  (let [s [:#detail-slider.slider
            [:input {:type "text"
                     :data-slider-min min
                     :data-slider-max max
@@ -383,9 +372,7 @@
    (map-indexed key-with
                 [(slider-title headers)
                  (slider-labels)
-                 (do
-                   #_(prn "calling slider-control with " slider-axis-value)
-                   (control slider-axis-value 0 1 0.01))
+                 (control slider-axis-value 0 1 0.01)
                  (axis-container slider-axis-value)])]  )
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
@@ -409,7 +396,7 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (slider-widget headers slider-control)
+        (slider-widget headers slider-control slider-axis-value)
         ]]]]))
 
 
@@ -640,10 +627,10 @@
   []
   (let [ap (rum/react core/app)
         h-code (:map-h-code ap)]
-    (prn (h-code ((rows-by-code (:datasource ap)))))
-    (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
-      [:div
+    (if-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
+      [:#detail
        [:h3 (:h-name selected-row)]
-       (slider-widget {} slider2-control)
-       (chart-cell selected-row 1)
-       (interpretation selected-row)])))
+       (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+       (chart-cell selected-row (:detail-slider-axis-value ap))
+       (interpretation selected-row)]
+      [:p "Select a hospital"])))

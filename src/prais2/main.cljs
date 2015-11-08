@@ -163,6 +163,10 @@
             (fn [[_ slider-value _]]
               (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
+  (dispatch event-bus-pub :detail-slider-axis-value
+            (fn [[_ slider-value _]]
+              (swap! core/app #(assoc % :detail-slider-axis-value slider-value))))
+
   (dispatch event-bus-pub :sort-toggle
             (fn [[_ column-key _]] (data/handle-sort core/app column-key)))
 
