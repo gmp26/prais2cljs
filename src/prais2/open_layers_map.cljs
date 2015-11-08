@@ -193,15 +193,6 @@
                    (swap! core/app #(dissoc % :map :popup))
                    state)})
 
-
-(rum/defc hospital-button [row]
-  [:button
-   {:style {:color "#337AB7"}
-    :on-click #(put! event-bus [:click-on-hospital-map-link (keyword (:h-code row)) %])
-    }
-
-   [:span.fa.fa-map-marker ]])
-
 (rum/defc home-button []
   [:button.btn-primary.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home :home)
@@ -218,7 +209,9 @@
    "Menu " [:i.fa.fa-caret-down]])
 
 (rum/defc hospital-item [row]
-  [:li [:a {:href "#"} (:h-name row)]])
+  [:li [:a
+        {:on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row)) %])}
+        (:h-name row)]])
 
 (rum/defc hospital-list < rum/reactive []
   (let [rows (rest ((:datasource (rum/react core/app)) content/datasources))]

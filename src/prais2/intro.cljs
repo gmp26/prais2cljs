@@ -30,13 +30,14 @@
 
      ]]])
 
-(rum/defc hospital-item < rum/reactive [h-key]
-  [:li
-   (map/hospital-button (:BCH ((data/rows-by-code (:datasource (rum/react core/app))))))
-   [:a.btn-link {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]])
+#_(rum/defc hospital-item < rum/reactive [h-key]
+  (let [datasource ((data/rows-by-code (:datasource (rum/react core/app))))]
+    [:li
+     (map/hospital-button (:BCH ))
+     [:a.btn-link {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]]))
 
 
-(rum/defc hospital-list < rum/reactive []
+#_(rum/defc hospital-list < rum/reactive []
   [:ul
    (hospital-item :BCH)
 
@@ -240,9 +241,9 @@
 
    (map/hospitals)
 
-   (hospital-list)
+   #_(hospital-list)
 
-   (hospital-charities)
+   #_(hospital-charities)
 
    ])
 

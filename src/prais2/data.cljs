@@ -367,6 +367,16 @@
         [:br {:key :br}]
         title])]))
 
+(rum/defc slider-widget < rum/static [headers slider-axis-value]
+  [:div
+   (map-indexed key-with
+                [(slider-title headers)
+                 (slider-labels)
+                 (do
+                   #_(prn "calling slider-control with " slider-axis-value)
+                   (slider-control slider-axis-value event-bus 0 1 0.01))
+                 (axis-container slider-axis-value)])]  )
+
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
 
   (let [baseline (Math.round (* (min-outer-low) slider-axis-value))]
@@ -388,13 +398,8 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (map-indexed key-with
-                     [(slider-title headers)
-                      (slider-labels)
-                      (do
-                        #_(prn "calling slider-control with " slider-axis-value)
-                        (slider-control slider-axis-value event-bus 0 1 0.01))
-                      (axis-container slider-axis-value)])]]]]))
+        (slider-widget headers)
+        ]]]]))
 
 
 (rum/defc table1 < rum/reactive [app data event-bus]
@@ -619,3 +624,15 @@
          "Close"]
         ]]]
      ]))
+
+(rum/defc hospital-detail < rum/reactive
+  []
+  (let [ap (rum/react core/app)
+        h-code (:map-h-code ap)]
+    (prn (h-code ((rows-by-code (:datasource ap)))))
+    (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
+      [:div
+       [:h3 (:h-name selected-row)]
+       [:.slider]
+       (chart-cell selected-row 1)
+       (interpretation selected-row)])))

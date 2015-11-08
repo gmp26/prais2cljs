@@ -520,7 +520,7 @@ td:first-child {
  **/
 .hospital-map {
     width: 320px;
-    height: 320px;
+    height: 480px;
     position: relative;
     border: 1px solid grey;
 }
@@ -561,4 +561,9 @@ td:first-child {
 .dropdown-menu {
     font-size: 12px;
     opacity: 0.7;
+    cursor: pointer;
+}
+
+.ol-attribution li {
+    font-size: 160%;
 }

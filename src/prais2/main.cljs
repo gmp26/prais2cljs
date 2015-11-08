@@ -198,7 +198,7 @@
 
   (dispatch event-bus-pub :click-on-map-marker zoom-to-hospital)
 
-  (dispatch event-bus-pub :click-on-hospital-map-link zoom-to-hospital)
+  (dispatch event-bus-pub :click-on-map-menu-item zoom-to-hospital)
 
   (dispatch event-bus-pub :reset-map-to-home
             (fn [_]

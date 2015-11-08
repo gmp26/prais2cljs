@@ -8,24 +8,13 @@
    [prais2.content :as content :refer [faqs]]
    [prais2.data :as data]
    [prais2.chrome :as chrome]
-   [prais2.intro :refer [render-intro]]
+   [prais2.intro :as intro]
    [prais2.faqs :refer [faq-content
                         render-faqs]]
    [prais2.main :refer [render-404
                         debug
                         render-table
                         ]]
-   ;; [com.rpl.specter :as sp :refer [transform
-   ;;                                 select
-   ;;                                 filterer
-   ;;                                 collect
-   ;;                                 collect-one
-   ;;                                 putval
-   ;;                                 ALL
-   ;;                                 FIRST
-   ;;                                 LAST
-   ;;                                 VAL
-   ;;                                 ]]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -42,8 +31,13 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 ###General
 * Addressable content - esp FAQs
+* Session start, end, export and load
+* Event and state tracking and logging
+* Undo/Redo
+* Session export and load
+* Session CSV export
 * * *
-* <s>use touch-start rather than touch-end with on-click</s>
+- <s>use touch-start rather than touch-end with on-click</s>
 
 ###Intro page
 * Include option to click out to further information to ensure content is not lost (ie highlight relevant FAQ)
@@ -52,11 +46,8 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 ####Data page
 * Worry about small devices
-* Two end-colour theme
 * Add summary sentence at end of table
-* Add click to bar chart hover
 * Some kind of fade-out indicator on left side of bar charts
-* Sample data (uploadable data)
 * Add information to ‘i’ of each column explaining why ‘Number of Deaths’, ‘Number of Survivors’ or ‘Observed Survival Rate’ are not order able
 * MP to experiment with reducing table size & embedding it with surrounding text
 * EB to test this
@@ -65,9 +56,12 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 - <s>Consider merging Hospital and Hospital Code column and add details of location: eg Hospital, Location (Hospital code)</s>
 - <s>Remove hospital name ‘i’</s>
 - <s>Move row cick to Hospital i icon click</s>
-* <s>EB-test Colour of bars</s>
-* <s>EB-test Darker shade on inner or outer bar</s>
-* <s>EB-test Colour fade out at edges of the outer bars</s>
+- <s>EB-test Colour of bars</s>
+- <s>EB-test Darker shade on inner or outer bar</s>
+- <s>EB-test Colour fade out at edges of the outer bars</s>
+- <s>Add click to bar chart hover</s>
+- <s>Sample data (uploadable data)</s>
+- <s>Two end-colour theme</s>
 
 
 ###Faqs -> Understanding the data
@@ -102,11 +96,11 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard render-table
   (render-table "data"))
 
-(defcard faq-7-only
+(defcard sample-faq-7
   (rum-wrap (faq-content :faq7))
 )
 
-(defcard basic-grouped-faqs
+#_(defcard basic-grouped-faqs
   (rum-wrap
    (faq-content :faq1)
    (faq-content :faq2)
@@ -125,3 +119,6 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard map
   (map/hospitals))
+
+(defcard hospital-detail
+  (data/hospital-detail))
