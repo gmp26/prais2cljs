@@ -272,19 +272,19 @@
 
 
 ;; returns a bootstrap slider mixin
-(def bs-slider
+(defn bs-slider [hashed-id change-key]
   {:did-mount (fn [state]
                 (prn "mounting-slider")
-                (let [slider (new js/Slider "#slider"
-                                                       (clj->js {
-                                                                 :tooltip "hide"
-                                                                 :min 0
-                                                                 :max 1
-                                                                 :step 0.1
-                                                                 :value (:slider-axis-value @core/app)
-                                                                 }))
+                (let [slider (new js/Slider hashed-id
+                                  (clj->js {
+                                            :tooltip "hide"
+                                            :min 0
+                                            :max 1
+                                            :step 0.1
+                                            :value (:slider-axis-value @core/app)
+                                            }))
                       handler #(do
-                                 (put! event-bus [:slider-axis-value (.getValue slider) %]))
+                                 (put! event-bus [change-key (.getValue slider) %]))
                       state' (assoc state ::slider slider ::handler handler)]
 
                   (.on slider "slide" handler)
@@ -305,7 +305,7 @@
                        (.destroy slider))
                      (dissoc state ::slider ::handler)))})
 
-(rum/defcs slider-control < bs-slider rum/static [state value event-bus min max step]
+(rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum/static [state value min max step]
   #_(prn "called slider-control with " value)
   (let [s [:#slider.slider
            [:input {:type "text"
@@ -318,6 +318,17 @@
       (.setValue slider value))
     s))
 
+(rum/defcs slider2-control < (bs-slider "#slider2" :slider2-axis-value) rum/static [state value min max step]
+  (let [s [:#slider2.slider
+           [:input {:type "text"
+                    :data-slider-min min
+                    :data-slider-max max
+                    :data-slider-step step
+                    }]]
+        slider (::slider state)]
+    (when slider
+      (.setValue slider value))
+    s))
 
 (rum/defc axis-container < rum/static [slider-axis-value]
   [:.axis-container
@@ -367,14 +378,14 @@
         [:br {:key :br}]
         title])]))
 
-(rum/defc slider-widget < rum/static [headers slider-axis-value]
+(rum/defc slider-widget < rum/static [headers control slider-axis-value]
   [:div
    (map-indexed key-with
                 [(slider-title headers)
                  (slider-labels)
                  (do
                    #_(prn "calling slider-control with " slider-axis-value)
-                   (slider-control slider-axis-value event-bus 0 1 0.01))
+                   (control slider-axis-value 0 1 0.01))
                  (axis-container slider-axis-value)])]  )
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
@@ -398,7 +409,7 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (slider-widget headers)
+        (slider-widget headers slider-control)
         ]]]]))
 
 
@@ -633,6 +644,6 @@
     (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
       [:div
        [:h3 (:h-name selected-row)]
-       [:.slider]
+       (slider-widget {} slider2-control)
        (chart-cell selected-row 1)
        (interpretation selected-row)])))
