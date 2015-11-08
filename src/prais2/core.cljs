@@ -23,7 +23,7 @@
                     :theme 1
                     :selected-row nil
                     :datasource :2014
-                    :map-h-code :home
+                    :map-h-code nil
                     }))
 
 ;;;

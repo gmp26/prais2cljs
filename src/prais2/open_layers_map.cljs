@@ -43,7 +43,7 @@
   "Generate map coordinates given longitude and latitude in degrees"
   [lat lon]
   (.transform (.-proj js/ol)
-              (clj->js [lon lat])  ; stet lon, then lat
+              (clj->js [lon lat])  ; elsewhere it's [lat lon] !
               "EPSG:4326"
               "EPSG:3857"
               ))
@@ -88,6 +88,7 @@
   (new js/ol.Map (clj->js {:target "open-map"
                            :layers [tileLayer (vectorLayer)]
                            :view mapView
+                           :interactions [] ; to disable mouse wheel and pan
                            :loadTilesWhileAnimating true})))
 
 
@@ -184,6 +185,7 @@
                   (swap! core/app #(assoc %
                                           :map the-map
                                           :popup the-popup))
+                  ;(.setActive (.-MouseWheelZoom (.-interaction js/ol)) false)
                   (.addOverlay the-map the-popup)
                   (.on the-map "click" map-click-handler)
                   )
@@ -195,7 +197,7 @@
 
 (rum/defc home-button []
   [:button.btn-primary.h-button
-   {:on-click #(core/click->event-bus % :reset-map-to-home :home)
+   {:on-click #(core/click->event-bus % :reset-map-to-home nil)
     :tab-index 0}
    "Home"])
 
@@ -210,11 +212,12 @@
 
 (rum/defc hospital-item [row]
   [:li [:a
-        {:on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row)) %])}
+        {:tab-index 0
+         :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row)) %])}
         (:h-name row)]])
 
 (rum/defc hospital-list < rum/reactive []
-  (let [rows (rest ((:datasource (rum/react core/app)) content/datasources))]
+  (let [rows ((:datasource (rum/react core/app)) content/datasources)]
     [:ul.dropdown-menu
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))

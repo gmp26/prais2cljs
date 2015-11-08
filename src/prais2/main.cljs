@@ -207,7 +207,7 @@
   (dispatch event-bus-pub :reset-map-to-home
             (fn [_]
               (prn "reset map to home")
-              (swap! core/app #(assoc % :map-h-code :home))
+              (swap! core/app #(assoc % :map-h-code nil))
               (map/go-home)))
 
   (dispatch event-bus-pub :intro

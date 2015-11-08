@@ -41,6 +41,12 @@
          ))
 
 ;;;
+;; Sample hospital
+;;;
+(def sample-hospital
+  (Row. "Sample Hospital"	"H"	52 -2     976	24	952	97.5	96.5	97.1	98.9	99.2  nil))
+
+;;;
 ;; The 2014 results
 ;;;
 
@@ -203,7 +209,7 @@
          [:a {:href "http://chsf.org.uk/"} "The Childrens Heart Surgery Fund"]]
    :OLS [[:a
         {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin"}
-          "Dublin, Our Lady&#39;s Children&#39;s Hospital"]
+          "Dublin, Our Lady's Children's Hospital"]
          [:a {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin"}
         "Heart Children Ireland"]]
    :NHB [[:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx"} "Newcastle, Freeman Hospital"]
@@ -211,7 +217,7 @@
    :ACH [[:a {:href "http://www.alderhey.nhs.uk/departments/cardiac/"} "Liverpool, Alder Hey Hospital"]
          [:a {:href "http://www.alderheycharity.org/"} "Alder Hey Charity"]]
    :GUY [[:a {:href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx"}
-          "London, Evelina London Children&#39;s Hospital"]
+          "London, Evelina London Children's Hospital"]
          [:a {:href "http://www.echo-evelina.org.uk/"} "ECHO – Evelina Children’s Heart Organisation"]]
    :BCH [[:a {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]
          [:a {:href "http://www.youngatheart.org.uk/"} "Young at Heart"]
