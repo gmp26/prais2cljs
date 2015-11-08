@@ -354,7 +354,7 @@
           (let [info-handler #(core/click->event-bus % :info-clicked column-key)]
             [:a.btn.btn-primary.btn-xs.info
              {:on-click       info-handler
-              :on-touch-start   info-handler
+              :on-touch-start info-handler
               :role           "button"
               :tabIndex       -1
               :data-trigger   "focus"
@@ -633,4 +633,9 @@
        (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
        (chart-cell selected-row (:detail-slider-axis-value ap))
        (interpretation selected-row)]
-      [:p "Select a hospital"])))
+      [:detail
+       (let [selected-row (first (:baseline content/datasources))]
+         [:h3 (:h-name selected-row)]
+         (slider-widget content/headerg-row detail-slider-control (:detail-slider-axis-value ap))
+         (chart-cell selected-row (:detail-slider-axis-value ap))
+         (interpretation selected-row))])))

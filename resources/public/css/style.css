@@ -273,10 +273,6 @@ td:first-child {
     margin-left: 15px;
 }
 
-#detail .axis-container {
-    height: 20px;
-}
-
 .tick {
     width: 1px;
     height: 738px;
@@ -295,6 +291,14 @@ td:first-child {
     font-weight: 200 !important;
     font-size: 18px;
     color: #ffffff;
+}
+
+#detail {
+    width: 320px;
+}
+
+#detail .axis-container {
+    height: 20px;
 }
 
 #detail .tick {
@@ -505,8 +509,6 @@ td:first-child {
 
 
 .two-col {
-    /*-webkit-columns: 2 !important;
-    -webkit-column-count: 2 !important; */
     column-width: 24em;
     -webkit-column-width: 24em;
     -moz-column-width: 24em;
@@ -576,4 +578,15 @@ td:first-child {
 
 .ol-attribution li {
     font-size: 160%;
+}
+
+.map-container {
+    display: inline-table;
+    width: 50%;
+}
+
+.detail-container {
+    display: inline-table;
+    vertical-align: top;
+    width: 50%;
 }
