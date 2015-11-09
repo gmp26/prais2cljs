@@ -84,7 +84,7 @@
 (def mapView
   (new js/ol.View (clj->js {:center (map-point 53.7 -3.4)
                             :zoom 5.5})))
-(defn hospital-map []
+#_(defonce hospital-map
   (new js/ol.Map (clj->js {:target "open-map"
                            :layers [tileLayer (vectorLayer)]
                            :view mapView
@@ -106,9 +106,42 @@
 (defn project [lat lon]
   (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
+
+(declare map-click-handler)
+
+(def map-view
+  {:did-mount (fn [state]
+                (defonce hospital-map
+                  (new js/ol.Map (clj->js {:target "open-map"
+                           :layers [tileLayer (vectorLayer)]
+                           :view mapView
+                           :interactions [] ; to disable mouse wheel and pan
+                           :loadTilesWhileAnimating true})))
+
+                (let [the-map hospital-map
+                      the-popup (popup)
+                      ]
+                  (swap! core/app #(assoc %
+                                          ;:map the-map
+                                          :popup the-popup))
+                  ;(.setActive (.-MouseWheelZoom (.-interaction js/ol)) false)
+                  (.addOverlay the-map the-popup)
+                  (.on the-map "click" map-click-handler)
+                  )
+                state)
+
+   :will-unmount (fn [state]
+                   (swap! core/app #(dissoc %
+                                            ;:map
+                                            :popup))
+                   state)})
+
+
+
+
 (defn map-click-handler
   [event]
-  (let [the-map (:map @core/app)
+  (let [the-map hospital-map ;(:map @core/app)
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
                                          (fn [a b] a))]
@@ -137,7 +170,8 @@
          ]
      (.setCenter mapView (project lat lon))
      (.setResolution mapView resolution)
-     (.beforeRender (:map @core/app) pan zoom)
+     ;(.beforeRender (:map @core/app) pan zoom)
+     (.beforeRender hospital-map pan zoom)
      )))
 
 (defn go-home
@@ -176,24 +210,6 @@
             (.popover element "destroy")))
     (.popover element "hide")))
 
-
-(def map-view
-  {:did-mount (fn [state]
-                (let [the-map (hospital-map)
-                      the-popup (popup)
-                      ]
-                  (swap! core/app #(assoc %
-                                          :map the-map
-                                          :popup the-popup))
-                  ;(.setActive (.-MouseWheelZoom (.-interaction js/ol)) false)
-                  (.addOverlay the-map the-popup)
-                  (.on the-map "click" map-click-handler)
-                  )
-                state)
-
-   :will-unmount (fn [state]
-                   (swap! core/app #(dissoc % :map :popup))
-                   state)})
 
 (rum/defc home-button []
   [:button.btn-primary.h-button
