@@ -7,7 +7,7 @@
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put!]]
               [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus event-bus-pub]]
+              [prais2.core :as core :refer [event-bus event-bus-pub log-bus-pub]]
               [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
@@ -44,7 +44,7 @@
 (rum/defc para < rum/static [text]
   [:p text])
 
-;; mixin to initialise bootstrap popover code code
+;; mixin to initialise bootstrap popover code
 (def bs-popover
   {:did-mount (fn [state]
                 (ready
@@ -66,9 +66,9 @@
 ;;
 (comment headers
          (assoc (first data')
-                                :n-deaths false
-                                :n-survivors false
-                                :h-code false)
+                :n-deaths false
+                :n-survivors false
+                :h-code false)
          data (conj (rest data') headers))
 
 (rum/defc render-table < rum/reactive [id]
@@ -135,6 +135,16 @@
   (rum/mount (app-container) mount-point))
 
 
+(defn write-log
+  "write an event to the log"
+  [event]
+  (let [log-entry {:timestamp (new js/Date.)
+                   :event event
+                   :state @core/app
+                   }]
+    (prn log-entry)
+    (swap! core/monitor #(update % :log (fn [old] (conj old log-entry))))))
+
 ;;;
 ;; Read events off the event bus and handle them
 ;;;
@@ -145,7 +155,9 @@
     (sub event-feed event-key in-chan)
     (go-loop []
       (let [event (<! in-chan)]
-        (handle event))
+        (handle event)
+        (when (= event-bus-pub event-feed)
+          (write-log event)))
       (recur)))
   )
 
@@ -181,7 +193,7 @@
             (fn [[_ value _]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
-  (dispatch event-bus-pub :open-hospital-modal
+  (dispatch event-bus-pub :open-hospital-modgrepal
             (fn [[_ row _]]
               (prn "dispatching")
               (data/open-hospital-modal row)))
@@ -223,7 +235,38 @@
   (dispatch event-bus-pub :faqs
             (fn [_]
               (prn "nav to faqs")
-              (swap! core/app #(assoc % :page :faqs)))))
+              (swap! core/app #(assoc % :page :faqs))))
+
+  ;;;
+  ;; log-bus handling from here
+  ;;;
+  (dispatch log-bus-pub :rewind
+            (fn [_] (prn "rewind session")))
+
+  (dispatch log-bus-pub :undo
+            (fn [_] (prn "undo")))
+
+  (dispatch log-bus-pub :redo
+            (fn [_] (prn "redo")))
+
+  (dispatch log-bus-pub :start-session
+            (fn [_]
+              (prn "start record")
+              (swap! core/monitor #(update % :recording not))
+              (prn core/monitor)))
+
+  (dispatch log-bus-pub :stop-session
+            (fn [_] (prn "stop record")))
+
+  (dispatch log-bus-pub :share-session
+            (fn [_] (prn "mail out session")))
+
+  (dispatch log-bus-pub :load-session
+            (fn [_]
+              (prn "read in session")
+              ))
+
+  )
 
 ;; start the event dispatcher
 (dispatch-central)

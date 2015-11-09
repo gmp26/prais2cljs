@@ -13,8 +13,8 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:title "Understanding Published Children's Heart Surgery Outcomes"
-                    :logo "assets/logo-placeholder.png"
+(defonce app (atom {;:title "Understanding Published Children's Heart Surgery Outcomes"
+                    ;:logo "assets/logo-placeholder.png"
                     :page :intro
                     :sort-by nil
                     :sort-ascending true
@@ -26,6 +26,14 @@
                     :datasource :2014
                     :map-h-code nil
                     }))
+
+;;;
+;; state of the logger
+;;;
+(defonce monitor (atom {:log []
+                        :states []
+                        :recording false
+                        }))
 
 ;;;
 ;; media query support
@@ -68,6 +76,26 @@
   (.preventDefault event)
   (.stopPropagation event)
   )
+
+;;;
+;; Define a log bus carrying data about event-bus traffic (a meta-event-bus)
+;;;
+(def log-bus (chan))
+(def log-bus-pub (pub log-bus first))
+
+;;;
+;; generic click handler
+;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
+;;;
+(defn click->log-bus
+  [event dispatch-key dispatch-value]
+  (prn "logger" dispatch-key)
+  (put! log-bus [dispatch-key dispatch-value event])
+  (.preventDefault event)
+  (.stopPropagation event)
+  )
+
+
 
 ;; get element by id
 (defn el [id] (.getElementById js/document id))

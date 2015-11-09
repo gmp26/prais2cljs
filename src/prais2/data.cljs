@@ -5,6 +5,7 @@
               [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
               [prais2.utils :as u :refer [px pc important key-with]]
+              [prais2.logger :as logger]
               [clojure.string :as str]
               )
     (:require-macros [jayq.macros :refer [ready]]))
@@ -511,6 +512,7 @@
                   [(datasource-dropdown event-bus)
                    (theme-dropdown event-bus)
                    (chart-state-dropdown event-bus)
+                   (logger/playback-controls)
                    ])]]])
 
 ;;;

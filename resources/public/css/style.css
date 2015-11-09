@@ -598,3 +598,11 @@ td:first-child {
     min-width: 320px;
     width: calc(100% - 320px);
 }
+
+i.fa.red {
+    color: #ff0000;
+}
+
+i.fa.black {
+    color: #000000;
+}

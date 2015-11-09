@@ -15,6 +15,7 @@
                         debug
                         render-table
                         ]]
+   [prais2.logger :as logger]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -121,7 +122,11 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (map/hospitals))
 
 (defcard hospital-detail
-  (data/hospital-detail))
+  (intro/hospital-detail))
 
 (defcard section-1-intro
   (intro/section-1-content))
+
+
+(defcard playback-controls
+  (logger/playback-controls))
