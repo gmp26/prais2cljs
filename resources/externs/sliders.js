@@ -1,3 +1,4 @@
+function Slider() {};
 Slider.prototype._init = function() {};
 Slider.prototype.getElemen = function() {};
 Slider.prototype.getValue = function() {};

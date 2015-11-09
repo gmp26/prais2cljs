@@ -18,7 +18,7 @@
    [:.row
     [:#intro
 
-     [:h1  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
+     #_[:h1  "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]
 
      (section 1 "What is this site for?" section-1-content)
 
@@ -29,135 +29,6 @@
      (section 4 "How do we put survival rates into context?" section-4-content)
 
      ]]])
-
-
-(rum/defc hospital-charities []
-  [:.table-responsive
-   [:table.table.table-striped.table-bordered
-
-    [:thead
-     [:tr.header
-      [:th
-       [:strong "WHERE"]]
-      [:th
-       [:strong "LOCAL CHARITIES"]]]]
-
-    [:tbody
-     [:tr
-      [:td
-       [:strong "ENGLAND"]]
-      [:td
-       ]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.bch.nhs.uk/content/heart-unit"} "Birmingham Children’s Hospital"]]
-      [:td
-       [:a {:href "http://www.youngatheart.org.uk/"} "Young at Heart"]
-       [:a {:href "http://www.bch.org.uk"} "Birmingham Children’s Hospital Charity"]]]
-
-     [:tr
-      [:td
-       [:a
-        {:href "http://www.uhbristol.nhs.uk/patients-and-visitors/your-hospitals/bristol-royal-hospital-for-children/the-paediatric-cardiac-service/"}
-        "Bristol Royal Hospital for Children"]]
-      [:td
-       [:a {:href "http://www.heartfamilies.org.uk/"} "Heart Families South West"]
-       [:a {:href "http://www.heartcircle.org/"} "South West Children’s Heart Circle"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/"} "Leeds General Infirmary"]]
-      [:td
-       [:a {:href "http://chsf.org.uk/"} "The Childrens Heart Surgery Fund"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.leicestershospitals.nhs.uk/aboutus/leicester-hospitals-charity/childrens-heart-unit/"}
-        "Leicester, Glenfield Hospital"]]
-      [:td
-       [:a {:href "http://www.heartlink-glenfield.org.uk/"} "Heart Link"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.alderhey.nhs.uk/departments/cardiac/"} "Liverpool, Alder Hey Hospital"]]
-      [:td
-       [:a {:href "http://www.alderheycharity.org/"} "Alder Hey Charity"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx"}
-        "London, Evelina London Children&#39;s Hospital"]]
-      [:td
-       [:a {:href "http://www.echo-evelina.org.uk/"} "ECHO – Evelina Children’s Heart Organisation"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"}
-        "London, Great Ormond Street Hospital for Children"]]
-      [:td
-       [:a {:href "http://www.gosh.org/"} "Great Ormond Street Hospital Charity"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://theharleystreetclinic.co.uk/cardiac/congenital-heart-care"}
-        "London, Harley Street Clinic"] " (Private)"]
-      [:td ]]
-
-
-     [:tr
-      [:td
-       [:a {:href "http://www.rbht.nhs.uk/about/our-work/brompton/"} "London, Royal Brompton Hospital"]]
-      [:td
-       [:a {:href "http://www.thebromptonfountain.org.uk/"} "The Brompton Fountain"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx"} "Newcastle, Freeman Hospital"]]
-      [:td
-       [:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit_childrens-heart-unit-fund-chuf.aspx"} "Newcastle Children’s Heart Unit Fund"]]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"} "Southampton, Wessex Cardiothoracic Centre"] " (Southampton Children’s Hospital)"]
-      [:td
-       [:a {:href "http://www.oceanward.co.uk/"} "Families of Ocean Ward"]]]
-
-     [:tr
-      [:td [:strong "NORTHERN IRELAND"]]
-      [:td]]
-
-     [:tr
-      [:td
-       [:a {:href "http://belfasttrust-cardiacsurgery.hscni.net/about-cardiac-surgery/location/"} "Belfast, Royal Victoria Hospital"]]
-      [:td [:a {:href "http://www.childrensheartbeattrust.org/"} "Children’s Heartbeat Trust"]]]
-
-     [:tr
-      [:td
-       [:strong "SCOTLAND"]]
-      [:td ]]
-
-     [:tr
-      [:td
-       [:a {:href "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"}
-        "Glasgow, Royal Hospital for Children"]]
-      [:td
-       [:a {:href "http://www.youngheart.info/"}
-        [:p "The Scottish Association for Children with Heart Disorders (SACHD)"]]]]
-
-     [:tr
-      [:td
-       [:strong "IRELAND"]]
-      [:td ]]
-
-     [:tr
-      [:td
-       [:a
-        {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin"}
-        "Dublin, Our Lady&#39;s Children&#39;s Hospital"]]
-      [:td
-       [:a {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin"}
-        "Heart Children Ireland"]]]]]])
 
 
 (rum/defc section-1-content []
@@ -220,6 +91,57 @@
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data (more in the FAQs)."]])
 
 
+
+(rum/defc hospital-charities < rum/reactive []
+  (let [ap (rum/react core/app)
+        datasource ((:datasource ap) content/datasources)
+        h-code (:map-h-code ap)
+        meta (h-code content/hospital-metadata)
+        [link1 link2 link3 link4 link5] meta]
+    (when link1 [:div
+                 [:h4 {:key 1} "Further web information"]
+                 [:ul {:key 2}
+                  [:li {:key 1} [:a (link1 1) (link1 2)]]
+                  (when link2 [:li [:a (link2 1) (link2 2)]])
+                  (when link3 [:li [:a (link3 1) (link3 2)]])
+                  (when link4 [:li [:a (link4 1) (link4 2)]])
+                  (when link5 [:li [:a (link5 1) (link5 2)]])
+                  ]])
+    )
+  )
+
+(rum/defc sample-hospital-intro-text []
+  [:i {:key :sintros}
+   [:p {:key 1} "Below is a chart showing how we present the results of a sample hospital."]
+   [:p {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
+   [:p {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
+
+(rum/defc hospital-detail < rum/reactive
+  []
+  (let [ap (rum/react core/app)
+        h-code (:map-h-code ap)]
+    (if h-code
+      (when-let [selected-row (h-code ((data/rows-by-code (:datasource ap))))]
+        [:#detail
+         [:h3 (:h-name selected-row)]
+         (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
+         (data/chart-cell selected-row (:detail-slider-axis-value ap))
+         (data/interpretation selected-row)
+         (hospital-charities)])
+      (let [selected-row content/sample-hospital]
+        [:#detail
+         (sample-hospital-intro-text)
+         [:h3 {:key :b} (:h-name selected-row)]
+         (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
+         (data/chart-cell selected-row (:detail-slider-axis-value ap))
+         [:p "We conclude that "]
+         (data/interpretation selected-row)
+         #_(map-indexed key-with
+                      [(data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
+                       (data/chart-cell selected-row (:detail-slider-axis-value ap))
+                       (data/interpretation selected-row)])]))))
+
+
 (rum/defc section-2-content []
   [:section
    [:p
@@ -229,7 +151,7 @@
 
    [:span
     [:.map-container (map/hospitals)]
-    [:.detail-container (data/hospital-detail)]]])
+    [:.detail-container (hospital-detail)]]])
 
 
 (rum/defc section-3-content []

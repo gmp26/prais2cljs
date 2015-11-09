@@ -122,3 +122,6 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard hospital-detail
   (data/hospital-detail))
+
+(defcard section-1-intro
+  (intro/section-1-content))

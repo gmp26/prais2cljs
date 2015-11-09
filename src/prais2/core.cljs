@@ -2,6 +2,7 @@
   (:require-macros [cljs.core.async.macros :refer [go-loop]])
   (:require [rum.core :as rum]
             [cljs.core.async :refer [chan <! pub put!]]
+            [prais2.utils :as u :refer [key-with]]
             [goog.events :as events]
             [cljsjs.react :as react]
             [prais2.fps :refer [fps]]
@@ -39,7 +40,15 @@
 ;; wraps raw content in a div and returns a rum react element
 ;;;
 (rum/defc rum-wrap [& content]
-  (apply conj [:div] content))
+  (apply conj [:div] content)
+  )
+
+#_(rum/defc rum-wrap [& content]
+  (prn "wrapping " content)
+  (let [wrapped (apply conj [:div {:key :rw}] (map-indexed key-with content))]
+    (prn "wrapped " wrapped)
+    wrapped)
+  )
 
 ;;;
 ;; Define an event bus carrying [topic message] data

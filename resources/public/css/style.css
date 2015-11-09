@@ -94,6 +94,10 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     border-bottom: 5px solid  rgba(44, 127, 184, 1);
 }
 
+.well.intro {
+    border: none;
+}
+
 .data {
     border-bottom: 5px solid rgba(252, 141, 89, 1);
 }
@@ -112,6 +116,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .well.faqs {
+    border: none;
     background-color: rgba(127, 205, 187, 0.3);
 }
 
@@ -294,7 +299,7 @@ td:first-child {
 }
 
 #detail {
-    width: 320px;
+    //width: 320px;
 }
 
 #detail .axis-container {
@@ -582,11 +587,14 @@ td:first-child {
 
 .map-container {
     display: inline-table;
-    width: 50%;
+    width: 320px;
 }
 
 .detail-container {
     display: inline-table;
     vertical-align: top;
-    width: 50%;
+    padding-top: 10px;
+    padding-left: 30px;
+    min-width: 320px;
+    width: calc(100% - 320px);
 }
