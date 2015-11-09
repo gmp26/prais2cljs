@@ -203,7 +203,7 @@
           "Bristol Royal Hospital for Children"]
          [:a {:href "http://www.heartfamilies.org.uk/"} "Heart Families South West"]
          [:a {:href "http://www.heartcircle.org/"} "South West Children’s Heart Circle"]]
-   :SGH [[:a {:href "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"} "Southampton, Wessex Cardiothoracic Centre"] " (Southampton Children’s Hospital)"
+   :SGH [[:a {:href "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"} "Southampton, Wessex Cardiothoracic Centre (Southampton Children’s Hospital)"]
          [:a {:href "http://www.oceanward.co.uk/"} "Families of Ocean Ward"]]
    :LGI [[:a {:href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/"} "Leeds General Infirmary"]
          [:a {:href "http://chsf.org.uk/"} "The Childrens Heart Surgery Fund"]]

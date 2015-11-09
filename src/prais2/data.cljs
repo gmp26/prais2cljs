@@ -186,44 +186,43 @@
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    [:div  ;; td !!!
-     [:.chart-cell {:style {:padding-left (important (px axis-margin))
-                            :padding-right last-pad-right}}
-      [:div.bar-chart
-       (map-indexed key-with
+    [:.chart-cell {:style {:padding-left (important (px axis-margin))
+                           :padding-right last-pad-right}}
+     [:div.bar-chart
+      (map-indexed key-with
 
-                    (cond
-                      (= dotless #{})
-                      [(dot slider (dot-size slider) (:survival-rate row) dotty)]
+                   (cond
+                     (= dotless #{})
+                     [(dot slider (dot-size slider) (:survival-rate row) dotty)]
 
-                      (= dotless #{:inner})
-                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
-                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
-                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
-                       (bar slider 100 (:outer-high row) :high (:high colours))
-                       (dot slider (dot-size slider) (:survival-rate row) dotty)
-                       ]
-
-
-                      (= dotless #{:outer})
-                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
-                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-                       (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
-                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                       (bar slider 100 (:outer-high row) :high (:high colours))
-                       (dot slider (dot-size slider) (:survival-rate row) dotty)
-                       ]
+                     (= dotless #{:inner})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]
 
 
-                      (= dotless #{:inner :outer})
-                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
-                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                       (bar slider 100 (:outer-high row) :high (:high colours))
-                       (dot slider (dot-size slider) (:survival-rate row) dotty)
-                       ]))]]]))
+                     (= dotless #{:outer})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]
+
+
+                     (= dotless #{:inner :outer})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]))]]))
 
 
 (rum/defc tick < rum/static [baseline value]
@@ -454,7 +453,7 @@
                  " "
                  [:i.fa.fa-chevron-right]
                  ])])
-           (rum/with-key (chart-cell row slider-axis-value) :bars)])]]]]))
+           [:td {:key :bars} (chart-cell row slider-axis-value)]])]]]]))
 
 
 (defn get-chart-state
