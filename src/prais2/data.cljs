@@ -494,7 +494,6 @@
                   [(datasource-dropdown event-bus)
                    (theme-dropdown event-bus)
                    (chart-state-dropdown event-bus)
-                   (logger/playback-controls)
                    ])]]])
 
 ;;;

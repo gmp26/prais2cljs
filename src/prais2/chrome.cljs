@@ -1,6 +1,8 @@
 (ns ^:figwheel-always prais2.chrome
     (:require [rum.core :as rum]
-              [prais2.core :as core :refer [event-bus]]))
+              [prais2.core :as core :refer [event-bus]]
+              [prais2.logger :as logger]
+              ))
 
 
 
@@ -80,6 +82,7 @@
 
 (rum/defc footer []
   [:.footer
+   [:.pull-right (logger/playback-controls)]
    [:h3
     "Funding acknowledgement"]
    [:p
@@ -87,4 +90,5 @@
    [:h3
     "Department of Health disclaimer"]
    [:p
-    "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]])
+    "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
+])
