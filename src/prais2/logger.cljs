@@ -5,7 +5,9 @@
 
 (rum/defc icon-control [icon event-key tooltip]
   [:button.btn.btn-default
-   {:on-click #(core/click->log-bus % event-key nil)}
+   {:title tooltip
+    :tab-index 0
+    :on-click #(core/click->log-bus % event-key nil)}
    [:i.fa {:class (str "fa-" icon)}]])
 
 

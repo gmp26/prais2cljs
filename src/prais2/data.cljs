@@ -645,14 +645,7 @@
                             }
      [:.modal-dialog {:role "document"}
       [:.modal-content
-       [:.modal-header
-        [:button.close {:type"button"
-                        :on-click close-handler
-                        :on-touch-start close-handler
-                        :aria-label "Close"}
-         [:span {:aria-hidden "true"
-                 :dangerouslySetInnerHTML {:__html "&times;"}}]]
-        [:h4#myModalLabel.modal-title (:h-name selected-row)]]
+
        [:.modal-body
 
         (hospital-detail selected-h-code)]
