@@ -6,7 +6,7 @@
 
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.122"]
-                 [org.clojure/core.async "0.1.346.0-17112a-alpha"]
+                 [org.clojure/core.async "0.2.371"] ;"0.1.346.0-17112a-alpha"
                  [devcards "0.2.0-8"] ; devcards only
                  [sablono "0.3.6"]    ; devcards only
                  [secretary "1.2.3"]
@@ -17,9 +17,8 @@
                  ; experimental
                  [cljsjs/openlayers "3.5.0-1"]]
 
-  :plugins [[lein-cljsbuild "1.1.0"]
-            [lein-figwheel "0.4.1"]
-            [lein-npm "0.6.1"]]
+  :plugins [[lein-cljsbuild "1.1.1"]
+            [lein-figwheel "0.4.1"]]
 
   :source-paths ["src"]
 

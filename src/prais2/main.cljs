@@ -156,7 +156,7 @@
     (go-loop []
       (let [event (<! in-chan)]
         (handle event)
-        (when (= event-bus-pub event-feed)
+        (when (and (= event-bus-pub event-feed) (:recording @core/monitor))
           (write-log event)))
       (recur)))
   )
@@ -193,13 +193,12 @@
             (fn [[_ value _]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
-  (dispatch event-bus-pub :open-hospital-modgrepal
-            (fn [[_ row _]]
-              (prn "dispatching")
-              (data/open-hospital-modal row)))
+  (dispatch event-bus-pub :open-hospital-modal
+            (fn [[_ h-code _]]
+              (data/open-hospital-modal h-code)))
 
   (dispatch event-bus-pub :close-hospital-modal
-            (fn [_]
+            (fn [[_ h-code _]]
               (data/close-hospital-modal)))
 
   (dispatch event-bus-pub :morph-full-range

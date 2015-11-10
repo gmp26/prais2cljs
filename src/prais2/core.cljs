@@ -13,16 +13,14 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {;:title "Understanding Published Children's Heart Surgery Outcomes"
-                    ;:logo "assets/logo-placeholder.png"
-                    :page :intro
+(defonce app (atom {:page :intro
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0
                     :detail-slider-axis-value 1.0
                     :chart-state 3
                     :theme 1
-                    :selected-row nil
+                    :selected-h-code nil
                     :datasource :2014
                     :map-h-code nil
                     }))

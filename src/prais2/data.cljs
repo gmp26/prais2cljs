@@ -263,7 +263,6 @@
 ;; returns a bootstrap slider mixin
 (defn bs-slider [hashed-id change-key]
   {:did-mount (fn [state]
-                (prn "mounting-slider")
                 (let [slider (new js/Slider hashed-id
                                   (clj->js {
                                             :tooltip "hide"
@@ -278,7 +277,6 @@
 
                   (.on slider "slide" handler)
                   (.on slider "change" handler)
-                  (prn state')
                   state'))
 
    :transfer-state (fn [old new]
@@ -411,29 +409,20 @@
                 (rest data))
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
-    #_(prn "calling table-head with " slider-axis-value)
+
     [:div
-     #_(when (core/query-media? "screen")
-
-       [:div.screenable {:key :screen}
-        ;; fixed table with header only for @media screen, hidden in print
-        [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-         (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)]])
-
      [:div {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
-       #_(prn (str "printing true?" (core/query-media? "print")))
-       #_(prn headers)
-       ;; full table with print header, hidden on screen
        (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)
 
        ;; body for both print and screen
        [:tbody {:key :tbody}
         (for [row rows
-              :let [info-handler #(core/click->event-bus % :open-hospital-modal row)]]
-          [:tr {:key (:h-code row)
-
-                :class (if (= row (:selected-row ap)) "info" "")}
+              :let [h-code (:h-code row)
+                    info-handler #(core/click->event-bus % :open-hospital-modal h-code)
+                    ]]
+          [:tr {:key h-code
+                :class (if (= (keyword h-code) (:selected-h-code ap)) "info" "")}
            (for [column-key column-keys
                  :let [column-header (column-key headers)]
                  :when (:shown column-header)]
@@ -442,25 +431,18 @@
                            :height (px (:height column-header))}}
               [:div {:style {:display "inline-block"
                              :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
-               (str
-                (column-key row)
-                (when (= column-key :survival-rate) " %" ""))]
+               (str (column-key row) (when (= column-key :survival-rate) " %" ""))]
 
               (when (= column-key :h-name)
                 [:button.btn.btn-link.btn-xs.h-info
                  {:on-click info-handler
                   :on-touch-start info-handler}
-                 (:h-code row)
-                 " "
-                 [:i.fa.fa-chevron-right]
-                 ])])
+                 h-code " " [:i.fa.fa-chevron-right]])])
            [:td {:key :bars} (chart-cell row slider-axis-value)]])]]]]))
-
 
 (defn get-chart-state
   [index]
-  (chart-states index)
-  )
+  (chart-states index))
 
 (rum/defc integer-option < rum/static [n]
   [:option {:value n} n])
@@ -578,20 +560,86 @@
       ))
   )
 
+(rum/defc hospital-charities < rum/reactive [h-code]
+  (let [ap (rum/react core/app)
+        datasource ((:datasource ap) content/datasources)
+        meta (h-code content/hospital-metadata)
+        [link1 link2 link3 link4 link5] meta]
+    (when link1 [:div
+                 [:h4 {:key 1} "Further web information"]
+                 [:ul {:key 2}
+                  [:li {:key 1} [:a (link1 1) (link1 2)]]
+                  (when link2 [:li [:a (link2 1) (link2 2)]])
+                  (when link3 [:li [:a (link3 1) (link3 2)]])
+                  (when link4 [:li [:a (link4 1) (link4 2)]])
+                  (when link5 [:li [:a (link5 1) (link5 2)]])
+                  ]])))
+
+(rum/defc sample-hospital-intro-text []
+  [:i {:key :sintros}
+   [:p {:key 1} "Below is a chart showing how we present the results of a sample hospital."]
+   [:p {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
+   [:p {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
+
+(rum/defc hospital-data < rum/reactive
+  [h-code]
+  (let [datasource (:datasource (rum/react core/app))
+        selected-row (h-code ((rows-by-code datasource)))]
+    [:.data-summary
+     [:p "The hospital performed "
+      [:b (:n-ops selected-row) "  operations. "]]
+     [:p "After 30 days there were "
+      [:b (:n-survivors selected-row) " survivors "]
+      "and "
+      [:b (:n-deaths selected-row) " deaths"]
+      " had been recorded. "]
+     [:p
+      "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
+     ]))
+
+(rum/defc hospital-detail < rum/reactive
+  [h-code]
+  (let [ap (rum/react core/app)]
+    (if h-code
+      (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
+        [:#detail
+         [:h3 (:h-name selected-row)]
+         (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+         (chart-cell selected-row (:detail-slider-axis-value ap))
+         (hospital-data h-code)
+         (interpretation selected-row)
+         (hospital-charities h-code)])
+      (let [selected-row content/sample-hospital]
+        [:#detail
+         (sample-hospital-intro-text)
+         [:h3 {:key :b} (:h-name selected-row)]
+         (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+         (chart-cell selected-row (:detail-slider-axis-value ap))
+         (interpretation selected-row)
+         #_(map-indexed key-with
+                      [(slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+                       (chart-cell selected-row (:detail-slider-axis-value ap))
+                       (interpretation selected-row)])]))))
+
 
 (defn open-hospital-modal
-  [row]
-  (swap! core/app #(assoc % :selected-row row))
-  (.modal ($ "#rowModal")))
+  [h-code]
+  (swap! core/app #(assoc % :selected-h-code (keyword h-code)))
+  (.modal ($ "#rowModal"))
+)
 
 (defn close-hospital-modal
   []
-  (swap! core/app #(assoc % :selected-row nil))
+  (swap! core/app #(assoc % :selected-h-code nil))
   (.modal ($ "#rowModal") "hide")  )
 
 (rum/defc modal  < rum/reactive bs-tooltip []
-  (let [selected-row (:selected-row (rum/react core/app))
+  (let [ap (rum/react core/app)
+        datasource (:datasource ap)
+        selected-h-code (:selected-h-code ap)
+        selected-row (if selected-h-code (selected-h-code ((rows-by-code datasource))) nil)
         close-handler #(core/click->event-bus % :close-hospital-modal selected-row)]
+    (prn "selected-h-code = " selected-h-code)
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"
                             :aria-labelledby "myModalLabel"
@@ -605,15 +653,10 @@
                         :aria-label "Close"}
          [:span {:aria-hidden "true"
                  :dangerouslySetInnerHTML {:__html "&times;"}}]]
-        [:h4#myModalLabel.modal-title
-         (:h-name selected-row)
-                                        ;(google/g-map 54.5940 5.9530)
-         ]]
+        [:h4#myModalLabel.modal-title (:h-name selected-row)]]
        [:.modal-body
-        (modal-axis-container 1)
-        (chart-cell selected-row 1)
-        [:h3]
-        (interpretation selected-row)]
+
+        (hospital-detail selected-h-code)]
 
        [:.modal-footer
         [:button.btn.btn-default

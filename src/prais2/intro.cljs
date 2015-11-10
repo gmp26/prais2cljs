@@ -91,67 +91,20 @@
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data (more in the FAQs)."]])
 
 
-
-(rum/defc hospital-charities < rum/reactive []
-  (let [ap (rum/react core/app)
-        datasource ((:datasource ap) content/datasources)
-        h-code (:map-h-code ap)
-        meta (h-code content/hospital-metadata)
-        [link1 link2 link3 link4 link5] meta]
-    (when link1 [:div
-                 [:h4 {:key 1} "Further web information"]
-                 [:ul {:key 2}
-                  [:li {:key 1} [:a (link1 1) (link1 2)]]
-                  (when link2 [:li [:a (link2 1) (link2 2)]])
-                  (when link3 [:li [:a (link3 1) (link3 2)]])
-                  (when link4 [:li [:a (link4 1) (link4 2)]])
-                  (when link5 [:li [:a (link5 1) (link5 2)]])
-                  ]])
-    )
-  )
-
-(rum/defc sample-hospital-intro-text []
-  [:i {:key :sintros}
-   [:p {:key 1} "Below is a chart showing how we present the results of a sample hospital."]
-   [:p {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
-   [:p {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
-
-(rum/defc hospital-detail < rum/reactive
-  []
-  (let [ap (rum/react core/app)
-        h-code (:map-h-code ap)]
-    (if h-code
-      (when-let [selected-row (h-code ((data/rows-by-code (:datasource ap))))]
-        [:#detail
-         [:h3 (:h-name selected-row)]
-         (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-         (data/chart-cell selected-row (:detail-slider-axis-value ap))
-         (data/interpretation selected-row)
-         (hospital-charities)])
-      (let [selected-row content/sample-hospital]
-        [:#detail
-         (sample-hospital-intro-text)
-         [:h3 {:key :b} (:h-name selected-row)]
-         (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-         (data/chart-cell selected-row (:detail-slider-axis-value ap))
-         [:p "We conclude that "]
-         (data/interpretation selected-row)
-         #_(map-indexed key-with
-                      [(data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-                       (data/chart-cell selected-row (:detail-slider-axis-value ap))
-                       (data/interpretation selected-row)])]))))
-
-
-(rum/defc section-2-content []
+(rum/defc section-2-content < rum/reactive []
   [:section
    [:p
     "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]
    [:p
-    "The hospitals are listed below alongside links to their local family charities. "]
+    "We have marked these hospitals on the map. Click on a hospital's marker or menu item and a summary report will appear alongside or underneath. Mouse over or click on the bars and dot within the summary data chart for further explanation."]
+   [:p "To see all hospitals together "
+    [:button.btn.btn-link {:style {:padding 0}
+                           :on-click #(core/click->event-bus % :data nil)} "visit the data page"]
+    "."]
 
    [:span
     [:.map-container (map/hospitals)]
-    [:.detail-container (hospital-detail)]]])
+    [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))]]])
 
 
 (rum/defc section-3-content []

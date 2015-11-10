@@ -95,12 +95,7 @@
 ;;
 ;; Rum mixin which initialises an openlayer map on a component once the React component has mounted
 ;;
-(defn popup []
-  (new js/ol.Overlay
-       (clj->js {:element (core/el "popup")
-                 :positioning "bottom-center"
-                 :stopEvent false
-                 })))
+
 
 
 (defn project [lat lon]
@@ -118,23 +113,19 @@
                            :interactions [] ; to disable mouse wheel and pan
                            :loadTilesWhileAnimating true})))
 
-                (let [the-map hospital-map
-                      the-popup (popup)
-                      ]
-                  (swap! core/app #(assoc %
-                                          ;:map the-map
-                                          :popup the-popup))
-                  ;(.setActive (.-MouseWheelZoom (.-interaction js/ol)) false)
-                  (.addOverlay the-map the-popup)
-                  (.on the-map "click" map-click-handler)
-                  )
-                state)
+                (defonce popup
+                  (new js/ol.Overlay
+                       (clj->js {:element (core/el "popup")
+                                 :positioning "bottom-center"
+                                 :stopEvent false
+                                 })))
 
-   :will-unmount (fn [state]
-                   (swap! core/app #(dissoc %
-                                            ;:map
-                                            :popup))
-                   state)})
+                (defonce once-only
+                  (do
+                    (.addOverlay hospital-map popup)
+                    (.on hospital-map "click" map-click-handler)))
+
+                state)})
 
 
 
@@ -187,7 +178,7 @@
   []
   (let [ap @core/app
         h-code (:map-h-code ap)
-        the-popup (:popup ap)
+        ; the-popup (:popup ap)
         element ($ "#popup")
         the-datasource (:datasource ap)
         row (h-code ((data/rows-by-code the-datasource)))
@@ -199,7 +190,7 @@
     (zoom-to-location lat lon)
     (go (<! (timeout zoom-time))
 
-        (.setPosition the-popup (clj->js [(first coord) (+ 150 (second coord))]))
+        (.setPosition popup (clj->js [(first coord) (+ 150 (second coord))]))
         (.popover element (clj->js
                            {:placement "top"
                             :html true
