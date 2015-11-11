@@ -16,6 +16,7 @@
                         render-table
                         ]]
    [prais2.logger :as logger]
+   [sablono.core :as sab]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -91,8 +92,9 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (render-404)
   )
 
-(defcard show-app-state-2
-  @core/app)
+(defcard show-app-state
+  (fn [app-state] app-state)
+  core/app)
 
 (defcard render-table
   (render-table "data"))
@@ -122,11 +124,31 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (map/hospitals))
 
 (defcard hospital-detail
-  (intro/hospital-detail))
+  (fn [app-state]
+    (data/hospital-detail (:map-h-code @app-state)))
+  core/app)
 
 (defcard section-1-intro
   (intro/section-1-content))
 
-
 (defcard playback-controls
   (logger/playback-controls))
+
+(defn log->csv
+  "convert the log to a lazy seq of comma separated values"
+  [log]
+  (for [log-entry log]
+    (str
+     (apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
+                                        (name (:event-key log-entry))
+                                        (:event-data log-entry)]
+                                       (into [] (map second (:app-state log-entry)))))))))
+
+(defn print-log [log]
+  (for [log-entry log]
+    (str (into {} log-entry))))
+
+(defcard log
+  (fn [log-atom]
+    (log->csv @log-atom))
+  core/log)

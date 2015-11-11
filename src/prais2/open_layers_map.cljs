@@ -137,7 +137,6 @@
                                          (.-pixel event)
                                          (fn [a b] a))]
     (when feature
-      ;(core/click->event-bus event :click-on-map-marker (keyword (.get feature "code")))
       (put! event-bus [:click-on-map-marker (keyword (.get feature "code")) event])
       )))
 
@@ -220,7 +219,7 @@
 (rum/defc hospital-item [row]
   [:li [:a
         {:tab-index 0
-         :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row)) %])}
+         :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
         (:h-name row)]])
 
 (rum/defc hospital-list < rum/reactive []

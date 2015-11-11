@@ -13,7 +13,7 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:page :intro
+#_(defonce app (atom {:page :intro
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0
@@ -25,13 +25,20 @@
                     :map-h-code nil
                     }))
 
+(defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
+
+(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
+
+(defrecord Log-entry [time-stamp event-key event-data app-state])
+
+(defn format-time-stamp [ts]
+  (str (.format ts "HH:mm:SS")))
+
+
 ;;;
 ;; state of the logger
 ;;;
-(defonce monitor (atom {:log []
-                        :states []
-                        :recording false
-                        }))
+(defonce log (atom []))
 
 ;;;
 ;; media query support
@@ -49,13 +56,6 @@
   (apply conj [:div] content)
   )
 
-#_(rum/defc rum-wrap [& content]
-  (prn "wrapping " content)
-  (let [wrapped (apply conj [:div {:key :rw}] (map-indexed key-with content))]
-    (prn "wrapped " wrapped)
-    wrapped)
-  )
-
 ;;;
 ;; Define an event bus carrying [topic message] data
 ;; publication channels are based on topic - the first part of the data
@@ -70,7 +70,7 @@
 (defn click->event-bus
   [event dispatch-key dispatch-value]
   (prn "dispatch" dispatch-key)
-  (put! event-bus [dispatch-key dispatch-value event])
+  (put! event-bus [dispatch-key dispatch-value])
   (.preventDefault event)
   (.stopPropagation event)
   )
@@ -92,8 +92,6 @@
   (.preventDefault event)
   (.stopPropagation event)
   )
-
-
 
 ;; get element by id
 (defn el [id] (.getElementById js/document id))

@@ -272,7 +272,7 @@
                                             :value (:slider-axis-value @core/app)
                                             }))
                       handler #(do
-                                 (put! event-bus [change-key (.getValue slider) %]))
+                                 (put! event-bus [change-key (.getValue slider)]))
                       state' (assoc state ::slider slider ::handler handler)]
 
                   (.on slider "slide" handler)
@@ -316,6 +316,24 @@
     (when slider
       (.setValue slider value))
     s))
+
+;;;
+;; TODO - sort out what to do when multiple sliders are on a page
+;;;
+(rum/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
+  (let [s [:#map-detail-slider.slider
+           [:input {:type "text"
+                    :data-slider-min min
+                    :data-slider-max max
+                    :data-slider-step step
+                    }]]
+        slider (::slider state)]
+    (when slider
+      (.setValue slider value))
+    s))
+
+
+
 
 (rum/defc axis-container < rum/static [slider-axis-value]
   [:.axis-container
@@ -453,7 +471,7 @@
    [:select#chart-selector.form-control.input-sm
     {
      :value (:chart-state (rum/react core/app))
-     :on-change #(put! event-bus [:change-chart-state (.. % -target -value) %])}
+     :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count chart-states))]
                    (integer-option n)))
@@ -466,7 +484,7 @@
    [:select#colour-map-selector.form-control.input-sm
     {
      :value (:theme (rum/react core/app))
-     :on-change #(put! event-bus [:change-colour-map (.. % -target -value) %])}
+     :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count content/colour-map-options))]
                    (integer-option n)))]
@@ -480,7 +498,7 @@
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
-     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value)) %])}
+     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
                    (key-option key)))]

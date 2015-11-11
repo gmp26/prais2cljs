@@ -20,10 +20,6 @@
 (rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc record-control < rum/reactive []
-  (let [color (if (:recording (rum/react core/monitor)) "red" "black")]
-    (icon-control (str "circle " color) :start-session "start recording session")))
-
 (rum/defc stop-control []
   (icon-control "circle" :stop-session "stop recording session"))
 
@@ -45,6 +41,5 @@
    [:.btn-group
     (share-control)
     (load-control)]
-   " "
-   (record-control)
+
    ])

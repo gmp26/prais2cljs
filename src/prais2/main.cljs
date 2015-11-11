@@ -15,10 +15,8 @@
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.faqs :refer [render-faqs]]
-              [jayq.core :refer ($)])
-    )
-
-
+              [jayq.core :refer ($)]
+              [cljsjs.moment :as moment]))
 
 (enable-console-print!)
 
@@ -134,16 +132,13 @@
 (if-let [mount-point (core/el "app")]
   (rum/mount (app-container) mount-point))
 
-
 (defn write-log
   "write an event to the log"
-  [event]
-  (let [log-entry {:timestamp (new js/Date.)
-                   :event event
-                   :state @core/app
-                   }]
-    (prn log-entry)
-    (swap! core/monitor #(update % :log (fn [old] (conj old log-entry))))))
+  [[event-key event-data]]
+    (let [log-entry (core/Log-entry. (js/moment) event-key event-data @core/app)]
+      (swap! core/log #(conj % log-entry))))
+
+(write-log [:start-session nil])
 
 ;;;
 ;; Read events off the event bus and handle them
@@ -156,7 +151,7 @@
     (go-loop []
       (let [event (<! in-chan)]
         (handle event)
-        (when (and (= event-bus-pub event-feed) (:recording @core/monitor))
+        (when (= event-bus-pub event-feed)
           (write-log event)))
       (recur)))
   )
@@ -172,33 +167,33 @@
   []
 
   (dispatch event-bus-pub :slider-axis-value
-            (fn [[_ slider-value _]]
+            (fn [[_ slider-value]]
               (swap! core/app #(assoc % :slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :detail-slider-axis-value
-            (fn [[_ slider-value _]]
+            (fn [[_ slider-value]]
               (swap! core/app #(assoc % :detail-slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :sort-toggle
-            (fn [[_ column-key _]] (data/handle-sort core/app column-key)))
+            (fn [[_ column-key]] (data/handle-sort core/app column-key)))
 
   (dispatch event-bus-pub :info-clicked
-            (fn [[_ column-key _]] (prn (str "clicked on info for column " column-key))))
+            (fn [[_ column-key]] (prn (str "clicked on info for column " column-key))))
 
   (dispatch event-bus-pub :change-colour-map
-            (fn [[_ value _]]
+            (fn [[_ value]]
               (swap! core/app #(assoc % :theme (int value)))))
 
   (dispatch event-bus-pub :change-chart-state
-            (fn [[_ value _]]
+            (fn [[_ value]]
               (swap! core/app #(assoc % :chart-state (int value)))))
 
   (dispatch event-bus-pub :open-hospital-modal
-            (fn [[_ h-code _]]
+            (fn [[_ h-code]]
               (data/open-hospital-modal h-code)))
 
   (dispatch event-bus-pub :close-hospital-modal
-            (fn [[_ h-code _]]
+            (fn [[_ h-code]]
               (data/close-hospital-modal)))
 
   (dispatch event-bus-pub :morph-full-range
@@ -207,7 +202,7 @@
               (swap! core/app #(assoc % :slider-axis-value 0))))
 
   (dispatch event-bus-pub :change-datasource
-            (fn [[_ new-source _] ]
+            (fn [[_ new-source] ]
               (prn (str "datasource now " new-source))
               (swap! core/app #(assoc % :datasource new-source))))
 
@@ -240,7 +235,10 @@
   ;; log-bus handling from here
   ;;;
   (dispatch log-bus-pub :rewind
-            (fn [_] (prn "rewind session")))
+            (fn [_]
+              (prn "rewind session")
+
+              ))
 
   (dispatch log-bus-pub :undo
             (fn [_] (prn "undo")))
@@ -249,10 +247,7 @@
             (fn [_] (prn "redo")))
 
   (dispatch log-bus-pub :start-session
-            (fn [_]
-              (prn "start record")
-              (swap! core/monitor #(update % :recording not))
-              (prn core/monitor)))
+            (fn [_] (prn "start-session")))
 
   (dispatch log-bus-pub :stop-session
             (fn [_] (prn "stop record")))
