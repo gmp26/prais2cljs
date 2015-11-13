@@ -654,8 +654,7 @@
   (let [ap (rum/react core/app)
         datasource (:datasource ap)
         selected-h-code (:selected-h-code ap)
-        selected-row (if selected-h-code (selected-h-code ((rows-by-code datasource))) nil)
-        close-handler #(core/click->event-bus % :close-hospital-modal selected-row)]
+        close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code)]
     (prn "selected-h-code = " selected-h-code)
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"

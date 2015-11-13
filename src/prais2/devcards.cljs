@@ -132,23 +132,11 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (intro/section-1-content))
 
 (defcard playback-controls
-  (logger/playback-controls))
-
-(defn log->csv
-  "convert the log to a lazy seq of comma separated values"
-  [log]
-  (for [log-entry log]
-    (str
-     (apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
-                                        (name (:event-key log-entry))
-                                        (:event-data log-entry)]
-                                       (into [] (map second (:app-state log-entry)))))))))
-
-(defn print-log [log]
-  (for [log-entry log]
-    (str (into {} log-entry))))
+  (fn [log-atom]
+    (logger/playback-controls "playback"))
+  logger/log-state)
 
 (defcard log
   (fn [log-atom]
-    (log->csv @log-atom))
-  core/log)
+    (logger/log->csv @log-atom))
+  logger/log-state)

@@ -1,14 +1,58 @@
 (ns ^:figwheel-always prais2.logger
     (:require [rum.core :as rum]
+              [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
-
               ))
+
+(defrecord Log-entry [time-stamp event-key event-data app-state])
+
+;;;
+;; state of the logger
+;;;
+(defonce log-state (atom []))
+
+(defn write-log
+  "write an event to the log"
+  [[event-key event-data]]
+    (let [log-entry (Log-entry. (js/moment) event-key event-data @core/app)]
+      (swap! log-state #(conj % log-entry))))
+
+;;;
+;; Define a log bus carrying data about event-bus traffic (a meta-event-bus)
+;;;
+(def log-bus (chan))
+(def log-bus-pub (pub log-bus first))
+
+;;;
+;; generic click handler
+;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
+;;;
+(defn click->log-bus
+  [event dispatch-key dispatch-value]
+  (prn "logger" dispatch-key)
+  (put! log-bus [dispatch-key dispatch-value event])
+  (.preventDefault event)
+  (.stopPropagation event)
+  )
+
+(defn log->csv
+  "convert the log to a lazy seq of comma separated values"
+  [log]
+  (for [log-entry log]
+    (apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
+                                       (name (:event-key log-entry))
+                                       (:event-data log-entry)]
+                                      (into [] (map second (:app-state log-entry))))))))
+
+
+(defn prn-log [log]
+  (.log js/console (log->csv log)))
 
 (rum/defc icon-control [icon event-key tooltip]
   [:button.btn.btn-default
    {:title tooltip
     :tab-index 0
-    :on-click #(core/click->log-bus % event-key nil)}
+    :on-click #(click->log-bus % event-key nil)}
    [:i.fa {:class (str "fa-" icon)}]])
 
 
@@ -24,29 +68,32 @@
 (rum/defc stop-control []
   (icon-control "circle" :stop-session "stop recording session"))
 
+(rum/defc edit-control []
+  (icon-control "pencil" :edit-session-log "show-hide-session-log"))
+
 (rum/defc share-control []
   (icon-control "sign-out fa-rotate-270" :share-session "mail out session"))
 
 (rum/defc load-control []
   (icon-control "sign-in fa-rotate-90" :load-session "read in session"))
 
-#_(rum/defcc my-component [comp arg1 arg2]
-  (let [node (.findDOMNode comp)]
-    [:div "fails with: Uncaught TypeError: comp.findDOMNode is not a function"]))
+(rum/defc email-form < rum/static [to-address session-log]
+  ;(prn (interpose \newline session-log))
+  [:form#email {:action (str "mailto:" to-address
+                             "?subject=" "prais2-session-start " (new js/Date.))
+                :method "post"
+                :enc-type "text/plain"
+     }
+   [:textarea {:value (apply str (interpose \newline session-log))
+               :rows 10
+               :cols 100}
+    ]
 
-(rum/defcc my-component [comp arg1 arg2]
-  (let [node (.findDOMNode js/React comp)]
-    [:div "fails with: Invariant Violation: findComponentRoot(...): Unable to find element.  This probably means the DOM was unexpectedly mutated ..."]))
+    ])
 
-#_(rum/defcc div [comp to-address session-log]
-  (let [element (.findDOMNode js/React comp)]
 
-    (.log js/console element)
-    [:div#lookatme "Hi there"]
-))
-
-(rum/defc playback-controls []
-  [:div
+(rum/defc playback-controls < rum/reactive [id]
+  [:div {:id id}
     (reset-control)
    " "
    [:.btn-group
@@ -54,21 +101,13 @@
     (redo-control)]
    " "
    [:.btn-group
+    (edit-control)
     (share-control)
     (load-control)]
 
-   (my-component 1 2)
-
-   #_(email-form "gmp26@cam.ac.uk" "hello there")
+   (email-form "gmp26@cam.ac.uk" (log->csv (rum/react log-state)))
    ])
 
 
-(comment
-  #_[:form {:action (str "mailto:" to-address
-                         "?subject=" "prais2-session-start " (new js/Date.))
-            :method "post"
-            :enctype "text/plain"}
-     [:input {:type "text"
-              :name "session log"
-              :value session-log
-              }]])
+(defn edit-session-log []
+  (core/el ""))

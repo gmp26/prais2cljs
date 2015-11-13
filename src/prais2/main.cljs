@@ -7,7 +7,7 @@
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put!]]
               [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus event-bus-pub log-bus-pub]]
+              [prais2.core :as core :refer [event-bus event-bus-pub]]
               [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
@@ -15,6 +15,7 @@
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.faqs :refer [render-faqs]]
+              [prais2.logger :as logger :refer [log-bus-pub]]
               [jayq.core :refer ($)]
               [cljsjs.moment :as moment]))
 
@@ -132,13 +133,7 @@
 (if-let [mount-point (core/el "app")]
   (rum/mount (app-container) mount-point))
 
-(defn write-log
-  "write an event to the log"
-  [[event-key event-data]]
-    (let [log-entry (core/Log-entry. (js/moment) event-key event-data @core/app)]
-      (swap! core/log #(conj % log-entry))))
-
-(write-log [:start-session nil])
+(logger/write-log [:start-session nil])
 
 ;;;
 ;; Read events off the event bus and handle them
@@ -152,7 +147,7 @@
       (let [event (<! in-chan)]
         (handle event)
         (when (= event-bus-pub event-feed)
-          (write-log event)))
+          (logger/write-log event)))
       (recur)))
   )
 
@@ -251,6 +246,9 @@
 
   (dispatch log-bus-pub :stop-session
             (fn [_] (prn "stop record")))
+
+  (dispatch log-bus-pub :edit-session-log
+            (fn [_] (logger/edit-session-log)))
 
   (dispatch log-bus-pub :share-session
             (fn [_] (prn "mail out session")))

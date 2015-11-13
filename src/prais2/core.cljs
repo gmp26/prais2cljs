@@ -29,16 +29,8 @@
 
 (defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
 
-(defrecord Log-entry [time-stamp event-key event-data app-state])
-
 (defn format-time-stamp [ts]
   (str (.format ts "HH:mm:SS")))
-
-
-;;;
-;; state of the logger
-;;;
-(defonce log (atom []))
 
 ;;;
 ;; media query support
@@ -71,24 +63,6 @@
   [event dispatch-key dispatch-value]
   (prn "dispatch" dispatch-key)
   (put! event-bus [dispatch-key dispatch-value])
-  (.preventDefault event)
-  (.stopPropagation event)
-  )
-
-;;;
-;; Define a log bus carrying data about event-bus traffic (a meta-event-bus)
-;;;
-(def log-bus (chan))
-(def log-bus-pub (pub log-bus first))
-
-;;;
-;; generic click handler
-;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
-;;;
-(defn click->log-bus
-  [event dispatch-key dispatch-value]
-  (prn "logger" dispatch-key)
-  (put! log-bus [dispatch-key dispatch-value event])
   (.preventDefault event)
   (.stopPropagation event)
   )
