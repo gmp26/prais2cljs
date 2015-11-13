@@ -10,13 +10,15 @@
                  [devcards "0.2.0-8"] ; devcards only
                  [sablono "0.3.6"]    ; devcards only
                  [secretary "1.2.3"]
+                 [cljsjs/showdown "0.4.0-1"]
                  [cljsjs/react "0.13.3-1"]
                  ; [cljsjs/react "0.14.0-0"] is released, but Rum is not using it yet
                  [rum "0.5.0"]
                  [jayq "2.5.4"]
                  ; experimental
                  [cljsjs/openlayers "3.5.0-1"]
-                 [cljsjs/moment "2.10.6-0"]]
+                 [cljsjs/moment "2.10.6-0"]
+                 [com.cognitect/transit-cljs "0.8.232"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             [lein-figwheel "0.4.1"]]

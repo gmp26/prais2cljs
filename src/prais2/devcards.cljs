@@ -17,6 +17,10 @@
                         ]]
    [prais2.logger :as logger]
    [sablono.core :as sab]
+   [cognitect.transit :as sit]
+   [cljs.test :as t]
+   [cljsjs.moment :as moment]
+
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -140,3 +144,25 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (fn [log-atom]
     (logger/log->csv @log-atom))
   logger/log-state)
+
+
+;;;
+;; Transit tests
+;;;
+(defn roundtrip [x]
+  (let [w (sit/writer :json)
+        r (sit/reader :json)]
+    (sit/read r (sit/write w x))))
+
+(deftest test-roundtrip
+  "Round trip some basic types"
+  (let [list1 [:red :green :blue]
+        list2 [:apple :pear :grape]
+        data  {(sit/integer 1) list1
+               (sit/integer 2) list2}
+        data' (roundtrip data)]
+    (t/is (= data data'))))
+
+
+(defcard roundtrip
+  (test-roundtrip))

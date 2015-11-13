@@ -2,7 +2,22 @@
     (:require [rum.core :as rum]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
+              [cognitect.transit :as sit]
+              [cljsjs.moment :as moment]
               ))
+
+;;;
+;; We need to serialise/deserialise the log and also convert it to CSV
+;;;
+
+;;;
+;; Use cljs/transit for serialisation
+;;;
+(def j-w (sit/writer :json))
+(def j-r (sit/reader :json))
+
+(def j-wv (sit/writer :json-verbose))
+(def j-rv (sit/reader :json-verbose))
 
 (defrecord Log-entry [time-stamp event-key event-data app-state])
 
@@ -84,7 +99,9 @@
                 :method "post"
                 :enc-type "text/plain"
      }
-   [:textarea {:value (apply str (interpose \newline session-log))
+   [:textarea {:value
+               (str session-log)
+               ;(apply str (interpose \newline (log->csv session-log)))
                :rows 10
                :cols 100}
     ]
@@ -105,7 +122,7 @@
     (share-control)
     (load-control)]
 
-   (email-form "gmp26@cam.ac.uk" (log->csv (rum/react log-state)))
+   (email-form "gmp26@cam.ac.uk" (rum/react log-state))
    ])
 
 
