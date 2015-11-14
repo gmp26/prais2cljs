@@ -173,7 +173,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   "Writes Foo records"
   (sit/write foo-wv aFoo))
 
-(defcard Log-writer
+(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
     (sit/write logger/log-w @log-atom))

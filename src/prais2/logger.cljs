@@ -71,7 +71,8 @@
     (apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
                                        (name (:event-key log-entry))
                                        (:event-data log-entry)]
-                                      (into [] (map second (:app-state log-entry))))))))
+                                      (into [] (map second (:app-state log-entry)))))
+          )))
 
 
 (defn prn-log [log]
@@ -113,9 +114,9 @@
                 :method "post"
                 :enc-type "text/plain"
      }
-   [:textarea {:value (log->csv session-log)
+   [:textarea {:value
 
-               ;(apply str (interpose \newline (log->csv session-log)))
+               (apply str (interpose \newline (log->csv session-log)))
                :rows 10
                :cols 100}
     ]
