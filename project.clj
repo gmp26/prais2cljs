@@ -18,6 +18,7 @@
                  ; experimental
                  [cljsjs/openlayers "3.5.0-1"]
                  [cljsjs/moment "2.10.6-0"]
+                 [org.clojure/tools.reader "1.0.0-alpha1"]
                  [com.cognitect/transit-cljs "0.8.232"]]
 
   :plugins [[lein-cljsbuild "1.1.1"]

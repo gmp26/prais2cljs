@@ -21,6 +21,20 @@
 
 (defrecord Log-entry [time-stamp event-key event-data app-state])
 
+(deftype Log-entry-handler []
+  Object
+  (tag [this v] "log-entry")
+  (rep [this v] #js [(.format (:time-stamp v)) (:event-key v) (:event-data v) (:app-state v)]))
+
+(def log-w (sit/writer :json
+                        {:handlers {Log-entry (Log-entry-handler.)
+                                    core/App-state (core/App-state-handler.)}}))
+
+(def log-wv (sit/writer :json-verbose
+                        {:handlers {Log-entry (Log-entry-handler.)
+                                    core/App-state (core/App-state-handler.)}}))
+
+
 ;;;
 ;; state of the logger
 ;;;
@@ -99,8 +113,8 @@
                 :method "post"
                 :enc-type "text/plain"
      }
-   [:textarea {:value
-               (str session-log)
+   [:textarea {:value (log->csv session-log)
+
                ;(apply str (interpose \newline (log->csv session-log)))
                :rows 10
                :cols 100}

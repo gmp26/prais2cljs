@@ -27,6 +27,24 @@
 
 (defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
 
+(deftype App-state-handler []
+  Object
+  (tag [this v] "app-state")
+ ;(rep [this v] (clj->js v))
+  (rep [this v] #js [
+                     (:datasource v)
+                     (:page v)
+                     (:sort-by v)
+                     (:sort-ascending v)
+                     (:slider-axis-value v)
+                     (:detail-slider-axis-value v)
+                     (:chart-state v)
+                     (:theme v)
+                     (:selected-h-code v)
+                     (:map-h-code v)
+                     ])
+  )
+
 (defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
 
 (defn format-time-stamp [ts]

@@ -20,7 +20,6 @@
    [cognitect.transit :as sit]
    [cljs.test :as t]
    [cljsjs.moment :as moment]
-
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -145,24 +144,52 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (logger/log->csv @log-atom))
   logger/log-state)
 
-
 ;;;
 ;; Transit tests
 ;;;
+(defrecord Foo [time-stamp gummy])
+
+(def aFoo (Foo. (js/Date.) 7))
+
+(deftype FooHandler []
+  Object
+  (tag [this v] "foo")
+;  (rep [this v] (clj->js v))
+  (rep [this v] #js [(:time-stamp v) (:gummy v)])
+  )
+
+(defcard a-Foo
+  aFoo)
+
+(def foo-wv (sit/writer :json-verbose
+                      {:handlers {Foo (FooHandler.)}}))
+
 (defn roundtrip [x]
-  (let [w (sit/writer :json)
-        r (sit/reader :json)]
+  (let [w foo-wv
+        r (sit/reader :json-verbose)]
     (sit/read r (sit/write w x))))
+
+(defcard Foo-writer
+  "Writes Foo records"
+  (sit/write foo-wv aFoo))
+
+(defcard Log-writer
+  "Writes Log entries"
+  (fn [log-atom]
+    (sit/write logger/log-w @log-atom))
+  logger/log-state)
 
 (deftest test-roundtrip
   "Round trip some basic types"
   (let [list1 [:red :green :blue]
         list2 [:apple :pear :grape]
         data  {(sit/integer 1) list1
-               (sit/integer 2) list2}
+               (sit/integer 2) list2
+               :a :b
+               ;:f aFoo
+               }
         data' (roundtrip data)]
     (t/is (= data data'))))
-
 
 (defcard roundtrip
   (test-roundtrip))

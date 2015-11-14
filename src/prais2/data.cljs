@@ -271,8 +271,7 @@
                                             :step 0.1
                                             :value (:slider-axis-value @core/app)
                                             }))
-                      handler #(do
-                                 (put! event-bus [change-key (.getValue slider)]))
+                      handler #(put! event-bus [change-key (.getValue slider)])
                       state' (assoc state ::slider slider ::handler handler)]
 
                   (.on slider "slide" handler)
