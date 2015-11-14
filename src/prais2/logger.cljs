@@ -34,6 +34,11 @@
                         {:handlers {Log-entry (Log-entry-handler.)
                                     core/App-state (core/App-state-handler.)}}))
 
+(def log-r
+  (sit/reader :json
+    {:handlers
+     {"log-entry" (fn [[ts ek ed as]] (Log-entry. (js/moment ts) ek ed as))
+      "app-state" core/json->app-state }}))
 
 ;;;
 ;; state of the logger

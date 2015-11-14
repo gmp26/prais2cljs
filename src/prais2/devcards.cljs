@@ -179,6 +179,16 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (sit/write logger/log-w @log-atom))
   logger/log-state)
 
+(defcard Transit-roundtrip
+  "Reads written Log entries"
+  (fn [log-atom]
+    (let [str (sit/write logger/log-w @log-atom)]
+      (sit/read logger/log-r str)
+      ))
+  logger/log-state
+)
+
+
 (deftest test-roundtrip
   "Round trip some basic types"
   (let [list1 [:red :green :blue]

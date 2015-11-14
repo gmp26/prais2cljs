@@ -30,7 +30,6 @@
 (deftype App-state-handler []
   Object
   (tag [this v] "app-state")
- ;(rep [this v] (clj->js v))
   (rep [this v] #js [
                      (:datasource v)
                      (:page v)
@@ -42,8 +41,12 @@
                      (:theme v)
                      (:selected-h-code v)
                      (:map-h-code v)
-                     ])
-  )
+                     ]))
+
+(defn json->app-state
+  "take transit encoded json vector of app-state and recreate an App-state"
+  [as]
+  (apply ->App-state. as))
 
 (defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
 
