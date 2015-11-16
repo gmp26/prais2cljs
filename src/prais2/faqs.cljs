@@ -34,9 +34,11 @@
       (faq-content :faq1)
       (faq-content :faq2)
       (faq-content :faq3)
+
       (faq-content :faq4)
       (faq-content :faq5)
       (faq-content :faq6)
+
       (faq-content :faq7)
       (faq-content :faq8)
       (faq-content :faq9)

@@ -147,31 +147,6 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;;;
 ;; Transit tests
 ;;;
-(defrecord Foo [time-stamp gummy])
-
-(def aFoo (Foo. (js/Date.) 7))
-
-(deftype FooHandler []
-  Object
-  (tag [this v] "foo")
-;  (rep [this v] (clj->js v))
-  (rep [this v] #js [(:time-stamp v) (:gummy v)])
-  )
-
-(defcard a-Foo
-  aFoo)
-
-(def foo-wv (sit/writer :json-verbose
-                      {:handlers {Foo (FooHandler.)}}))
-
-(defn roundtrip [x]
-  (let [w foo-wv
-        r (sit/reader :json-verbose)]
-    (sit/read r (sit/write w x))))
-
-(defcard Foo-writer
-  "Writes Foo records"
-  (sit/write foo-wv aFoo))
 
 (defcard Transit-log-writer
   "Writes Log entries"
@@ -179,7 +154,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (sit/write logger/log-w @log-atom))
   logger/log-state)
 
-(defcard Transit-roundtrip
+#_(defcard Transit-roundtrip-result
   "Reads written Log entries"
   (fn [log-atom]
     (let [str (sit/write logger/log-w @log-atom)]
@@ -188,15 +163,9 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   logger/log-state
 )
 
-
-(deftest test-roundtrip
-  "Round trip some basic types"
-  (let [list1 [:red :green :blue]
-        list2 [:apple :pear :grape]
-        data  {(sit/integer 1) list1
-               (sit/integer 2) list2
-               :a :b
-               ;:f aFoo
-               }
-        data' (roundtrip data)]
-    (t/is (= data data'))))
+#_(deftest Transit-roundtrip-session
+  "Roundtrip log-state to transit and back"
+  (let [str (sit/write logger/log-w @logger/log-state)
+        tb  (sit/read logger/log-r str)]
+    (t/is (= (map #(dissoc % :time-stamp) tb)
+             (map #(dissoc % :time-stamp) @logger/log-state)))))

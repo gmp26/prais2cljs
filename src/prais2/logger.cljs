@@ -13,11 +13,11 @@
 ;;;
 ;; Use cljs/transit for serialisation
 ;;;
-(def j-w (sit/writer :json))
-(def j-r (sit/reader :json))
+(defonce j-w (sit/writer :json))
+(defonce j-r (sit/reader :json))
 
-(def j-wv (sit/writer :json-verbose))
-(def j-rv (sit/reader :json-verbose))
+(defonce j-wv (sit/writer :json-verbose))
+(defonce j-rv (sit/reader :json-verbose))
 
 (defrecord Log-entry [time-stamp event-key event-data app-state])
 
@@ -26,15 +26,15 @@
   (tag [this v] "log-entry")
   (rep [this v] #js [(.format (:time-stamp v)) (:event-key v) (:event-data v) (:app-state v)]))
 
-(def log-w (sit/writer :json
+(defonce log-w (sit/writer :json
                         {:handlers {Log-entry (Log-entry-handler.)
                                     core/App-state (core/App-state-handler.)}}))
 
-(def log-wv (sit/writer :json-verbose
+(defonce log-wv (sit/writer :json-verbose
                         {:handlers {Log-entry (Log-entry-handler.)
                                     core/App-state (core/App-state-handler.)}}))
 
-(def log-r
+(defonce log-r
   (sit/reader :json
     {:handlers
      {"log-entry" (fn [[ts ek ed as]] (Log-entry. (js/moment ts) ek ed as))
@@ -54,8 +54,8 @@
 ;;;
 ;; Define a log bus carrying data about event-bus traffic (a meta-event-bus)
 ;;;
-(def log-bus (chan))
-(def log-bus-pub (pub log-bus first))
+(defonce log-bus (chan))
+(defonce log-bus-pub (pub log-bus first))
 
 ;;;
 ;; generic click handler

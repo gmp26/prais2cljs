@@ -13,19 +13,12 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-#_(defonce app (atom {:page :intro
-                    :sort-by nil
-                    :sort-ascending true
-                    :slider-axis-value 1.0
-                    :detail-slider-axis-value 1.0
-                    :chart-state 3
-                    :theme 1
-                    :selected-h-code nil
-                    :datasource :2014
-                    :map-h-code nil
-                    }))
+
 
 (defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
+
+(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
+
 
 (deftype App-state-handler []
   Object
@@ -48,7 +41,6 @@
   [as]
   (apply ->App-state. as))
 
-(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
 
 (defn format-time-stamp [ts]
   (str (.format ts "HH:mm:SS")))
@@ -73,8 +65,8 @@
 ;; Define an event bus carrying [topic message] data
 ;; publication channels are based on topic - the first part of the data
 ;;;
-(def event-bus (chan))
-(def event-bus-pub (pub event-bus first))
+(defonce event-bus (chan))
+(defonce event-bus-pub (pub event-bus first))
 
 ;;;
 ;; generic click handler
