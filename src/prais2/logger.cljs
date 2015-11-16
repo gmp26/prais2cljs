@@ -26,9 +26,17 @@
   (tag [this v] "log-entry")
   (rep [this v] #js [(.format (:time-stamp v)) (:event-key v) (:event-data v) (:app-state v)]))
 
+(defonce LEH (Log-entry-handler.))
+(defonce ASH (core/App-state-handler.))
+
 (defonce log-w (sit/writer :json
-                        {:handlers {Log-entry (Log-entry-handler.)
-                                    core/App-state (core/App-state-handler.)}}))
+                        {:handlers {Log-entry LEH
+                                    core/App-state ASH}}))
+
+(defn logw []
+  (sit/writer :json
+                        {:handlers {prais2.logger/Log-entry (prais2.logger/Log-entry-handler.)
+                                    prais2.core/App-state (prais2.core/App-state-handler.)}}))
 
 (defonce log-wv (sit/writer :json-verbose
                         {:handlers {Log-entry (Log-entry-handler.)

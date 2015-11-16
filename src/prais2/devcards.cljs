@@ -151,13 +151,17 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
-    (sit/write logger/log-w @log-atom))
+    (sit/write (logger/logw) @log-atom))
   logger/log-state)
 
 #_(defcard Transit-roundtrip-result
   "Reads written Log entries"
   (fn [log-atom]
-    (let [str (sit/write logger/log-w @log-atom)]
+    (prn "writer")
+    (.log js/console logger/logw)
+    (prn "log-state")
+    (prn @logger/log-state)
+    (let [str (sit/write logger/logw @log-atom)]
       (sit/read logger/log-r str)
       ))
   logger/log-state
