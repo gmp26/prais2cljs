@@ -200,6 +200,3 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
                }
         data' (roundtrip data)]
     (t/is (= data data'))))
-
-(defcard roundtrip
-  (test-roundtrip))
