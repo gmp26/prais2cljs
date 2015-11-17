@@ -43,7 +43,7 @@
 
 
 (defn format-time-stamp [ts]
-  (str (.format ts "HH:mm:SS")))
+  (str (.format (js/moment ts) "DD-MMM-YYYY HH:mm:SS")))
 
 ;;;
 ;; media query support

@@ -148,7 +148,53 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;; Transit tests
 ;;;
 
-(defcard Transit-log-writer
+;;
+;;
+;;
+;; practise code
+;;
+;;
+;;
+(def aFoo (logger/Foo. (js/Date.) 7))
+
+(defcard a-Foo
+  aFoo)
+
+(def foo-wv (sit/writer :json-verbose
+                        {:handlers {logger/Foo (logger/FooHandler.)}}))
+
+(def foo-w (sit/writer :json
+                      {:handlers {logger/Foo (logger/FooHandler.)}}))
+
+(def foo-rv (sit/reader :json-verbose))
+
+(def foo-r (sit/reader :json))
+
+(defn roundtrip [x]
+  (let [w foo-wv
+        r (sit/reader :json-verbose)]
+    (sit/read r (sit/write w x))))
+
+#_(defcard Foo-writer
+  "Writes Foo records"
+  (sit/write foo-wv aFoo))
+
+;;
+;;
+;;
+;; real code
+;;
+;;
+;;
+
+
+#_(defcard Transit-log-write
+  "Dump log to transit format - unresponsively..."
+  (prn @logger/log-state)
+  (sit/write (logger/logw) @logger/log-state))
+
+
+#_(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
     (sit/write (logger/logw) @log-atom))
