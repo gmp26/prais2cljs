@@ -65,8 +65,8 @@
 ;; Define an event bus carrying [topic message] data
 ;; publication channels are based on topic - the first part of the data
 ;;;
-(defonce event-bus (chan))
-(defonce event-bus-pub (pub event-bus first))
+(def event-bus (chan))
+(def event-bus-pub (pub event-bus first))
 
 ;;;
 ;; generic click handler

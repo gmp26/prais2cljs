@@ -27,7 +27,8 @@
   :cljsbuild {
               :builds [{:id "devcards"
                         :source-paths ["src"]
-                        :figwheel { :devcards true }
+                        :figwheel { :devcards true
+                                    :on-jsload "prais2.main/on-js-reload"}
                         :compiler { :main       "prais2.devcards"
                                    :asset-path "js/compiled/devcards_out"
                                    :output-to  "resources/public/js/compiled/devcards.js"

@@ -146,7 +146,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 ;;;
 ;; Transit tests
-;;;
+;;
 
 ;;
 ;;
@@ -155,27 +155,28 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;;
 ;;
 ;;
-(def aFoo (logger/Foo. (js/Date.) 7))
+(comment
+  (def aFoo (logger/Foo. (js/Date.) 7))
 
-(defcard a-Foo
-  aFoo)
+  (defcard a-Foo
+    aFoo)
 
-(def foo-wv (sit/writer :json-verbose
-                        {:handlers {logger/Foo (logger/FooHandler.)}}))
+  (def foo-wv (sit/writer :json-verbose
+                          {:handlers {logger/Foo (logger/FooHandler.)}}))
 
-(def foo-w (sit/writer :json
-                      {:handlers {logger/Foo (logger/FooHandler.)}}))
+  (def foo-w (sit/writer :json
+                         {:handlers {logger/Foo (logger/FooHandler.)}}))
 
-(def foo-rv (sit/reader :json-verbose))
+  (def foo-rv (sit/reader :json-verbose))
 
-(def foo-r (sit/reader :json))
+  (def foo-r (sit/reader :json))
 
-(defn roundtrip [x]
-  (let [w foo-wv
-        r (sit/reader :json-verbose)]
-    (sit/read r (sit/write w x))))
+  (defn roundtrip [x]
+    (let [w foo-wv
+          r (sit/reader :json-verbose)]
+      (sit/read r (sit/write w x)))))
 
-(defcard Foo-writer
+#_(defcard Foo-writer
   "Writes Foo records"
   (sit/write foo-wv aFoo))
 
@@ -185,24 +186,35 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;; real code
 ;;
 ;;
-;;
 
 
-(defcard Transit-log-write
+
+(defcard Transit-log-write1
   "Dump log to transit format - unresponsively..."
-  (sit/write (logger/logw) ;@logger/log-state
-
-             [(logger/Log-entry. (js/Date.) :foo (:event-data @logger/log-state) @core/app)
-              (logger/Log-entry. (js/Date.) :bar (:event-data @logger/log-state) @core/app)
-              (logger/Log-entry. (js/Date.) :bar (:event-data @logger/log-state) @core/app)]
+  (sit/write logger/log-wv ;@logger/log-state
+             [(logger/Log-entry. (js/Date.) :foo (:event-data @logger/log-state) @core/app)]
              ))
 
+(defcard Transit-log-write2
+  "Dump log to transit format - unresponsively..."
+  (sit/write logger/log-wv @logger/log-state))
+
+;;
+;;
 ;;=> [["~#log-entry",["~m1447800495549","~:start-session",null,["~#app-state",["~:2014","~:intro",null,true,1,1,3,1,null,null]]]]]
 
+;;
+;;=> on success:
+;;=> [#prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T10:57:33.854-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}}]
 
-(defcard Transit-log-writer
+;;=> on failure
+
+
+;;=> Transit-log-writer: @log-atom: " [#prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T11:32:48.870-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}} #prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T13:28:01.215-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}}]
+#_(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
+    (prn "Transit-log-writer: @log-atom: " @log-atom)
     (sit/write (logger/logw) @log-atom))
   logger/log-state)
 

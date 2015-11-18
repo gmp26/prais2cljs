@@ -5,7 +5,7 @@
               [cljs.reader :as reader]
               [clojure.set :refer (intersection)]
               [cljsjs.react]
-              [cljs.core.async :refer [chan <! pub sub put!]]
+              [cljs.core.async :refer [chan <! pub sub put! close!]]
               [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus event-bus-pub]]
               [prais2.routes :as routes]
@@ -44,14 +44,14 @@
   [:p text])
 
 ;; mixin to initialise bootstrap popover code
-(def bs-popover
+(defonce bs-popover
   {:did-mount (fn [state]
                 (ready
                  (.popover ($ "[data-toggle=\"popover\"]")))
                 state)})
 
 ;; mixin to initialise bootstrap tooltip code code
-(def bs-tooltip
+(defonce bs-tooltip
   {:did-mount (fn [state]
                 (ready
                  (.tooltip ($ "[data-toggle=\"tooltip\"]")))
@@ -93,8 +93,7 @@
          (map-indexed key-with
                       [(chrome/header true)
                        (render-intro section)
-                       (chrome/footer)])
-)
+                       (chrome/footer)]))
 
        (= page :data)
        (do
@@ -144,12 +143,15 @@
   (let [in-chan (chan)]
     (sub event-feed event-key in-chan)
     (go-loop []
-      (let [event (<! in-chan)]
-        (handle event)
-        (when (= event-bus-pub event-feed)
-          (logger/write-log event)))
-      (recur)))
-  )
+      (let [[ev-key ev-data :as event] (<! in-chan)]
+        (if (= ev-key :reloading)
+          (do
+            (prn :reloading)
+            (close! in-chan))
+          (do (handle event)
+              (when (= event-bus-pub event-feed)
+                (logger/write-log event))
+              (recur)))))))
 
 (defn zoom-to-hospital
   [[_ h-code _] ]
@@ -160,6 +162,7 @@
 (defn dispatch-central
   "centralised dispatch of all events"
   []
+
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]
@@ -268,4 +271,5 @@
 ;;
 (defn on-js-reload []
   (prn "Reloaded")
+  (put! event-bus [:reloading nil])
 )
