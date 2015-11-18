@@ -16,12 +16,7 @@
 (deftype FooHandler []
   Object
   (tag [this v] "foo")
-;  (rep [this v] (clj->js v))
-  (rep [this v] #js [(:time-stamp v) (:gummy v)])
-  )
-
-
-
+  (rep [this v] #js [(:time-stamp v) (:gummy v)]))
 
 ;;;
 ;; Use cljs/transit for serialisation
@@ -32,13 +27,13 @@
 (defonce j-wv (sit/writer :json-verbose))
 (defonce j-rv (sit/reader :json-verbose))
 
-(defrecord Log-entry [time-stamp event-key event-data ;app-state
+(defrecord Log-entry [time-stamp event-key event-data app-state
                       ])
 
 (deftype Log-entry-handler []
   Object
   (tag [this v] "log-entry")
-  (rep [this v] #js [(:time-stamp v) (:event-key v) (:event-data v) ;(:app-state v)
+  (rep [this v] #js [(:time-stamp v) (:event-key v) (:event-data v) (:app-state v)
                      ]))
 
 (defonce LEH (Log-entry-handler.))
@@ -60,8 +55,8 @@
 (defonce log-r
   (sit/reader :json
     {:handlers
-     {"log-entry" (fn [[ts ek ed ;as
-                       ]] (Log-entry. ts ek ed ;as
+     {"log-entry" (fn [[ts ek ed as
+                       ]] (Log-entry. ts ek ed as
                                       ))
       "app-state" core/json->app-state }}))
 
@@ -73,7 +68,8 @@
 (defn write-log
   "write an event to the log"
   [[event-key event-data]]
-    (let [log-entry (Log-entry. (js/Date.) event-key event-data ;@core/app
+  (prn "event-key " event-key " event-data " event-data)
+    (let [log-entry (Log-entry. (js/Date.) event-key event-data @core/app
                                 )]
       (swap! log-state #(conj % log-entry))))
 

@@ -16,8 +16,8 @@
                  [rum "0.5.0"]
                  [jayq "2.5.4"]]
 
-  :plugins [[lein-cljsbuild "1.1.1"]
-            [lein-figwheel "0.5.0"]]
+  :plugins [#_[lein-cljsbuild "1.1.1"]
+            [lein-figwheel "0.5.0-1"]]
 
   :source-paths ["src"]
 

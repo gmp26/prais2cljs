@@ -175,7 +175,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
         r (sit/reader :json-verbose)]
     (sit/read r (sit/write w x))))
 
-#_(defcard Foo-writer
+(defcard Foo-writer
   "Writes Foo records"
   (sit/write foo-wv aFoo))
 
@@ -188,13 +188,19 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;;
 
 
-#_(defcard Transit-log-write
+(defcard Transit-log-write
   "Dump log to transit format - unresponsively..."
-  (prn @logger/log-state)
-  (sit/write (logger/logw) @logger/log-state))
+  (sit/write (logger/logw) ;@logger/log-state
+
+             [(logger/Log-entry. (js/Date.) :foo (:event-data @logger/log-state) @core/app)
+              (logger/Log-entry. (js/Date.) :bar (:event-data @logger/log-state) @core/app)
+              (logger/Log-entry. (js/Date.) :bar (:event-data @logger/log-state) @core/app)]
+             ))
+
+;;=> [["~#log-entry",["~m1447800495549","~:start-session",null,["~#app-state",["~:2014","~:intro",null,true,1,1,3,1,null,null]]]]]
 
 
-#_(defcard Transit-log-writer
+(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
     (sit/write (logger/logw) @log-atom))
