@@ -44,14 +44,14 @@
   [:p text])
 
 ;; mixin to initialise bootstrap popover code
-(defonce bs-popover
+(def bs-popover
   {:did-mount (fn [state]
                 (ready
                  (.popover ($ "[data-toggle=\"popover\"]")))
                 state)})
 
 ;; mixin to initialise bootstrap tooltip code code
-(defonce bs-tooltip
+(def bs-tooltip
   {:did-mount (fn [state]
                 (ready
                  (.tooltip ($ "[data-toggle=\"tooltip\"]")))
@@ -163,6 +163,8 @@
   "centralised dispatch of all events"
   []
 
+  (dispatch event-bus-pub :reloading
+            (fn [_] (prn "really reloaded")))
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]

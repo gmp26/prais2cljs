@@ -203,10 +203,10 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 ;;
 ;;=> [["~#log-entry",["~m1447800495549","~:start-session",null,["~#app-state",["~:2014","~:intro",null,true,1,1,3,1,null,null]]]]]
 
-;;
+
 ;;=> on success:
 ;;=> [#prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T10:57:33.854-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}}]
-
+;;
 ;;=> on failure
 
 
