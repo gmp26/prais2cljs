@@ -192,8 +192,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard Transit-log-write1
   "Dump log to transit format - unresponsively..."
   (sit/write logger/log-wv ;@logger/log-state
-             [(logger/Log-entry. (js/Date.) :foo (:event-data @logger/log-state) @core/app)]
-             ))
+                          [(js/Date.) :foo (:event-data @logger/log-state) @core/app]))
 
 (defcard Transit-log-write2
   "Dump log to transit format - unresponsively..."

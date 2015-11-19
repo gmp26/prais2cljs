@@ -14,13 +14,21 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 
+#_(defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
 
-(defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
+;(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
+(defonce app (atom {:datasource :2014
+                    :page :intro
+                    :sort-by nil
+                    :sort-ascending true
+                    :slider-axis-value 1.0
+                    :detail-slider-axis-value 1.0
+                    :chart-state 3
+                    :theme 1
+                    :selected-h-code nil
+                    :map-h-code nil}))
 
-(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
-
-
-(deftype App-state-handler []
+#_(deftype App-state-handler []
   Object
   (tag [this v] "app-state")
   (rep [this v] #js [
@@ -36,7 +44,7 @@
                      (:map-h-code v)
                      ]))
 
-(defn json->app-state
+#_(defn json->app-state
   "take transit encoded json vector of app-state and recreate an App-state"
   [as]
   (apply ->App-state. as))

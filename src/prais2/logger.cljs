@@ -27,40 +27,45 @@
 (defonce j-wv (sit/writer :json-verbose))
 (defonce j-rv (sit/reader :json-verbose))
 
-(defrecord Log-entry [time-stamp event-key event-data app-state
+#_(defrecord Log-entry [time-stamp event-key event-data app-state
                       ])
 
-(deftype Log-entry-handler []
+#_(deftype Log-entry-handler []
   Object
   (tag [this v] "log-entry")
   (rep [this v] #js [(:time-stamp v) (:event-key v) (:event-data v) (:app-state v)
                      ]))
 
-(defonce LEH (Log-entry-handler.))
-(defonce ASH (core/App-state-handler.))
+#_(defonce LEH (Log-entry-handler.))
+#_(defonce ASH (core/App-state-handler.))
 
 (defonce log-w (sit/writer :json
-                        {:handlers {Log-entry LEH
-                                    core/App-state ASH}}))
+                        {:handlers {;Log-entry LEH
+                                    ;core/App-state ASH
+                                    }}))
 
 (defn logw []
   (sit/writer :json
-                        {:handlers {Log-entry LEH
-                                    core/App-state ASH}}))
+                        {:handlers {;Log-entry LEH
+                                    ;core/App-state ASH
+                                    }}))
 
 (defonce log-wv (sit/writer :json-verbose
-                        {:handlers {Log-entry (Log-entry-handler.)
-                                    core/App-state (core/App-state-handler.)}}))
+                        {:handlers {;Log-entry (Log-entry-handler.)
+                                    ;core/App-state (core/App-state-handler.)
+                                    }}))
 
 (defonce log-r
   (sit/reader :json
     {:handlers
-     {"log-entry" (fn [[ts ek ed as
-                       ]] (Log-entry. ts ek ed as
-                                      ))
-      "app-state" core/json->app-state }}))
+     {;"log-entry"
+      #_(fn [[ts ek ed as
+           ]] (Log-entry. ts ek ed as
+                          ))
+                                        ;"app-state" core/json->app-state
+      }}))
 
-;;;
+;;
 ;; state of the logger
 ;;;
 (defonce log-state (atom []))
@@ -69,8 +74,9 @@
   "write an event to the log"
   [[event-key event-data]]
   (prn "event-key " event-key " event-data " event-data)
-    (let [log-entry (Log-entry. (js/Date.) event-key event-data @core/app
-                                )]
+  (let [log-entry [(js/Date.) event-key event-data @core/app]
+        #_(Log-entry. (js/Date.) event-key event-data @core/app
+                    )]
       (swap! log-state #(conj % log-entry))))
 
 ;;;
@@ -95,12 +101,20 @@
   "convert the log to a lazy seq of comma separated values"
   [log]
   (for [log-entry log]
-    (apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
-                                       (name (:event-key log-entry))
-                                       (:event-data log-entry)]
-                                      (into [] (map second (:app-state log-entry)))))
-          )))
+    (do
+      (prn "log->csv " log-entry)
+      #_(apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
+                                         (name (:event-key log-entry))
+                                         (:event-data log-entry)]
+                                          (into [] (map second (:app-state log-entry))))))
 
+      (apply str (interpose "," (concat [(core/format-time-stamp (log-entry 0))
+                                         (name (log-entry 1))
+                                         (log-entry 2)]
+                                        (into [] (map second (log-entry 3)))))
+
+               ))))
+;
 
 (defn prn-log [log]
   (.log js/console (log->csv log)))
