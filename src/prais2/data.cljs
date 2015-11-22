@@ -551,29 +551,28 @@
    (rum/with-key (modal-ticks 3) :ticks)])
 
 
-(defn interpretation
-  "return a text interpreting the results for the given hospital"
+(rum/defc interpretation
   [row]
-  (let [survival-rate (:survival-rate row)]
-    (cond
-      (< survival-rate (:outer-low row))
-      (:low  content/dot-comments)
+  [:span (let [survival-rate (:survival-rate row)]
+           (cond
+             (< survival-rate (:outer-low row))
+             (:low  content/dot-comments)
 
-      (< survival-rate (:inner-low row))
-      (:outer-low content/dot-comments)
+             (< survival-rate (:inner-low row))
+             (:outer-low content/dot-comments)
 
-      (<= survival-rate (:inner-high row))
-      (:inner content/dot-comments)
+             (<= survival-rate (:inner-high row))
+             (:inner content/dot-comments)
 
-      (<= survival-rate (:outer-high row))
-      (:outer-high content/dot-comments)
+             (<= survival-rate (:outer-high row))
+             (:outer-high content/dot-comments)
 
-      (> survival-rate (:outer-high row))
-      (:high content/dot-comments)
+             (> survival-rate (:outer-high row))
+             (:high content/dot-comments)
 
-      :else
-      "Oops - no text for this"
-      ))
+             :else
+             "Oops - no text for this"
+             ))]
   )
 
 (rum/defc hospital-charities < rum/reactive [h-code]
@@ -613,29 +612,34 @@
       "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
      ]))
 
+(rum/defc hospital-header < rum/static
+  [selected-row]
+  [:h3 (:h-name selected-row)]
+  )
+
 (rum/defc hospital-detail < rum/reactive
   [h-code]
   (let [ap (rum/react core/app)]
     (if h-code
-      (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
-        [:#detail
-         [:h3 (:h-name selected-row)]
-         (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
-         (chart-cell selected-row (:detail-slider-axis-value ap))
-         (hospital-data h-code)
-         (interpretation selected-row)
-         (hospital-charities h-code)])
-      (let [selected-row content/sample-hospital]
-        [:#detail
-         (sample-hospital-intro-text)
-         [:h3 {:key :b} (:h-name selected-row)]
-         (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
-         (chart-cell selected-row (:detail-slider-axis-value ap))
-         (interpretation selected-row)
-         #_(map-indexed key-with
-                      [(slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+      [:#detail
+       (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
+         (map-indexed key-with
+                      [(hospital-header selected-row)
+                       (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
-                       (interpretation selected-row)])]))))
+                       (hospital-data h-code)
+                       (interpretation selected-row)
+                       (hospital-charities h-code)])
+         )]
+      [:#detail
+       (let [selected-row content/sample-hospital]
+
+         (map-indexed key-with
+                      [(sample-hospital-intro-text)
+                       (hospital-header selected-row)
+                       (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+                       (chart-cell selected-row (:detail-slider-axis-value ap))
+                       (interpretation selected-row)]))])))
 
 
 (defn open-hospital-modal

@@ -16,7 +16,8 @@
                         render-table
                         ]]
    [prais2.logger :as logger]
-   [sablono.core :as sab]
+   [prais2.utils :as u :refer [px pc important key-with]]
+;   [sablono.core :as sab]
    [cognitect.transit :as sit]
    [cljs.test :as t]
    [cljsjs.moment :as moment]
@@ -125,6 +126,27 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard map
   (map/hospitals))
+
+#_(defcard sample-hospital-header
+  (data/hospital-header content/sample-hospital))
+
+#_(defcard sample-hospital-intro-text
+  (data/sample-hospital-intro-text))
+
+#_(rum/defc test-sample-hospital-array < rum/reactive []
+  (let [selected-row content/sample-hospital
+        ap (rum/react core/app)]
+    [:div
+     (map-indexed key-with
+                  [(data/sample-hospital-intro-text)
+                   (data/hospital-header selected-row)
+                   (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
+                   (data/chart-cell selected-row (:detail-slider-axis-value ap))
+                   (data/interpretation selected-row)]
+                  )])  )
+#_(defcard sample-hospital-array
+  (test-sample-hospital-array)
+  )
 
 (defcard hospital-detail
   (fn [app-state]
