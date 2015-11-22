@@ -13,7 +13,7 @@
                  [com.cognitect/transit-cljs "0.8.232"]
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
-                 [rum "0.5.0"]
+                 [rum "0.6.0"]
                  [jayq "2.5.4"]]
 
   :plugins [#_[lein-cljsbuild "1.1.1"]

@@ -236,15 +236,15 @@
   ;;;
   (dispatch log-bus-pub :rewind
             (fn [_]
-              (prn "rewind session")
-
-              ))
+              (prn "rewind session")))
 
   (dispatch log-bus-pub :undo
-            (fn [_] (prn "undo")))
+            (fn [_] (prn "undo")
+              (swap! logger/log-state-index #(dec %))))
 
   (dispatch log-bus-pub :redo
-            (fn [_] (prn "redo")))
+            (fn [_] (prn "redo")
+              (swap! logger/log-state-index #(inc %))))
 
   (dispatch log-bus-pub :start-session
             (fn [_] (prn "start-session")))

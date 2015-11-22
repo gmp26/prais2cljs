@@ -274,7 +274,7 @@
                       handler #(put! event-bus [change-key (.getValue slider)])
                       state' (assoc state ::slider slider ::handler handler)]
 
-                  (.on slider "slide" handler)
+                  #_(.on slider "slide" handler)
                   (.on slider "change" handler)
                   state'))
 

@@ -30,7 +30,7 @@
   "#Test suite
 This is based on Bruce Hauman's devcards package so we can interleave REPL tests with visual test cards with markdown notes.")
 
-(defcard nov-todos
+#_(defcard nov-todos
   "##For November
 
 
@@ -91,18 +91,18 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 * Explanation of slider function)
 ")
 
-(defcard show-404
+#_(defcard show-404
   (render-404)
   )
 
-(defcard show-app-state
+#_(defcard show-app-state
   (fn [app-state] app-state)
   core/app)
 
-(defcard render-table
+#_(defcard render-table
   (render-table "data"))
 
-(defcard sample-faq-7
+#_(defcard sample-faq-7
   (rum-wrap (faq-content :faq7))
 )
 
@@ -131,13 +131,8 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (data/hospital-detail (:map-h-code @app-state)))
   core/app)
 
-(defcard section-1-intro
+#_(defcard section-1-intro
   (intro/section-1-content))
-
-(defcard playback-controls
-  (fn [log-atom]
-    (logger/playback-controls "playback"))
-  logger/log-state)
 
 (defcard log
   (fn [log-atom]
@@ -217,14 +212,14 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (sit/write (logger/logw) @log-atom))
   logger/log-state)
 
-#_(defcard Transit-roundtrip-result
+(defcard Transit-roundtrip-result
   "Reads written Log entries"
   (fn [log-atom]
     (prn "writer")
-    (.log js/console logger/logw)
+    (.log js/console logger/log-wv)
     (prn "log-state")
     (prn @logger/log-state)
-    (let [str (sit/write logger/logw @log-atom)]
+    (let [str (sit/write logger/log-wv @log-atom)]
       (sit/read logger/log-r str)
       ))
   logger/log-state
@@ -236,3 +231,12 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
         tb  (sit/read logger/log-r str)]
     (t/is (= (map #(dissoc % :time-stamp) tb)
              (map #(dissoc % :time-stamp) @logger/log-state)))))
+
+(defcard playback-controls
+  (fn [log-atom]
+    (logger/playback-controls "playback"))
+  logger/log-state)
+
+(defcard log-state-index
+  (fn [lsi] @lsi)
+  logger/log-state-index)
