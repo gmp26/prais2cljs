@@ -114,17 +114,23 @@
   (icon-control "sign-in fa-rotate-90" :load-session "read in session"))
 
 (rum/defc email-form < rum/static [to-address session-log]
-  ;(prn (interpose \newline session-log))
-  [:form#email {:action (str "mailto:" to-address
-                             "?subject=" "prais2-session-start " (new js/Date.))
-                :method "post"
-                :enc-type "text/plain"
-     }
-   [:textarea {:value
-
-               (apply str (interpose \newline (log->csv session-log)))
+  [:form#email {:action "https://script.google.com/macros/s/AKfycbw7mvaOsWkGyP0z_DXLstWML7cdh2wCGuPcJ1hmlmKJ1prN1adi/exec"
+                ;;:action ;"http://httpbin.org/post"
+                ;;:action
+                #_(str "mailto:" to-address
+                     "?subject=" "prais2-session-start " (new js/Date.))
+                :method "POST"
+                :enc-type "text/uri-list" ;"application/javascript" ;"text/html"; "multipart/form-data"
+                }
+   [:textarea {:value (apply str (interpose \newline (log->csv session-log)))
+               :name "foo"
+               :id "foob"
                :rows 10
-               :cols 100}]])
+               :cols 100
+               :form "email"}
+
+    ]
+   [:input.btn.btn-default {:type "submit" :value "Send"}]])
 
 (rum/defc playback-controls < rum/reactive [id]
   [:div {:id id}
@@ -144,3 +150,26 @@
 
 (defn edit-session-log []
   (core/el ""))
+
+(defn unload-handler [event]
+  (.submit (core/el "email"))
+  )
+
+(defn before-unload-handler [event]
+  (.log js/console event)
+  (set! (.-returnValue event) "Unload me?")
+  (.submit (core/el "email"))
+  "boo2"
+)
+
+(defn catch-app-unload
+  []
+  (.addEventListener js/window "beforeunload" before-unload-handler)
+  (.addEventListener js/window "unload" unload-handler)
+)
+
+;; deploy here
+;; https://script.google.com/macros/s/AKfycbw7mvaOsWkGyP0z_DXLstWML7cdh2wCGuPcJ1hmlmKJ1prN1adi/exec
+
+
+(catch-app-unload)
