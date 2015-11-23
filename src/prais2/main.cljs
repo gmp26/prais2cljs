@@ -236,7 +236,8 @@
   ;;;
   (dispatch log-bus-pub :rewind
             (fn [_]
-              (prn "rewind session")))
+              (prn "rewind session")
+              (reset! logger/log-state-index nil)))
 
   (dispatch log-bus-pub :undo
             (fn [_] (prn "undo")
@@ -246,21 +247,13 @@
             (fn [_] (prn "redo")
               (swap! logger/log-state-index #(inc %))))
 
-  (dispatch log-bus-pub :start-session
-            (fn [_] (prn "start-session")))
-
-  (dispatch log-bus-pub :stop-session
-            (fn [_] (prn "stop record")))
-
-  (dispatch log-bus-pub :edit-session-log
-            (fn [_] (logger/edit-session-log)))
-
-  (dispatch log-bus-pub :share-session
-            (fn [_] (prn "mail out session")))
+  (dispatch log-bus-pub :save-session
+            (fn [_] (logger/save-session)))
 
   (dispatch log-bus-pub :load-session
             (fn [_]
-              (prn "read in session")
+              (prn "load session")
+              (logger/load-session)
               ))
 
   )

@@ -8,6 +8,7 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170"]
                  [org.clojure/core.async "0.2.374"]
+                 [cljs-ajax "0.5.1"]
                  [cljsjs/openlayers "3.5.0-1"]
                  [cljsjs/moment "2.10.6-0"]
                  [com.cognitect/transit-cljs "0.8.232"]

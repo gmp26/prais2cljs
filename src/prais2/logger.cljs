@@ -4,6 +4,7 @@
               [prais2.core :as core]
               [cognitect.transit :as sit]
               [cljsjs.moment :as moment]
+              [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
               ))
 
 ;;;
@@ -28,12 +29,113 @@
 
 (defonce log-rv (sit/reader :json-verbose))
 
-;;
+;;;
 ;; state of the logger
 ;;;
 (defonce log-state (atom []))
 
 (defonce log-state-index (atom nil))
+
+(def ip-address (atom nil))
+
+(defn get-ip-address
+  "get the ip address of this machine"
+  []
+  (GET "http://ipinfo.io/json" {:handler (fn [response] (reset! ip-address (:ip response)))
+                                :error-handler (fn [status status-text] (prn "get-ip-error: " status status-text))
+                                :keywords? true
+                                :response-format :json}))
+
+;; get ip address for this session
+(get-ip-address)
+
+
+(def store-session-app "https://script.google.com/a/macros/cam.ac.uk/s/AKfycbx1wfGXBMVImgmiyOY9JvcnV5tBNS8YyAlIiv73q4gjvkbRiis/exec")
+
+(def sheets-logger-app "https://script.google.com/a/macros/cam.ac.uk/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
+
+
+
+
+(defn sheets-success-handler
+  [response]
+  (.log js/console (str response)))
+
+(defn sheets-error-handler
+  [status status-text]
+  (.log js/console (str "spreadsheet write error " status " " status-text)))
+
+(defn save-session
+  "Write out a session to the store."
+  []
+  (prn "saving")
+  (prn (sit/write log-w @log-state))
+  (POST store-session-app
+        :params (str "ip=" @ip-address
+                     "&saved-session=" (sit/write log-w @log-state))
+        :handler sheets-success-handler
+        :error-handler sheets-error-handler
+        :format {:write identity
+                 :content-type "application/x-www-form-urlencoded"}
+        :response-format :json
+        :keywords? true))
+
+(defn load-session
+  []
+  (prn "load-session not yet implemented"))
+
+(defn write-sheet-log
+  "Write a log-event to the google sheet url."
+  [log-entry]
+  (let [app-state (log-entry 3)]
+    (POST sheets-logger-app
+          :params (str "ip=" @ip-address
+                       "&timestamp=" (log-entry 0)
+                       "&eventkey=" (log-entry 1)
+                       "&eventdata=" (log-entry 2)
+                       "&datasource=" (:datasource app-state)
+                       "&page=" (:page app-state)
+                       "&sort-by=" (:sort-by app-state)
+                       "&sort-asc=" (:sort-ascending app-state)
+                       "&table-slider=" (:slider-axis-value app-state)
+                       "&popup-slider=" (:detail-slider-axis-value app-state)
+                       "&chart-state=" (:chart-state app-state)
+                       "&theme=" (:theme app-state)
+                       "&table-selection=" (:selected-h-code app-state)
+                       "&map-selection=" (:map-h-code app-state)
+                       )
+          :handler sheets-success-handler
+          :error-handler sheets-error-handler
+          :format {:write identity
+                   :content-type "application/x-www-form-urlencoded"}
+          :response-format :json
+          :keywords? true)
+
+    ;; (ajax-request :uri sheets-logger-app
+    ;;               :method :post
+    ;;               :params (str "ip=" @ip-address
+    ;;                            "&timestamp=" (log-entry 0)
+    ;;                            "&eventkey=" (log-entry 1)
+    ;;                            "&eventdata=" (log-entry 2)
+    ;;                            "&datasource=" (:datasource app-state)
+    ;;                            "&page=" (:page app-state)
+    ;;                            "&sort-by=" (:sort-by app-state)
+    ;;                            "&sort-asc=" (:sort-ascending app-state)
+    ;;                            "&table-slider=" (:slider-axis-value app-state)
+    ;;                            "&popup-slider=" (:detail-slider-axis-value app-state)
+    ;;                            "&chart-state=" (:chart-state app-state)
+    ;;                            "&theme=" (:theme app-state)
+    ;;                            "&table-selection=" (:selected-h-code app-state)
+    ;;                            "&map-selection=" (:map-h-code app-state)
+    ;;                            )
+    ;;               :handler sheets-success-handler
+    ;;               :error-handler sheets-error-handler
+    ;;               :format {:write identity
+    ;;                        :content-type "application/x-www-form-urlencoded"}
+    ;;               :response-format (json-response-format {:keywords? true})
+    ;;              :keywords
+    ;; )
+  ))
 
 (defn write-log
   "write an event to the log"
@@ -41,6 +143,7 @@
   (prn "event-key " event-key " event-data " event-data)
   (let [log-entry [(js/Date.) event-key event-data @core/app]
         #_(Log-entry. (js/Date.) event-key event-data @core/app)]
+    (write-sheet-log log-entry)
     (swap! log-state #(conj % log-entry))
     (swap! log-state-index #(if (nil? %) 0 (inc %)))
     ))
@@ -101,19 +204,13 @@
 (rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc stop-control []
-  (icon-control "circle" :stop-session "stop recording session"))
-
-(rum/defc edit-control []
-  (icon-control "pencil" :edit-session-log "show-hide-session-log"))
-
-(rum/defc share-control []
-  (icon-control "sign-out fa-rotate-270" :share-session "mail out session"))
+(rum/defc save-control []
+  (icon-control "sign-out fa-rotate-270" :save-session "save session"))
 
 (rum/defc load-control []
-  (icon-control "sign-in fa-rotate-90" :load-session "read in session"))
+  (icon-control "sign-in fa-rotate-90" :load-session "load session"))
 
-(rum/defc email-form < rum/static [to-address session-log]
+#_(rum/defc email-form < rum/static [to-address session-log]
   [:form#email {:action "https://script.google.com/macros/s/AKfycbw7mvaOsWkGyP0z_DXLstWML7cdh2wCGuPcJ1hmlmKJ1prN1adi/exec"
                 ;;:action ;"http://httpbin.org/post"
                 ;;:action
@@ -141,28 +238,31 @@
     (redo-control)]
    " "
    [:.btn-group
-    (edit-control)
-    (share-control)
+    (save-control)
     (load-control)]
-
-   (email-form "gmp26@cam.ac.uk" (rum/react log-state))
    ])
+
 
 (defn edit-session-log []
   (core/el ""))
 
-(defn unload-handler [event]
+
+;;;
+;; Following experimented with catching page unloads. Not worth it here...
+;;;
+
+#_(defn unload-handler [event]
   (.submit (core/el "email"))
   )
 
-(defn before-unload-handler [event]
+#_(defn before-unload-handler [event]
   (.log js/console event)
   (set! (.-returnValue event) "Unload me?")
   (.submit (core/el "email"))
   "boo2"
 )
 
-(defn catch-app-unload
+#_(defn catch-app-unload
   []
   (.addEventListener js/window "beforeunload" before-unload-handler)
   (.addEventListener js/window "unload" unload-handler)
@@ -172,4 +272,4 @@
 ;; https://script.google.com/macros/s/AKfycbw7mvaOsWkGyP0z_DXLstWML7cdh2wCGuPcJ1hmlmKJ1prN1adi/exec
 
 
-(catch-app-unload)
+#_(catch-app-unload)
