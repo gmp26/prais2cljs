@@ -490,14 +490,16 @@
    ])
 
 (rum/defc key-option < rum/static [key]
-  [:option {:value key} (name key)])
+  [:option {:value (name key)} (name key)])
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
   [:.form-group.col-md-3
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
-     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
+     :on-change #(do
+                   (prn "change-datasource " (keyword (.. % -target -value)))
+                   (put! event-bus [:change-datasource (keyword (.. % -target -value))]))}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
                    (key-option key)))]

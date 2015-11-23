@@ -100,7 +100,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   (fn [app-state] app-state)
   core/app)
 
-#_(defcard render-table
+(defcard render-table
   (render-table "data"))
 
 #_(defcard sample-faq-7
