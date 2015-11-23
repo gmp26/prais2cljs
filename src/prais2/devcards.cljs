@@ -206,27 +206,11 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 
 
-(defcard Transit-log-write1
-  "Dump log to transit format - unresponsively..."
-  (sit/write logger/log-wv ;@logger/log-state
-                          [(js/Date.) :foo (:event-data @logger/log-state) @core/app]))
 
-(defcard Transit-log-write2
+(defcard Transit-log-write-once
   "Dump log to transit format - unresponsively..."
   (sit/write logger/log-wv @logger/log-state))
 
-;;
-;;
-;;=> [["~#log-entry",["~m1447800495549","~:start-session",null,["~#app-state",["~:2014","~:intro",null,true,1,1,3,1,null,null]]]]]
-
-
-;;=> on success:
-;;=> [#prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T10:57:33.854-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}}]
-;;
-;;=> on failure
-
-
-;;=> Transit-log-writer: @log-atom: " [#prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T11:32:48.870-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}} #prais2.logger.Log-entry{:time-stamp #inst "2015-11-18T13:28:01.215-00:00", :event-key :start-session, :event-data nil, :app-state #prais2.core.App-state{:datasource :2014, :page :intro, :sort-by nil, :sort-ascending true, :slider-axis-value 1, :detail-slider-axis-value 1, :chart-state 3, :theme 1, :selected-h-code nil, :map-h-code nil}}]
 #_(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
