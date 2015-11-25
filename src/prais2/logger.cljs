@@ -50,7 +50,8 @@
 (get-ip-address)
 
 
-(def store-session-app "https://script.google.com/a/macros/cam.ac.uk/s/AKfycbx1wfGXBMVImgmiyOY9JvcnV5tBNS8YyAlIiv73q4gjvkbRiis/exec")
+(def store-session-app "https://script.google.com/macros/s/AKfycbx1wfGXBMVImgmiyOY9JvcnV5tBNS8YyAlIiv73q4gjvkbRiis/exec"
+  )
 
 (def sheets-logger-app "https://script.google.com/a/macros/cam.ac.uk/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
 
@@ -61,20 +62,22 @@
   [response]
   (.log js/console (str response)))
 
-(defn sheets-error-handler
+(defn sheets-write-error
   [status status-text]
   (.log js/console (str "spreadsheet write error " status " " status-text)))
+
+(defn sheets-read-error
+  [status status-text]
+  (.log js/console (str "spreadsheet read error " status " " status-text)))
 
 (defn save-session
   "Write out a session to the store."
   []
-  (prn "saving")
-  (prn (sit/write log-w @log-state))
   (POST store-session-app
         :params (str "ip=" @ip-address
                      "&saved-session=" (sit/write log-w @log-state))
         :handler sheets-success-handler
-        :error-handler sheets-error-handler
+        :error-handler sheets-write-error
         :format {:write identity
                  :content-type "application/x-www-form-urlencoded"}
         :response-format :json
@@ -82,7 +85,12 @@
 
 (defn load-session
   []
-  (prn "load-session not yet implemented"))
+  (prn "load-session not yet implemented")
+  (GET store-session-app
+       :handler sheets-success-handler
+       :error-handler sheets-read-error
+       :response-format :json
+       :keywords? true))
 
 (defn write-sheet-log
   "Write a log-event to the google sheet url."
@@ -105,7 +113,7 @@
                        "&map-selection=" (:map-h-code app-state)
                        )
           :handler sheets-success-handler
-          :error-handler sheets-error-handler
+          :error-handler sheets-write-error
           :format {:write identity
                    :content-type "application/x-www-form-urlencoded"}
           :response-format :json
@@ -129,7 +137,7 @@
     ;;                            "&map-selection=" (:map-h-code app-state)
     ;;                            )
     ;;               :handler sheets-success-handler
-    ;;               :error-handler sheets-error-handler
+    ;;               :error-handler sheets-write-error
     ;;               :format {:write identity
     ;;                        :content-type "application/x-www-form-urlencoded"}
     ;;               :response-format (json-response-format {:keywords? true})
