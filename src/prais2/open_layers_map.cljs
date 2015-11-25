@@ -97,7 +97,6 @@
 ;;
 
 
-
 (defn project [lat lon]
   (.fromLonLat js/ol.proj (clj->js [lon lat])))
 
@@ -106,21 +105,22 @@
 
 (def map-view
   {:did-mount (fn [state]
-                (defonce hospital-map
+;; once?
+                (def hospital-map
                   (new js/ol.Map (clj->js {:target "open-map"
                            :layers [tileLayer (vectorLayer)]
                            :view mapView
                            :interactions [] ; to disable mouse wheel and pan
                            :loadTilesWhileAnimating true})))
-
-                (defonce popup
+;; once?
+                (def popup
                   (new js/ol.Overlay
                        (clj->js {:element (core/el "popup")
                                  :positioning "bottom-center"
                                  :stopEvent false
                                  })))
-
-                (defonce once-only
+;; once?
+                (def once-only
                   (do
                     (.addOverlay hospital-map popup)
                     (.on hospital-map "click" map-click-handler)))

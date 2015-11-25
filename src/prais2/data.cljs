@@ -465,7 +465,7 @@
   [:option {:value n} n])
 
 (rum/defc chart-state-dropdown < rum/reactive [event-bus]
-  [:.form-group
+  [:.form-group.col-md-2
    [:label-for {:for "chart-selector"} "Chart State "]
    [:select#chart-selector.form-control.input-sm
     {
@@ -478,7 +478,7 @@
   )
 
 (rum/defc theme-dropdown < rum/reactive [event-bus]
-  [:.form-group.col-md-2
+  [:.form-group.col-md-1
    [:label-for{:for "colour-map-selector"} "Theme "]
    [:select#colour-map-selector.form-control.input-sm
     {
@@ -493,7 +493,7 @@
   [:option {:value (name key)} (name key)])
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
-  [:.form-group.col-md-3
+  [:.form-group.col-md-2
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
