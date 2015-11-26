@@ -247,8 +247,8 @@
             (fn [_] (prn "redo")
               (swap! logger/log-state-index #(inc %))))
 
-  (dispatch log-bus-pub :save-session
-            (fn [_] (logger/save-session)))
+  (dispatch log-bus-pub :view-session
+            (fn [_] (logger/view-session)))
 
   (dispatch log-bus-pub :load-session
             (fn [_]

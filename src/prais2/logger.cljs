@@ -5,6 +5,7 @@
               [cognitect.transit :as sit]
               [cljsjs.moment :as moment]
               [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
+              [jayq.core :refer [$]]
               ))
 
 ;;;
@@ -70,18 +71,10 @@
   [status status-text]
   (.log js/console (str "spreadsheet read error " status " " status-text)))
 
-(defn save-session
-  "Write out a session to the store."
+(defn view-session
+  "No-op - the hyperlink should do it all."
   []
-  (POST store-session-app
-        :params (str "ip=" @ip-address
-                     "&saved-session=" (sit/write log-w @log-state))
-        :handler sheets-success-handler
-        :error-handler sheets-write-error
-        :format {:write identity
-                 :content-type "application/x-www-form-urlencoded"}
-        :response-format :json
-        :keywords? true))
+)
 
 (defn load-session
   []
@@ -118,31 +111,6 @@
                    :content-type "application/x-www-form-urlencoded"}
           :response-format :json
           :keywords? true)
-
-    ;; (ajax-request :uri sheets-logger-app
-    ;;               :method :post
-    ;;               :params (str "ip=" @ip-address
-    ;;                            "&timestamp=" (log-entry 0)
-    ;;                            "&eventkey=" (log-entry 1)
-    ;;                            "&eventdata=" (log-entry 2)
-    ;;                            "&datasource=" (:datasource app-state)
-    ;;                            "&page=" (:page app-state)
-    ;;                            "&sort-by=" (:sort-by app-state)
-    ;;                            "&sort-asc=" (:sort-ascending app-state)
-    ;;                            "&table-slider=" (:slider-axis-value app-state)
-    ;;                            "&popup-slider=" (:detail-slider-axis-value app-state)
-    ;;                            "&chart-state=" (:chart-state app-state)
-    ;;                            "&theme=" (:theme app-state)
-    ;;                            "&table-selection=" (:selected-h-code app-state)
-    ;;                            "&map-selection=" (:map-h-code app-state)
-    ;;                            )
-    ;;               :handler sheets-success-handler
-    ;;               :error-handler sheets-write-error
-    ;;               :format {:write identity
-    ;;                        :content-type "application/x-www-form-urlencoded"}
-    ;;               :response-format (json-response-format {:keywords? true})
-    ;;              :keywords
-    ;; )
   ))
 
 (defn write-log
@@ -155,6 +123,8 @@
     (swap! log-state #(conj % log-entry))
     (swap! log-state-index #(if (nil? %) 0 (inc %)))
     ))
+
+(def log-sheet-url "https://docs.google.com/spreadsheets/d/1bLxk8unegtsoBr9TysVDVA0jECmr5D4a3WQvyT69iuE")
 
 ;;;
 ;; Define a log bus carrying data about event-bus traffic (a meta-event-bus)
@@ -189,8 +159,7 @@
                                          (name (log-entry 1))
                                          (log-entry 2)]
                                         (into [] (map second (log-entry 3)))))
-
-               ))))
+             ))))
 
 (defn prn-log [log]
   (.log js/console (log->csv log)))
@@ -212,30 +181,42 @@
 (rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc save-control []
-  (icon-control "sign-out fa-rotate-270" :save-session "save session"))
+(rum/defc view-control []
+  (icon-control "eye" :view-session "view session log"))
 
 (rum/defc load-control []
-  (icon-control "sign-in fa-rotate-90" :load-session "load session"))
+  [:a#load-ctl.btn.btn-default
+   {:href log-sheet-url
+    :target "_blank"
+    :title "load session from spreadsheet"
+    :data-toggle "collapse"
+    :data-target "#paste-box"
+    :aria-controls "paste-box"
+    :aria-expanded false
+    :tab-index 0
+    }
+   [:i.fa.fa-sign-in.fa-rotate-90]])
 
-#_(rum/defc email-form < rum/static [to-address session-log]
-  [:form#email {:action "https://script.google.com/macros/s/AKfycbw7mvaOsWkGyP0z_DXLstWML7cdh2wCGuPcJ1hmlmKJ1prN1adi/exec"
-                ;;:action ;"http://httpbin.org/post"
-                ;;:action
-                #_(str "mailto:" to-address
-                     "?subject=" "prais2-session-start " (new js/Date.))
-                :method "POST"
-                :enc-type "text/uri-list" ;"application/javascript" ;"text/html"; "multipart/form-data"
+(rum/defc paste-box < rum/static [to-address session-log]
+  [:div#paste-box.paste-class.collapse
+   "To import a session, "
+   [:a.btn.btn-default {:href log-sheet-url} "copy rows"]
+   " from this spreadsheet and paste into the textbox."
+   [:form
+    [:textarea {:placeholder "Paste rows here."
+                :name "foo"
+                :id "foob"
+                :rows 10
+                :cols 100
+                :form "email"
+                :title "paste-session"
                 }
-   [:textarea {:value (apply str (interpose \newline (log->csv session-log)))
-               :name "foo"
-               :id "foob"
-               :rows 10
-               :cols 100
-               :form "email"}
-
-    ]
-   [:input.btn.btn-default {:type "submit" :value "Send"}]])
+     ]
+    [:input.btn.btn-default
+     {:type "Read session"
+      :value "Read session"
+      }]]]
+)
 
 (rum/defc playback-controls < rum/reactive [id]
   [:div {:id id}
@@ -246,8 +227,10 @@
     (redo-control)]
    " "
    [:.btn-group
-    (save-control)
+    (view-control)
     (load-control)]
+
+   (paste-box)
    ])
 
 
