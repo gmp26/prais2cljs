@@ -244,6 +244,7 @@ td:first-child {
     padding: 0px !important;
     vertical-align: top;
     cursor: pointer;
+    float: left;
 }
 
 .slider input {
@@ -276,6 +277,7 @@ td:first-child {
 .axis-container {
     position: relative;
     margin-left: 15px;
+    clear: both;
 }
 
 .tick {

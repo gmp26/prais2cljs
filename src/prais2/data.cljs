@@ -335,7 +335,8 @@
                         (core/click->event-bus % :sort-toggle column-key))]
     [:th {:on-click sort-handler
           :on-touch-start sort-handler
-          :style {:width (px (:width header))
+          :style {:max-width (px (:width header))
+                  :white-space "normal !important"
                   :vertical-align "top"
                   :cursor (if (:sortable header) "pointer" "auto")
                   :background-color background
@@ -429,7 +430,8 @@
                  :let [column-header (column-key headers)]
                  :when (:shown column-header)]
              [:td {:key [column-key "r"]
-                   :style {:width (px (:width column-header))
+                   :style {:max-width (px (:width column-header))
+                           :white-space "normal"
                            :height (px (:height column-header))}}
               [:div {:style {:display "inline-block"
                              :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
