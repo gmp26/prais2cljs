@@ -9,6 +9,11 @@
               ))
 
 ;;;
+;; The session id is ideally unique for this user
+;;;
+(defonce session-id nil)
+
+;;;
 ;; We need to serialise/deserialise the log and also convert it to CSV
 ;;;
 
@@ -41,11 +46,13 @@
 
 (defn get-ip-address
   "get the ip address of this machine"
+
   []
   (GET "http://ipinfo.io/json" {:handler (fn [response] (reset! ip-address (:ip response)))
                                 :error-handler (fn [status status-text] (prn "get-ip-error: " status status-text))
                                 :keywords? true
-                                :response-format :json}))
+                                :response-format :json})
+  )
 
 ;; get ip address for this session
 (get-ip-address)
@@ -54,7 +61,7 @@
 (def store-session-app "https://script.google.com/macros/s/AKfycbx1wfGXBMVImgmiyOY9JvcnV5tBNS8YyAlIiv73q4gjvkbRiis/exec"
   )
 
-(def sheets-logger-app "https://script.google.com/a/macros/cam.ac.uk/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
+(def sheets-logger-app "https://script.google.com/macros/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
 
 
 
@@ -88,12 +95,12 @@
 (defn write-sheet-log
   "Write a log-event to the google sheet url."
   [log-entry]
-  (let [app-state (log-entry 3)]
-    (POST sheets-logger-app
-          :params (str "ip=" @ip-address
-                       "&timestamp=" (log-entry 0)
-                       "&eventkey=" (log-entry 1)
-                       "&eventdata=" (log-entry 2)
+  (let [app-state (log-entry 4)
+        params (str "ip=" @ip-address
+                       "&session-id=" (log-entry 0)
+                       "&timestamp=" (log-entry 1)
+                       "&eventkey=" (log-entry 2)
+                       "&eventdata=" (log-entry 3)
                        "&datasource=" (:datasource app-state)
                        "&page=" (:page app-state)
                        "&sort-by=" (:sort-by app-state)
@@ -104,25 +111,31 @@
                        "&theme=" (:theme app-state)
                        "&table-selection=" (:selected-h-code app-state)
                        "&map-selection=" (:map-h-code app-state)
-                       )
+                       )]
+    (prn "params = " params)
+    (POST sheets-logger-app
+          :params params
           :handler sheets-success-handler
           :error-handler sheets-write-error
           :format {:write identity
                    :content-type "application/x-www-form-urlencoded"}
           :response-format :json
-          :keywords? true)
-  ))
+          :keywords? true)))
 
 (defn write-log
   "write an event to the log"
-  [[event-key event-data]]
-  (prn "event-key " event-key " event-data " event-data)
-  (let [log-entry [(js/Date.) event-key event-data @core/app]
-        #_(Log-entry. (js/Date.) event-key event-data @core/app)]
-    (write-sheet-log log-entry)
-    (swap! log-state #(conj % log-entry))
-    (swap! log-state-index #(if (nil? %) 0 (inc %)))
-    ))
+
+  ([[event-key event-data] new-session-id]
+   (prn "event-key " event-key " event-data " event-data " session-id " new-session-id)
+   (let [log-entry [new-session-id (js/Date.) event-key event-data @core/app]]
+     (prn log-entry)
+     (write-sheet-log log-entry)
+     (swap! log-state #(conj % log-entry))
+     (swap! log-state-index #(if (nil? %) 0 (inc %)))
+     ))
+
+  ([[event-key event-data]]
+   (write-log [event-key event-data] @session-id)))
 
 (def log-sheet-url "https://docs.google.com/spreadsheets/d/1bLxk8unegtsoBr9TysVDVA0jECmr5D4a3WQvyT69iuE")
 
@@ -217,8 +230,10 @@
       :value "Read session"
       }]]]
 )
+;
 
 (rum/defc playback-controls < rum/reactive [id]
+
   [:div {:id id}
     (reset-control)
    " "

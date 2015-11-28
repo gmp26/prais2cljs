@@ -66,7 +66,10 @@
 
 (defn close-start-modal []
   (prn "closing")
-  (.modal ($ "#start-modal") "hide"))
+  (let [new-session-id (.val ($ "#session-id"))]
+    (when new-session-id
+      (logger/write-log [:start-session nil] new-session-id)
+      (.modal ($ "#start-modal") "hide"))))
 
 (rum/defc start-modal  < rum/reactive bs-tooltip []
   (let [ap (rum/react core/app)]
@@ -76,10 +79,18 @@
                           :aria-labelledby "myModalLabel"}
      [:.modal-dialog {:role "document"}
       [:.modal-content
-
+       [:.modal-header
+        [:h4.modal-title "Starting a new session"]]
        [:.modal-body
-        "Please enter a name for this session"]
-
+        [:form.form-horizontal
+         [:.form-group
+          [:label.col-md-3.control-label {:for "session-id"}
+           "Session id"]
+          [:.col-sm-3
+           [:input#session-id.form-control
+            {:type "text"
+             :placeholder "my tag"}]]
+          ]]]
        [:.modal-footer
         [:button.btn.btn-default
          {:type "button"
@@ -151,8 +162,6 @@
 ;;
 (if-let [mount-point (core/el "app")]
   (rum/mount (app-container) mount-point))
-
-(logger/write-log [:start-session nil])
 
 ;;;
 ;; Read events off the event bus and handle them
