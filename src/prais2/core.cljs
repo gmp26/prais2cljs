@@ -1,12 +1,14 @@
 (ns ^:figwheel-always prais2.core
-  (:require-macros [cljs.core.async.macros :refer [go-loop]])
-  (:require [rum.core :as rum]
-            [cljs.core.async :refer [chan <! pub put!]]
-            [prais2.utils :as u :refer [key-with]]
-            [goog.events :as events]
-            [cljsjs.react :as react]
-            [prais2.fps :refer [fps]]
-            [prais2.chan :refer [scroll-chan-events]]
+    (:require-macros [cljs.core.async.macros :refer [go-loop]]
+                     [jayq.macros :refer [ready]])
+    (:require [rum.core :as rum]
+              [jayq.core :refer ($ on)]
+              [cljs.core.async :refer [chan <! pub put!]]
+              [prais2.utils :as u :refer [key-with]]
+              [goog.events :as events]
+              [cljsjs.react :as react]
+              [prais2.fps :refer [fps]]
+              [prais2.chan :refer [scroll-chan-events]]
             ))
 
 ;;;
@@ -14,9 +16,7 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 
-#_(defrecord App-state [datasource page sort-by sort-ascending slider-axis-value detail-slider-axis-value chart-state theme selected-h-code map-h-code])
 
-;(defonce app (atom (App-state. :2014 :intro nil true 1.0 1.0 3 1 nil nil)))
 (defonce app (atom {:datasource :2014
                     :page :intro
                     :sort-by nil
@@ -27,28 +27,6 @@
                     :theme 1
                     :selected-h-code nil
                     :map-h-code nil}))
-
-#_(deftype App-state-handler []
-  Object
-  (tag [this v] "app-state")
-  (rep [this v] #js [
-                     (:datasource v)
-                     (:page v)
-                     (:sort-by v)
-                     (:sort-ascending v)
-                     (:slider-axis-value v)
-                     (:detail-slider-axis-value v)
-                     (:chart-state v)
-                     (:theme v)
-                     (:selected-h-code v)
-                     (:map-h-code v)
-                     ]))
-
-#_(defn json->app-state
-  "take transit encoded json vector of app-state and recreate an App-state"
-  [as]
-  (apply ->App-state. as))
-
 
 (defn format-time-stamp [ts]
   (str (.format (js/moment ts) "DD-MMM-YYYY HH:mm:SS")))
@@ -68,6 +46,23 @@
 (rum/defc rum-wrap [& content]
   (apply conj [:div] content)
   )
+
+;; mixin to initialise bootstrap tooltip code code
+(def bs-tooltip
+  {:did-mount (fn [state]
+                (ready
+                 (.tooltip  (.tooltip ($ "[data-toggle=\"tooltip\"]"))) "show")
+                state)
+   })
+
+;; mixin to initialise bootstrap t code code
+(def bs-popover
+  {:did-mount (fn [state]
+                (ready
+                 (.popover ($ "[data-toggle=\"popover\"]")))
+                state)
+   })
+
 
 ;;;
 ;; Define an event bus carrying [topic message] data

@@ -7,7 +7,7 @@
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put! close!]]
               [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus event-bus-pub]]
+              [prais2.core :as core :refer [event-bus event-bus-pub bs-popover bs-tooltip]]
               [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
@@ -43,20 +43,6 @@
 (rum/defc para < rum/static [text]
   [:p text])
 
-;; mixin to initialise bootstrap popover code
-(def bs-popover
-  {:did-mount (fn [state]
-                (ready
-                 (.popover ($ "[data-toggle=\"popover\"]")))
-                state)})
-
-;; mixin to initialise bootstrap tooltip code code
-(def bs-tooltip
-  {:did-mount (fn [state]
-                (ready
-                 (.tooltip ($ "[data-toggle=\"tooltip\"]")))
-                state)})
-
 (rum/defc render-404 []
   [:h1 "Page not found"])
 
@@ -78,11 +64,44 @@
                    (data/table1 core/app data event-bus)
                    (data/option-menu event-bus)])]))
 
+(defn close-start-modal []
+  (prn "closing")
+  (.modal ($ "#start-modal") "hide"))
 
+(rum/defc start-modal  < rum/reactive bs-tooltip []
+  (let [ap (rum/react core/app)]
+
+    [:#start-modal.modal.fade {:tab-index -1
+                          :role "dialog"
+                          :aria-labelledby "myModalLabel"}
+     [:.modal-dialog {:role "document"}
+      [:.modal-content
+
+       [:.modal-body
+        "Please enter a name for this session"]
+
+       [:.modal-footer
+        [:button.btn.btn-default
+         {:type "button"
+          :on-click close-start-modal
+          :on-touch-start close-start-modal}
+         "Close"]
+        ]]]
+     ]))
+
+(def bs-open-popover
+  {:did-mount (fn [state]
+                (ready
+                 (prn "calling modal")
+                 (prn ($ "#start-modal"))
+                 (.modal ($ "#start-modal") (clj->js {:show true}))
+                 )
+                state)
+   })
 ;;;
 ;; pager
 ;;;
-(rum/defc render-page < rum/reactive []
+(rum/defc render-page < bs-open-popover rum/reactive []
   (let [{:keys [page section]} (rum/react core/app)]
     [:div
      (cond
@@ -91,7 +110,8 @@
        (do
          (aset js/location "href" (routes/intro))
          (map-indexed key-with
-                      [(chrome/header true)
+                      [(start-modal)
+                       (chrome/header true)
                        (render-intro section)
                        (chrome/footer)]))
 
@@ -119,7 +139,7 @@
     ))
 
 ;;
-;; Contains the app user interface in here
+;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip rum/reactive []
   [:div
@@ -260,6 +280,7 @@
 
 ;; start the event dispatcher
 (dispatch-central)
+
 
 ;;
 ;; optionally do something on app reload

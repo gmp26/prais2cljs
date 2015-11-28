@@ -2,7 +2,7 @@
     (:require [rum.core :as rum]
               [jayq.core :refer ($ on)]
               [cljs.core.async :refer [put!]]
-              [prais2.core :as core :refer [event-bus]]
+              [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
               [prais2.utils :as u :refer [px pc important key-with]]
               [prais2.logger :as logger]
@@ -126,21 +126,6 @@
                    :data-trigger "hover"
                    :data-placement "bottom"}]))
 
-;; mixin to initialise bootstrap tooltip code code
-(def bs-tooltip
-  {:did-mount (fn [state]
-                (ready
-                 (.tooltip  (.tooltip ($ "[data-toggle=\"tooltip\"]"))) "show")
-                state)
-   })
-
-;; mixin to initialise bootstrap t code code
-(def bs-popover
-  {:did-mount (fn [state]
-                (ready
-                 (.popover ($ "[data-toggle=\"popover\"]")))
-                state)
-   })
 
 
 
@@ -428,7 +413,7 @@
         slider-axis-value (:slider-axis-value ap)  ]
 
     [:div
-     [:div {:key :print}
+     [:div.table-responsive {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)
 
@@ -660,7 +645,6 @@
         datasource (:datasource ap)
         selected-h-code (:selected-h-code ap)
         close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code)]
-    (prn "selected-h-code = " selected-h-code)
     [:#rowModal.modal.fade {:tab-index -1
                             :role "dialog"
                             :aria-labelledby "myModalLabel"
