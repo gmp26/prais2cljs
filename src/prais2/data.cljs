@@ -413,7 +413,7 @@
         column-keys (keys headers)
         slider-axis-value (:slider-axis-value ap)  ]
 
-    [:div
+    [:.table-container
      [:div.table-responsive {:key :print}
       [:table.table.table-striped.table-bordered {:cell-spacing "0"}
        (rum/with-key (table-head ap headers column-keys event-bus slider-axis-value) :thead)
@@ -493,7 +493,7 @@
    ])
 
 (rum/defc option-menu < rum/reactive [event-bus]
-  [:nav.navbar.navbar-default
+  [:nav.navbar.navbar-default.table-container
    [:.container
     [:navbar-form.form-inline.row
      (map-indexed key-with
