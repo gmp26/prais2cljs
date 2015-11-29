@@ -6,8 +6,6 @@
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.utils :as u :refer [key-with]]
               [goog.events :as events]
-              [cljsjs.react :as react]
-              [prais2.fps :refer [fps]]
               [prais2.chan :refer [scroll-chan-events]]
             ))
 

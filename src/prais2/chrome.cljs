@@ -1,5 +1,6 @@
 (ns ^:figwheel-always prais2.chrome
     (:require [rum.core :as rum]
+              [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.logger :as logger]
               ))
@@ -20,26 +21,24 @@
                 :data  (Nav-item. "Results Table" "Data" "nav-item data" "table")
                 :faqs  (Nav-item. "Understanding the Data" "FAQs" "nav-item faqs" "question")})
 
-(rum/defc nav-link [active-key key]
-  (let [nav-item (key nav-items)
-        click-handler #(core/click->event-bus % key nil)]
-    [:.simple-link {:class (str (:class nav-item) " " (if (= active-key key) "active" ""))
-                    :on-click click-handler
-                    :on-touch-start click-handler}
-     [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))]))
+(rum/defc nav-link [active? nav-item click-handler]
+  [:.simple-link {:class (str (:class nav-item) " " (if active? "active" ""))
+                  :on-click click-handler
+                  :on-touch-start click-handler}
+   [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))])
 
 (rum/defc nav-bar [active-key]
-
   (let [nav-item (active-key nav-items)]
     [:div.simple-navbar
-     [:h1 {:class (str "simple-title " (:class (active-key nav-items)))}
+     [:h1 {:key 1
+           :class (str "simple-title " (:class (active-key nav-items)))}
       (:long-title nav-item)]
-     [:div.simple-buttons.pull-right
-      (for [k (keys nav-items)]
-        (nav-link active-key k))
-      ]
-     ])
-  )
+     [:div.simple-buttons.pull-right {:key 2}
+      (map-indexed #(key-with %1 (nav-link
+                                  (= active-key %2)
+                                  (%2 nav-items)
+                                  (fn [e] (core/click->event-bus e %2 nil))))
+                   (keys nav-items))]]))
 
 
 (rum/defc header < rum/reactive [& deep]

@@ -44,7 +44,8 @@
   [:p text])
 
 (rum/defc render-404 []
-  [:h1 "Page not found"])
+  [:h1 "Page not found. "
+   [:a {:href "/"} "Try the home page."]])
 
 ;;
 ;; Code snippet to remove columns from table
@@ -71,90 +72,96 @@
       (logger/write-log [:start-session nil] new-session-id)
       (.modal ($ "#start-modal") "hide"))))
 
-(rum/defc start-modal  < rum/reactive bs-tooltip []
-  (let [ap (rum/react core/app)]
+(defn valid-session-id []
+  (#(or (nil? %) (= "" %)) (rum/react logger/session-id)))
 
-    [:#start-modal.modal.fade {:tab-index -1
-                          :role "dialog"
-                          :aria-labelledby "myModalLabel"}
-     [:.modal-dialog {:role "document"}
-      [:.modal-content
-       [:.modal-header
-        [:h4.modal-title "Starting a new session"]]
-       [:.modal-body
-        [:form.form-horizontal
-         [:.form-group
-          [:label.col-md-3.control-label {:for "session-id"}
-           "Session id"]
-          [:.col-sm-3
-           [:input#session-id.form-control
-            {:type "text"
-             :placeholder "my tag"}]]
-          ]]]
-       [:.modal-footer
-        [:button.btn.btn-default
-         {:type "button"
-          :on-click close-start-modal
-          :on-touch-start close-start-modal}
-         "Close"]
+(rum/defc start-modal < rum/reactive []
+  [:#start-modal.modal.fade {:tab-index -1
+                             :role "dialog"
+                             :aria-labelledby "myModalLabel"}
+   [:.modal-dialog {:role "document"}
+    [:.modal-content
+     [:.modal-header {:key 1}
+      [:h4.modal-title "Starting a new session"]]
+     [:.modal-body {:key 2}
+      [:form.form-horizontal
+       [:.form-group
+        {:class (if (valid-session-id) "has-error" "")}
+        [:label.col-md-3.control-label {:for "session-id" :key 1}
+         "Session id"]
+        [:.col-sm-3 {:key 2}
+         [:input#session-id.form-control
+          {:type "text"
+           :placeholder "my tag"
+           :value (rum/react logger/session-id)
+           :on-change #(reset! logger/session-id (.val ($ "#session-id")))}]]
         ]]]
-     ]))
+     [:.modal-footer {:key 3}
+      [:button.btn.btn-primary
+       {:type "button"
+        :disabled (valid-session-id)
+        :on-click close-start-modal
+        :on-touch-start close-start-modal}
+       "OK"]
+      ]]]
+   ])
 
 (def bs-open-popover
   {:did-mount (fn [state]
-                (ready
-                 (prn "calling modal")
-                 (prn ($ "#start-modal"))
-                 (.modal ($ "#start-modal") (clj->js {:show true}))
-                 )
-                state)
-   })
+                (if (nil? @logger/session-id)
+                  (ready (.modal ($ "#start-modal") (clj->js {:show true}))))
+                state)})
 ;;;
 ;; pager
 ;;;
+
+(rum/defc page-choice < rum/static [page section]
+  [:div
+   (cond
+     (= page :intro)
+     (do
+       (aset js/location "href" (routes/intro))
+       (map-indexed key-with
+                    [(chrome/header true)
+                     (render-intro section)
+                     (chrome/footer)]))
+
+     (= page :data)
+     (do
+       (aset js/location "href" (routes/data))
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-table section)
+                     (chrome/footer)]))
+
+     (= page :faqs)
+     (do
+       (aset js/location "href" (routes/faqs))
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs section)
+                     (chrome/footer)]))
+
+     :else
+     (do
+       (prn "Route mismatch" page)
+       (render-404)))])
+
 (rum/defc render-page < bs-open-popover rum/reactive []
   (let [{:keys [page section]} (rum/react core/app)]
     [:div
-     (cond
-
-       (= page :intro)
-       (do
-         (aset js/location "href" (routes/intro))
-         (map-indexed key-with
-                      [(start-modal)
-                       (chrome/header true)
-                       (render-intro section)
-                       (chrome/footer)]))
-
-       (= page :data)
-       (do
-         (aset js/location "href" (routes/data))
-         (map-indexed key-with
-                      [(chrome/header)
-                       (render-table section)
-                       (chrome/footer)]))
-
-       (= page :faqs)
-       (do
-         (aset js/location "href" (routes/faqs))
-         (map-indexed key-with
-                      [(chrome/header)
-                       (render-faqs section)
-                       (chrome/footer)]))
-
-       :else
-       (do
-         (prn "Route mismatch" page)
-         (render-404 nil)))]
-
-    ))
+     (map-indexed key-with
+                  [(start-modal)
+                   (page-choice page section)
+                   (debug)])
+     ]))
 
 ;;
 ;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip rum/reactive []
   [:div
-   (map-indexed key-with [(render-page) (debug)])]
+   (render-page)]
 )
 
 ;;
