@@ -11,7 +11,7 @@
 ;;;
 ;; The session id is ideally unique for this user
 ;;;
-(defonce session-id nil)
+(defonce session-id (atom nil))
 
 ;;;
 ;; We need to serialise/deserialise the log and also convert it to CSV
@@ -130,12 +130,14 @@
    (let [log-entry [new-session-id (js/Date.) event-key event-data @core/app]]
      (prn log-entry)
      (write-sheet-log log-entry)
+     (reset! session-id new-session-id)
      (swap! log-state #(conj % log-entry))
      (swap! log-state-index #(if (nil? %) 0 (inc %)))
      ))
 
-  ([[event-key event-data]]
-   (write-log [event-key event-data] @session-id)))
+  ([event-key-data]
+   (prn "one parameter log " event-key-data)
+   (write-log event-key-data @session-id)))
 
 (def log-sheet-url "https://docs.google.com/spreadsheets/d/1bLxk8unegtsoBr9TysVDVA0jECmr5D4a3WQvyT69iuE")
 
