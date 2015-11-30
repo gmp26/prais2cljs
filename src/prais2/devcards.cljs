@@ -159,7 +159,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard log
   (fn [log-atom]
     (logger/log->csv @log-atom))
-  logger/log-state)
+  logger/log-states)
 
 ;;;
 ;; Transit tests
@@ -197,51 +197,10 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   "Writes Foo records"
   (sit/write foo-wv aFoo))
 
-;;
-;;
-;;
-;; real code
-;;
-;;
-
-
-
-
-(defcard Transit-log-write-once
-  "Dump log to transit format - unresponsively..."
-  (sit/write logger/log-wv @logger/log-state))
-
-#_(defcard Transit-log-writer
-  "Writes Log entries"
-  (fn [log-atom]
-    (prn "Transit-log-writer: @log-atom: " @log-atom)
-    (sit/write (logger/logw) @log-atom))
-  logger/log-state)
-
-(defcard Transit-roundtrip-result
-  "Reads written Log entries"
-  (fn [log-atom]
-    (prn "writer")
-    (.log js/console logger/log-wv)
-    (prn "log-state")
-    (prn @logger/log-state)
-    (let [str (sit/write logger/log-wv @log-atom)]
-      (sit/read logger/log-r str)
-      ))
-  logger/log-state
-)
-
-#_(deftest Transit-roundtrip-session
-  "Roundtrip log-state to transit and back"
-  (let [str (sit/write logger/log-w @logger/log-state)
-        tb  (sit/read logger/log-r str)]
-    (t/is (= (map #(dissoc % :time-stamp) tb)
-             (map #(dissoc % :time-stamp) @logger/log-state)))))
-
 (defcard playback-controls
   (fn [log-atom]
     (logger/playback-controls "playback"))
-  logger/log-state)
+  logger/log-states)
 
 (defcard log-state-index
   (fn [lsi] @lsi)

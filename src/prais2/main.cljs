@@ -277,11 +277,11 @@
 
   (dispatch log-bus-pub :undo
             (fn [_] (prn "undo")
-              (swap! logger/log-state-index #(dec %))))
+              (swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
   (dispatch log-bus-pub :redo
             (fn [_] (prn "redo")
-              (swap! logger/log-state-index #(inc %))))
+              (swap! logger/log-state-index #(if (< (count logger/log-states) %) (inc %) %))))
 
   (dispatch log-bus-pub :view-session
             (fn [_] (logger/view-session)))
@@ -290,9 +290,7 @@
             (fn [_]
               (prn "load session")
               (logger/load-session)
-              ))
-
-  )
+              )))
 
 ;; start the event dispatcher
 (dispatch-central)
@@ -303,5 +301,4 @@
 ;;
 (defn on-js-reload []
   (prn "Reloaded")
-  (put! event-bus [:reloading nil])
-)
+  (put! event-bus [:reloading nil]))

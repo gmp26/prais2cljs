@@ -14,33 +14,17 @@
 (defonce session-id (atom nil))
 
 ;;;
-;; We need to serialise/deserialise the log and also convert it to CSV
-;;;
-
-
-;;;
-;; Use cljs/transit for serialisation
-;;;
-(defonce j-w (sit/writer :json))
-(defonce j-r (sit/reader :json))
-
-(defonce j-wv (sit/writer :json-verbose))
-(defonce j-rv (sit/reader :json-verbose))
-
-(defonce log-w (sit/writer :json))
-
-(defonce log-wv (sit/writer :json-verbose))
-
-(defonce log-r (sit/reader :json))
-
-(defonce log-rv (sit/reader :json-verbose))
-
-;;;
 ;; state of the logger
 ;;;
-(defonce log-state (atom []))
+(defonce log-states (atom []))
 
 (defonce log-state-index (atom nil))
+
+(defn log-state
+  "The current state indicated by log-state-index"
+  []
+  (if (integer? @log-state-index) (@log-states @log-state-index) nil))
+
 
 (def ip-address (atom nil))
 
@@ -127,7 +111,7 @@
      (prn log-entry)
      (write-sheet-log log-entry)
      (reset! session-id new-session-id)
-     (swap! log-state #(conj % log-entry))
+     (swap! log-states #(conj % log-entry))
      (swap! log-state-index #(if (nil? %) 0 (inc %)))
      ))
 
@@ -244,7 +228,6 @@
     (redo-control)]
    " "
    [:.btn-group
-    #_(view-control)
     (load-control)]
 
    (paste-box)
