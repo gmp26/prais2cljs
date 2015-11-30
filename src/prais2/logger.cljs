@@ -214,6 +214,7 @@
 
 (rum/defc paste-box []
   [:#paste-box.paste-class.collapse
+   [:br]
    [:p "To load a recorded session, copy rows from"
     [:a.btn.btn-link {:href log-sheet-url :target "_blank" :style {:font-size "16px" :padding "0 4px 4px 4px" }} "the session log"]
     "using a filtered view and paste them into the textbox here."]
@@ -221,21 +222,17 @@
     [:br]
     "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
    [:form
-    [:textarea {:placeholder "Paste rows here."
-                :name "foo"
-                :id "foob"
-                :rows 10
-                :cols 100
-                :form "email"
-                :title "paste-session"
-                }
-     ]
-    [:input.btn.btn-default
-     {:type "Read session"
-      :value "Read session"
-      }]]]
-)
-;
+    [:.form-group
+     [:textarea {:placeholder "Paste rows from the session log here."
+                 :name "pasted-session"
+                 :id "pasted-session"
+                 :rows 10
+                 :cols 50
+                 :title "paste-session"
+                 }
+      ]]
+    [:button.btn.btn-primary "Load pasted session"]]])
+
 
 (rum/defc playback-controls < rum/reactive [id]
 
