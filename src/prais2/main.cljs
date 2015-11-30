@@ -37,7 +37,7 @@
 ;;;
 (rum/defc debug < rum/reactive []
   [:div
-   [:p (str (rum/react core/app))]]
+   [:p (str (rum/react (core/app)))]]
   )
 
 (rum/defc para < rum/static [text]
@@ -58,11 +58,11 @@
          data (conj (rest data') headers))
 
 (rum/defc render-table < rum/reactive [id]
-  (let [data ((data/table-data (:datasource (rum/react core/app))))]
+  (let [data ((data/table-data (:datasource (rum/react (core/app)))))]
     [:div
      (map-indexed key-with
                   [(data/modal)
-                   (data/table1 core/app data event-bus)
+                   (data/table1 (core/app) data event-bus)
                    (data/option-menu event-bus)])]))
 
 (defn close-start-modal []
@@ -148,7 +148,7 @@
        (render-404)))])
 
 (rum/defc render-page < bs-open-popover rum/reactive []
-  (let [{:keys [page section]} (rum/react core/app)]
+  (let [{:keys [page section]} (rum/react (core/app))]
     [:div
      (map-indexed key-with
                   [(start-modal)
@@ -192,7 +192,7 @@
 (defn zoom-to-hospital
   [[_ h-code _] ]
   (prn (str "clicked on marker " (name h-code)))
-  (swap! core/app #(assoc % :map-h-code h-code))
+  (swap! (core/app) #(assoc % :map-h-code h-code))
   (map/zoom-to-feature))
 
 (defn dispatch-central
@@ -204,25 +204,25 @@
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]
-              (swap! core/app #(assoc % :slider-axis-value slider-value))))
+              (swap! (core/app) #(assoc % :slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :detail-slider-axis-value
             (fn [[_ slider-value]]
-              (swap! core/app #(assoc % :detail-slider-axis-value slider-value))))
+              (swap! (core/app) #(assoc % :detail-slider-axis-value slider-value))))
 
   (dispatch event-bus-pub :sort-toggle
-            (fn [[_ column-key]] (data/handle-sort core/app column-key)))
+            (fn [[_ column-key]] (data/handle-sort (core/app) column-key)))
 
   (dispatch event-bus-pub :info-clicked
             (fn [[_ column-key]] (prn (str "clicked on info for column " column-key))))
 
   (dispatch event-bus-pub :change-colour-map
             (fn [[_ value]]
-              (swap! core/app #(assoc % :theme (int value)))))
+              (swap! (core/app) #(assoc % :theme (int value)))))
 
   (dispatch event-bus-pub :change-chart-state
             (fn [[_ value]]
-              (swap! core/app #(assoc % :chart-state (int value)))))
+              (swap! (core/app) #(assoc % :chart-state (int value)))))
 
   (dispatch event-bus-pub :open-hospital-modal
             (fn [[_ h-code]]
@@ -235,12 +235,12 @@
   (dispatch event-bus-pub :morph-full-range
             (fn [_]
               (prn (str "morph to full range"))
-              (swap! core/app #(assoc % :slider-axis-value 0))))
+              (swap! (core/app) #(assoc % :slider-axis-value 0))))
 
   (dispatch event-bus-pub :change-datasource
             (fn [[_ new-source] ]
               (prn (str "datasource now " new-source))
-              (swap! core/app #(assoc % :datasource new-source))))
+              (swap! (core/app) #(assoc % :datasource new-source))))
 
   (dispatch event-bus-pub :click-on-map-marker zoom-to-hospital)
 
@@ -249,23 +249,23 @@
   (dispatch event-bus-pub :reset-map-to-home
             (fn [_]
               (prn "reset map to home")
-              (swap! core/app #(assoc % :map-h-code nil))
+              (swap! (core/app) #(assoc % :map-h-code nil))
               (map/go-home)))
 
   (dispatch event-bus-pub :intro
             (fn [_]
               (prn "nav to intro")
-              (swap! core/app #(assoc % :page :intro))))
+              (swap! (core/app) #(assoc % :page :intro))))
 
   (dispatch event-bus-pub :data
             (fn [_]
               (prn "nav to data")
-              (swap! core/app #(assoc % :page :data))))
+              (swap! (core/app) #(assoc % :page :data))))
 
   (dispatch event-bus-pub :faqs
             (fn [_]
               (prn "nav to faqs")
-              (swap! core/app #(assoc % :page :faqs))))
+              (swap! (core/app) #(assoc % :page :faqs))))
 
   ;;;
   ;; log-bus handling from here
@@ -273,18 +273,16 @@
   (dispatch log-bus-pub :rewind
             (fn [_]
               (prn "rewind session")
-              (reset! logger/log-state-index nil)))
+              (reset! core/log-state-index nil)
+              ))
 
   (dispatch log-bus-pub :undo
             (fn [_] (prn "undo")
-              (swap! logger/log-state-index #(dec %))))
+              (swap! core/log-state-index #(if (zero? %) 0 (dec %)))))
 
   (dispatch log-bus-pub :redo
             (fn [_] (prn "redo")
-              (swap! logger/log-state-index #(inc %))))
-
-  (dispatch log-bus-pub :view-session
-            (fn [_] (logger/view-session)))
+              (swap! core/log-state-index inc)))
 
   (dispatch log-bus-pub :load-session
             (fn [_]

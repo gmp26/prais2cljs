@@ -35,13 +35,6 @@
 
 (defonce log-rv (sit/reader :json-verbose))
 
-;;;
-;; state of the logger
-;;;
-(defonce log-state (atom []))
-
-(defonce log-state-index (atom nil))
-
 (def ip-address (atom nil))
 
 (defn get-ip-address
@@ -123,12 +116,12 @@
 
   ([[event-key event-data] new-session-id]
    (prn "event-key " event-key " event-data " event-data " session-id " new-session-id)
-   (let [log-entry [new-session-id (js/Date.) event-key event-data @core/app]]
+   (let [log-entry [new-session-id (js/Date.) event-key event-data @(core/app)]]
      (prn log-entry)
      (write-sheet-log log-entry)
      (reset! session-id new-session-id)
-     (swap! log-state #(conj % log-entry))
-     (swap! log-state-index #(if (nil? %) 0 (inc %)))
+     (swap! core/log-state #(conj % log-entry))
+     (swap! core/log-state-index inc)
      ))
 
   ([event-key-data]
@@ -192,15 +185,6 @@
 (rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc view-control []
-  [:a#load-ctl.btn.btn-default
-   {:href log-sheet-url
-    :target "_blank"
-    :title "view session log"
-    :tab-index 0
-    }
-   [:i.fa.fa-eye]])
-
 (rum/defc load-control []
   [:button#load-ctl.btn.btn-default
    {:title "load session from spreadsheet"
@@ -244,7 +228,6 @@
     (redo-control)]
    " "
    [:.btn-group
-    #_(view-control)
     (load-control)]
 
    (paste-box)

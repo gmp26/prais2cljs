@@ -104,7 +104,7 @@
 
    [:span
     [:.map-container (map/hospitals)]
-    [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))]]])
+    [:.detail-container (data/hospital-detail (:map-h-code (rum/react (core/app))))]]])
 
 
 (rum/defc section-3-content []

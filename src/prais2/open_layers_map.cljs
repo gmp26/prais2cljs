@@ -62,7 +62,7 @@
 
 (defn hospital-markers
   []
-  (let [rows (rest ((data/table-data (:datasource @core/app))))]
+  (let [rows (rest ((data/table-data (:datasource @(core/app)))))]
     (clj->js
      (map hospital-marker rows))))
 
@@ -132,7 +132,7 @@
 
 (defn map-click-handler
   [event]
-  (let [the-map hospital-map ;(:map @core/app)
+  (let [the-map hospital-map
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
                                          (fn [a b] a))]
@@ -160,7 +160,6 @@
          ]
      (.setCenter mapView (project lat lon))
      (.setResolution mapView resolution)
-     ;(.beforeRender (:map @core/app) pan zoom)
      (.beforeRender hospital-map pan zoom)
      )))
 
@@ -175,7 +174,7 @@
   bypasses React. We should render from map-state stored in the app atom."
 
   []
-  (let [ap @core/app
+  (let [ap @(core/app)
         h-code (:map-h-code ap)
         ; the-popup (:popup ap)
         element ($ "#popup")
@@ -223,7 +222,7 @@
         (:h-name row)]])
 
 (rum/defc hospital-list < rum/reactive []
-  (let [rows ((:datasource (rum/react core/app)) content/datasources)]
+  (let [rows ((:datasource (rum/react (core/app))) content/datasources)]
     [:ul.dropdown-menu
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))

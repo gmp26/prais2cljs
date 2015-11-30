@@ -98,7 +98,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 #_(defcard show-app-state
   (fn [app-state] app-state)
-  core/app)
+  (core/app))
 
 (defcard render-table
   (render-table "data"))
@@ -135,7 +135,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 #_(rum/defc test-sample-hospital-array < rum/reactive []
   (let [selected-row content/sample-hospital
-        ap (rum/react core/app)]
+        ap (rum/react (core/app))]
     [:div
      (map-indexed key-with
                   [(data/sample-hospital-intro-text)
@@ -151,7 +151,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard hospital-detail
   (fn [app-state]
     (data/hospital-detail (:map-h-code @app-state)))
-  core/app)
+  (core/app))
 
 #_(defcard section-1-intro
   (intro/section-1-content))
@@ -159,7 +159,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard log
   (fn [log-atom]
     (logger/log->csv @log-atom))
-  logger/log-state)
+  core/log-state)
 
 ;;;
 ;; Transit tests
@@ -209,14 +209,14 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard Transit-log-write-once
   "Dump log to transit format - unresponsively..."
-  (sit/write logger/log-wv @logger/log-state))
+  (sit/write logger/log-wv @core/log-state))
 
 #_(defcard Transit-log-writer
   "Writes Log entries"
   (fn [log-atom]
     (prn "Transit-log-writer: @log-atom: " @log-atom)
     (sit/write (logger/logw) @log-atom))
-  logger/log-state)
+  core/log-state)
 
 (defcard Transit-roundtrip-result
   "Reads written Log entries"
@@ -224,25 +224,25 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
     (prn "writer")
     (.log js/console logger/log-wv)
     (prn "log-state")
-    (prn @logger/log-state)
+    (prn @core/log-state)
     (let [str (sit/write logger/log-wv @log-atom)]
       (sit/read logger/log-r str)
       ))
-  logger/log-state
+  core/log-state
 )
 
 #_(deftest Transit-roundtrip-session
   "Roundtrip log-state to transit and back"
-  (let [str (sit/write logger/log-w @logger/log-state)
+  (let [str (sit/write logger/log-w @core/log-state)
         tb  (sit/read logger/log-r str)]
     (t/is (= (map #(dissoc % :time-stamp) tb)
-             (map #(dissoc % :time-stamp) @logger/log-state)))))
+             (map #(dissoc % :time-stamp) @core/log-state)))))
 
 (defcard playback-controls
   (fn [log-atom]
     (logger/playback-controls "playback"))
-  logger/log-state)
+  core/log-state)
 
 (defcard log-state-index
   (fn [lsi] @lsi)
-  logger/log-state-index)
+  core/log-state-index)

@@ -65,7 +65,7 @@
              :text-align "center"
              :padding-top "24px"
              :font-size "1.5em"}}])
-   (nav-bar (:page (rum/react core/app)))
+   (nav-bar (:page (rum/react (core/app))))
    (when deep
      [:h1 {:style
            {:color "#CCDDFF"
