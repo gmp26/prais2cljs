@@ -71,7 +71,7 @@
 
 ;;  "the minimum outer-low value across all rows"
 (defn min-outer-low []
-  (* 2 (int (/ (apply min (map :outer-low (rest ((table-data (:datasource @(core/app))))))) 2))))
+  (* 2 (int (/ (apply min (map :outer-low (rest ((table-data (:datasource @core/app)))))) 2))))
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
@@ -139,7 +139,7 @@
       :data-html true
       :data-original-title (str (pc value) "<br>The observed survival rate"
 )
-      :style {:background-color (:dot (colour-map (:theme (rum/react (core/app)))))
+      :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
               :height px-size
@@ -167,7 +167,7 @@
 
 
 (rum/defc chart-cell < bs-tooltip rum/reactive [row slider]
-  (let [ap (rum/react (core/app))
+  (let [ap (rum/react core/app)
         colours (colour-map (:theme ap))
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
@@ -254,7 +254,7 @@
                                             :min 0
                                             :max 1
                                             :step 0.1
-                                            :value (:slider-axis-value @(core/app))
+                                            :value (:slider-axis-value @core/app)
                                             }))
                       handler #(put! event-bus [change-key (.getValue slider)])
                       state' (assoc state ::slider slider ::handler handler)]
@@ -455,7 +455,7 @@
    [:label-for {:for "chart-selector"} "Chart State "]
    [:select#chart-selector.form-control.input-sm
     {
-     :value (:chart-state (rum/react (core/app)))
+     :value (:chart-state (rum/react core/app))
      :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count chart-states))]
@@ -468,7 +468,7 @@
    [:label-for{:for "colour-map-selector"} "Theme "]
    [:select#colour-map-selector.form-control.input-sm
     {
-     :value (:theme (rum/react (core/app)))
+     :value (:theme (rum/react core/app))
      :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count content/colour-map-options))]
@@ -482,7 +482,7 @@
   [:.form-group.col-md-2
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
-    {:value (name (:datasource (rum/react (core/app))))
+    {:value (name (:datasource (rum/react core/app)))
      :on-change #(do
                    (prn "change-datasource " (keyword (.. % -target -value)))
                    (put! event-bus [:change-datasource (keyword (.. % -target -value))]))}
@@ -564,7 +564,7 @@
   )
 
 (rum/defc hospital-charities < rum/reactive [h-code]
-  (let [ap (rum/react (core/app))
+  (let [ap (rum/react core/app)
         datasource ((:datasource ap) content/datasources)
         meta (h-code content/hospital-metadata)
         [link1 link2 link3 link4 link5] meta]
@@ -586,7 +586,7 @@
 
 (rum/defc hospital-data < rum/reactive
   [h-code]
-  (let [datasource (:datasource (rum/react (core/app)))
+  (let [datasource (:datasource (rum/react core/app))
         selected-row (h-code ((rows-by-code datasource)))]
     [:.data-summary
      [:p "The hospital performed "
@@ -607,7 +607,7 @@
 
 (rum/defc hospital-detail < rum/reactive
   [h-code]
-  (let [ap (rum/react (core/app))]
+  (let [ap (rum/react core/app)]
     (if h-code
       [:#detail
        (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
@@ -632,17 +632,17 @@
 
 (defn open-hospital-modal
   [h-code]
-  (swap! (core/app) #(assoc % :selected-h-code (keyword h-code)))
+  (swap! core/app #(assoc % :selected-h-code (keyword h-code)))
   (.modal ($ "#rowModal"))
 )
 
 (defn close-hospital-modal
   []
-  (swap! (core/app) #(assoc % :selected-h-code nil))
+  (swap! core/app #(assoc % :selected-h-code nil))
   (.modal ($ "#rowModal") "hide")  )
 
 (rum/defc modal  < rum/reactive bs-tooltip []
-  (let [ap (rum/react (core/app))
+  (let [ap (rum/react core/app)
         datasource (:datasource ap)
         selected-h-code (:selected-h-code ap)
         close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code)]

@@ -13,25 +13,18 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-;;;
-;; state of the logger
-;;;
-(defonce log-state (atom [{:datasource :2014
-                            :page :intro
-                            :sort-by nil
-                            :sort-ascending true
-                            :slider-axis-value 1.0
-                            :detail-slider-axis-value 1.0
-                            :chart-state 3
-                            :theme 1
-                            :selected-h-code nil
-                            :map-h-code nil}]))
 
-(defonce log-state-index (atom 0))
 
-(defn app []
-  (@log-state @log-state-index))
-
+(defonce app (atom {:datasource :2014
+                    :page :intro
+                    :sort-by nil
+                    :sort-ascending true
+                    :slider-axis-value 1.0
+                    :detail-slider-axis-value 1.0
+                    :chart-state 3
+                    :theme 1
+                    :selected-h-code nil
+                    :map-h-code nil}))
 
 (defn format-time-stamp [ts]
   (str (.format (js/moment ts) "DD-MMM-YYYY HH:mm:SS")))

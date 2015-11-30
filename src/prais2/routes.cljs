@@ -17,28 +17,28 @@
 ;; client-side routes
 ;;;
 (defroute faqs "/faqs" []
-  (swap! (core/app) #(assoc % :page :faqs :section :top)))
+  (swap! core/app #(assoc % :page :faqs :section :top)))
 
 #_(defroute faq "/faq/:id" [id]
-    (swap! (core/app) #(assoc % :page :faq :section id)))
+  (swap! core/app #(assoc % :page :faq :section id)))
 
 (defroute intro "/intro" []
-  (swap! (core/app) #(assoc % :page :intro :section :top)))
+  (swap! core/app #(assoc % :page :intro :section :top)))
 
 #_(defroute intro "/intro/:id" [id]
-    (swap! (core/app) #(assoc % :page :intro :section id)))
+  (swap! core/app #(assoc % :page :intro :section id)))
 
 (defroute data "/data" []
-  (swap! (core/app) #(assoc % :page :data :section :top)))
+  (swap! core/app #(assoc % :page :data :section :top)))
 
 #_(defroute data "/data/:id" [id]
-    (swap! (core/app) #(assoc % :page :data :section id)))
+  (swap! core/app #(assoc % :page :data :section id)))
 
 (defroute home "/" []
-  (swap! (core/app) #(assoc % :page :intro :section :top)))
+  (swap! core/app #(assoc % :page :intro :section :top)))
 
 (defroute other "*" []
-  (swap! (core/app) #(assoc % :page :unknown :section :unknown)))
+  (swap! core/app #(assoc % :page :unknown :section :unknown)))
 
 ;; history configuration.
 ;;
