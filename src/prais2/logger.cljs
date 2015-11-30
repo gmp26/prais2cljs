@@ -84,13 +84,9 @@
 )
 
 (defn load-session
+  "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
-  (prn "load-session not yet implemented")
-  (GET store-session-app
-       :handler sheets-success-handler
-       :error-handler sheets-read-error
-       :response-format :json
-       :keywords? true))
+)
 
 (defn write-sheet-log
   "Write a log-event to the google sheet url."
@@ -197,13 +193,17 @@
   (icon-control "chevron-right" :redo "redo"))
 
 (rum/defc view-control []
-  (icon-control "eye" :view-session "view session log"))
-
-(rum/defc load-control []
   [:a#load-ctl.btn.btn-default
    {:href log-sheet-url
     :target "_blank"
-    :title "load session from spreadsheet"
+    :title "view session log"
+    :tab-index 0
+    }
+   [:i.fa.fa-eye]])
+
+(rum/defc load-control []
+  [:button#load-ctl.btn.btn-default
+   {:title "load session from spreadsheet"
     :data-toggle "collapse"
     :data-target "#paste-box"
     :aria-controls "paste-box"
@@ -212,11 +212,14 @@
     }
    [:i.fa.fa-sign-in.fa-rotate-90]])
 
-(rum/defc paste-box < rum/static [to-address session-log]
-  [:div#paste-box.paste-class.collapse
-   "To import a session, "
-   [:a.btn.btn-default {:href log-sheet-url} "copy rows"]
-   " from this spreadsheet and paste into the textbox."
+(rum/defc paste-box []
+  [:#paste-box.paste-class.collapse
+   [:p "To load a recorded session, copy rows from"
+    [:a.btn.btn-link {:href log-sheet-url :target "_blank" :style {:font-size "16px" :padding "0 4px 4px 4px" }} "the session log"]
+    "using a filtered view and paste them into the textbox here."]
+   [:.alert.alert-info "To create or view the spreadsheet using a session filter, go to 'Data > Filter views...' in the sheet menu."
+    [:br]
+    "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
    [:form
     [:textarea {:placeholder "Paste rows here."
                 :name "foo"
@@ -244,7 +247,7 @@
     (redo-control)]
    " "
    [:.btn-group
-    (view-control)
+    #_(view-control)
     (load-control)]
 
    (paste-box)
