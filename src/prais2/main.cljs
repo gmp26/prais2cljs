@@ -157,10 +157,18 @@
                    (debug)])
      ]))
 
+#_(rum/defc render-page < rum/cursored rum/cursored-watch [core/app]
+  [:div
+   (map-indexed key-with
+                [(start-modal)
+                 (page-choice (rum/cursor core/app [:page]) (rum/cursor core/app [:section]))
+                 (debug)])
+   ])
+
 ;;
 ;; Contains the app user interface
 ;;
-(rum/defc app-container < bs-popover bs-tooltip rum/reactive []
+(rum/defc app-container < bs-popover bs-tooltip []
   (render-page)
 )
 
@@ -186,7 +194,7 @@
             (close! in-chan))
           (do (handle event)
               (when (= event-bus-pub event-feed)
-                (prn "dispatching " event)
+                (prn "dispatched " event)
                 (logger/write-log event))
               (recur)))))))
 
