@@ -116,6 +116,7 @@
 ;;;
 
 (rum/defc page-choice < rum/static [page section]
+  (prn "about to render " page section)
   [:div
    (cond
      (= page :intro)
