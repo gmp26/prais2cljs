@@ -120,7 +120,7 @@
    (cond
      (= page :intro)
      (do
-       (aset js/location "href" (routes/intro))
+       (aset js/location "href" (routes/intros))
        (map-indexed key-with
                     [(chrome/header true)
                      (render-intro section)
@@ -128,7 +128,7 @@
 
      (= page :data)
      (do
-       (aset js/location "href" (routes/data))
+       (aset js/location "href" (routes/datas))
        (map-indexed key-with
                     [(chrome/header)
                      (render-table section)
@@ -160,8 +160,7 @@
 ;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip rum/reactive []
-  [:div
-   (render-page)]
+  (render-page)
 )
 
 ;;
@@ -186,6 +185,7 @@
             (close! in-chan))
           (do (handle event)
               (when (= event-bus-pub event-feed)
+                (prn "dispatching " event)
                 (logger/write-log event))
               (recur)))))))
 
@@ -253,19 +253,19 @@
               (map/go-home)))
 
   (dispatch event-bus-pub :intro
-            (fn [_]
-              (prn "nav to intro")
-              (swap! core/app #(assoc % :page :intro))))
+            (fn [[_ section]]
+              (prn "nav to intro" section)
+              (swap! core/app #(assoc % :page :intro :section section))))
 
   (dispatch event-bus-pub :data
-            (fn [_]
-              (prn "nav to data")
-              (swap! core/app #(assoc % :page :data))))
+            (fn [[_ section]]
+              (prn "nav to data" section)
+              (swap! core/app #(assoc % :page :data :section section))))
 
   (dispatch event-bus-pub :faqs
-            (fn [_]
-              (prn "nav to faqs")
-              (swap! core/app #(assoc % :page :faqs))))
+            (fn [[_ section]]
+              (prn "nav to faqs" section)
+              (swap! core/app #(assoc % :page :faqs :section section))))
 
   ;;;
   ;; log-bus handling from here

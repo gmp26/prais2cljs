@@ -37,7 +37,7 @@
       (map-indexed #(key-with %1 (nav-link
                                   (= active-key %2)
                                   (%2 nav-items)
-                                  (fn [e] (core/click->event-bus e %2 nil))))
+                                  (fn [e] (core/click->event-bus e %2 :top))))
                    (keys nav-items))]]))
 
 

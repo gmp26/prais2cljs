@@ -2,10 +2,13 @@
     (:require [secretary.core :as secretary :refer-macros [defroute]]
               [goog.events :as events]
               [goog.history.EventType :as EventType]
+              [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               )
     (:import goog.History))
 
+
+(enable-console-print!)
 
 ;;;
 ;; basic hashbang routing to configure some options
@@ -17,28 +20,39 @@
 ;; client-side routes
 ;;;
 (defroute faqs "/faqs" []
-  (swap! core/app #(assoc % :page :faqs :section :top)))
+  (put! core/event-bus [:faqs :top])
+  #_(swap! core/app #(assoc % :page :faqs :section :top)))
 
-#_(defroute faq "/faq/:id" [id]
-  (swap! core/app #(assoc % :page :faq :section id)))
+(defroute faq "/faq/:id" [id]
+  (put! core/event-bus [:faqs id])
+  (prn "faq :id match")
+  #_(swap! core/app #(assoc % :page :faq :section id)))
 
-(defroute intro "/intro" []
-  (swap! core/app #(assoc % :page :intro :section :top)))
+(defroute intros "/intro" []
+  (put! core/event-bus [:intro :top])
+  #_(swap! core/app #(assoc % :page :intro :section :top)))
 
-#_(defroute intro "/intro/:id" [id]
-  (swap! core/app #(assoc % :page :intro :section id)))
+(defroute intro "/intro/:id" [id]
+  (put! core/event-bus [:intro id])
+  (prn "intro :id match")
+  #_(swap! core/app #(assoc % :page :intro :section id)))
 
-(defroute data "/data" []
-  (swap! core/app #(assoc % :page :data :section :top)))
+(defroute datas "/data" []
+  (put! core/event-bus [:data :top])
+  #_(swap! core/app #(assoc % :page :data :section :top)))
 
-#_(defroute data "/data/:id" [id]
-  (swap! core/app #(assoc % :page :data :section id)))
+(defroute data "/data/:id" [id]
+  (put! core/event-bus [:data id])
+  (prn "data :id match")
+  #_(swap! core/app #(assoc % :page :data :section id)))
 
 (defroute home "/" []
-  (swap! core/app #(assoc % :page :intro :section :top)))
+  (prn "home match")
+  #_(swap! core/app #(assoc % :page :intro :section :top)))
 
 (defroute other "*" []
-  (swap! core/app #(assoc % :page :unknown :section :unknown)))
+  (prn "* match")
+  #_(swap! core/app #(assoc % :page :unknown :section :unknown)))
 
 ;; history configuration.
 ;;
