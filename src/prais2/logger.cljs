@@ -69,7 +69,9 @@
 
 (defn load-session
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
-  []
+  [value]
+  (prn "load-session not yet implemented")
+  (prn (str "value = " (.-value ($ "#pasted-session"))))
 )
 
 (defn write-sheet-log
@@ -176,15 +178,6 @@
 (rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc view-control []
-  [:a#load-ctl.btn.btn-default
-   {:href log-sheet-url
-    :target "_blank"
-    :title "view session log"
-    :tab-index 0
-    }
-   [:i.fa.fa-eye]])
-
 (rum/defc load-control []
   [:button#load-ctl.btn.btn-default
    {:title "load session from spreadsheet"
@@ -196,26 +189,34 @@
     }
    [:i.fa.fa-sign-in.fa-rotate-90]])
 
-(rum/defc paste-box []
-  [:#paste-box.paste-class.collapse
-   [:br]
-   [:p "To load a recorded session, copy rows from"
-    [:a.btn.btn-link {:href log-sheet-url :target "_blank" :style {:font-size "16px" :padding "0 4px 4px 4px" }} "the session log"]
-    "using a filtered view and paste them into the textbox here."]
-   [:.alert.alert-info "To create or view the spreadsheet using a session filter, go to 'Data > Filter views...' in the sheet menu."
-    [:br]
-    "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
-   [:form
-    [:.form-group
-     [:textarea {:placeholder "Paste rows from the session log here."
-                 :name "pasted-session"
-                 :id "pasted-session"
-                 :rows 10
-                 :cols 50
-                 :title "paste-session"
-                 }
-      ]]
-    [:button.btn.btn-primary "Load pasted session"]]])
+(def tsv-log (atom "Paste rows from session log here"))
+
+(rum/defc paste-box < rum/reactive []
+  (let [handler #(click->log-bus % :load-session nil)]
+    [:#paste-box.paste-class.collapse
+     [:br]
+     [:p "To load a recorded session, copy rows from"
+      [:a.btn.btn-link {:href log-sheet-url :target "_blank" :style {:font-size "16px" :padding "0 4px 4px 4px" }} "the session log"]
+      "using a filtered view and paste them into the textbox here."]
+     [:.alert.alert-info "To create or view the spreadsheet using a session filter, go to 'Data > Filter views...' in the sheet menu."
+      [:br]
+      "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
+     [:form
+      [:.form-group
+       [:textarea {:placeholder "Paste rows from the session log here."
+                   :name "pasted-session"
+                   :id "pasted-session"
+                   :rows 10
+                   :cols 50
+                   :title "paste-session"
+                   ;:on-change #(reset! tsv-log (.. % -nativeEvent -target -value))
+                   ;:value (rum/react tsv-log)
+                   }
+        ]]
+      [:button.btn.btn-primary
+       {:on-click handler
+        :on-touch-start handler}
+       "Load pasted session"]]]))
 
 
 (rum/defc playback-controls < rum/reactive [id]

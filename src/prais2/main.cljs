@@ -301,9 +301,9 @@
             (fn [_] (logger/view-session)))
 
   (dispatch log-bus-pub :load-session
-            (fn [_]
+            (fn [[_ value]]
               (prn "load session")
-              (logger/load-session)
+              (logger/load-session value)
               )))
 
 ;; start the event dispatcher

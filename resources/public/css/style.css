@@ -612,3 +612,11 @@ i.fa.red {
 i.fa.black {
     color: #000000;
 }
+
+#paste-box a.btn.btn-link {
+    color: #0df;
+}
+
+#paste-box textarea {
+    color: #000;
+}
