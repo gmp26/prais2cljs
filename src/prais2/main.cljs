@@ -7,7 +7,7 @@
               [cljsjs.react]
               [cljs.core.async :refer [chan <! pub sub put! close!]]
               [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus event-bus-pub bs-popover bs-tooltip]]
+              [prais2.core :as core :refer [app event-bus event-bus-pub bs-popover bs-tooltip]]
               [prais2.routes :as routes]
               [prais2.content :as content]
               [prais2.data :as data]
@@ -57,7 +57,8 @@
                 :h-code false)
          data (conj (rest data') headers))
 
-(rum/defc render-table < rum/reactive [id]
+(rum/defc render-table < rum/reactive (core/monitor-react "DATA>")
+  [id]
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
@@ -116,12 +117,12 @@
 ;;;
 
 (rum/defc page-choice < rum/static [page section]
-  (prn "about to render " page section)
   [:div
+   (prn "about to render " page section)
    (cond
      (= page :intro)
      (do
-       (aset js/location "href" (routes/intros))
+       (.pushState js/history [] "" (routes/intros))
        (map-indexed key-with
                     [(chrome/header true)
                      (render-intro section)
@@ -129,7 +130,7 @@
 
      (= page :data)
      (do
-       (aset js/location "href" (routes/datas))
+       (.pushState js/history [] "" (routes/datas))
        (map-indexed key-with
                     [(chrome/header)
                      (render-table section)
@@ -137,7 +138,7 @@
 
      (= page :faqs)
      (do
-       (aset js/location "href" (routes/faqs))
+       (.pushState js/history [] "" (routes/faqs))
        (map-indexed key-with
                     [(chrome/header)
                      (render-faqs section)
@@ -157,19 +158,21 @@
                    (debug)])
      ]))
 
-#_(rum/defc render-page < rum/cursored rum/cursored-watch [core/app]
+
+#_(rum/defc render-page < bs-open-popover rum/cursored rum/cursored-watch [app]
   [:div
    (map-indexed key-with
                 [(start-modal)
-                 (page-choice (rum/cursor core/app [:page]) (rum/cursor core/app [:section]))
+                 (page-choice @(rum/cursor app [:page]) @(rum/cursor app [:section]))
                  (debug)])
    ])
+
 
 ;;
 ;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip []
-  (render-page)
+  (render-page app)
 )
 
 ;;
@@ -264,7 +267,9 @@
   (dispatch event-bus-pub :intro
             (fn [[_ section]]
               (prn "nav to intro" section)
-              (swap! core/app #(assoc % :page :intro :section section))))
+              (let [ap @app]
+                (when (not= [(:page ap) (:section ap)] [:intro section])
+                  (swap! core/app #(assoc % :page :intro :section section))))))
 
   (dispatch event-bus-pub :data
             (fn [[_ section]]

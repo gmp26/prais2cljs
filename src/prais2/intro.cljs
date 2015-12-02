@@ -13,7 +13,7 @@
 (declare section-3-content)
 (declare section-4-content)
 
-(rum/defc render-intro [section-id]
+(rum/defc render-intro < (core/monitor-react "INTRO>")  [section-id]
   [:.container
    [:.row
     [:#intro

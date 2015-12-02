@@ -1,6 +1,7 @@
 (ns ^:figwheel-always prais2.faqs
     (:require [rum.core :as rum]
               [clojure.string :as str]
+              [prais2.core :as core]
               [prais2.chrome :as chrome]
               [prais2.content :as content :refer [terminology
                                                   faqs]]))
@@ -22,7 +23,7 @@
 )
 
 
-(rum/defc render-faqs [section-id]
+(rum/defc render-faqs < (core/monitor-react "FAQS>") [section-id]
   [:.container
    [:.row
     [:#faqs terminology

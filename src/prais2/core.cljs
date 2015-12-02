@@ -62,6 +62,11 @@
                 state)
    })
 
+;; mixin to monitor react state changes
+(defn monitor-react [label] {
+                             :did-mount #(do (prn (str label " did-mount " %1)) %1)
+                             :will-unmount #(do (prn (str label " will-unmount " %1)) %1)
+                             })
 
 ;;;
 ;; Define an event bus carrying [topic message] data
@@ -69,6 +74,8 @@
 ;;;
 (def event-bus (chan))
 (def event-bus-pub (pub event-bus first))
+
+
 
 ;;;
 ;; generic click handler
