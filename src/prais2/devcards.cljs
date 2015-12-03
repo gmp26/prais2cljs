@@ -214,14 +214,13 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard tsv-atom
   logger/tsv-log)
 
-#_(defn tsv-parse
-  [s]
-  #_(let [s "131.111.16.20	goo	Wed Dec 02 2015 13:23:05 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:27:32 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:22 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1"])
-  (map #(str/split % #"\t") (str/split s #"\r?\n")))
-
-#_(defcard tsv-parse
-  (tsv-parse "131.111.16.20	goo	Wed Dec 02 2015 13:23:05 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:27:32 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:22 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1"))
-
 (defcard parse-csv
   (fn [tsv] logger/tsv-parse @tsv)
   logger/tsv-log)
+
+
+(def test-session
+  "session-id	timestamp	eventkey	eventdata	datasource	page	sort-by	sort-asc	table-slider	popup-slider	chart-state	theme	table-selection	map-selection\nrective	Tue Dec 01 2015 17:21:11 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		"
+)
+
+(defn parsed-data [] (js->clj (logger/tsv-parse test-session)))

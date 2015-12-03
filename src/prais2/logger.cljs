@@ -8,6 +8,7 @@
               [cljsjs.moment :as moment]
               [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
               [jayq.core :refer [$]]
+              [cljs.reader :as r]
               ))
 
 ;;;
@@ -187,32 +188,42 @@
   (.parse js/Papa s (clj->js {:header true}))
   )
 
-(defn parse-field
-  [[key val]]
-  (let [key-colon #(subs % 1)]
-    (condp = key
-      :eventkey {key-colon val}
-      :eventdata val
-      :datasource {key-colon val}
-      :page {key-colon val}
-      :sort-by {key-colon val}
-      :sort-asc {key (if (= val "TRUE") true false)}
-      :table-slider {:slider-axis-value (.parseFloat js/window val)}
-      :popup-slider {:detail-slider-axis-value (.parseFloat js/window val)}
-      :chart-state {key (.parseInt js/window val)}
-      :theme {key (.parseInt js/window val)}
-      :table-selection {:selected-h-code {key-colon val}}
-      :map-selection {:map-h-code {key-colon val}}
-      )))
+(def parse-value r/read-string)
+
+(defn parse-key-value [key str-value]
+  (let [renamed-key (condp = key
+                      :table-slider :slider-axis-value
+                      :popup-slider :detail-slider-axis-value
+                      :table-selection :selected-h-code
+                      :map-selection :map-h-code)]
+    [key (if (= str-value :2014) str-value (r/read-string str-value))]))
+
+;; (let [key-colon #(subs % 1)]
+  ;;   (condp = key
+  ;;     :eventkey {key-colon val}
+  ;;     :eventdata val
+  ;;     :datasource {key-colon val}
+  ;;     :page {key-colon val}
+  ;;     :sort-by {key-colon val}
+  ;;     :sort-asc {key (if (= val "TRUE") true false)}
+  ;;     :table-slider {:slider-axis-value (.parseFloat js/window val)}
+  ;;     :popup-slider {:detail-slider-axis-value (.parseFloat js/window val)}
+  ;;     :chart-state {key (.parseInt js/window val)}
+  ;;     :theme {key (.parseInt js/window val)}
+  ;;     :table-selection {:selected-h-code {key-colon val}}
+  ;;     :map-selection {:map-h-code {key-colon val}}
+  ;;     )))
 
 (defn parse-session
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
   (prn "parse-session not yet implemented")
   (prn (str "value = " (.val ($ "#pasted-session"))))
-  (let [parsed-data (tsv-parse (.val ($ "#pasted-session")))]
+  (let [parsed-data (tsv-parse (.val ($ "#pasted-session")))
+        ;parse-entry (partial map parse-field)
+        ]
 
-    (reset! tsv-log (map #(map parse-field %) parsed-data))))
+    (reset! tsv-log parsed-data)))
 
 (rum/defc paste-box < rum/reactive []
   (let [handler #(click->log-bus % :parse-session nil)]
