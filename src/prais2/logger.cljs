@@ -190,13 +190,23 @@
 
 (def parse-value r/read-string)
 
-(defn parse-key-value [key str-value]
-  (let [renamed-key (condp = key
-                      :table-slider :slider-axis-value
-                      :popup-slider :detail-slider-axis-value
-                      :table-selection :selected-h-code
-                      :map-selection :map-h-code)]
-    [key (if (= str-value :2014) str-value (r/read-string str-value))]))
+(defn parse-key-value [[key str-value]]
+  (let [renamed-key (keyword (condp = key
+                               "table-slider" "slider-axis-value"
+                               "popup-slider" "detail-slider-axis-value"
+                               "table-selection" "selected-h-code"
+                               "map-selection" "map-h-code"
+                               key))]
+    [renamed-key (if (= renamed-key :timestamp)
+                   (js/Date. str-value)
+                   (condp = str-value
+                     ":2014" :2014
+                     "TRUE" true
+                     "FALSE" false
+                     "" nil
+                     (if (#(or (keyword? %) (number? %)) (r/read-string str-value))
+                       (r/read-string str-value)
+                       str-value)))]))
 
 ;; (let [key-colon #(subs % 1)]
   ;;   (condp = key

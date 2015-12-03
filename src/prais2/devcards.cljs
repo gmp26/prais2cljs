@@ -22,6 +22,7 @@
    [cognitect.transit :as sit]
    [cljs.test :as t]
    [cljsjs.moment :as moment]
+   [cljs.reader :as r]
    )
   (:require-macros
    [devcards.core :as dc :refer [defcard deftest]]))
@@ -224,3 +225,12 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 )
 
 (defn parsed-data [] (js->clj (logger/tsv-parse test-session)))
+
+(defn parsed-log-states []
+  (rest ((parsed-data) "data")))
+
+(defn first-row []
+  (first (parsed-log-states)))
+
+(defn read-first-row []
+  (into {} (map logger/parse-key-value (seq (first-row)))))
