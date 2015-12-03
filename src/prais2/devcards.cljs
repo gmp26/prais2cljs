@@ -18,6 +18,7 @@
    [prais2.logger :as logger]
    [prais2.utils :as u :refer [px pc important key-with]]
 ;   [sablono.core :as sab]
+;   [cljsjs.csv :as csv]
    [cognitect.transit :as sit]
    [cljs.test :as t]
    [cljsjs.moment :as moment]
@@ -158,7 +159,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defcard log
   (fn [log-atom]
-    (logger/log->csv @log-atom))
+    @log-atom)
   logger/log-states)
 
 ;;;
@@ -205,3 +206,22 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard log-state-index
   (fn [lsi] @lsi)
   logger/log-state-index)
+
+(defcard log-states
+  (fn [lsi] @lsi)
+  logger/log-states)
+
+(defcard tsv-atom
+  logger/tsv-log)
+
+#_(defn tsv-parse
+  [s]
+  #_(let [s "131.111.16.20	goo	Wed Dec 02 2015 13:23:05 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:27:32 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:22 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1"])
+  (map #(str/split % #"\t") (str/split s #"\r?\n")))
+
+#_(defcard tsv-parse
+  (tsv-parse "131.111.16.20	goo	Wed Dec 02 2015 13:23:05 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:27:32 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:22 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1\n131.111.16.20	repl	Wed Dec 02 2015 13:44:27 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	0.7	1	3	1"))
+
+(defcard parse-csv
+  (fn [tsv] logger/tsv-parse @tsv)
+  logger/tsv-log)

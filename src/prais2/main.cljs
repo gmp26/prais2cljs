@@ -297,13 +297,12 @@
             (fn [_] (prn "redo")
               (swap! logger/log-state-index #(if (< (count logger/log-states) %) (inc %) %))))
 
-  (dispatch log-bus-pub :view-session
-            (fn [_] (logger/view-session)))
 
-  (dispatch log-bus-pub :load-session
-            (fn [[_ value]]
-              (prn "load session")
-              (logger/load-session value)
+
+  (dispatch log-bus-pub :parse-session
+            (fn [_]
+              (prn "calling parse-session")
+              (logger/parse-session)
               )))
 
 ;; start the event dispatcher

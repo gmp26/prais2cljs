@@ -1,5 +1,7 @@
 (ns ^:figwheel-always prais2.logger
     (:require [rum.core :as rum]
+              [clojure.string :as str]
+              [cljsjs.papaparse]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
               [cognitect.transit :as sit]
@@ -61,18 +63,6 @@
 (defn sheets-read-error
   [status status-text]
   (.log js/console (str "spreadsheet read error " status " " status-text)))
-
-(defn view-session
-  "No-op - the hyperlink should do it all."
-  []
-)
-
-(defn load-session
-  "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
-  [value]
-  (prn "load-session not yet implemented")
-  (prn (str "value = " (.-value ($ "#pasted-session"))))
-)
 
 (defn write-sheet-log
   "Write a log-event to the google sheet url."
@@ -155,8 +145,7 @@
       (apply str (interpose "," (concat [(core/format-time-stamp (log-entry 0))
                                          (name (log-entry 1))
                                          (log-entry 2)]
-                                        (into [] (map second (log-entry 3)))))
-             ))))
+                                        (into [] (map second (log-entry 3)))))))))
 
 (defn prn-log [log]
   (.log js/console (log->csv log)))
@@ -191,8 +180,42 @@
 
 (def tsv-log (atom "Paste rows from session log here"))
 
+
+
+(defn tsv-parse
+  [s]
+  (.parse js/Papa s (clj->js {:header true}))
+  )
+
+(defn parse-field
+  [[key val]]
+  (let [key-colon #(subs % 1)]
+    (condp = key
+      :eventkey {key-colon val}
+      :eventdata val
+      :datasource {key-colon val}
+      :page {key-colon val}
+      :sort-by {key-colon val}
+      :sort-asc {key (if (= val "TRUE") true false)}
+      :table-slider {:slider-axis-value (.parseFloat js/window val)}
+      :popup-slider {:detail-slider-axis-value (.parseFloat js/window val)}
+      :chart-state {key (.parseInt js/window val)}
+      :theme {key (.parseInt js/window val)}
+      :table-selection {:selected-h-code {key-colon val}}
+      :map-selection {:map-h-code {key-colon val}}
+      )))
+
+(defn parse-session
+  "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
+  []
+  (prn "parse-session not yet implemented")
+  (prn (str "value = " (.val ($ "#pasted-session"))))
+  (let [parsed-data (tsv-parse (.val ($ "#pasted-session")))]
+
+    (reset! tsv-log (map #(map parse-field %) parsed-data))))
+
 (rum/defc paste-box < rum/reactive []
-  (let [handler #(click->log-bus % :load-session nil)]
+  (let [handler #(click->log-bus % :parse-session nil)]
     [:#paste-box.paste-class.collapse
      [:br]
      [:p "To load a recorded session, copy rows from"
