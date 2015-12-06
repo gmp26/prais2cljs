@@ -222,6 +222,14 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (def test-session
   "session-id	timestamp	eventkey	eventdata	datasource	page	sort-by	sort-asc	table-slider	popup-slider	chart-state	theme	table-selection	map-selection\nrective	Tue Dec 01 2015 17:21:11 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		"
+  )
+
+(def test-session*
+  "rective	Tue Dec 01 2015 17:21:11 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		"
+  )
+
+(def test-session**
+  "Tue Dec 01 2015 17:21:11 GMT 0000 (GMT)	:start-session		:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:14 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:15 GMT 0000 (GMT)	:data	:top	:2014	:data		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:28 GMT 0000 (GMT)	:faqs	:top	:2014	:faqs		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		\nrective	Tue Dec 01 2015 17:21:43 GMT 0000 (GMT)	:intro	:top	:2014	:intro		TRUE	1	1	3	1		"
 )
 
 (defn parsed-data [] (js->clj (logger/tsv-parse test-session)))
@@ -231,6 +239,3 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defn first-row []
   (first (parsed-log-states)))
-
-(defn read-first-row []
-  (into {} (map logger/parse-key-value (seq (first-row)))))

@@ -181,16 +181,24 @@
 
 (def tsv-log (atom "Paste rows from session log here"))
 
+(def tsv-header "session-id	timestamp	eventkey	eventdata	datasource	page	sort-by	sort-asc	table-slider	popup-slider	chart-state	theme	table-selection	map-selection\n")
 
+(defn add-header
+  "add header to s if not already present"
+  [header s]
+  (if (= 0 (.indexOf s "session-id")) s (str header s)))
 
 (defn tsv-parse
-  [s]
-  (.parse js/Papa s (clj->js {:header true}))
-  )
+  "parse pasted tab separated values into maps of field value pairs, using first row
+of headers for field names and then discarding the first header row from the result set."
+  [tsv]
+  (rest
+   ((js->clj (.parse js/Papa (add-header tsv-header tsv) (clj->js {:header true})))
+    "data")))
 
-(def parse-value r/read-string)
-
-(defn parse-key-value [[key str-value]]
+(defn pair->kv
+  "convert one pair from string/value form to internal key/value transforming as necessary."
+  [[key str-value]]
   (let [renamed-key (keyword (condp = key
                                "table-slider" "slider-axis-value"
                                "popup-slider" "detail-slider-axis-value"
@@ -207,6 +215,22 @@
                      (if (#(or (keyword? %) (number? %)) (r/read-string str-value))
                        (r/read-string str-value)
                        str-value)))]))
+
+(defn row-of-kvs [f row-of-pairs]
+  (into {} (map f row-of-pairs)))
+
+(defn rows-of-kvs [rows-of-pairs]
+  (map #(row-of-kvs pair->kv %) rows-of-pairs) )
+
+(defn row-map->log-entry
+  "split row map into log fields and state fields to make a log-entry"
+  [rm]
+  [(:session-id rm) (:timestamp rm) (:eventkey rm) (:eventdata rm)
+   (dissoc rm :session-id :timestamp :eventkey :eventdata)])
+
+(defn tsv->log
+  [tsv]
+  (mapv row-map->log-entry (rows-of-kvs (tsv-parse tsv))))
 
 ;; (let [key-colon #(subs % 1)]
   ;;   (condp = key
@@ -227,13 +251,11 @@
 (defn parse-session
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
-  (prn "parse-session not yet implemented")
-  (prn (str "value = " (.val ($ "#pasted-session"))))
-  (let [parsed-data (tsv-parse (.val ($ "#pasted-session")))
+  (let [parsed-tsv (tsv->log (.val ($ "#pasted-session")))
         ;parse-entry (partial map parse-field)
         ]
 
-    (reset! tsv-log parsed-data)))
+    (reset! tsv-log parsed-tsv)))
 
 (rum/defc paste-box < rum/reactive []
   (let [handler #(click->log-bus % :parse-session nil)]
