@@ -67,7 +67,7 @@
                    (data/table1 core/app data event-bus)
                    (data/option-menu event-bus)])]))
 
-(defn close-start-modal []
+(defn close-start-modal [event]
   (prn "closing")
   (let [new-session-id (.val ($ "#session-id"))]
     (when new-session-id
@@ -111,7 +111,7 @@
 (def bs-open-popover
   {:did-mount (fn [state]
                 (if (nil? @logger/session-id)
-                  (ready (.modal ($ "#start-modal") (clj->js {:show true}))))
+                  (ready (.modal ($ "#start-modal") (clj->js {:show true :backdrop :static}))))
                 state)})
 ;;;
 ;; pager
