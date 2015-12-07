@@ -120,6 +120,15 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     background-color: rgba(127, 205, 187, 0.3);
 }
 
+.map-data {
+    border-bottom: 5px solid #f00;
+    border-color:  #f00;
+}
+
+.well.map-data {
+    border: none;
+    background-color: #f00;
+}
 
 .simple-navbar {
     display: block;
@@ -152,7 +161,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     text-align: center;
     height: 40px;
     padding: 5px 0 0 0;
-    width: 100px;
+    width: 126px;
     font-size: 18px;
 }
 
@@ -226,7 +235,7 @@ td:first-child {
     position: relative;
     padding: 10px 0px 0px !important;
     margin: 0 !important;
-    min-width: 230px;
+    min-width: 300px;
     width: 100%;
     height: 100px;
     cursor: pointer;

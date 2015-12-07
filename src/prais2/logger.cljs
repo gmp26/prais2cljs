@@ -181,32 +181,35 @@
 
 (def tsv-log (atom "Paste rows from session log here"))
 
-(def tsv-header "session-id	timestamp	eventkey	eventdata	datasource	page	sort-by	sort-asc	table-slider	popup-slider	chart-state	theme	table-selection	map-selection\n")
+(def tsv-header "ip	session-id	timestamp	eventkey	eventdata	datasource	page	sort-by	sort-asc	table-slider	popup-slider	chart-state	theme	table-selection	map-selection\n")
 
 (defn add-header
   "add header to s if not already present"
   [header s]
-  (if (= 0 (.indexOf s "session-id")) s (str header s)))
+  (if (= 0 (.indexOf s "ip")) s (str header s)))
 
 (defn tsv-parse
   "parse pasted tab separated values into maps of field value pairs, using first row
 of headers for field names and then discarding the first header row from the result set."
   [tsv]
   (rest
-   ((js->clj (.parse js/Papa (add-header tsv-header tsv) (clj->js {:header true})))
+   ((js->clj (.parse js/Papa (add-header tsv-header tsv) (clj->js {:header true :delimiter "\t"})))
     "data")))
 
 (defn pair->kv
   "convert one pair from string/value form to internal key/value transforming as necessary."
   [[key str-value]]
+  (prn "pair->kv" key str-value)
   (let [renamed-key (keyword (condp = key
                                "table-slider" "slider-axis-value"
                                "popup-slider" "detail-slider-axis-value"
                                "table-selection" "selected-h-code"
                                "map-selection" "map-h-code"
+                               "sort-asc" "sort-ascending"
                                key))]
-    [renamed-key (if (= renamed-key :timestamp)
-                   (js/Date. str-value)
+    [renamed-key (condp = renamed-key
+                   :timestamp (js/Date. str-value)
+                   :ip str-value
                    (condp = str-value
                      ":2014" :2014
                      "TRUE" true
@@ -232,30 +235,16 @@ of headers for field names and then discarding the first header row from the res
   [tsv]
   (mapv row-map->log-entry (rows-of-kvs (tsv-parse tsv))))
 
-;; (let [key-colon #(subs % 1)]
-  ;;   (condp = key
-  ;;     :eventkey {key-colon val}
-  ;;     :eventdata val
-  ;;     :datasource {key-colon val}
-  ;;     :page {key-colon val}
-  ;;     :sort-by {key-colon val}
-  ;;     :sort-asc {key (if (= val "TRUE") true false)}
-  ;;     :table-slider {:slider-axis-value (.parseFloat js/window val)}
-  ;;     :popup-slider {:detail-slider-axis-value (.parseFloat js/window val)}
-  ;;     :chart-state {key (.parseInt js/window val)}
-  ;;     :theme {key (.parseInt js/window val)}
-  ;;     :table-selection {:selected-h-code {key-colon val}}
-  ;;     :map-selection {:map-h-code {key-colon val}}
-  ;;     )))
-
 (defn parse-session
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
-  (let [parsed-tsv (tsv->log (.val ($ "#pasted-session")))
-        ;parse-entry (partial map parse-field)
-        ]
-
-    (reset! tsv-log parsed-tsv)))
+  (prn "really pasting")
+  (let [parsed-tsv (tsv->log (.val ($ "#pasted-session")))]
+    (when parsed-tsv
+      (let [ix (count parsed-tsv)]
+        (when (not (zero? ix))
+          (reset! log-state-index (dec ix))
+          (reset! log-states parsed-tsv))))))
 
 (rum/defc paste-box < rum/reactive []
   (let [handler #(click->log-bus % :parse-session nil)]

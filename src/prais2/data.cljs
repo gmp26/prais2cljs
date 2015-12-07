@@ -25,8 +25,7 @@
   (map-indexed
    (fn [index row]
      (let [lat (+ 50.7 (/ index 3))
-           lon (+ -2.6 (* 0.8 (mod index 3)))
-           ]
+           lon (+ -2.6 (* 0.8 (mod index 3)))]
        (assoc row :h-lat lat :h-lon lon)))
    table-rows
    ))
@@ -416,9 +415,10 @@
                    info-handler #(core/click->event-bus % :open-hospital-modal h-code)]
              :when (:shown column-header)]
          [:td {:key column-key
-               :style {:max-width (px (:width column-header))
-                       :white-space "normal"
-                       :height (px (:height column-header))}}
+               :style (merge {:maxWidth (px (:width column-header))
+                              :whiteSpace "normal"
+                              :height (px (:height column-header))}
+                             (if (= column-key :h-name) {:minWidth (px 256)} {}))}
           [:div {:key 1
                  :style {:display "inline-block"
                          :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}

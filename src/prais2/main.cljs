@@ -290,12 +290,12 @@
               (reset! logger/log-state-index nil)))
 
   (dispatch log-bus-pub :undo
-            (fn [_] (prn "undo")
+            (fn [_] (prn "undoing")
               (swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
   (dispatch log-bus-pub :redo
-            (fn [_] (prn "redo")
-              (swap! logger/log-state-index #(if (< (count logger/log-states) %) (inc %) %))))
+            (fn [_] (prn "redoing")
+              (swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
 
 
 
