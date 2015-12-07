@@ -15,6 +15,8 @@
 (declare section-5-content)
 (declare section-6-content)
 
+;; look at http://materializecss.com/
+
 (rum/defc render-intro < (core/monitor-react "INTRO>")  [section-id]
   [:.container
    [:.row
@@ -22,14 +24,19 @@
 
      (section 1 "What is this site for?" section-1-content)
 
+     ;; tv newspaper-o film
      (section 2 "Survival statistics in the media [collapsible]" section-2-content)
 
+     ;; ban
      (section 3 "What this site cannot do [collapsible]" section-3-content)
 
+     ;; h-square bed
      (section 4 "Numbers of operations and what is meant by survival rate [collapsible]" section-4-content)
 
+     ;; hospital-o area-chart warning percent
      (section 5 "Why can survival rate data be difficult to interpret? [not collapsible]" section-5-content)
 
+     ;; balance-scale question percent
      (section 6 "A fairer way of looking at survival rate data [not collapsible]" section-6-content)
      ]]])
 
