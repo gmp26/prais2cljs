@@ -9,7 +9,7 @@
 (declare section)
 
 (declare section-1-content)
-(declare section-2-content)
+#_(declare section-2-content)
 (declare section-3-content)
 (declare section-4-content)
 
@@ -22,7 +22,7 @@
 
      (section 1 "What is this site for?" section-1-content)
 
-     (section 2 "Which hospitals perform heart surgery in children?" section-2-content)
+     #_(section 2 "Which hospitals perform heart surgery in children?" section-2-content)
 
      (section 3 "What can published survival rates tell you without extra information?" section-3-content)
 
@@ -91,7 +91,7 @@
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data (more in the FAQs)."]])
 
 
-(rum/defc section-2-content < rum/reactive []
+#_(rum/defc section-2-content < rum/reactive []
   [:section
    [:p
     "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]

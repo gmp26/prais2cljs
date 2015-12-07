@@ -14,6 +14,7 @@
               [prais2.open-layers-map :as map]
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
+              [prais2.map-data :refer [render-map-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
               [jayq.core :refer ($)]
@@ -126,6 +127,14 @@
        (map-indexed key-with
                     [(chrome/header true)
                      (render-intro section)
+                     (chrome/footer)]))
+
+     (= page :map-data)
+     (do
+       (.pushState js/history [] "" (routes/map-data))
+       (map-indexed key-with
+                    [(chrome/header true)
+                     (render-map-data section)
                      (chrome/footer)]))
 
      (= page :data)
@@ -268,8 +277,13 @@
             (fn [[_ section]]
               (prn "nav to intro" section)
               (let [ap @app]
-                (when (not= [(:page ap) (:section ap)] [:intro section])
-                  (swap! core/app #(assoc % :page :intro :section section))))))
+                (swap! core/app #(assoc % :page :intro :section section)))))
+
+  (dispatch event-bus-pub :map-data
+            (fn [[_ section]]
+              (prn "nav to map data" section)
+              (let [ap @app]
+                (swap! core/app #(assoc % :page :map-data :section section)))))
 
   (dispatch event-bus-pub :data
             (fn [[_ section]]

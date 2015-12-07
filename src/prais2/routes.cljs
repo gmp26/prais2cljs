@@ -21,38 +21,42 @@
 ;;;
 (defroute faqs "/faqs" []
   (put! core/event-bus [:faqs :top])
-  #_(swap! core/app #(assoc % :page :faqs :section :top)))
+)
 
 (defroute faq "/faq/:id" [id]
   (put! core/event-bus [:faqs id])
   (prn "faq :id match")
-  #_(swap! core/app #(assoc % :page :faq :section id)))
+)
 
 (defroute intros "/intro" []
   (put! core/event-bus [:intro :top])
-  #_(swap! core/app #(assoc % :page :intro :section :top)))
+)
 
 (defroute intro "/intro/:id" [id]
   (put! core/event-bus [:intro id])
   (prn "intro :id match")
-  #_(swap! core/app #(assoc % :page :intro :section id)))
+)
+
+(defroute map-data "/map-data" []
+  (put! core/event-bus [:map-data :top])
+)
 
 (defroute datas "/data" []
   (put! core/event-bus [:data :top])
-  #_(swap! core/app #(assoc % :page :data :section :top)))
+)
 
 (defroute data "/data/:id" [id]
   (put! core/event-bus [:data id])
   (prn "data :id match")
-  #_(swap! core/app #(assoc % :page :data :section id)))
+)
 
 (defroute home "/" []
   (prn "home match")
-  #_(swap! core/app #(assoc % :page :intro :section :top)))
+)
 
 (defroute other "*" []
   (prn "* match")
-  #_(swap! core/app #(assoc % :page :unknown :section :unknown)))
+)
 
 ;; history configuration.
 ;;
