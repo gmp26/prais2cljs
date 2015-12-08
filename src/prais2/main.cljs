@@ -133,7 +133,7 @@
      (do
        (.pushState js/history [] "" (routes/map-data))
        (map-indexed key-with
-                    [(chrome/header true)
+                    [(chrome/header)
                      (render-map-data section)
                      (chrome/footer)]))
 

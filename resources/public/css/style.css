@@ -91,7 +91,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .intro {
-    border-bottom: 5px solid  rgba(44, 127, 184, 1);
+    border-bottom: 5px solid  rgba(0, 174, 239, 1);
 }
 
 .well.intro {
@@ -171,7 +171,9 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .simple-link.active {
-    font-style: bold;
+    vertical-align: bottom;
+    color: #fff;
+    border-bottom-width: 8px;
     vertical-align: bottom;
 }
 
