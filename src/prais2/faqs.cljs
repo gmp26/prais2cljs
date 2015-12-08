@@ -8,16 +8,25 @@
 
 
 (rum/defc callout []
-  [:div
-   [:.callout]])
+  [:.callout])
+
+
+(defn ix-col [index]
+  (["rgba(127, 205, 187, 1)"
+    "rgba(205, 127, 187, 1)"
+    "rgba(127, 187, 205, 1)"
+    ] (mod index 3)))
 
 (rum/defc render-bubble-title [[index faq]]
   (prn "render-bubble-title " index)
   [:div
-   (let [pull (if (even? index) "on-left" "on-right")]
+   (let [pull (if (even? index) "on-left" "on-right")
+         ixc (ix-col index)]
      [:div
-      [:.bubble {:class pull} (:title faq)
-       (callout)]
+      [:.bubble {:class pull :style {:background-color ixc}} (:title faq)
+       (if (even? index)
+         [:.callout.left {:style {:background-color ixc}}]
+         [:.callout.right {:style {:background-color ixc}}])]
       ]
      )])
 
@@ -30,8 +39,7 @@
   )
 
 (rum/defc render-faqs [section-id]
-  (prn "rendering faqs " section-id)
-  [:.container
+  [:.container-fluid
    [:.row
     [:#faqs.col-md-8.offset
      [:h1 content/title]

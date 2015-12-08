@@ -644,32 +644,47 @@ i.fa.black {
 .bubble {
     border: none;
     border-radius: 20px;
-    //background-color: rgba(205, 220, 57, 0.8);
-    background-color: rgba(127, 205, 187, 1);
     color: white;
     box-shadow: 1px 1px 1px grey;
     text-shadow: -1px -1px 1px grey;
-    padding: 15px 15px 22px 15px;
+    padding: 20px 20px 22px 20px;
     font-family: chalkboard, comic-sans;
     font-size: 20px;
-    max-width: 300px;
+    max-width: 400px;
     margin:10px;
     position: relative;
+    cursor: pointer;
 }
 
-
 .callout {
+    -ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
     box-shadow: 1px 1px 1px grey;
     background-color: rgba(127, 205, 187, 1);
     width: 20px;
     height: 20px;
     bottom: -9px;
-    /*left: 20px;*/
     right: 20px;
     position: absolute;
 }
 
+.bubble:hover {
+    box-shadow: 1px 1px 4px black;
+}
+
+.callout:hover {
+    box-shadow: 2px 2px 2px grey;
+}
+
+
+.left {
+    left: 20px;
+}
+
+.right {
+    right: 20px;
+}
 
 .on-left {
     margin-left: 60px;
@@ -681,4 +696,13 @@ i.fa.black {
     margin-right: 60px;
     float: right;
     clear: both;
+}
+
+.bubble-group {
+    clear: both;
+    float: left;
+    width: 100%;
+    padding: 10px 20px 40px 20px;;
+    margin: 20px 5px 20px 0px;
+    box-shadow: 2px 2px 6px grey;
 }
