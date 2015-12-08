@@ -5,11 +5,11 @@
    [prais2.open-layers-map :as map]
    [prais2.core :as core :refer [event-bus event-bus-pub rum-wrap]]
    [prais2.routes :as routes]
-   [prais2.content :as content :refer [faqs]]
+   [prais2.content :as content :refer [faq-sections]]
    [prais2.data :as data]
    [prais2.chrome :as chrome]
    [prais2.intro :as intro]
-   [prais2.faqs :refer [faq-content
+   [prais2.faqs :refer [
                         render-faqs]]
    [prais2.main :refer [render-404
                         debug

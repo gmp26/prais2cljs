@@ -2,50 +2,39 @@
     (:require [rum.core :as rum]
               [clojure.string :as str]
               [prais2.core :as core]
+              [prais2.utils :refer [key-with]]
               [prais2.chrome :as chrome]
-              [prais2.content :as content :refer [terminology
-                                                  faqs]]))
+              [prais2.content :as content :refer [faq-sections]]))
 
 
-(defn faq-content [faq-key]
-  (let [faq (faq-key faqs)
-        faq-name (name faq-key)
-        faq-number (str/replace faq-name #"\D" "")]
-    [:.no-break {:id faq-name}
-     [:h2
-      (str "Q" faq-number ": " (:title faq))]
-     [:.well
-      (:body faq)
-      ]]))
+(rum/defc callout []
+  [:div
+   [:.callout]])
 
-(rum/defc faq-item [faq]
-  (faq-content faq)
-)
+(rum/defc render-bubble-title [[index faq]]
+  (prn "render-bubble-title " index)
+  [:div
+   (let [pull (if (even? index) "on-left" "on-right")]
+     [:div
+      [:.bubble {:class pull} (:title faq)
+       (callout)]
+      ]
+     )])
 
+(rum/defc render-section [faq-section]
+  [:.bubble-group
+   [:h2 (:section faq-section)]
+   (map-indexed key-with
+                (map render-bubble-title
+                     (vec (zipmap (range) (:faqs faq-section)))))]
+  )
 
-(rum/defc render-faqs < (core/monitor-react "FAQS>") [section-id]
+(rum/defc render-faqs [section-id]
+  (prn "rendering faqs " section-id)
   [:.container
    [:.row
-    [:#faqs terminology
+    [:#faqs.col-md-8.offset
+     [:h1 content/title]
+     (map-indexed key-with (map render-section faq-sections))
 
-     [:h1 (:title faqs)]
-
-     [:div
-      [:h2#section]
-      (faq-content :faq1)
-      (faq-content :faq2)
-      (faq-content :faq3)
-
-      (faq-content :faq4)
-      (faq-content :faq5)
-      (faq-content :faq6)
-
-      (faq-content :faq7)
-      (faq-content :faq8)
-      (faq-content :faq9)
-      (faq-content :faq10)
-      (faq-content :faq11)
-      (faq-content :faq12)
-      (faq-content :faq13)
-
-      ]]]])
+]]])

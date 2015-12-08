@@ -21,7 +21,7 @@
                 :intro (Nav-item. "Introduction" "Intro" "nav-item intro" "home")
                 :map-data (Nav-item. "Mapped Data" "Mapped Data" "nav-item map-data" "map-marker")
                 :data  (Nav-item. "Tabled Data" "Data" "nav-item data" "table")
-                :faqs  (Nav-item. "Understanding the Data" "FAQs" "nav-item faqs" "question")})
+                :faqs  (Nav-item. "Understanding the Data" "Understanding" "nav-item faqs" "question")})
 
 (rum/defc nav-link [active? nav-item click-handler]
   (prn (:short-title nav-item) active?)

@@ -161,7 +161,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     text-align: center;
     height: 40px;
     padding: 5px 0 0 0;
-    width: 126px;
+    width: 135px;
     font-size: 18px;
 }
 
@@ -630,4 +630,55 @@ i.fa.black {
 
 #paste-box textarea {
     color: #000;
+}
+
+/**
+ * New bubble faqs
+ */
+.bubble-group h2 {
+    margin: 0;
+    padding-top: 20px;
+    clear: both;
+}
+
+.bubble {
+    border: none;
+    border-radius: 20px;
+    //background-color: rgba(205, 220, 57, 0.8);
+    background-color: rgba(127, 205, 187, 1);
+    color: white;
+    box-shadow: 1px 1px 1px grey;
+    text-shadow: -1px -1px 1px grey;
+    padding: 15px 15px 22px 15px;
+    font-family: chalkboard, comic-sans;
+    font-size: 20px;
+    max-width: 300px;
+    margin:10px;
+    position: relative;
+}
+
+
+.callout {
+    -webkit-transform: rotate(45deg);
+    box-shadow: 1px 1px 1px grey;
+    background-color: rgba(127, 205, 187, 1);
+    width: 20px;
+    height: 20px;
+    bottom: -9px;
+    /*left: 20px;*/
+    right: 20px;
+    position: absolute;
+}
+
+
+.on-left {
+    margin-left: 60px;
+    float: left;
+    clear: both;
+}
+
+.on-right {
+    margin-right: 60px;
+    float: right;
+    clear: both;
 }
