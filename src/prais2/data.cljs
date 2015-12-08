@@ -1,6 +1,7 @@
 (ns ^:figwheel-always prais2.data
     (:require [rum.core :as rum]
-              [jayq.core :refer ($ on)]
+              [jayq.core :refer [$]]
+              [cljsjs.jquery :as $]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
@@ -8,7 +9,8 @@
               [prais2.logger :as logger]
               [clojure.string :as str]
               )
-    (:require-macros [jayq.macros :refer [ready]]))
+
+    )
 
 
 ;;;

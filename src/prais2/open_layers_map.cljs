@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.open-layers-map
     (:require [rum.core :as rum]
-              [jayq.core :refer ($)]
+              [jayq.core :refer [$]]
               [cljs.core.async :refer [<! put! timeout]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]

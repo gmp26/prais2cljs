@@ -1,8 +1,10 @@
 (ns ^:figwheel-always prais2.core
     (:require-macros [cljs.core.async.macros :refer [go-loop]]
-                     [jayq.macros :refer [ready]])
+                   [jayq.macros :refer [ready]]
+                     )
     (:require [rum.core :as rum]
-              [jayq.core :refer ($ on)]
+              [jayq.core :refer [$ on]]
+              [cljsjs.jquery :as $]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.utils :as u :refer [key-with]]
               [goog.events :as events]
@@ -14,6 +16,9 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 
+
+#_(defn ready [handler]
+  ((.ready $ (.-document js/window)) handler))
 
 (defonce app (atom {:datasource :2014
                     :page :intro

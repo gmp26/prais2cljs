@@ -12,13 +12,17 @@
                  [cljsjs/openlayers "3.5.0-1"]
                  [cljsjs/moment "2.10.6-0"]
                  [cljsjs/papaparse "4.1.1-1"]
-;                 [com.cognitect/transit-cljs "0.8.232"]
+
+                 [cljsjs/jquery "1.9.1-0"]
+                 [cljsjs/bootstrap "3.3.6-0"]
+
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
                  [rum "0.6.0"]
-                 [jayq "2.5.4"]]
+                 [jayq "2.5.4"]
+                 ]
 
-  :plugins [#_[lein-cljsbuild "1.1.1"]
+  :plugins [[lein-cljsbuild "1.1.1"]
             [lein-figwheel "0.5.0-1"]]
 
   :source-paths ["src"]

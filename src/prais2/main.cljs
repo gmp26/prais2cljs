@@ -17,7 +17,8 @@
               [prais2.map-data :refer [render-map-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
-              [jayq.core :refer ($)]
+;;              [cljsjs.jquery :as $]
+              [jayq.core :refer [$]]
               [cljsjs.moment :as moment]))
 
 (enable-console-print!)
