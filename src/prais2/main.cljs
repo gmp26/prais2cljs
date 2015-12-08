@@ -295,6 +295,12 @@
               (prn "nav to faqs" section)
               (swap! core/app #(assoc % :page :faqs :section section))))
 
+  (dispatch event-bus-pub :show-faq
+            (fn [[_ faq-ref]]
+              (prn "nav to faq" faq-ref)
+              #_(render-faq faq-ref)
+              (swap! core/app #(assoc % :page :faqs :section faq-ref))))
+
   ;;;
   ;; log-bus handling from here
   ;;;
