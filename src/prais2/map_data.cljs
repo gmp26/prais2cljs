@@ -9,10 +9,11 @@
   [:.container
    [:.row
     [:section
-     [:h1 "Mapped Data"]
+     [:h1 "Mapped Data for 2011-2014"]
      [:p
       "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]
-     [:p
+     [:p "This data is updated annually and covers the last three years. The survival data in this map is from 2011-14"]
+     #_[:p
       "We have marked these hospitals on the map. Click on a hospital's marker or menu item and a summary report will appear alongside or underneath. Mouse over or click on the bars and dot within the summary data chart for further explanation."]
      [:p "To see all hospitals together "
       [:button.btn.btn-link {:style {:padding 0}
