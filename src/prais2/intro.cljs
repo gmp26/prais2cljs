@@ -4,9 +4,49 @@
               [prais2.content :as content]
               [prais2.data :as data]
               [prais2.chrome :as chrome]
-              [prais2.open-layers-map :as map]))
+              [prais2.utils :as u :refer [key-with]]
+              [prais2.open-layers-map :as map]
+              [cljsjs.jquery
+               ]))
 
-(declare section)
+(rum/defc section [section-id section-title section-content]
+  [:section {:id section-id}
+   [:h2 section-title]
+   (section-content)])
+
+(rum/defc panel [parent-id header-id header body-id body]
+  [:section.panel.panel-default
+   [:.panel-heading {:id header-id
+                     :on-click #(.collapse (js/$ (str "#" body-id)) "toggle")
+                     :role "tab"
+                     :style {:background-color "rgba(127, 205, 187, 0.41)"
+                             :cursor "pointer"}}
+    [:h2.panel-title {:style {:font-size "22px"}}
+     [:a {:role "button"
+          :data-toggle "collapse"
+          :data-parent (str "#" parent-id)
+          :href (str "#" body-id)
+          :aria-expanded false
+          :aria-controls body-id}
+      header]]]
+   [:.panel-collapse.collapse
+    {:id body-id
+     :role "tabpanel"
+     :aria-labelledby header-id}
+    [:.panel-body (body)]]
+   ])
+
+(rum/defc accordion [id & panels]
+  [:.panel-group {:id id :role "tablist" :aria-multiselectable "true"}
+   #_(prn (count panels))
+   (map-indexed key-with panels)])
+
+(rum/defc collapsible-section [parent-id section-id section-title section-content]
+  (panel parent-id
+         (str parent-id "-sec-" section-id)
+         section-title
+         (str parent-id "-body-" section-id)
+         section-content))
 
 (declare section-1-content)
 (declare section-2-content)
@@ -24,39 +64,51 @@
 
      (section 1 "What is this site for?" section-1-content)
 
+     (accordion "acc1"
+                (collapsible-section "acc1" 2
+                                     "Survival statistics in the media"
+                                     section-2-content)
+                (collapsible-section "acc1" 3
+                                     "What this site cannot do" section-3-content)
+                (collapsible-section "acc1" 4
+                                     "Numbers of operations and what is meant by survival rate"
+                                     section-4-content)
+                )
+
      ;; tv newspaper-o film
-     (section 2 "Survival statistics in the media [collapsible]" section-2-content)
+     #_(section 2 "Survival statistics in the media [collapsible]" section-2-content)
 
      ;; ban
-     (section 3 "What this site cannot do [collapsible]" section-3-content)
+     #_(section 3 "What this site cannot do [collapsible]" section-3-content)
 
      ;; h-square bed
-     (section 4 "Numbers of operations and what is meant by survival rate [collapsible]" section-4-content)
+     #_(section 4 "Numbers of operations and what is meant by survival rate [collapsible]" section-4-content)
 
      ;; hospital-o area-chart warning percent
-     (section 5 "Why can survival rate data be difficult to interpret? [not collapsible]" section-5-content)
+     (section 5 "Why can survival rate data be difficult to interpret?" section-5-content)
 
      ;; balance-scale question percent
-     (section 6 "A fairer way of looking at survival rate data [not collapsible]" section-6-content)
+     (section 6 "A fairer way of looking at survival rate data" section-6-content)
      ]]])
 
 
 (rum/defc section-1-content []
   [:section.well.intro
    [:p "This site is to help\npeople make sense of the published survival statistics about children’s heart surgery. Our website will help you explore what survival rates "
-    [:b "can"] " and " [:b "can’t"] " tell you: for instance, if one hospital has a higher survival rate than another\nit " [:b "does not mean"] " that one hospital must be better than the other. We\nhope that this website will let everyone can see and understand how the NHS\nmonitors children’s heart surgery. "]
+    [:b "can"] " and " [:b "can’t"] " tell you: for instance, if one hospital has a higher survival rate than another\nit " [:b "does not mean"] " that one hospital must be better than the other. We\nhope that this website will let everyone see and understand how the NHS\nmonitors children’s heart surgery. "]
 
 
    [:p "This site will be particularly helpful for: older patients, parents and families of children who have had/will have heart surgery; journalists, parents, health professionals, family liaison services of paediatric hospitals.
 "]])
 
 (rum/defc section-2-content []
-  [:p "Every year or so there are some articles in the press about children’s heart surgery in the UK. Often, these articles compare one hospital to another or suggest that a hospital has more deaths than it “should have”. "]
-  [:ul
-   [:li "Where do journalists get these numbers from?"]
-   [:li "What do they mean by “should have”? "]
-   [:li "How valid are these sorts of comparisons? "]
-   [:li "What do survival rates actually tell you?"]]
+  [:section
+   [:p "Every year or so there are some articles in the press about children’s heart surgery in the UK. Often, these articles compare one hospital to another or suggest that a hospital has more deaths than it “should have”. "]
+   [:ul
+    [:li "Where do journalists get these numbers from?"]
+    [:li "What do they mean by “should have”? "]
+    [:li "How valid are these sorts of comparisons? "]
+    [:li "What do survival rates actually tell you?"]]]
   )
 
 (rum/defc section-3-content []
@@ -83,8 +135,8 @@
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data [link to relevant FAQ]. "]])
 
 (rum/defc section-4-content []
-
-  [:p "Currently, about 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland. The main measure that the NHS uses to monitor children’s heart surgery in the UK is the " [:i "30-day survival rate"] ". This is the percentage of operations where the child survived at least 30 days after their heart surgery (e.g. 100% would mean that every child survived). "]
+  [:section
+   [:p "Currently, about 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland. The main measure that the NHS uses to monitor children’s heart surgery in the UK is the " [:i "30-day survival rate"] ". This is the percentage of operations where the child survived at least 30 days after their heart surgery (e.g. 100% would mean that every child survived). "]]
   )
 
 (rum/defc section-5-content []
@@ -121,16 +173,9 @@
 
    [:p "The national audit body use what is called a “statistical model” to combine what we know about these aspects for all the children a hospital has treated over the last three years. This mathematical combination results in a " [:b "predicted "] "overall proportion of survivors for " [:b "that specific hospital for that specific time period"] ". We would expect the survival rate actually achieved in that hospital to be not too far away from this prediction and so we finally calculate " [:b "a predicted range"] " for that specific hospital. If that hospital’s actual survival rate is anywhere within that predicted range, its results are in line with what we expect. "]
 
-   [:.bg-danger
+   [:.bg-danger {:style {:border-radius "3px" :border "1px solid #DDD"}
+                 }
     [:p
      "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year!"]
     [:p
      "That is why we only compare a hospital’s survival rate to its predicted range (from the independent statistical model) and not to survival rates at other hospitals. "]]])
-
-
-
-
-(rum/defc section [section-id section-title section-content]
-  [:section {:id section-id}
-   [:h2 section-title]
-   (section-content)])

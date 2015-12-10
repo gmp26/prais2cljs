@@ -1,10 +1,11 @@
 (ns ^:figwheel-always prais2.core
     (:require-macros [cljs.core.async.macros :refer [go-loop]]
-                   [jayq.macros :refer [ready]]
+                   ;[jayq.macros :refer [ready]]
                      )
     (:require [rum.core :as rum]
-              [jayq.core :refer [$ on]]
-              [cljsjs.jquery :as $]
+              ;[jayq.core :refer [$ on]]
+              [cljsjs.jquery]
+              [cljsjs.bootstrap]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.utils :as u :refer [key-with]]
               [goog.events :as events]
@@ -17,8 +18,8 @@
 ;;;
 
 
-#_(defn ready [handler]
-  ((.ready $ (.-document js/window)) handler))
+(defn ready [handler]
+  (.ready (js/$ js/document) handler))
 
 (defonce app (atom {:datasource :2014
                     :page :intro
@@ -51,11 +52,19 @@
   (apply conj [:div] content)
   )
 
-;; mixin to initialise bootstrap tooltip code code
+;; mixin to initialise bootstrap collapse code
+(def bs-collapse
+  {:did-mount (fn [state]
+                (ready
+                 #(.collapse (js/$ "[data-toggle=\"collapse\"]")))
+                state)
+   })
+
+;; mixin to initialise bootstrap tooltip code
 (def bs-tooltip
   {:did-mount (fn [state]
                 (ready
-                 (.tooltip  (.tooltip ($ "[data-toggle=\"tooltip\"]"))) "show")
+                 #(.tooltip (.tooltip (js/$ "[data-toggle=\"tooltip\"]"))))
                 state)
    })
 
@@ -63,7 +72,7 @@
 (def bs-popover
   {:did-mount (fn [state]
                 (ready
-                 (.popover ($ "[data-toggle=\"popover\"]")))
+                 #(.popover (js/$ "[data-toggle=\"popover\"]")))
                 state)
    })
 

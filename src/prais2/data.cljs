@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.data
     (:require [rum.core :as rum]
-              [jayq.core :refer [$]]
-              [cljsjs.jquery :as $]
+              [cljsjs.jquery]
+              [cljsjs.bootstrap]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
@@ -330,7 +330,7 @@
   [:p {:key :p}
    (:title (:observed headers))])
 
-(rum/defc table-header < rum/static bs-tooltip bs-popover [background ap header column-key event-bus]
+(rum/defc table-header < rum/static bs-popover [background ap header column-key event-bus]
   [:th {:on-click #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key))
         :on-touch-start #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key))
         :style {:max-width (px (:width header))
@@ -635,15 +635,15 @@
 (defn open-hospital-modal
   [h-code]
   (swap! core/app #(assoc % :selected-h-code (keyword h-code)))
-  (.modal ($ "#rowModal"))
+  (.modal (js/$ "#rowModal"))
 )
 
 (defn close-hospital-modal
   []
   (swap! core/app #(assoc % :selected-h-code nil))
-  (.modal ($ "#rowModal") "hide")  )
+  (.modal (js/$ "#rowModal") "hide")  )
 
-(rum/defc modal  < rum/reactive bs-tooltip []
+(rum/defc modal  < rum/reactive []
   (let [ap (rum/react core/app)
         datasource (:datasource ap)
         selected-h-code (:selected-h-code ap)

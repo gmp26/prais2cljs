@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.main
-    (:require-macros [jayq.macros :refer [ready]]
+    (:require-macros ;[jayq.macros :refer [ready]]
                      [cljs.core.async.macros :refer [go-loop]])
     (:require [rum.core :as rum]
               [cljs.reader :as reader]
@@ -17,8 +17,9 @@
               [prais2.map-data :refer [render-map-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
-;;              [cljsjs.jquery :as $]
-              [jayq.core :refer [$]]
+              [cljsjs.jquery]
+              ;;[jayq.core :refer [$]]
+
               [cljsjs.moment :as moment]))
 
 (enable-console-print!)
@@ -70,10 +71,10 @@
 
 (defn close-start-modal [event]
   (prn "closing")
-  (let [new-session-id (.val ($ "#session-id"))]
+  (let [new-session-id (.val (js/$ "#session-id"))]
     (when new-session-id
       (logger/write-log [:start-session nil] new-session-id)
-      (.modal ($ "#start-modal") "hide"))))
+      (.modal (js/$ "#start-modal") "hide"))))
 
 (defn valid-session-id []
   (#(or (nil? %) (= "" %)) (rum/react logger/session-id)))
@@ -97,7 +98,9 @@
           {:type "text"
            :placeholder "my tag"
            :value (rum/react logger/session-id)
-           :on-change #(reset! logger/session-id (.val ($ "#session-id")))}]]
+           :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent  %)))
+                            (close-start-modal %))
+           :on-change #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
         ]]]
      [:.modal-footer {:key 3}
       [:button.btn.btn-primary
@@ -112,7 +115,7 @@
 (def bs-open-popover
   {:did-mount (fn [state]
                 (if (nil? @logger/session-id)
-                  (ready (.modal ($ "#start-modal") (clj->js {:show true :backdrop :static}))))
+                  (core/ready #(.modal (js/$ "#start-modal") (clj->js {:show true :backdrop :static}))))
                 state)})
 ;;;
 ;; pager

@@ -6,8 +6,8 @@
               [prais2.core :as core]
               [cognitect.transit :as sit]
               [cljsjs.moment :as moment]
+              [cljsjs.jquery]
               [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
-              [jayq.core :refer [$]]
               [cljs.reader :as r]
               ))
 
@@ -239,7 +239,7 @@ of headers for field names and then discarding the first header row from the res
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
   (prn "really pasting")
-  (let [parsed-tsv (tsv->log (.val ($ "#pasted-session")))]
+  (let [parsed-tsv (tsv->log (.val (js/$ "#pasted-session")))]
     (when parsed-tsv
       (let [ix (count parsed-tsv)]
         (when (not (zero? ix))
