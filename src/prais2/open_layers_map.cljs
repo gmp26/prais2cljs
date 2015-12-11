@@ -1,6 +1,7 @@
 (ns ^:figwheel-always prais2.open-layers-map
     (:require [rum.core :as rum]
-              [jayq.core :refer [$]]
+;              [jayq.core :refer [$]]
+              [cljsjs.jquery]
               [cljs.core.async :refer [<! put! timeout]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.content :as content]
@@ -178,7 +179,7 @@
   (let [ap @core/app
         h-code (:map-h-code ap)
         ; the-popup (:popup ap)
-        element ($ "#popup")
+        element (js/$ "#popup")
         the-datasource (:datasource ap)
         row (h-code ((data/rows-by-code the-datasource)))
         lat (:h-lat row)
