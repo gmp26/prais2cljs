@@ -47,8 +47,8 @@
 
 (def store-session-app "https://script.google.com/macros/s/AKfycbx1wfGXBMVImgmiyOY9JvcnV5tBNS8YyAlIiv73q4gjvkbRiis/exec"
   )
-
-(def sheets-logger-app "https://script.google.com/macros/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
+(def sheets-logger-app "https://script.google.com/macros/s/AKfycbztUWfkCXdD8MaPu0m3kuEcwfk3fFp6blGnIPRBEFz3Qbckg4OM/exec")
+#_(def sheets-logger-app "https://script.google.com/macros/s/AKfycbwg81jLTtCY_cU3qOVv6A93GePfnpAj-HxBM_7_nF8B-DkfyLp5/exec")
 
 
 

@@ -44,6 +44,57 @@
                    (keys nav-items))]]))
 
 
+(rum/defc better-nav-bar [active-key]
+  (let [nav-item (active-key nav-items)]
+    [:div.better-nav-bar
+     [:nav.navbar.navbar-default.navbar-fixed-top
+      [:.container-fluid {:style {:background-color "black"}}
+       [:.navbar-header.page-scroll
+        [:button.navbar-toggle {:type "button"
+                                :data-toggle "collapse"
+                                :data-target "#bs-example-navbar-collapse-1"}
+         [:span.sr-only "Toggle navigation"]
+         [:span.icon-bar]
+         [:span.icon-bar]
+         [:span.icon-bar]]
+        [:div {:style {:width "200px"}} [:div {:style
+                                 {      ;:position "absolute"
+                                  :z-index 1 ;
+                                        ;:left "0px"
+                                        ;:top "0px"
+                                  :background-image "url(assets/logo-placeholder.png)"
+                                  :background-image-scale-x "0.1"
+                                  :background-repeat "no-repeat"
+                                  :background-size "50%"
+                                  :width "100px"
+                                  :height "90px"
+                                  :border "none"
+                                  :color "white"
+                                  :text-align "center"
+                                  :padding-top "24px"
+                                  :font-size "1.5em"}}
+                  [:a.navbar-brand.page-scroll {:href "#"} "Home"]]]
+        ]
+     [:div.simple-buttons.pull-right {:key 2}
+      (map-indexed #(key-with %1 (nav-link
+                                  (= active-key %2)
+                                  (%2 nav-items)
+                                  (fn [e] (core/click->event-bus e %2 :top))))
+                   (keys nav-items))]
+       [:#bs-example-navbar-collapse-1.collapse.nav-collapse
+        [:ul.nav.navbar-nav.navbar-right
+         [:li
+          [:a {:href= "#"} "Home"]]
+         [:li.page-scroll
+          [:a {:href= "#"} "Intro"]]
+         [:li.page-scroll
+          [:a {:href= "#"} "Mapped Data"]]
+         [:li.page-scroll
+          [:a {:href= "#"} "Tabled Data"]]
+         [:li.page-scroll
+          [:a {:href= "#"} "Understanding the Data"]]
+         ]]]]]))
+
 (rum/defc header < rum/reactive [& deep]
   [:div
    {:style
