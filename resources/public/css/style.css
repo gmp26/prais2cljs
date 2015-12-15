@@ -80,9 +80,21 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
  * Chrome
  */
 
+
+
 .nav-item {
     color: rgba(255,255,255,0.5);
+    //height: 35px;
+    border-radius: 5px;
+    width: 144px;
+    padding: 8px;
+    margin-right:10px;
 }
+
+.in .nav-item {
+    display: block;
+}
+
 .nav-item:hover {
     color: rgba(255,255,255,1);
 }
@@ -91,7 +103,8 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .intro {
-    border-bottom: 5px solid  rgba(0, 174, 239, 1);
+    background-color: rgba(0, 174, 239, 1);
+    //border-bottom: 5px solid  rgba(0, 174, 239, 1);
 }
 
 .well.intro {
@@ -99,12 +112,14 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .data {
-    border-bottom: 5px solid rgba(252, 141, 89, 1);
+    background-color: rgba(252, 141, 89, 1);
+    //border-bottom: 5px solid rgba(252, 141, 89, 1);
 }
 
 .faqs {
-    border-bottom: 5px solid rgba(127, 205, 187, 1);
-    border-color:  #7FCDBB;
+    background-color: rgba(127, 205, 187, 1);
+    //border-bottom: 5px solid rgba(127, 205, 187, 1);
+    //border-color:  #7FCDBB;
 }
 
 .well.intro {
@@ -121,8 +136,9 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .map-data {
-    border-bottom: 5px solid #f00;
-    border-color:  #f00;
+    background-color: #f00;
+    //border-bottom: 5px solid #f00;
+    //border-color:  #f00;
 }
 
 .well.map-data {

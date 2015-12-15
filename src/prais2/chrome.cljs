@@ -1,5 +1,7 @@
 (ns ^:figwheel-always prais2.chrome
     (:require [rum.core :as rum]
+              [cljsjs.jquery]
+              [cljsjs.bootstrap]
               [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.logger :as logger]
@@ -25,7 +27,7 @@
 
 (rum/defc nav-link [active? nav-item click-handler]
   (prn (:short-title nav-item) active?)
-  [:.simple-link {:class (str (:class nav-item) " " (if active? "active" ""))
+  [:.simple-link {:class (str (:class nav-item) " " (if active? "active " " "))
                   :on-click click-handler
                   :on-touch-start click-handler}
    [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))])
@@ -44,62 +46,45 @@
                    (keys nav-items))]]))
 
 
-(rum/defc better-nav-bar [active-key]
+(rum/defc bs-nav-link [active? nav-item click-handler]
+  [:button.navbar-btn {:on-click click-handler
+        :class (str (if active? " active " " ") (:class nav-item))}
+   [:i.fa {:class (str "fa-" (:icon nav-item))}]
+   (str " " (:short-title nav-item))])
+
+(rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:div.better-nav-bar
-     [:nav.navbar.navbar-default.navbar-fixed-top
-      [:.container-fluid {:style {:background-color "black"}}
-       [:.navbar-header.page-scroll
-        [:button.navbar-toggle {:type "button"
-                                :data-toggle "collapse"
-                                :data-target "#bs-example-navbar-collapse-1"}
-         [:span.sr-only "Toggle navigation"]
-         [:span.icon-bar]
-         [:span.icon-bar]
-         [:span.icon-bar]]
-        [:div {:style {:width "200px"}} [:div {:style
-                                 {      ;:position "absolute"
-                                  :z-index 1 ;
-                                        ;:left "0px"
-                                        ;:top "0px"
-                                  :background-image "url(assets/logo-placeholder.png)"
-                                  :background-image-scale-x "0.1"
-                                  :background-repeat "no-repeat"
-                                  :background-size "50%"
-                                  :width "100px"
-                                  :height "90px"
-                                  :border "none"
-                                  :color "white"
-                                  :text-align "center"
-                                  :padding-top "24px"
-                                  :font-size "1.5em"}}
-                  [:a.navbar-brand.page-scroll {:href "#"} "Home"]]]
-        ]
-     [:div.simple-buttons.pull-right {:key 2}
-      (map-indexed #(key-with %1 (nav-link
-                                  (= active-key %2)
-                                  (%2 nav-items)
-                                  (fn [e] (core/click->event-bus e %2 :top))))
-                   (keys nav-items))]
-       [:#bs-example-navbar-collapse-1.collapse.nav-collapse
-        [:ul.nav.navbar-nav.navbar-right
-         [:li
-          [:a {:href= "#"} "Home"]]
-         [:li.page-scroll
-          [:a {:href= "#"} "Intro"]]
-         [:li.page-scroll
-          [:a {:href= "#"} "Mapped Data"]]
-         [:li.page-scroll
-          [:a {:href= "#"} "Tabled Data"]]
-         [:li.page-scroll
-          [:a {:href= "#"} "Understanding the Data"]]
-         ]]]]]))
+    [:nav.navbar.navbar-fixed-top.navbar-inverse
+     [:.container
+      [:.navbar-header {:key 1}
+       [:button.navbar-toggle.collapsed {:key 1
+                                         :type "button"
+                                         :data-toggle "collapse"
+                                         :data-target "#navbar"
+                                         :aria-expanded "false"
+                                         :aria-controls "navbar"}
+        [:span.sr-only {:key 1} "Toggle navigation"]
+        [:span.icon-bar {:key 2}]
+        [:span.icon-bar {:key 3}]
+        [:span.icon-bar {:key 4}]]
+       [:a.navbar-brand {:key 2
+                         :href "#"} "Home"]
+       ]
+      [:#navbar.navbar-collapse.collapse {:key 2}
+       [:ul.nav.navbar-nav.navbar-right
+        (map-indexed #(key-with %1 (bs-nav-link
+                                    (= active-key %2)
+                                    (%2 nav-items)
+                                    (fn [e] (core/click->event-bus e %2 :top))))
+                     (keys nav-items))
+
+        ]]]]))
 
 (rum/defc header < rum/reactive [& deep]
   [:div
    {:style
     {:width "100%"
-     :height (if deep "250px" "80px")
+     :height (if deep "235px" "80px")
      :background-color "#475E63"
      :color "rgba(255,255,255,0.5)"
      :position "relative"
@@ -108,27 +93,29 @@
      [:div {:style
             {:position "absolute"
              :z-index 1;
-             :left "37px"
+             :left "12px"
              :top "60px"
              :background-image "url(assets/logo-placeholder.png)"
              :background-repeat "no-repeat"
-             :width "200px"
-             :height "180px"
+             :background-size "100%"
+             :width "150px"
+             :height "135px"
              :border "none"
              :color "white"
              :text-align "center"
              :padding-top "24px"
              :font-size "1.5em"}}])
-   (nav-bar (:page (rum/react core/app)))
+   (bs-fixed-navbar (:page (rum/react core/app)))
    (when deep
      [:h1 {:style
            {:color "#CCDDFF"
             :position "relative"
             :font-size "2em"
-            :top "5px"
+            :top "0px"
             :right "25px"
             :text-align "right"
-            :padding-left "300px"
+            :padding-left "160px"
+            :z-index 100
             }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"])])
 
 

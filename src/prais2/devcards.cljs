@@ -239,3 +239,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 
 (defn first-row []
   (first (parsed-log-states)))
+
+(defcard navbar
+  "Navigation bar"
+  (chrome/bs-fixed-navbar :intro))
