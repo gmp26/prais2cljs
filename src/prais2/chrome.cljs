@@ -54,7 +54,7 @@
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-fixed-top.navbar-inverse
+    [:nav.navbar.navbar-default.navbar-fixed-top {:margin-bottom 0}
      [:.container
       [:.navbar-header {:key 1}
        [:button.navbar-toggle.collapsed {:key 1
@@ -82,41 +82,46 @@
 
 (rum/defc header < rum/reactive [& deep]
   [:div
-   {:style
-    {:width "100%"
-     :height (if deep "235px" "80px")
-     :background-color "#475E63"
-     :color "rgba(255,255,255,0.5)"
-     :position "relative"
-     }}
-   (when deep
-     [:div {:style
-            {:position "absolute"
-             :z-index 1;
-             :left "12px"
-             :top "60px"
-             :background-image "url(assets/logo-placeholder.png)"
-             :background-repeat "no-repeat"
-             :background-size "100%"
-             :width "150px"
-             :height "135px"
-             :border "none"
-             :color "white"
-             :text-align "center"
-             :padding-top "24px"
-             :font-size "1.5em"}}])
    (bs-fixed-navbar (:page (rum/react core/app)))
-   (when deep
-     [:h1 {:style
-           {:color "#CCDDFF"
-            :position "relative"
-            :font-size "2em"
-            :top "0px"
-            :right "25px"
-            :text-align "right"
-            :padding-left "160px"
-            :z-index 100
-            }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"])])
+   [:div
+    {:style
+     {:width "100%"
+      :height (if deep "170px" "80px")
+      :background-color "#475E63"
+      :color "rgba(255,255,255,0.5)"
+      :position "relative"
+      }}
+    (when deep
+      [:div
+       [:div {:style
+              {:position "relative"
+               :z-index 1;
+               :left "12px"
+               :top "20px"
+               :background-image "url(assets/logo-placeholder.png)"
+               :background-repeat "no-repeat"
+               :background-size "100%"
+               :width "150px"
+               :height "135px"
+               :border "none"
+               :color "white"
+               :text-align "right"
+               :float "left"
+               :padding-top "24px"}}
+
+        ]
+       [:h3 {:style
+             {:float "right"
+              :clear "none"
+              :color "#CCDDFF"
+              :width "calc(100% - 160px)"
+              :position "relative"
+              :top "0px"
+              :right "25px"
+              :text-align "right"
+              :z-index 100
+              }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]])
+    ]])
 
 
 
