@@ -47,43 +47,53 @@
 
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
-  [:button.navbar-btn {:on-click click-handler
-        :class (str (if active? " active " " ") (:class nav-item))}
-   [:i.fa {:class (str "fa-" (:icon nav-item))}]
-   (str " " (:short-title nav-item))])
+  [:li
+   [:button.navbar-btn {:on-click click-handler
+                        :class (str (if active? " active " " ") (:class nav-item))}
+    [:i.fa {:class (str "fa-" (:icon nav-item))}]
+    (str " " (:short-title nav-item))]])
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-default.navbar-fixed-top {:margin-bottom 0}
-     [:.container
-      [:.navbar-header {:key 1}
-       [:button.navbar-toggle.collapsed {:key 1
-                                         :type "button"
-                                         :data-toggle "collapse"
-                                         :data-target "#navbar"
-                                         :aria-expanded "false"
-                                         :aria-controls "navbar"}
-        [:span.sr-only {:key 1} "Toggle navigation"]
-        [:span.icon-bar {:key 2}]
-        [:span.icon-bar {:key 3}]
-        [:span.icon-bar {:key 4}]]
-       [:a.navbar-brand {:key 2
-                         :href "#"} "Home"]
-       ]
-      [:#navbar.navbar-collapse.collapse {:key 2}
-       [:ul.nav.navbar-nav.navbar-right
-        (map-indexed #(key-with %1 (bs-nav-link
-                                    (= active-key %2)
-                                    (%2 nav-items)
-                                    (fn [e] (core/click->event-bus e %2 :top))))
-                     (keys nav-items))
+    [:nav.navbar.navbar-prais2.navbar-fixed-top {:margin-bottom 0}
+     [:.navbar-inner
+      [:.container
+       [:.navbar-header {:key 1}
+        [:button.navbar-toggle.collapsed {:key 1
+                                          :type "button"
+                                          :data-toggle "collapse"
+                                          :data-target "#navbar"
+                                          :aria-expanded "false"
+                                          :aria-controls "navbar"}
+         [:span.sr-only {:key 1} "Toggle navigation"]
+         [:span.icon-bar {:key 2}]
+         [:span.icon-bar {:key 3}]
+         [:span.icon-bar {:key 4}]]
+        [:a.navbar-brand {:key 2
+                          :href "#"} "Home"]
+        ]
+       [:#navbar.navbar-collapse.collapse {:key 2}
+        [:ul.nav.navbar-nav.navbar-right {:key 1}
+         (map-indexed #(key-with %1 (bs-nav-link
+                                     (= active-key %2)
+                                     (%2 nav-items)
+                                     (fn [e] (core/click->event-bus e %2 :top))))
+                      (keys nav-items))
 
-        ]]]]))
+         ]
+        #_[:ul.nav.navbar-nav.navbar-right {:key 2}
+           (map-indexed #(key-with %1 (bs-nav-link
+                                       (= active-key %2)
+                                       (%2 nav-items)
+                                       (fn [e] (core/click->event-bus e %2 :top))))
+                        (take 2 (drop 2 (keys nav-items))))
+
+           ]]]]]))
 
 (rum/defc header < rum/reactive [& deep]
   [:div
    (bs-fixed-navbar (:page (rum/react core/app)))
-   [:div
+   [:div.blurred
     {:style
      {:width "100%"
       :height (if deep "170px" "80px")

@@ -80,23 +80,41 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
  * Chrome
  */
 
+.container.
 
+#navbar.navbar-collapse.collapse.in {
+    background-color: red;
+    width: 180px;
+    float: right;
+}
 
 .nav-item {
-    color: rgba(255,255,255,0.5);
+    color: rgb(255,255,255);
     //height: 35px;
-    border-radius: 5px;
+    border: none;
+    border-radius: 25px;
     width: 144px;
     padding: 8px;
-    margin-right:10px;
+    margin-left:15px;
+    opacity: 0.7;
+}
+
+.active.nav-item {
+    opacity: 1;
+}
+
+ul.nav.navbar-nav.navbar-right {
+    float: right;
+    clear: right;
+    background-color: white;
 }
 
 .in .nav-item {
-    display: block;
+    display: inline;
 }
 
 .nav-item:hover {
-    color: rgba(255,255,255,1);
+    opacity: 1;
 }
 .nav-item.simple-title {
     color: rgba(255,255,255,1);
@@ -187,6 +205,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .simple-link.active {
+    font-weight: bold;
     vertical-align: bottom;
     color: #fff;
     border-bottom-width: 8px;
@@ -504,8 +523,16 @@ td:first-child {
     background-color: #ffffff;
 }
 
-.navbar {
-    position: static;
+.navbar-prais2 {
+    margin-bottom: 0px;
+    background-color: rgba(71, 94, 99, 0);
+}
+
+.navbar-toggle {
+    border: 1px solid white;
+}
+.navbar-toggle .icon-bar {
+    background-color: white;
 }
 
 #map {
@@ -721,4 +748,10 @@ i.fa.black {
     padding: 10px 20px 40px 20px;;
     margin: 20px 5px 20px 0px;
     box-shadow: 2px 2px 6px grey;
+}
+
+body { padding-top: 70px; }
+
+.blurred {
+    -webkit-filter: blur(0px) contrast(0.5);
 }
