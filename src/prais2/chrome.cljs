@@ -55,7 +55,7 @@
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-prais2.navbar-fixed-top {:margin-bottom 0}
+    [:nav.navbar.navbar-simple.navbar-fixed-top {:margin-bottom 0}
      [:.navbar-inner
       [:.container
        [:.navbar-header {:key 1}
