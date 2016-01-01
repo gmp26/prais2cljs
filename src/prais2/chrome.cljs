@@ -69,7 +69,7 @@
          [:span.icon-bar {:key 2}]
          [:span.icon-bar {:key 3}]
          [:span.icon-bar {:key 4}]]
-        [:a.navbar-brand {:key 2
+        [:a.navbar-brand.brand {:key 2
                           :href "#"} "Home"]
         ]
        [:#navbar.navbar-collapse.collapse {:key 2}
@@ -96,7 +96,7 @@
    [:div.blurred
     {:style
      {:width "100%"
-      :height (if deep "170px" "80px")
+      :height (if deep "170px" "10px")
       :background-color "#475E63"
       :color "rgba(255,255,255,0.5)"
       :position "relative"
