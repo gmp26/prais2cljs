@@ -63,8 +63,6 @@
                        {:id "min"
                         :source-paths ["src"]
                         :compiler {:output-to "resources/public/js/compiled/prais2.js"
-                                   :asset-path "js/compiled/prod"
-                                   :output-dir "resources/public/js/compiled/prod"
                                    :main "prais2.main"
                                    :externs ["externs/bootstrap.js"
                                              "externs/jquery.js"

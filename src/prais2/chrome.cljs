@@ -70,7 +70,13 @@
          [:span.icon-bar {:key 3}]
          [:span.icon-bar {:key 4}]]
         [:a.navbar-brand.brand {:key 2
-                          :href "#"} "Home"]
+                                :href "#"}
+         [:span
+          [:img {:src "assets/logo2.png"
+                 :style {:zoom 0.35
+                         :padding-bottom "0px"
+                         :padding-right "20px"}}]
+          "Home"]]
         ]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
@@ -108,16 +114,18 @@
                :z-index 1;
                :left "12px"
                :top "20px"
-               :background-image "url(assets/logo-placeholder.png)"
+               :transform "rotate(270deg)"
+               :background-image "url(assets/logo2.png)"
                :background-repeat "no-repeat"
                :background-size "100%"
-               :width "150px"
+               :width "120px"
                :height "135px"
                :border "none"
                :color "white"
                :text-align "right"
                :float "left"
-               :padding-top "24px"}}
+               :margin-left "30px"
+}}
 
         ]
        [:h3 {:style
@@ -130,7 +138,7 @@
               :right "25px"
               :text-align "right"
               :z-index 100
-              }} "UNDERSTANDING PUBLISHED CHILDREN’S HEART SURGERY OUTCOMES"]])
+              }} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
     ]])
 
 
