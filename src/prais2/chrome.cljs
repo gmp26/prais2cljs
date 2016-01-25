@@ -124,20 +124,7 @@
 }}
 
         ]
-       [:h3 {:style
-             {:float "right"
-              :clear "none"
-              :color "#CCDDFF"
-              :width "calc(100% - 160px)"
-              :position "relative"
-              :top "5px"
-              :right "25px"
-              :text-align "right"
-              :z-index 100
-              :padding 0
-              :margin 0
-              :font-size "16px"
-              }} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
+       [:h3 {:class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
     ]])
 
 

@@ -99,17 +99,13 @@
   "write an event to the log"
 
   ([[event-key event-data] new-session-id]
-   #_(prn "event-key " event-key " event-data " event-data " session-id " new-session-id)
    (let [log-entry [new-session-id (js/Date.) event-key event-data @core/app]]
-     #_(prn log-entry)
      (write-sheet-log log-entry)
      (reset! session-id new-session-id)
      (swap! log-states #(conj % log-entry))
-     (swap! log-state-index #(if (nil? %) 0 (inc %)))
-     ))
+     (swap! log-state-index #(if (nil? %) 0 (inc %)))))
 
   ([event-key-data]
-   #_(prn "one parameter log " event-key-data)
    (write-log event-key-data @session-id)))
 
 (def log-sheet-url "https://docs.google.com/spreadsheets/d/1bLxk8unegtsoBr9TysVDVA0jECmr5D4a3WQvyT69iuE")
