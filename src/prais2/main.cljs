@@ -60,13 +60,46 @@
                 :h-code false)
          data (conj (rest data') headers))
 
-(rum/defc render-table < rum/reactive (core/monitor-react "DATA>")
+(rum/defc render-data-tabs []
+  [:.container
+   [:.row
+    [:ul.nav.nav-tabs {:role "tablist"
+                       :style {:clear "both"}}
+     [:li {:role "presentation"}
+      [:a#map-tab {:href "#"
+           :aria-controls "mapped-data"
+           :role "tab"
+           :data-toggle "tab"
+           :on-click #(do (.preventDefault (.-nativeEvent %))
+                       (.tab (js/$ "map-tab") "show"))} "Map"]]
+     [:li.active {:role "presentation"}
+      [:a#table-tab {:href "#"
+           :aria-controls "data-table"
+           :role "tab"
+           :data-toggle "tab"
+           :on-click #(
+                       .tab (js/$ "#table-tab") "show")} "Table"]]]]])
+
+(rum/defc render-data-tab-panes < rum/reactive []
+  (let [data ((data/table-data (:datasource (rum/react core/app))))]
+    [:.tab-content
+     [:.tab-pane {:id "mapped-data"}
+      (render-map-data)]
+     [:.tab-pane.active {:id "data-table"}
+      (data/table1 core/app data event-bus)]])
+  )
+
+(rum/defc render-data < rum/reactive ;(core/monitor-react "DATA>")
   [id]
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
                   [(data/modal)
-                   (data/table1 core/app data event-bus)
+                   (render-data-tabs)
+                   (render-data-tab-panes)
+                   ;(render-map-data)
+                   ;(data/table1 core/app data event-bus)
+
                    (data/option-menu event-bus)])]))
 
 (defn valid-session-id
@@ -148,7 +181,7 @@
        (.pushState js/history [] "" (routes/map-data))
        (map-indexed key-with
                     [(chrome/header)
-                     (render-map-data section)
+                     (render-map-data)
                      (chrome/footer)]))
 
      (= page :data)
@@ -156,7 +189,7 @@
        (.pushState js/history [] "" (routes/datas))
        (map-indexed key-with
                     [(chrome/header)
-                     (render-table section)
+                     (render-data section)
                      (chrome/footer)]))
 
      (= page :faqs)
@@ -216,7 +249,6 @@
       (let [[ev-key ev-data :as event] (<! in-chan)]
         (if (= ev-key :reloading)
           (do
-            (prn :reloading)
             (close! in-chan))
           (do (handle event)
               (when (= event-bus-pub event-feed)
@@ -301,7 +333,7 @@
 
   (dispatch event-bus-pub :data
             (fn [[_ section]]
-              (prn "nav to data" section)
+              (prn "nav to data " section)
               (swap! core/app #(assoc % :page :data :section section))))
 
   (dispatch event-bus-pub :faqs

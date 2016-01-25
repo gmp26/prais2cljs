@@ -13,7 +13,7 @@
                         render-faqs]]
    [prais2.main :refer [render-404
                         debug
-                        render-table
+                        render-data
                         ]]
    [prais2.logger :as logger]
    [prais2.utils :as u :refer [px pc important key-with]]

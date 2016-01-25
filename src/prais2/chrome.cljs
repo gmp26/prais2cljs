@@ -100,7 +100,7 @@
     {:style
      {:width "100%"
       :height (if true "80px" "10px")
-      :background-color "#475E63"
+      :background-color "#4F4763"
       :color "rgba(255,255,255,0.5)"
       :position "relative"
       }}

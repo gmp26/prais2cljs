@@ -46,8 +46,9 @@
 )
 
 (defroute data "/data/:id" [id]
-  (put! core/event-bus [:data id])
-  (prn "data :id match")
+  (prn (str "data " id " match"))
+  (put! core/event-bus [:data :top])
+  ;(put! core/event-bus [:data id])
 )
 
 (defroute home "/" []
