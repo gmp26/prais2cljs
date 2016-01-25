@@ -22,14 +22,14 @@
   (.ready (js/$ js/document) handler))
 
 (defonce app (atom {:datasource :2014
-                    :page :intro
+                    :page :home
                     :section :top
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0
                     :detail-slider-axis-value 1.0
                     :chart-state 3
-                    :theme 1
+                    :theme 12
                     :selected-h-code nil
                     :map-h-code nil}))
 

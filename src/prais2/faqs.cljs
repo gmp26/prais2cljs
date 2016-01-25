@@ -6,9 +6,6 @@
               [prais2.chrome :as chrome]
               [prais2.content :as content :refer [faq-sections]]))
 
-(rum/defc callout []
-  [:.callout])
-
 (defn ix-col [index]
   (["rgba(127, 205, 187, 1)"
     "rgba(205, 127, 187, 1)"
@@ -27,7 +24,7 @@
                  :on-touch-start #(core/click->event-bus % :show-faq faq-ref)
                  }
        (:title faq)
-       (if (even? index)
+       #_(if (even? index)
          [:.callout.left {:style {:background-color ixc}}]
          [:.callout.right {:style {:background-color ixc}}])]
       ]

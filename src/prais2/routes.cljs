@@ -29,11 +29,11 @@
 )
 
 (defroute intros "/intro" []
-  (put! core/event-bus [:intro :top])
+  (put! core/event-bus [:home :top])
 )
 
 (defroute intro "/intro/:id" [id]
-  (put! core/event-bus [:intro id])
+  (put! core/event-bus [:home id])
   (prn "intro :id match")
 )
 

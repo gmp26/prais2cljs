@@ -570,7 +570,7 @@ td:first-child {
 .h-button {
     display: block;
     position: absolute;
-    z-index: 10000;
+    z-index: 500;
     top: 10px;
     left: 190px;
 }
@@ -578,7 +578,7 @@ td:first-child {
 .map-menu {
     display: block;
     position: absolute;
-    z-index: 10000;
+    z-index: 500;
     top: 10px;
     left: 245px;
 }
@@ -638,8 +638,8 @@ i.fa.black {
     color: white;
     box-shadow: 1px 1px 1px grey;
     text-shadow: -1px -1px 1px grey;
-    padding: 20px 20px 22px 20px;
-    font-family: chalkboard, comic-sans;
+    padding: 10px 20px 12px 20px;
+    //font-family: chalkboard, comic-sans;
     font-size: 20px;
     max-width: 400px;
     margin:10px;
@@ -647,6 +647,7 @@ i.fa.black {
     cursor: pointer;
 }
 
+/*
 .callout {
     -ms-transform: rotate(45deg);
     -webkit-transform: rotate(45deg);
@@ -659,15 +660,17 @@ i.fa.black {
     right: 20px;
     position: absolute;
 }
+*/
 
 .bubble:hover {
     box-shadow: 1px 1px 4px black;
 }
 
+/*
 .callout:hover {
     box-shadow: 2px 2px 2px grey;
 }
-
+*/
 
 .left {
     left: 20px;
@@ -752,10 +755,10 @@ body { padding-top: 55px; }
 }
 
 .navbar-toggle {
-    border: 1px solid black;
+    border: 1px solid #ffffff;
 }
 .navbar-toggle .icon-bar {
-    background-color: black;
+    background-color: #ffffff;
 }
 
 

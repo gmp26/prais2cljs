@@ -69,20 +69,29 @@
                    (data/table1 core/app data event-bus)
                    (data/option-menu event-bus)])]))
 
-(defn close-start-modal [event]
-  (prn "closing")
-  (let [new-session-id (.val (js/$ "#session-id"))]
-    (when new-session-id
-      (logger/write-log [:start-session nil] new-session-id)
-      (.modal (js/$ "#start-modal") "hide"))))
+(defn valid-session-id
+  ([session-id]
+   (#(not (or (nil? %) (= "" %))) session-id))
+  ([]
+   (valid-session-id @logger/session-id)))
 
-(defn valid-session-id []
-  (#(or (nil? %) (= "" %)) (rum/react logger/session-id)))
+(defn close-start-modal [event]
+  (prn "click")
+  (if (.hasClass (js/$ "#start-modal") "in")
+    (let [new-session-id (.val (js/$ "#session-id"))]
+      (when (valid-session-id new-session-id)
+        (do
+          (prn "closing")
+          (logger/write-log [:start-session nil] new-session-id)
+          (.modal (js/$ "#start-modal") "hide"))))))
 
 (rum/defc start-modal < rum/reactive []
   [:#start-modal.modal.fade {:tab-index -1
                              :role "dialog"
-                             :aria-labelledby "myModalLabel"}
+                             :aria-labelledby "myModalLabel"
+                             :on-click close-start-modal
+                             :on-touch-start close-start-modal
+}
    [:.modal-dialog {:role "document"}
     [:.modal-content
      [:.modal-header {:key 1}
@@ -90,7 +99,7 @@
      [:.modal-body {:key 2}
       [:form.form-horizontal
        [:.form-group
-        {:class (if (valid-session-id) "has-error" "")}
+        {:class (if (valid-session-id) "" "has-error")}
         [:label.col-md-3.control-label {:for "session-id" :key 1}
          "Session id"]
         [:.col-sm-3 {:key 2}
@@ -105,7 +114,7 @@
      [:.modal-footer {:key 3}
       [:button.btn.btn-primary
        {:type "button"
-        :disabled (valid-session-id)
+        :disabled (not (valid-session-id))
         :on-click close-start-modal
         :on-touch-start close-start-modal}
        "OK"]
@@ -122,10 +131,11 @@
 ;;;
 
 (rum/defc page-choice < rum/static [page section]
-  [:div
+  [:div {:on-click close-start-modal
+         :on-touch-start close-start-modal}
    (prn "about to render " page section)
    (cond
-     (= page :intro)
+     (= page :home)
      (do
        (.pushState js/history [] "" (routes/intros))
        (map-indexed key-with
@@ -277,11 +287,11 @@
               (swap! core/app #(assoc % :map-h-code nil))
               (map/go-home)))
 
-  (dispatch event-bus-pub :intro
+  (dispatch event-bus-pub :home
             (fn [[_ section]]
-              (prn "nav to intro" section)
+              (prn "nav to home" section)
               (let [ap @app]
-                (swap! core/app #(assoc % :page :intro :section section)))))
+                (swap! core/app #(assoc % :page :home :section section)))))
 
   (dispatch event-bus-pub :map-data
             (fn [[_ section]]

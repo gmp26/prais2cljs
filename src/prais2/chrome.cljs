@@ -20,10 +20,10 @@
 
 
 (def nav-items {
-                :intro (Nav-item. "Introduction" "Intro" "nav-item intro" "home")
-                :map-data (Nav-item. "Mapped Data" "Mapped Data" "nav-item map-data" "map-marker")
-                :data  (Nav-item. "Tabled Data" "Data" "nav-item data" "table")
-                :faqs  (Nav-item. "Understanding the Data" "Understanding" "nav-item faqs" "question")})
+                :home (Nav-item. "Home" "Home" "nav-item intro" "home")
+                :map-data (Nav-item. "What, why, how?" "What, why, how?" "nav-item map-data" "question")
+                :data  (Nav-item. "Data" "Data" "nav-item data" "table")
+                :faqs  (Nav-item. "Everything else" "Everything else" "nav-item faqs" "info")})
 
 (rum/defc nav-link [active? nav-item click-handler]
   (prn (:short-title nav-item) active?)
@@ -99,12 +99,12 @@
    [:div.blurred
     {:style
      {:width "100%"
-      :height (if deep "80px" "10px")
+      :height (if true "80px" "10px")
       :background-color "#475E63"
       :color "rgba(255,255,255,0.5)"
       :position "relative"
       }}
-    (when deep
+    (when true ;deep
       [:div
        [:div {:style
               {:position "relative"
