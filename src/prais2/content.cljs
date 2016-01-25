@@ -448,6 +448,7 @@
     :header "#578FD2"
     :dot "black"
     }
+   ;; theme 6
    {:low "rgba(255,255,255,0)"
     :inner "#fc8d59"
     :outer-low "#efdf11"
@@ -456,7 +457,7 @@
     :header "#91bfdb"
     :dot "black"
    }
-   ;; theme 6
+   ;; theme 7
    {:low "rgba(255,255,255,0)"
     :inner "#efdf11"
     :outer-low "#fc8d59"
@@ -464,7 +465,7 @@
     :high "rgba(255,255,255,0)"
     :header "#fc8d59"
     :dot "black"}
-   ;; theme 7
+   ;; theme 8
    {:low "rgba(255,255,255,0)"
     :inner "#7fcdbb"
     :outer-low "#2c7fb8"
@@ -472,7 +473,7 @@
     :high "rgba(255,255,255,0)"
     :header "#2c7fb8"
     :dot "black"}
-   ;; theme 8
+   ;; theme 9
    {:low "rgba(255,255,255,0)"
     :inner "#8FB4E1"
     :outer-low "#578FD2"
@@ -480,7 +481,7 @@
     :high "rgba(255,255,255,0)"
     :header "#578FD2"
     :dot "black"}
-   ;; theme 3
+   ;; theme 10
    {:low "rgba(255,255,255,0)"
     :inner "#3c8fc8"
     :outer-low "#7fcdbb"
@@ -488,13 +489,22 @@
     :high "rgba(255,255,255,0)"
     :header "#3c8fc8"
     :dot "black"}
-      ;; theme 5
+   ;; theme 11
    {:low "rgba(255,255,255,0)"
     :inner "#578FD2"
     :outer-low "#8FB4E1"
     :outer-high "#9AE1A7"
     :high "rgba(255,255,255,0)"
     :header "#578FD2"
+    :dot "black"
+    }
+   ;; theme 12
+   {:low "rgba(255,255,255,1)"
+    :inner "#566AF9"
+    :outer-low "#C9CDFC"
+    :outer-high "#C9CDFC"
+    :high "rgba(255,255,255,1)"
+    :header "#566AF9"
     :dot "black"
     }
 ])
