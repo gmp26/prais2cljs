@@ -573,7 +573,6 @@ td:first-child {
     z-index: 10000;
     top: 10px;
     left: 190px;
-    opacity: 0.6 !important;
 }
 
 .map-menu {
@@ -582,7 +581,6 @@ td:first-child {
     z-index: 10000;
     top: 10px;
     left: 245px;
-    opacity: 0.6 !important;
 }
 
 .dropdown-menu {
@@ -700,14 +698,16 @@ i.fa.black {
     box-shadow: 2px 2px 6px grey;
 }
 
-body { padding-top: 70px; }
+body { padding-top: 55px; }
 
 
 .navbar-simple .brand {
  	/*padding-top: 15px;
 	padding-bottom: 15px;*/
-        background-color: white;
-        width: 150px;
+
+        color: white;
+        padding: 6px 0px 15px 10px;
+        width: 95px;
         height: 52px;
 }
 .navbar-simple .navbar-inner {
@@ -787,10 +787,10 @@ body { padding-top: 70px; }
 
 ul.nav.navbar-nav.navbar-right {
     margin: 0 -5px;
-    background-color: rgba(255,255,255,0.9);
-    padding:0px 15px 0px 0px;
+//    background-color: rgba(255,255,255,0.9);
+//    padding:0px 15px 0px 0px;
 
-    margin: 7px -42px;
+//    margin: 7px -42px;
 
 }
 

@@ -57,7 +57,11 @@
   (let [nav-item (active-key nav-items)]
     [:nav.navbar.navbar-simple.navbar-fixed-top {:margin-bottom 0}
      [:.navbar-inner
-      [:.container
+      [:.container {
+                    :style {:background-color "#475E63"
+                            :opacity 0.95
+                            :width "100%"}
+                    }
        [:.navbar-header {:key 1}
         [:button.navbar-toggle.collapsed {:key 1
                                           :type "button"
@@ -69,14 +73,14 @@
          [:span.icon-bar {:key 2}]
          [:span.icon-bar {:key 3}]
          [:span.icon-bar {:key 4}]]
-        [:a.navbar-brand.brand {:key 2
+        #_[:a.navbar-brand.brand {:key 2
                                 :href "#"}
          [:span
           [:img {:src "assets/logo2.png"
                  :style {:padding-bottom "0px"
                          :padding-right "10px"
-                         :width "30%"}}]
-          "Home"]]
+                         :width "55%"}}]
+          ]]
         ]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
@@ -87,14 +91,7 @@
                       (keys nav-items))
 
          ]
-        #_[:ul.nav.navbar-nav.navbar-right {:key 2}
-           (map-indexed #(key-with %1 (bs-nav-link
-                                       (= active-key %2)
-                                       (%2 nav-items)
-                                       (fn [e] (core/click->event-bus e %2 :top))))
-                        (take 2 (drop 2 (keys nav-items))))
-
-           ]]]]]))
+]]]]))
 
 (rum/defc header < rum/reactive [& deep]
   [:div
@@ -102,7 +99,7 @@
    [:div.blurred
     {:style
      {:width "100%"
-      :height (if deep "170px" "10px")
+      :height (if deep "80px" "10px")
       :background-color "#475E63"
       :color "rgba(255,255,255,0.5)"
       :position "relative"
@@ -112,13 +109,12 @@
        [:div {:style
               {:position "relative"
                :z-index 1;
-               :left "12px"
-               :top "20px"
-               :transform "rotate(270deg)"
+               :left "0px"
+               :top "3px"
                :background-image "url(assets/logo2.png)"
                :background-repeat "no-repeat"
                :background-size "100%"
-               :width "120px"
+               :width "70px"
                :height "135px"
                :border "none"
                :color "white"
@@ -134,10 +130,13 @@
               :color "#CCDDFF"
               :width "calc(100% - 160px)"
               :position "relative"
-              :top "0px"
+              :top "5px"
               :right "25px"
               :text-align "right"
               :z-index 100
+              :padding 0
+              :margin 0
+              :font-size "16px"
               }} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
     ]])
 

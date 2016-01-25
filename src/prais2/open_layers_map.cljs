@@ -203,13 +203,13 @@
 
 
 (rum/defc home-button []
-  [:button.btn-primary.h-button
+  [:button.btn-info.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home nil)
     :tab-index 0}
    "Home"])
 
 (rum/defc menu-button []
-  [:button#drop1.btn-primary.h-button.map-menu.dropdown-toggle
+  [:button#drop1.btn-info.h-button.map-menu.dropdown-toggle
    {:type "button"
     :data-toggle "dropdown"
     :aria-haspopup "true"
