@@ -4,6 +4,7 @@
 figwheel_server.log
 pom.xml
 *jar
+*.psd
 /lib/
 /classes/
 /out/

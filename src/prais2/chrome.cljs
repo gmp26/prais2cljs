@@ -73,9 +73,9 @@
                                 :href "#"}
          [:span
           [:img {:src "assets/logo2.png"
-                 :style {:zoom 0.35
-                         :padding-bottom "0px"
-                         :padding-right "20px"}}]
+                 :style {:padding-bottom "0px"
+                         :padding-right "10px"
+                         :width "30%"}}]
           "Home"]]
         ]
        [:#navbar.navbar-collapse.collapse {:key 2}

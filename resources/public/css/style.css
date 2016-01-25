@@ -704,9 +704,10 @@ body { padding-top: 70px; }
 
 
 .navbar-simple .brand {
- 	padding-top: 15px;
-	padding-bottom: 15px;
+ 	/*padding-top: 15px;
+	padding-bottom: 15px;*/
         background-color: white;
+        width: 150px;
         height: 52px;
 }
 .navbar-simple .navbar-inner {
