@@ -84,11 +84,11 @@
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:.tab-content
      [:.tab-pane.active {:id "mapped-data"}
-      ;(render-map-data)
+      (render-map-data)
       ]
      [:.tab-pane {:id "data-table"}
+      (when false (data/modal))
       (data/table1 core/app data event-bus)]])
-  (render-map-data)
 )
 
 (rum/defc render-data < rum/reactive ;(core/monitor-react "DATA>")
@@ -96,11 +96,10 @@
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
-                  [;(data/modal)
+                  [;
                    (render-data-tabs)
                    (render-data-tab-panes)
-                   ;(render-map-data)
-                                        ;(data/table1 core/app data event-bus)
+                   ;(data/table1 core/app data event-bus)
 
                    (data/option-menu event-bus)])])
 )
