@@ -74,24 +74,21 @@
       [:a#example-tab {:href "#"
                        :aria-controls "mapped-data"
                        :role "tab"
-                       :on-click #(do (.preventDefault (.-nativeEvent %))
-                                      (swap! core/app assoc :section :example))} "Example"]]
+                       :on-click #(core/click->event-bus % :data :example)} "Example"]]
 
      [:li {:class (active? :map)
            :role "presentation"}
       [:a#map-tab {:href "#"
-           :aria-controls "mapped-data"
-           :role "tab"
-           :on-click #(do (.preventDefault (.-nativeEvent %))
-                          (swap! core/app assoc :section :map))} "Map"]]
+                   :aria-controls "mapped-data"
+                   :role "tab"
+                   :on-click #(core/click->event-bus % :data :map)} "Map"]]
 
      [:li {:class (active? :table)
            :role "presentation"}
       [:a#table-tab {:href "#"
            :aria-controls "data-table"
            :role "tab"
-           :on-click #(do (.preventDefault (.-nativeEvent %))
-                          (swap! core/app assoc :section :table))} "Table"]]]]])
+           :on-click #(core/click->event-bus % :data :table)} "Table"]]]]])
 
 
 
