@@ -83,10 +83,10 @@
 (rum/defc render-data-tab-panes < rum/reactive []
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:.tab-content
-     [:.tab-pane.active {:id "mapped-data"}
+     [:.tab-pane {:id "mapped-data"}
       (render-map-data)
       ]
-     [:.tab-pane {:id "data-table"}
+     [:.tab-pane.active {:id "data-table"}
       (when false (data/modal))
       (data/table1 core/app data event-bus)]])
 )
@@ -183,7 +183,7 @@
        (.pushState js/history [] "" (routes/map-data))
        (map-indexed key-with
                     [(chrome/header)
-                     ;(render-map-data)
+                     (render-map-data)
                      (chrome/footer)]))
 
      (= page :data)

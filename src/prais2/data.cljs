@@ -170,7 +170,8 @@
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    [:.chart-cell {:style {:padding-left (important (px axis-margin))
+    [:.chart-cell {:style {:background "#ffffff"
+                           :margin-left (important (px axis-margin))
                            :padding-right last-pad-right}}
      [:div.bar-chart
       (map-indexed key-with
@@ -341,7 +342,9 @@
                                  :class (str  "right fa fa-sort"
                                               (if (= column-key (:sort-by ap))
                                                 (if (:sort-ascending ap) "-asc" "-desc") ""))
-                                 :style {:pointer-events "none"}}])
+                                 :style {:pointer-events "none"
+                                         :zoom 1.5
+                                         :color "#ffffff"}}])
    [:span {:key :text
            :style {:background-color "none !important"
                    :color "white !important"}}
