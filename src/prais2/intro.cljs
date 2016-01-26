@@ -57,7 +57,7 @@
 
 ;; look at http://materializecss.com/
 
-(rum/defc render-intro < (core/monitor-react "INTRO>")  [section-id]
+(rum/defc render-intro < (core/monitor-react "INTRO>" false)  [section-id]
   [:.container
    [:.row
     [:#intro

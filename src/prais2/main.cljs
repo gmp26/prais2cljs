@@ -60,47 +60,65 @@
                 :h-code false)
          data (conj (rest data') headers))
 
-(rum/defc render-data-tabs []
+(defn active? [section]
+  (if (= (:section @core/app) section) "active" nil))
+
+(rum/defc render-data-tabs [section]
   [:.container
    [:.row
-    [:ul.nav.nav-tabs {:role "tablist"
+    [:p {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
+    [:ul.nav.nav-pills {:role "tablist"
                        :style {:clear "both"}}
-     [:li.active {:role "presentation"}
+     [:li {:class (active? :example)
+                  :role "presentation"}
+      [:a#example-tab {:href "#"
+                       :aria-controls "mapped-data"
+                       :role "tab"
+                       :on-click #(do (.preventDefault (.-nativeEvent %))
+                                      (swap! core/app assoc :section :example))} "Example"]]
+
+     [:li {:class (active? :map)
+           :role "presentation"}
       [:a#map-tab {:href "#"
            :aria-controls "mapped-data"
            :role "tab"
-           :data-toggle "tab"
            :on-click #(do (.preventDefault (.-nativeEvent %))
-                       (.tab (js/$ "map-tab") "show"))} "Map"]]
-     [:li {:role "presentation"}
+                          (swap! core/app assoc :section :map))} "Map"]]
+
+     [:li {:class (active? :table)
+           :role "presentation"}
       [:a#table-tab {:href "#"
            :aria-controls "data-table"
            :role "tab"
-           :data-toggle "tab"
-           :on-click #(
-                       .tab (js/$ "#table-tab") "show")} "Table"]]]]])
+           :on-click #(do (.preventDefault (.-nativeEvent %))
+                          (swap! core/app assoc :section :table))} "Table"]]]]])
 
-(rum/defc render-data-tab-panes < rum/reactive []
-  (let [data ((data/table-data (:datasource (rum/react core/app))))]
-    [:.tab-content
-     [:.tab-pane {:id "mapped-data"}
-      (render-map-data)
-      ]
-     [:.tab-pane.active {:id "data-table"}
-      (when false (data/modal))
-      (data/table1 core/app data event-bus)]])
+
+
+(rum/defc render-data-tab-panes < rum/reactive [data section]
+  [:.tab-content
+   [:.tab-pane {:class (active? :example)
+                     :id "example-data"}]
+   [:.tab-pane {:class (active? :map)
+                     :id "mapped-data"}
+    (when (active? :map) (render-map-data ))
+    ]
+   [:.tab-pane {:class (active? :table)
+                     :id "data-table"}
+    (when (active? :table) (data/modal))
+    (data/table1 core/app data event-bus)]]
 )
 
-(rum/defc render-data < rum/reactive ;(core/monitor-react "DATA>")
+(rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
   [section]
-  (let [data ((data/table-data (:datasource (rum/react core/app))))]
+  (let [app (rum/react core/app)
+        data ((data/table-data (:datasource app)))
+        section (:section app)]
     [:div
      (map-indexed key-with
-                  [;
-                   (render-data-tabs)
-                   (render-data-tab-panes)
-                   ;(data/table1 core/app data event-bus)
-
+                  [
+                   (render-data-tabs section)
+                   (render-data-tab-panes data section)
                    (data/option-menu event-bus)])])
 )
 
@@ -218,7 +236,7 @@
   [:div
    (map-indexed key-with
                 [(start-modal)
-                 (page-choice @(rum/cursor app [:page]) @(rum/cursor app [:section]))
+                 (page-choice @(rum/cursor app [:page]) @(rum/cursor app [:setion]))
                  (debug)])
    ])
 
@@ -251,7 +269,7 @@
             (close! in-chan))
           (do (handle event)
               (when (= event-bus-pub event-feed)
-                (prn "dispatched " event)
+                #_(prn "dispatched " event)
                 (logger/write-log event))
               (recur)))))))
 

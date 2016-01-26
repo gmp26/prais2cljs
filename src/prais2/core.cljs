@@ -77,10 +77,17 @@
    })
 
 ;; mixin to monitor react state changes
-(defn monitor-react [label] {
-                             :did-mount #(do (prn (str label " did-mount " %1)) %1)
-                             :will-unmount #(do (prn (str label " will-unmount " %1)) %1)
-                             })
+(defn monitor-react
+  ([label]
+   {
+    :did-mount #(do (prn (str label " did-mount " %1)) %1)
+    :will-unmount #(do (prn (str label " will-unmount " %1)) %1)
+    })
+  ([label enabled]
+   {
+    :did-mount #(do (if enabled (prn (str label " did-mount " %1))) %1)
+    :will-unmount #(do (if enabled (prn (str label " will-unmount " %1))) %1)
+    }))
 
 ;;;
 ;; Define an event bus carrying [topic message] data
@@ -97,7 +104,7 @@
 ;;;
 (defn click->event-bus
   [event dispatch-key dispatch-value]
-  (prn "dispatch" dispatch-key " " dispatch-value)
+  (prn (str "click->event-bus " dispatch-key dispatch-value))
   (put! event-bus [dispatch-key dispatch-value])
   (.preventDefault event)
   (.stopPropagation event)

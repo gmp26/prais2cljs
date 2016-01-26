@@ -115,7 +115,7 @@
                :background-repeat "no-repeat"
                :background-size "100%"
                :width "70px"
-               :height "135px"
+               :height "100px"
                :border "none"
                :color "white"
                :text-align "right"
