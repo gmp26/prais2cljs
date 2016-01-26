@@ -25,26 +25,6 @@
                 :data  (Nav-item. "Data" "Data" "nav-item data" "table")
                 :faqs  (Nav-item. "Everything else" "Everything else" "nav-item faqs" "info")})
 
-(rum/defc nav-link [active? nav-item click-handler]
-  (prn (:short-title nav-item) active?)
-  [:.simple-link {:class (str (:class nav-item) " " (if active? "active " " "))
-                  :on-click click-handler
-                  :on-touch-start click-handler}
-   [:i.fa {:class (str "fa-" (:icon nav-item))}] (str " " (:short-title nav-item))])
-
-(rum/defc nav-bar [active-key]
-  (let [nav-item (active-key nav-items)]
-    [:div.simple-navbar
-     [:h1 {:key 1
-           :class (str "simple-title " (:class (active-key nav-items)))}
-      (:long-title nav-item)]
-     [:div.simple-buttons.pull-right {:key 2}
-      (map-indexed #(key-with %1 (nav-link
-                                  (= active-key %2)
-                                  (%2 nav-items)
-                                  (fn [e] (core/click->event-bus e %2 :top))))
-                   (keys nav-items))]]))
-
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
@@ -73,25 +53,14 @@
          [:span.icon-bar {:key 2}]
          [:span.icon-bar {:key 3}]
          [:span.icon-bar {:key 4}]]
-        #_[:a.navbar-brand.brand {:key 2
-                                :href "#"}
-         [:span
-          [:img {:src "assets/logo2.png"
-                 :style {:padding-bottom "0px"
-                         :padding-right "10px"
-                         :width "55%"}}]
-          ]]
-        ]
+]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
          (map-indexed #(key-with %1 (bs-nav-link
                                      (= active-key %2)
                                      (%2 nav-items)
-                                     (fn [e] (core/click->event-bus e %2 :top))))
-                      (keys nav-items))
-
-         ]
-]]]]))
+                                     (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :example :top)))))
+                      (keys nav-items))]]]]]))
 
 (rum/defc header < rum/reactive [& deep]
   [:div

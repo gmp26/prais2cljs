@@ -23,7 +23,7 @@
 
 (defonce app (atom {:datasource :2014
                     :page :home
-                    :section :top
+                    :section :example
                     :sort-by nil
                     :sort-ascending true
                     :slider-axis-value 1.0
@@ -104,7 +104,9 @@
 ;;;
 (defn click->event-bus
   [event dispatch-key dispatch-value]
-  (prn (str "click->event-bus " dispatch-key dispatch-value))
+  (if (and (= dispatch-key :data) (= dispatch-value :top))
+    (prn "gotcha")
+    (prn (str "click->event-bus " dispatch-key dispatch-value)))
   (put! event-bus [dispatch-key dispatch-value])
   (.preventDefault event)
   (.stopPropagation event)

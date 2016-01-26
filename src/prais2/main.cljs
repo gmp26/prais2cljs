@@ -14,7 +14,7 @@
               [prais2.open-layers-map :as map]
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
-              [prais2.map-data :refer [render-map-data]]
+              [prais2.map-data :refer [render-map-data render-sample-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
               [cljsjs.jquery]
@@ -66,13 +66,14 @@
 (rum/defc render-data-tabs [section]
   [:.container
    [:.row
-    [:p {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
+    [:h1 "Explore the data"]
+    [:h4 {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
     [:ul.nav.nav-pills {:role "tablist"
                        :style {:clear "both"}}
      [:li {:class (active? :example)
                   :role "presentation"}
       [:a#example-tab {:href "#"
-                       :aria-controls "mapped-data"
+                       :aria-controls "example-data"
                        :role "tab"
                        :on-click #(core/click->event-bus % :data :example)} "Example"]]
 
@@ -95,13 +96,15 @@
 (rum/defc render-data-tab-panes < rum/reactive [data section]
   [:.tab-content
    [:.tab-pane {:class (active? :example)
-                     :id "example-data"}]
+                :id "example-data"}
+    (when (active? :example) (render-sample-data ))]
+
    [:.tab-pane {:class (active? :map)
-                     :id "mapped-data"}
-    (when (active? :map) (render-map-data ))
-    ]
+                :id "mapped-data"}
+    (when (active? :map) (render-map-data ))]
+
    [:.tab-pane {:class (active? :table)
-                     :id "data-table"}
+                :id "data-table"}
     (when (active? :table) (data/modal))
     (data/table1 core/app data event-bus)]]
 )
