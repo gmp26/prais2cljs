@@ -65,14 +65,14 @@
    [:.row
     [:ul.nav.nav-tabs {:role "tablist"
                        :style {:clear "both"}}
-     [:li {:role "presentation"}
+     [:li.active {:role "presentation"}
       [:a#map-tab {:href "#"
            :aria-controls "mapped-data"
            :role "tab"
            :data-toggle "tab"
            :on-click #(do (.preventDefault (.-nativeEvent %))
                        (.tab (js/$ "map-tab") "show"))} "Map"]]
-     [:li.active {:role "presentation"}
+     [:li {:role "presentation"}
       [:a#table-tab {:href "#"
            :aria-controls "data-table"
            :role "tab"
@@ -83,24 +83,27 @@
 (rum/defc render-data-tab-panes < rum/reactive []
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:.tab-content
-     [:.tab-pane {:id "mapped-data"}
-      (render-map-data)]
-     [:.tab-pane.active {:id "data-table"}
+     [:.tab-pane.active {:id "mapped-data"}
+      ;(render-map-data)
+      ]
+     [:.tab-pane {:id "data-table"}
       (data/table1 core/app data event-bus)]])
-  )
+  (render-map-data)
+)
 
 (rum/defc render-data < rum/reactive ;(core/monitor-react "DATA>")
   [id]
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
-                  [(data/modal)
+                  [;(data/modal)
                    (render-data-tabs)
                    (render-data-tab-panes)
                    ;(render-map-data)
-                   ;(data/table1 core/app data event-bus)
+                                        ;(data/table1 core/app data event-bus)
 
-                   (data/option-menu event-bus)])]))
+                   (data/option-menu event-bus)])])
+)
 
 (defn valid-session-id
   ([session-id]
@@ -181,7 +184,7 @@
        (.pushState js/history [] "" (routes/map-data))
        (map-indexed key-with
                     [(chrome/header)
-                     (render-map-data)
+                     ;(render-map-data)
                      (chrome/footer)]))
 
      (= page :data)
