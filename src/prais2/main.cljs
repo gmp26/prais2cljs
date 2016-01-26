@@ -92,7 +92,7 @@
 )
 
 (rum/defc render-data < rum/reactive ;(core/monitor-react "DATA>")
-  [id]
+  [section]
   (let [data ((data/table-data (:datasource (rum/react core/app))))]
     [:div
      (map-indexed key-with
@@ -111,12 +111,10 @@
    (valid-session-id @logger/session-id)))
 
 (defn close-start-modal [event]
-  (prn "click")
   (if (.hasClass (js/$ "#start-modal") "in")
     (let [new-session-id (.val (js/$ "#session-id"))]
       (when (valid-session-id new-session-id)
         (do
-          (prn "closing")
           (logger/write-log [:start-session nil] new-session-id)
           (.modal (js/$ "#start-modal") "hide"))))))
 
@@ -168,7 +166,6 @@
 (rum/defc page-choice < rum/static [page section]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
-   (prn "about to render " page section)
    (cond
      (= page :home)
      (do
@@ -260,7 +257,6 @@
 
 (defn zoom-to-hospital
   [[_ h-code _] ]
-  (prn (str "clicked on marker " (name h-code)))
   (swap! core/app #(assoc % :map-h-code h-code))
   (map/zoom-to-feature))
 
@@ -269,7 +265,7 @@
   []
 
   (dispatch event-bus-pub :reloading
-            (fn [_] (prn "really reloaded")))
+            (fn [_] (prn ":reloading event - no-op")))
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]
@@ -303,12 +299,10 @@
 
   (dispatch event-bus-pub :morph-full-range
             (fn [_]
-              (prn (str "morph to full range"))
               (swap! core/app #(assoc % :slider-axis-value 0))))
 
   (dispatch event-bus-pub :change-datasource
             (fn [[_ new-source] ]
-              (prn (str "datasource now " new-source))
               (swap! core/app #(assoc % :datasource new-source))))
 
   (dispatch event-bus-pub :click-on-map-marker zoom-to-hospital)
@@ -317,19 +311,18 @@
 
   (dispatch event-bus-pub :reset-map-to-home
             (fn [_]
-              (prn "reset map to home")
               (swap! core/app #(assoc % :map-h-code nil))
               (map/go-home)))
 
   (dispatch event-bus-pub :home
             (fn [[_ section]]
-              (prn "nav to home" section)
+              (prn "nav to home " section)
               (let [ap @app]
                 (swap! core/app #(assoc % :page :home :section section)))))
 
   (dispatch event-bus-pub :map-data
             (fn [[_ section]]
-              (prn "nav to map data" section)
+              (prn "nav to map data " section)
               (let [ap @app]
                 (swap! core/app #(assoc % :page :map-data :section section)))))
 
@@ -340,12 +333,12 @@
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]
-              (prn "nav to faqs" section)
+              (prn "nav to faqs " section)
               (swap! core/app #(assoc % :page :faqs :section section))))
 
   (dispatch event-bus-pub :show-faq
             (fn [[_ faq-ref]]
-              (prn "nav to faq" faq-ref)
+              (prn "nav to faq " faq-ref)
               #_(render-faq faq-ref)
               (swap! core/app #(assoc % :page :faqs :section faq-ref))))
 
@@ -354,23 +347,23 @@
   ;;;
   (dispatch log-bus-pub :rewind
             (fn [_]
-              (prn "rewind session")
-              (reset! logger/log-state-index nil)))
+              (prn "rewind session: not yet")
+              #_(reset! logger/log-state-index nil)))
 
   (dispatch log-bus-pub :undo
-            (fn [_] (prn "undoing")
-              (swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
+            (fn [_] #_(prn "undoing: not yet")
+              #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
   (dispatch log-bus-pub :redo
-            (fn [_] (prn "redoing")
-              (swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
+            (fn [_] (prn "redoing: not yet")
+              #_(swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
 
 
 
   (dispatch log-bus-pub :parse-session
             (fn [_]
-              (prn "calling parse-session")
-              (logger/parse-session)
+              (prn "parse-session: not yet")
+              #_(logger/parse-session)
               )))
 
 ;; start the event dispatcher

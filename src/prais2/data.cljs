@@ -268,7 +268,7 @@
    :will-unmount (fn [state]
                    (let [slider (::slider state)
                          handler (::handler state)]
-                     (prn "unmounting slider")
+                     #_(prn "unmounting slider")
                      (when  slider
                        (when handler (.off slider "slide" handler))
                        (when handler (.off slider "change" handler))
@@ -399,7 +399,7 @@
 
 
 (rum/defc table1-core [ap data event-bus sort-key sort-direction headers rows]
-  [:table.table.table-striped.table-bordered {:cell-spacing "0"}
+  [:table.table.table-bordered {:cell-spacing "0"}
    (rum/with-key (table-head ap headers (keys headers) event-bus (:slider-axis-value ap)) :thead)
 
    [:tbody {:key :tbody}
@@ -486,7 +486,7 @@
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
      :on-change #(do
-                   (prn "change-datasource " (keyword (.. % -target -value)))
+                   #_(prn "change-datasource " (keyword (.. % -target -value)))
                    (put! event-bus [:change-datasource (keyword (.. % -target -value))]))}
     (map-indexed key-with
                  (for [key (keys content/datasources)]

@@ -85,7 +85,7 @@
                        "&table-selection=" (:selected-h-code app-state)
                        "&map-selection=" (:map-h-code app-state)
                        )]
-    (prn "params = " params)
+    #_(prn "params = " params)
     (POST sheets-logger-app
           :params params
           :handler sheets-success-handler
@@ -122,18 +122,18 @@
 ;;;
 (defn click->log-bus
   [event dispatch-key dispatch-value]
-  (prn "logger" dispatch-key)
+  #_(prn "logger" dispatch-key)
   (put! log-bus [dispatch-key dispatch-value event])
   (.preventDefault event)
   (.stopPropagation event)
   )
 
 (defn log->csv
-  "convert the log to a lazy seq of comma separated values"
+"convert the log to a lazy seq of comma separated values"
   [log]
   (for [log-entry log]
     (do
-      (prn "log->csv " log-entry)
+      (#_prn "log->csv " log-entry)
       #_(apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
                                          (name (:event-key log-entry))
                                          (:event-data log-entry)]
@@ -145,7 +145,7 @@
                                         (into [] (map second (log-entry 3)))))))))
 
 (defn prn-log [log]
-  (.log js/console (log->csv log)))
+  #_(.log js/console (log->csv log)))
 
 (rum/defc icon-control [icon event-key tooltip]
   [:button.btn.btn-default
@@ -195,7 +195,7 @@ of headers for field names and then discarding the first header row from the res
 (defn pair->kv
   "convert one pair from string/value form to internal key/value transforming as necessary."
   [[key str-value]]
-  (prn "pair->kv" key str-value)
+  #_(prn "pair->kv" key str-value)
   (let [renamed-key (keyword (condp = key
                                "table-slider" "slider-axis-value"
                                "popup-slider" "detail-slider-axis-value"
