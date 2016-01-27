@@ -109,20 +109,38 @@
                      }}])
 
 
-(rum/defc bar < rum/static  [slider hi-val lo-val bar-type fill]
-  (if (= fill "rgba(255,255,255,0)")
-    [:div.bar {:style {:background-color fill
-                       :width (str (bar-width slider (- hi-val lo-val)) "%")}
-               }]
-    [:div.bar.btn {:style {:background-color fill
-                           :border-radius 0
-                           :width (str (bar-width slider (- hi-val lo-val)) "%")}
-                   :data-toggle "tooltip"
-                   :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                   :data-delay 0
-                   :data-html true
-                   :data-trigger "hover"
-                   :data-placement "bottom"}]))
+(rum/defc bar < rum/static
+  ([slider hi-val lo-val bar-type fill]
+   (bar slider hi-val lo-val bar-type fill ""))
+
+  ([slider hi-val lo-val bar-type fill text]
+   (if (= fill "rgba(255,255,255,0)")
+     [:div.bar {:style {:background-color fill
+                        :width (str (bar-width slider (- hi-val lo-val)) "%")
+                        }
+                }]
+     [:div.bar.btn {:style {:background-color fill
+                            :border-radius 0
+                            :width (str (bar-width slider (- hi-val lo-val)) "%")
+                            :text-align "right"
+                            }
+                    :data-toggle "tooltip"
+                    :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                    :data-delay 0
+                    :data-html true
+                    :data-trigger "hover"
+                    :data-placement "bottom"}
+      [:div {:style {:position "relative"
+                     :z-index 200
+                     :overflow "scroll"
+                     :display "inline-block"
+                     :right (px 5)
+                     :color "#337AB7"
+                     :font-size (px 12)
+                     :font-style "italic"
+                     :white-space "normal"
+                     }}
+       text]])))
 
 
 
@@ -209,66 +227,70 @@
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]))]]))
 
-(rum/defc annotated-chart-cell < bs-tooltip rum/reactive [row slider]
+
+(rum/defc annotated-chart-cell < bs-tooltip rum/reactive [row slider bars text]
   (let [ap (rum/react core/app)
         colours (colour-map (:theme ap))
-        bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
     [:.chart-cell {:style {:background "#ffffff"
                            :margin-left (important (px axis-margin))
+                           :height "60px"
                            :padding-right last-pad-right}}
      [:div.bar-chart
       (map-indexed key-with
 
                    (cond
                      (= dotless #{})
-                     [(dot slider (dot-size slider) (:survival-rate row) dotty)]
+
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)]
 
                      (= dotless #{:inner})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
-                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low "#ffffff")
                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
-                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high "#ffffff")
+                      (bar slider 100 (:outer-high row) :high "#ffffff")
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]
 
 
                      (= dotless #{:outer})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
                       (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (bar slider 100 (:outer-high row) :high "#ffffff")
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]
 
 
                      (= dotless #{:inner :outer})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-                      (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (bar slider 100 (:outer-high row) :high "#ffffff")
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]))]]))
 
 
-(rum/defc tick < rum/static [baseline value]
+(rum/defc tick < rum/static [baseline value tick-height]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
     (when (>= percent 0)
       [:.tick {:style
                {:left (pc percent)
+                :height (px tick-height)
                 :border-left (str "1px "
                                   (if (or (= percent 100) (= value 0))
-                                      "solid "
-                                      "dashed ")
+                                    "solid "
+                                    "dashed ")
                                   "black")}}
        [:span.tick-label (pc value)]]
       )))
 
-(rum/defc ticks < rum/static [slider-axis-value tick-count]
+(rum/defc ticks < rum/static [slider-axis-value tick-count tick-height]
   (let [baseline (* (min-outer-low) slider-axis-value)
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
@@ -279,7 +301,7 @@
         tick-values (range 100 (dec baseline) (- interval))]
     [:div
      (for [value tick-values]
-       (rum/with-key (tick baseline value) value))]))
+       (rum/with-key (tick baseline value tick-height) value))]))
 
 (rum/defc slider-labels []
   [:.slider-label
@@ -363,11 +385,15 @@
 
 
 
-(rum/defc axis-container < rum/static [slider-axis-value]
-  [:.axis-container
-   {:style {:margin-left (px axis-margin)
-            :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
-   (rum/with-key (ticks slider-axis-value 3) :ticks)])
+(rum/defc axis-container < rum/static
+  ([slider-axis-value]
+   (axis-container slider-axis-value 69))
+
+  ([slider-axis-value tick-height]
+   [:.axis-container
+    {:style {:margin-left (px axis-margin)
+             :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+    (rum/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
 (rum/defc slider-title [headers]
   [:p {:key :p}
@@ -410,13 +436,17 @@
     [:br {:key :br}]
     (:title header)]])
 
-(rum/defc slider-widget < rum/static [headers control slider-axis-value]
-  [:div
-   (map-indexed key-with
-                [(slider-title headers)
-                 (slider-labels)
-                 (control slider-axis-value 0 1 0.01)
-                 (axis-container slider-axis-value)])]  )
+(rum/defc slider-widget < rum/static
+  ([headers control slider-axis-value]
+   (slider-widget headers control slider-axis-value 69))
+
+  ([headers control slider-axis-value tick-height]
+   [:div
+    (map-indexed key-with
+                 [(slider-title headers)
+                  (slider-labels)
+                  (control slider-axis-value 0 1 0.005)
+                  (axis-container slider-axis-value tick-height)])]))
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
 
@@ -548,44 +578,6 @@
                    (chart-state-dropdown event-bus)
                    ])]]])
 
-;;;
-;; Modals
-;;;
-(rum/defc modal-tick < rum/static [baseline value]
-  (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
-    (when (>= percent 0)
-      [:.modal.tick {:style
-               {:left (pc percent)
-                :border-left (str "1px "
-                                  (if (or (= percent 100) (= value 0))
-                                      "solid "
-                                      "dashed ")
-                                  "black")}}
-       [:span.modal.tick-label (pc value)]]
-      )))
-
-(rum/defc modal-ticks < rum/static [tick-count]
-  (let [baseline (min-outer-low)
-        raw-interval (/ (- 100 baseline) (inc tick-count))
-        interval (cond
-                   (> raw-interval 10) 20
-                   (> raw-interval 5) 10
-                   (> raw-interval 2) 5
-                   :else 2)
-        tick-values (range 100 (dec baseline) (- interval))]
-    [:div
-     (for [value tick-values]
-       (rum/with-key (modal-tick baseline value) value))]))
-
-
-(rum/defc modal-axis-container < rum/static [slider-axis-value]
-  [:.axis-container
-   {:style {:margin-left 0 ;(px axis-margin)
-            :width (pc 100) ;(str "calc(100% - " (px (+ extra-right axis-margin)) ")")
-            }}
-   (rum/with-key (modal-ticks 3) :ticks)])
-
-
 (rum/defc interpretation
   [row]
   [:span (let [survival-rate (:survival-rate row)]
@@ -627,9 +619,9 @@
 
 (rum/defc sample-hospital-intro-text []
   [:i {:key :sintros}
-   [:p {:key 1} "Below is a chart showing how we present the results of a sample hospital."]
-   [:p {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
-   [:p {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
+   [:p.note {:key 1} "You can move the slider button left to see the rates plotted on the full 0-100% range of possible survival rates, or right to focus on the detail near 100%"]
+   [:p.note {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
+   [:p.note {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
 
 (rum/defc hospital-data < rum/reactive
   [h-code]

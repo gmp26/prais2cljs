@@ -36,17 +36,14 @@
    [:.tooltip-inner {:style {:background-color "#DBF8FE"
                              :width "auto"}} note]])
 
-(rum/defc static-bar [slider width]
-  [:.bar-chart
-   [:.bar.button {:style
-                  {:border-radius "0px"
-                   :width (str (data/bar-width slider width) "%")
-                   :height "25px"
-                   :background-color "blue"}}]])
 
+(rum/defc wrap [component text]
+  [:div {:style {:border "1px solid black"}}
+   text
+   [:div
+    component]])
 
-(rum/defc hospital-example < rum/reactive
-  []
+(rum/defc hospital-example < rum/reactive []
   (let [ap (rum/react core/app)]
     [:#detail {:style {:position "relative"}}
 
@@ -55,11 +52,15 @@
        (map-indexed key-with
                     [(data/sample-hospital-intro-text)
                      (data/hospital-header selected-row)
-                     (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-                     #_(static-bar (:detail-slider-axis-value ap) (- 98.9 97.1))
+                     (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap) 250)
 
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap))
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the actual survival rate")
+                     #_(explanation )
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                      (data/interpretation selected-row)]))]))
+
 
 
 (rum/defc render-sample-data < rum/reactive []
