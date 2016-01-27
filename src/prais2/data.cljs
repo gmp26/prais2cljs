@@ -209,6 +209,51 @@
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]))]]))
 
+(rum/defc annotated-chart-cell < bs-tooltip rum/reactive [row slider]
+  (let [ap (rum/react core/app)
+        colours (colour-map (:theme ap))
+        bars (chart-states (:chart-state ap))
+        dotty (:dot bars)
+        dotless (disj bars :dot)]
+    [:.chart-cell {:style {:background "#ffffff"
+                           :margin-left (important (px axis-margin))
+                           :padding-right last-pad-right}}
+     [:div.bar-chart
+      (map-indexed key-with
+
+                   (cond
+                     (= dotless #{})
+                     [(dot slider (dot-size slider) (:survival-rate row) dotty)]
+
+                     (= dotless #{:inner})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]
+
+
+                     (= dotless #{:outer})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]
+
+
+                     (= dotless #{:inner :outer})
+                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
+                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
+                      (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
+                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
+                      (bar slider 100 (:outer-high row) :high (:high colours))
+                      (dot slider (dot-size slider) (:survival-rate row) dotty)
+                      ]))]]))
+
 
 (rum/defc tick < rum/static [baseline value]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
@@ -240,7 +285,7 @@
   [:.slider-label
    [:div.pull-left {:key :left}
     [:i.fa.fa-long-arrow-left {:key :full}] " full range"]
-   [:div.right {:key :right}
+   [:div.pull-right {:key :right}
     "full detail " [:i.fa.fa-long-arrow-right {:key :detail}]]])
 
 
@@ -350,7 +395,7 @@
                    :color "white !important"}}
     (when (not= column-key :h-name)
       (let [info-handler #(core/click->event-bus % :info-clicked column-key)]
-        [:a.btn.btn-primary.btn-xs.info
+        [:a.btn.btn-primary.btn-xs.info.pull-right
          {:on-click       info-handler
           :on-touch-start info-handler
           :role           "button"

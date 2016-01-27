@@ -25,33 +25,40 @@
       [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))]]]]])
 
 
-(rum/defc annotate [note]
-  [:#tip1.tooltip.top.in {:role "tooltip"
-                          :data-placement "bottom"}
-   [:.tooltip-arrow]
-   [:.tooltip-inner note]])
+(defn px [pixels] (str pixels "px"))
 
-(rum/defc static-bars [width]
+(rum/defc annotate [note placement top left]
+  [:#tip1.tooltip.in {:role "tooltip"
+                      :class placement
+                      :style {:top (px top)
+                              :left (px left)}}
+   [:.tooltip-arrow]
+   [:.tooltip-inner {:style {:background-color "#DBF8FE"
+                             :width "auto"}} note]])
+
+(rum/defc static-bar [slider width]
   [:.bar-chart
    [:.bar.button {:style
-                  {:border-radius "0px" :width width :height "25px" :background-color "rgb(249,249,249)"}}
-    ]])
+                  {:border-radius "0px"
+                   :width (str (data/bar-width slider width) "%")
+                   :height "25px"
+                   :background-color "blue"}}]])
 
 
 (rum/defc hospital-example < rum/reactive
   []
   (let [ap (rum/react core/app)]
-    [:#detail
+    [:#detail {:style {:position "relative"}}
+
      (let [selected-row content/sample-hospital]
 
        (map-indexed key-with
                     [(data/sample-hospital-intro-text)
-                     (annotate "Ii there")
                      (data/hospital-header selected-row)
                      (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-                     (static-bars "95%")
+                     #_(static-bar (:detail-slider-axis-value ap) (- 98.9 97.1))
 
-                     (data/chart-cell selected-row (:detail-slider-axis-value ap))
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap))
                      (data/interpretation selected-row)]))]))
 
 

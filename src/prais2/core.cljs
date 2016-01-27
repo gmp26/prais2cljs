@@ -90,7 +90,7 @@
     }))
 
 ;;;
-;; Define an event bus carrying [topic message] data
+;; Define an event bus carrying [topic message]
 ;; publication channels are based on topic - the first part of the data
 ;;;
 (def event-bus (chan))

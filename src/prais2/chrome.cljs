@@ -52,8 +52,7 @@
          [:span.sr-only {:key 1} "Toggle navigation"]
          [:span.icon-bar {:key 2}]
          [:span.icon-bar {:key 3}]
-         [:span.icon-bar {:key 4}]]
-]
+         [:span.icon-bar {:key 4}]]]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
          (map-indexed #(key-with %1 (bs-nav-link

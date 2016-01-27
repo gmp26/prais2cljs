@@ -89,7 +89,7 @@
       [:a#table-tab {:href "#"
            :aria-controls "data-table"
            :role "tab"
-           :on-click #(core/click->event-bus % :data :table)} "Table"]]]]])
+           :on-click #(core/click->event-bus % :data :table)} "List"]]]]])
 
 
 

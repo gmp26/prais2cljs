@@ -234,7 +234,7 @@ of headers for field names and then discarding the first header row from the res
 (defn parse-session
   "No-op - JSON or JSONP GET appears to have restrictive permissions - using textbox paste instead."
   []
-  (prn "really pasting")
+  #_(prn "really pasting")
   (let [parsed-tsv (tsv->log (.val (js/$ "#pasted-session")))]
     (when parsed-tsv
       (let [ix (count parsed-tsv)]

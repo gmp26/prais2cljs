@@ -23,10 +23,7 @@
                  :on-click #(core/click->event-bus % :show-faq faq-ref)
                  :on-touch-start #(core/click->event-bus % :show-faq faq-ref)
                  }
-       (:title faq)
-       #_(if (even? index)
-         [:.callout.left {:style {:background-color ixc}}]
-         [:.callout.right {:style {:background-color ixc}}])]
+       (:title faq)]
       ]
      )])
 

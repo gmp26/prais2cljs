@@ -278,6 +278,7 @@ td:first-child {
     display: block;
 }
 
+/* unused
 .left {
     float: left;
 }
@@ -285,6 +286,7 @@ td:first-child {
 .right {
     float: right;
 }
+*/
 
 .axis-container {
     position: relative;
