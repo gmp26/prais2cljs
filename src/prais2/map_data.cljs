@@ -10,19 +10,49 @@
   [:.container
    [:.row
     [:section
-     [:h1 "Mapped Data for 2011-2014"]
+     [:h2 "Mapped Data for April 2011 - March 2014"]
      [:p
-      "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (here a child means someone under the age of 16)."]
-     [:p "This data is updated annually and covers the last three years. The survival data in this map is from 2011-14"]
+      "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
+     [:p "This data is updated annually and covers the most recent three year report period."]
 
-     [:p "To see all hospitals together "
-      [:button.btn.btn-link {:style {:padding 0}
-                             :on-click #(core/click->event-bus % :data nil)} "visit the data page"]
-      "."]
+
 
      [:span
       [:.map-container (map/hospitals)]
-      [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))]]]]])
+      (if (nil? (:map-h-code (rum/react core/app)))
+        [:ul.detail-container
+         [:li "Either click on the relevant " [:img {:src "assets/icon.png"}] " button or use the map "
+          [:button.btn.btn-info.dropdown-toggle
+           {:type "button"
+            :data-toggle "dropdown"
+            :aria-haspopup true
+            :aria-expanded false
+            :id "drop2"
+            :tabindex 0
+            :disabled true}
+           "Menu " [:i.fa.fa-caret-down]]
+          " to see results and information for a specific hospital."]
+
+         [:li "Use the "
+          [:button.btn.btn-info
+           {:on-click #(core/click->event-bus % :reset-map-to-home nil)
+            :on-touch-start #(core/click->event-bus % :reset-map-to-home nil)}
+           "Home"]
+          " button on the map to return to the full UK view."]
+
+         [:li "You can use your mouse to hover over features of the data to get more explanation."]
+         [:li "For an explanation for how the predicted ranges are calculated see the "
+          [:span.navbar-btn.nav-item.map-data {:style {:margin 0}} "What,why,how"]
+          " page."]
+         [:li "Further information is available on the "
+          [:span.navbar-btn.nav-item.faqs {:style {:margin 0}} "Everything else"]
+          " page."]
+         [:li "To see all hospitals together visit the "
+          [:button.btn.btn-primary
+           {:on-click #(core/click->event-bus % :data :table)
+            :on-touch-start #(core/click->event-bus % :data :table)} "List"]
+          " page."]]
+        [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))])]]]])
 
 
 (defn px [pixels] (str pixels "px"))
@@ -56,7 +86,7 @@
 
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the actual survival rate")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the observed survival rate")
                      #_(explanation )
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                      (data/interpretation selected-row)]))]))

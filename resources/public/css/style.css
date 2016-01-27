@@ -332,7 +332,7 @@ td:first-child {
 }
 
 .note {
-    font-size: 12px;
+    font-size: 14px;
     color: #337ab7;
     font-weight: italic;
 }
@@ -613,6 +613,10 @@ td:first-child {
     padding-left: 30px;
     min-width: 320px;
     width: calc(100% - 320px);
+}
+
+.detail-container li {
+    line-height: 250%;
 }
 
 i.fa.red {

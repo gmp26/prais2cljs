@@ -520,6 +520,21 @@
                  (first data)
                  )]])
 
+(rum/defc list-tab [app data event-bus]
+  [:div
+   [:.container
+    [:.row
+     [:h2 "List data for April 2011 – March 2014"]
+     [:p (str "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children "
+              "(0-16 years old). "
+              "This data is updated annually and covers the most recent 3 year report period.")]
+     [:p "Previous reporting periods can be selected at the bottom of the table.
+    Clicking on a hospital code will bring up specific information for that hospital along with an interpretation of its survival rate."]
+     [:p "You can use your mouse to hover over the displayed data to bring up more explanation."]
+     ]
+    (table1 app data event-bus)]])
+
+
 (defn get-chart-state
   [index]
   (chart-states index))

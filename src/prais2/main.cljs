@@ -106,7 +106,7 @@
    [:.tab-pane {:class (active? :table)
                 :id "data-table"}
     (when (active? :table) (data/modal))
-    (data/table1 core/app data event-bus)]]
+    (data/list-tab core/app data event-bus)]]
 )
 
 (rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
