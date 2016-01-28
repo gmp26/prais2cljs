@@ -580,7 +580,17 @@ td:first-child {
     position: absolute;
     z-index: 500;
     top: 10px;
-    left: 190px;
+    border-radius: 5px;
+    left: 95px;
+}
+
+.london-button {
+    display: block;
+    position: absolute;
+    z-index: 500;
+    top: 10px;
+    border-radius: 5px;
+    left: 150px;
 }
 
 .map-menu {
@@ -616,7 +626,8 @@ td:first-child {
 }
 
 .detail-container li {
-    line-height: 250%;
+    padding-bottom: 20px;
+    //line-height: 200%;
 }
 
 i.fa.red {

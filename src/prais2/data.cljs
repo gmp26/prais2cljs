@@ -1,8 +1,9 @@
 (ns ^:figwheel-always prais2.data
+    (:require-macros [cljs.core.async.macros :refer [go]])
     (:require [rum.core :as rum]
               [cljsjs.jquery]
               [cljsjs.bootstrap]
-              [cljs.core.async :refer [put!]]
+              [cljs.core.async :refer [put! <! timeout]]
               [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
               [prais2.utils :as u :refer [px pc important key-with]]
@@ -319,8 +320,8 @@
                                             :tooltip "hide"
                                             :min 0
                                             :max 1
-                                            :step 0.1
-                                            :value (:slider-axis-value @core/app)
+                                            :step 0.02
+                                            :value (change-key @core/app)
                                             }))
                       handler #(put! event-bus [change-key (.getValue slider)])
                       state' (assoc state ::slider slider ::handler handler)]
@@ -345,38 +346,29 @@
 (rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum/static [state value min max step]
   #_(prn "called slider-control with " value)
   (let [s [:#slider.slider
-           [:input {:type "text"
-                    :data-slider-min min
-                    :data-slider-max max
-                    :data-slider-step step
-                    }]]
+           [:input {:type "text" :value value}]]
         slider (::slider state)]
     (when slider
       (.setValue slider value))
     s))
 
 (rum/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
+  #_(prn "called detail-slider-control with " value)
   (let [s [:#detail-slider.slider
-           [:input {:type "text"
-                    :data-slider-min min
-                    :data-slider-max max
-                    :data-slider-step step
-                    }]]
+           [:input {:type "text" :value value}]]
         slider (::slider state)]
     (when slider
       (.setValue slider value))
+
     s))
 
 ;;;
 ;; TODO - sort out what to do when multiple sliders are on a page
 ;;;
 (rum/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
+  #_(prn "called map-detail-slider-control with " value)
   (let [s [:#map-detail-slider.slider
-           [:input {:type "text"
-                    :data-slider-min min
-                    :data-slider-max max
-                    :data-slider-step step
-                    }]]
+           [:input {:type "text" :value value}]]
         slider (::slider state)]
     (when slider
       (.setValue slider value))
@@ -445,7 +437,7 @@
     (map-indexed key-with
                  [(slider-title headers)
                   (slider-labels)
-                  (control slider-axis-value 0 1 0.005)
+                  (control slider-axis-value 0 1 0.02)
                   (axis-container slider-axis-value tick-height)])]))
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
@@ -469,7 +461,7 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (slider-widget headers slider-control slider-axis-value)
+        (slider-widget headers slider-control slider-axis-value 748)
         ]]]]))
 
 
@@ -530,7 +522,7 @@
               "This data is updated annually and covers the most recent 3 year report period.")]
      [:p "Previous reporting periods can be selected at the bottom of the table.
     Clicking on a hospital code will bring up specific information for that hospital along with an interpretation of its survival rate."]
-     [:p "You can use your mouse to hover over the displayed data to bring up more explanation."]
+     [:p "You can use your mouse to hover over the chart to bring up more explanation."]
      ]
     (table1 app data event-bus)]])
 

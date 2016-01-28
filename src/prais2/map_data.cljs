@@ -1,5 +1,6 @@
 (ns ^:figwheek-always prais2.map-data
     (:require [rum.core :as rum]
+              [prais2.chrome :refer [what-why everything-else]]
               [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
@@ -22,30 +23,20 @@
       (if (nil? (:map-h-code (rum/react core/app)))
         [:ul.detail-container
          [:li "Either click on the relevant " [:img {:src "assets/icon.png"}] " button or use the map "
-          [:button.btn.btn-info.dropdown-toggle
-           {:type "button"
-            :data-toggle "dropdown"
-            :aria-haspopup true
-            :aria-expanded false
-            :id "drop2"
-            :tabindex 0
-            :disabled true}
+          [:.btn.btn-info
            "Menu " [:i.fa.fa-caret-down]]
           " to see results and information for a specific hospital."]
 
-         [:li "Use the "
-          [:button.btn.btn-info
-           {:on-click #(core/click->event-bus % :reset-map-to-home nil)
-            :on-touch-start #(core/click->event-bus % :reset-map-to-home nil)}
-           "Home"]
-          " button on the map to return to the full UK view."]
+         [:li "Use the " [:.btn.btn-info "All UK"] " or " [:.btn.btn-info "Just London"]
+          " buttons to return to a wider view."]
 
-         [:li "You can use your mouse to hover over features of the data to get more explanation."]
+         [:li "Hover or tap features of the chart for more explanation."]
          [:li "For an explanation for how the predicted ranges are calculated see the "
-          [:span.navbar-btn.nav-item.map-data {:style {:margin 0}} "What,why,how"]
+          [:span.navbar-btn.nav-item.map-data {:style {:margin 0}} what-why]
           " page."]
          [:li "Further information is available on the "
-          [:span.navbar-btn.nav-item.faqs {:style {:margin 0}} "Everything else"]
+          [:span.navbar-btn.nav-item.faqs {:style {:margin 0}} everything-else
+           ]
           " page."]
          [:li "To see all hospitals together visit the "
           [:button.btn.btn-primary

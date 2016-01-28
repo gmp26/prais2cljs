@@ -327,6 +327,11 @@
 
   (dispatch event-bus-pub :click-on-map-menu-item zoom-to-hospital)
 
+  (dispatch event-bus-pub :just-london
+            (fn [_]
+              (swap! core/app #(assoc % :map-h-code nil))
+              (map/go-london)))
+
   (dispatch event-bus-pub :reset-map-to-home
             (fn [_]
               (swap! core/app #(assoc % :map-h-code nil))
@@ -347,7 +352,9 @@
   (dispatch event-bus-pub :data
             (fn [[_ section]]
               (prn "nav to data " section)
-              (swap! core/app #(assoc % :page :data :section section))))
+              (swap! core/app #(assoc % :page :data
+                                      :section section
+                                      :detail-slider-axis-value (if (= section :example) 0.9 1)))))
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]

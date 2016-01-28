@@ -1,5 +1,6 @@
 (ns ^:figwheel-always prais2.chrome
-    (:require [rum.core :as rum]
+    (:require [goog.string :refer [unescapeEntities]]
+              [rum.core :as rum]
               [cljsjs.jquery]
               [cljsjs.bootstrap]
               [prais2.utils :refer [key-with]]
@@ -18,12 +19,15 @@
 
 (defrecord  Nav-item [long-title short-title class icon])
 
+(def nbsp (unescapeEntities "&nbsp;"))
+(def what-why (str "What," nbsp "why," nbsp "how?"))
+(def everything-else (str "Everything" (unescapeEntities "&nbsp;") "else"))
 
 (def nav-items {
                 :home (Nav-item. "Home" "Home" "nav-item intro" "home")
-                :map-data (Nav-item. "What, why, how?" "What, why, how?" "nav-item map-data" "question")
+                :map-data (Nav-item. what-why what-why "nav-item map-data" "question")
                 :data  (Nav-item. "Data" "Data" "nav-item data" "table")
-                :faqs  (Nav-item. "Everything else" "Everything else" "nav-item faqs" "info")})
+                :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info")})
 
 
 (rum/defc bs-nav-link [active? nav-item click-handler]

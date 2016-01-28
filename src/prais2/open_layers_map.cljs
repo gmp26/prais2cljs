@@ -170,6 +170,11 @@
   []
   (zoom-to-location 54.5 -3 4000))
 
+(defn go-london
+  "revert to map home location and zoom"
+  []
+  (zoom-to-location 51.52 -0.15 40))
+
 (defn zoom-to-feature
   "Handle a click on a map feature.
   This should behave like a react render even though it uses open-layers map software and so
@@ -202,11 +207,17 @@
     (.popover element "hide")))
 
 
+(rum/defc london-button []
+  [:button.btn-info.london-button
+   {:on-click #(core/click->event-bus % :just-london nil)
+    :tab-index 0}
+   "Just London"])
+
 (rum/defc home-button []
   [:button.btn-info.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home nil)
     :tab-index 0}
-   "Home"])
+   "All UK"])
 
 (rum/defc menu-button []
   [:button#drop1.btn-info.h-button.map-menu.dropdown-toggle
@@ -238,6 +249,7 @@
   [:div
    [:div {:key 2}
     [:#open-map.hospital-map {:tab-index 0 :key 1}
+     (london-button)
      (home-button)
      (hospital-dropdown)]
     [:#popup {:key 2}]
