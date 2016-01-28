@@ -251,7 +251,7 @@ of headers for field names and then discarding the first header row from the res
    [:.alert.alert-info {:key 3} "To create or view the spreadsheet using a session filter, go to 'Data > Filter views...' in the sheet menu."
     [:br]
     "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
-   [:form {:key 4}
+   #_[:form {:key 4}
     [:.form-group {:key 1}
      [:textarea {:placeholder "Paste rows from the session log here."
                  :name "pasted-session"
@@ -272,9 +272,9 @@ of headers for field names and then discarding the first header row from the res
 (rum/defc playback-controls < rum/reactive [id]
 
   [:div {:id id}
-    (reset-control)
+    #_(reset-control)
    " "
-   [:.btn-group
+   #_[:.btn-group
     (undo-control)
     (redo-control)]
    " "

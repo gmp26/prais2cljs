@@ -76,18 +76,20 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 /**
  * Chrome
  */
+.home-nav {
+    margin: 40px 0px 10px 0px;
+    border: none;
+    color: white;
+    height: 500px;
+}
 
 .home {
-    background-color: rgba(0, 174, 239, 1);
+    background-color: #8B99FA
 }
 
 .intro {
-    background-color: #f00;
+    background-color: #FC867A;
     //border-bottom: 5px solid  rgba(0, 174, 239, 1);
-}
-
-.well.intro {
-    border: none;
 }
 
 .well h2 {
@@ -100,26 +102,34 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 
 .data {
     background-color: rgba(252, 141, 89, 1);
-    //border-bottom: 5px solid rgba(252, 141, 89, 1);
 }
 
 .faqs {
-    background-color: rgba(127, 205, 187, 1);
+    background-color: #7FCDBB;
     //border-bottom: 5px solid rgba(127, 205, 187, 1);
     //border-color:  #7FCDBB;
 }
 
 .well.intro {
-    background-color: rgba(44, 127, 184, 0.3);
+    background-color:  #FC867A;
+    opacity: 0.9;
+    cursor: pointer;
 }
 
 .well.data {
-    background-color:  rgba(252, 141, 89, 0.3);
+    background-color:  #FC8D59;
+    opacity: 0.9;
+    cursor: pointer;
 }
 
 .well.faqs {
-    border: none;
-    background-color: rgba(127, 205, 187, 0.3);
+    background-color: #7FCDBB;
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+.well:hover {
+    opacity: 1;
 }
 
 .map-data {
