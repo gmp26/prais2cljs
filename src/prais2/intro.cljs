@@ -9,13 +9,15 @@
               [cljsjs.jquery
                ]))
 
+
 (rum/defc section [section-id section-title section-content]
-  [:section {:id section-id}
+  [:section.col-sm-12
+   {:id section-id}
    [:h2 section-title]
    (section-content)])
 
 (rum/defc panel [parent-id header-id header body-id body]
-  [:section.panel.panel-default
+  [:section.panel.panel-default.clearfix
    [:.panel-heading {:id header-id
                      :on-click #(.collapse (js/$ (str "#" body-id)) "toggle")
                      :role "tab"
@@ -48,6 +50,7 @@
          (str parent-id "-body-" section-id)
          section-content))
 
+(declare key-points)
 (declare section-1-content)
 (declare section-2-content)
 (declare section-3-content)
@@ -61,55 +64,23 @@
   [:.container
    [:.row
     [:#intro
+     [:h1 "What, why, how?"]
 
-     (section 1 "What is this site for?" section-1-content)
-
-     (accordion "acc1"
-                (collapsible-section "acc1" 2
-                                     "Survival statistics in the media"
-                                     section-2-content)
-                (collapsible-section "acc1" 3
-                                     "What this site cannot do" section-3-content)
-                (collapsible-section "acc1" 4
-                                     "Numbers of operations and what is meant by survival rate"
-                                     section-4-content)
-                )
-
-     ;; tv newspaper-o film
-     #_(section 2 "Survival statistics in the media [collapsible]" section-2-content)
-
-     ;; ban
-     #_(section 3 "What this site cannot do [collapsible]" section-3-content)
-
-     ;; h-square bed
-     #_(section 4 "Numbers of operations and what is meant by survival rate [collapsible]" section-4-content)
-
-     ;; hospital-o area-chart warning percent
-     (section 5 "Why can survival rate data be difficult to interpret?" section-5-content)
-
-     ;; balance-scale question percent
-     (section 6 "A fairer way of looking at survival rate data" section-6-content)
+     (key-points)
+     (section 4 "WHAT do we mean by survival statistics?" section-4-content)
+     (section 5 "WHY can survival rate data be difficult to interpret?" section-5-content)
+     (section 6 "HOW the NHS monitors survival rates: A fairer way of looking at survival rate data" section-6-content)
+     (section 3 "What this site cannot do" section-3-content)
      ]]])
 
-
-(rum/defc section-1-content []
-  [:section.well.intro
-   [:p "This site is to help\npeople make sense of the published survival statistics about children’s heart surgery. Our website will help you explore what survival rates "
-    [:b "can"] " and " [:b "can’t"] " tell you: for instance, if one hospital has a higher survival rate than another\nit " [:b "does not mean"] " that one hospital must be better than the other. We\nhope that this website will let everyone see and understand how the NHS\nmonitors children’s heart surgery. "]
-
-
-   [:p "This site will be particularly helpful for: older patients, parents and families of children who have had/will have heart surgery; journalists, parents, health professionals, family liaison services of paediatric hospitals.
-"]])
-
-(rum/defc section-2-content []
-  [:section
-   [:p "Every year or so there are some articles in the press about children’s heart surgery in the UK. Often, these articles compare one hospital to another or suggest that a hospital has more deaths than it “should have”. "]
+(rum/defc key-points []
+  [:section.well.danger.col-sm-offset-2.col-sm-8
+   [:h2 "Key points!"]
    [:ul
-    [:li "Where do journalists get these numbers from?"]
-    [:li "What do they mean by “should have”? "]
-    [:li "How valid are these sorts of comparisons? "]
-    [:li "What do survival rates actually tell you?"]]]
-  )
+    [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other!"]
+    [:li "The predicted range is calculated by a formula and does not depend on any judgements of a hospital’s quality!"]
+    [:li "The survival rate for all UK hospitals is very high!"]]])
+
 
 (rum/defc section-3-content []
   [:section
@@ -134,9 +105,11 @@
    [:p
     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data [link to relevant FAQ]. "]])
 
+
 (rum/defc section-4-content []
   [:section
-   [:p "Currently, about 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland. The main measure that the NHS uses to monitor children’s heart surgery in the UK is the " [:i "30-day survival rate"] ". This is the percentage of operations where the child survived at least 30 days after their heart surgery (e.g. 100% would mean that every child survived). "]]
+   [:p "The main measure that the NHS uses to monitor children’s heart surgery in the UK is the 30-day survival rate. This is the percentage of operations where the child survived at least 30 days after their heart surgery (e.g. 100% would mean that every child survived). Currently, about 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."
+    ]]
   )
 
 (rum/defc section-5-content []

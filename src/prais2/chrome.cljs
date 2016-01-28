@@ -24,8 +24,8 @@
 (def everything-else (str "Everything" (unescapeEntities "&nbsp;") "else"))
 
 (def nav-items {
-                :home (Nav-item. "Home" "Home" "nav-item intro" "home")
-                :map-data (Nav-item. what-why what-why "nav-item map-data" "question")
+                :home (Nav-item. "Home" "Home" "nav-item home" "home")
+                :intro (Nav-item. what-why what-why "nav-item intro" "question")
                 :data  (Nav-item. "Data" "Data" "nav-item data" "table")
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info")})
 

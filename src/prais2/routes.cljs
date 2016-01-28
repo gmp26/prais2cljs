@@ -28,17 +28,22 @@
   (prn "faq :id match")
 )
 
-(defroute intros "/intro" []
+(defroute homes "/home" []
   (put! core/event-bus [:home :top])
 )
 
-(defroute intro "/intro/:id" [id]
+(defroute home "/home/:id" [id]
   (put! core/event-bus [:home id])
-  (prn "intro :id match")
+  (prn "home :id match")
 )
 
-(defroute map-data "/map-data" []
-  (put! core/event-bus [:map-data :top])
+(defroute intros "/intro" []
+  (put! core/event-bus [:intro :top])
+)
+
+(defroute intro "/intro/:id" [id]
+  (put! core/event-bus [:intro id])
+  (prn "intro :id match")
 )
 
 (defroute datas "/data" []
@@ -52,7 +57,7 @@
   ;(put! core/event-bus [:data id])
 )
 
-(defroute home "/" []
+#_(defroute home "/" []
   (prn "home match")
 )
 

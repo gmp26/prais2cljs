@@ -11,8 +11,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 @media print {
-
-
     .screenable {
         display:none;
     }
@@ -45,7 +43,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     .printable thead th * {
         color: #ffffff !important;
     }
-
 }
 
 .screenable {
@@ -80,15 +77,25 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
  * Chrome
  */
 
-
+.home {
+    background-color: rgba(0, 174, 239, 1);
+}
 
 .intro {
-    background-color: rgba(0, 174, 239, 1);
+    background-color: #f00;
     //border-bottom: 5px solid  rgba(0, 174, 239, 1);
 }
 
 .well.intro {
     border: none;
+}
+
+.well h2 {
+    margin-top: 0px;
+}
+
+.well.danger {
+    background-color: #FFBDB6;
 }
 
 .data {
