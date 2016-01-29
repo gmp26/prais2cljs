@@ -145,9 +145,9 @@
 
 (rum/defc section-6-content []
   [:section.row
-   [:p.col-lg-12
+   [:p
     "Our research has shown that there are some consistent factors that hospitals routinely collect information about that do affect a child’s chance of survival. These things include: "]
-   [:ul.col-lg-12
+   [:ul
     [:li
      "the age and weight of the child (other things being equal, the bigger and stronger a child is, the safer the surgery is); "]
 
@@ -157,9 +157,9 @@
     [:li "the complexity of the surgical procedure.  "]
     ]
 
-   [:p.col-lg-12 "Knowing these factors for each patient, allows us to identify types of patient who are at greater or lesser risk even though we cannot predict exactly how a particular individual will respond."]
+   [:p "Knowing these factors for each patient, allows us to identify types of patient who are at greater or lesser risk even though we cannot predict exactly how a particular individual will respond."]
 
-   [:p.col-lg-12 "The national audit body use what is called a “statistical model” to combine what we know about these aspects for all the children a hospital has treated over the last three years. This mathematical combination results in a " [:b "predicted "] "overall proportion of survivors for " [:b "that specific hospital for that specific time period"] ". We would expect the survival rate actually achieved in that hospital to be not too far away from this prediction and so we finally calculate " [:b "a predicted range"] " for that specific hospital. If that hospital’s actual survival rate is anywhere within that predicted range, its results are in line with what we expect. "]
+   [:p "The national audit body use what is called a “statistical model” to combine what we know about these aspects for all the children a hospital has treated over the last three years. This mathematical combination results in a " [:b "predicted "] "overall proportion of survivors for " [:b "that specific hospital for that specific time period"] ". We would expect the survival rate actually achieved in that hospital to be not too far away from this prediction and so we finally calculate " [:b "a predicted range"] " for that specific hospital. If that hospital’s actual survival rate is anywhere within that predicted range, its results are in line with what we expect. "]
 
    [:.bg-danger {:style {:border-radius "3px" :border "1px solid #DDD"}
                  }

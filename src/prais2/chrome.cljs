@@ -105,15 +105,42 @@
 
 
 (rum/defc footer []
-  [:.footer
-   [:.pull-right (logger/playback-controls)]
-   [:h3
-    "Funding acknowledgement"]
-   [:p
-    "This project was funded by the National Institute for Health Research Health Services and Delivery Research Programme\n(project number 14/19/13)"]
-   [:h3
-    "Department of Health disclaimer"]
-   [:p
-    "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
-   ]
+  [:.container-fluid
+   [:.row
+    [:.col-sm-12 {:style {:padding-top "50px"
+                          :border-top "1px solid black"
+                          }}
+     [:img
+      {:style {:height "50%"
+               :margin-right "20px"}
+       :src "assets/ucl-logo.png"}]
+     [:img
+      {:style {:height "50%"
+               :margin-right "20px"}
+       :src "assets/camlogo.png"}]
+     [:img
+      {:style {:height "50%"
+               :margin-right "20px"}
+       :src "assets/kings-logo.png"}]
+     [:img
+      {:style {:height "50%"
+               :margin-right "20px"}
+       :src "assets/sas-logo.png"}]
+     [:img
+      {:style {:height "50%"
+               :margin-right "20px"}
+       :src "assets/chf-logo.png"}]]]
+   [:.row.footer
+    [:.pull-right (logger/playback-controls)]
+
+
+    [:h3
+     "Funding acknowledgement"]
+    [:p
+     "This project was funded by the National Institute for Health Research Health Services and Delivery Research Programme\n(project number 14/19/13)"]
+    [:h3
+     "Department of Health disclaimer"]
+    [:p
+     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
+    ]]
   )
