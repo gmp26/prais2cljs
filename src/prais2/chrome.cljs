@@ -26,7 +26,7 @@
 (def nav-items {
                 :home (Nav-item. "Home" "Home" "nav-item home" "home")
                 :intro (Nav-item. what-why what-why "nav-item intro" "question")
-                :data  (Nav-item. "Data" "Data" "nav-item data" "table")
+                :data  (Nav-item. "Data" "Explore the data" "nav-item data" "table")
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info")})
 
 
@@ -34,7 +34,8 @@
   [:li
    [:button.navbar-btn {:on-click click-handler
                         :class (str (if active? " active " " ") (:class nav-item))}
-    [:i.fa {:class (str "fa-" (:icon nav-item))}]
+    [:i.fa {:class (str "fa-" (:icon nav-item))
+            :style {:font-size "22px"}}]
     (str " " (:short-title nav-item))]])
 
 (rum/defc bs-fixed-navbar  [active-key]
@@ -43,8 +44,10 @@
      [:.navbar-inner
       [:.container {
                     :style {:background-color "#475E63"
-                            :opacity 0.95
-                            :width "100%"}
+                            ;:opacity 0.95
+                            :width "100%"
+                            :height "55px"
+                            }
                     }
        [:.navbar-header {:key 1}
         [:button.navbar-toggle.collapsed {:key 1
@@ -71,7 +74,7 @@
    [:div.blurred
     {:style
      {:width "100%"
-      :height (if true "80px" "10px")
+      :height "80px"
       :background-color "#4F4763"
       :color "rgba(255,255,255,0.5)"
       :position "relative"

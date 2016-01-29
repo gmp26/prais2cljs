@@ -64,6 +64,10 @@
    [:div
     component]])
 
+(rum/defc explain-interpretation []
+  [:.annotation  "We then add an interpretation of the observed survival rate"])
+
+
 (rum/defc hospital-example < rum/reactive []
   (let [ap (rum/react core/app)]
     [:#detail {:style {:position "relative"}}
@@ -73,14 +77,16 @@
        (map-indexed key-with
                     [(data/sample-hospital-intro-text)
                      (data/hospital-header selected-row)
-                     (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap) 250)
+                     (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap) 5)
 
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the observed survival rate")
                      #_(explanation )
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
-                     (data/interpretation selected-row)]))]))
+                     (explain-interpretation)
+                     (data/interpretation selected-row)
+                     ]))]))
 
 
 
@@ -101,7 +107,7 @@
       (hospital-example)]
 
      [:p]
-     [:.alert.alert-danger "IMPORTANT: If one hospital has a lower predicted range than another it is only because it treated children with more complex medical problems over that 3 year period!"]
+     [:.alert.alert-danger "IMPORTANT! The predicted range depends only on the actual patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year."]
 
 
 ]]])

@@ -112,7 +112,22 @@
 
 (rum/defc bar < rum/static
   ([slider hi-val lo-val bar-type fill]
-   (bar slider hi-val lo-val bar-type fill ""))
+   [:div.bar {:style {:background-color fill
+                      :width (str (bar-width slider (- hi-val lo-val)) "%")
+                      }
+              }]
+   [:div.bar.btn {:style {:background-color fill
+                          :border-radius 0
+                          :width (str (bar-width slider (- hi-val lo-val)) "%")
+                          :text-align "right"
+                          }
+                  :data-toggle "tooltip"
+                  :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                  :data-delay 0
+                  :data-html true
+                  :data-trigger "hover"
+                  :data-placement "bottom"}
+    ])
 
   ([slider hi-val lo-val bar-type fill text]
    (if (= fill "rgba(255,255,255,0)")
@@ -131,17 +146,7 @@
                     :data-html true
                     :data-trigger "hover"
                     :data-placement "bottom"}
-      [:div {:style {:position "relative"
-                     :z-index 200
-                     :overflow "scroll"
-                     :display "inline-block"
-                     :right (px 5)
-                     :color "#337AB7"
-                     :font-size (px 12)
-                     :font-style "italic"
-                     :white-space "normal"
-                     }}
-       text]])))
+      [:div.annotation text]])))
 
 
 
@@ -499,7 +504,8 @@
               :on-click info-handler
               :on-touch-start info-handler}
              h-code " " [:i.fa.fa-chevron-right]])])
-       [:td {:key :bars} (chart-cell row slider-axis-value)]])]])
+       [:td {:key :bars
+             :style {:background-color "#f0f0f0"}} (chart-cell row slider-axis-value)]])]])
 
 (rum/defc table1 < rum/reactive [app data event-bus]
   [:.table-container
@@ -567,9 +573,7 @@
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
-     :on-change #(do
-                   #_(prn "change-datasource " (keyword (.. % -target -value)))
-                   (put! event-bus [:change-datasource (keyword (.. % -target -value))]))}
+     :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
                    (key-option key)))]
@@ -628,7 +632,7 @@
   [:i {:key :sintros}
    [:p.note {:key 1} "You can move the slider button left to see the rates plotted on the full 0-100% range of possible survival rates, or right to focus on the detail near 100%"]
    [:p.note {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
-   [:p.note {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
+   #_[:p.note {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
 
 (rum/defc hospital-data < rum/reactive
   [h-code]
@@ -673,7 +677,8 @@
                        (hospital-header selected-row)
                        (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
-                       (interpretation selected-row)]))])))
+                       (interpretation selected-row)
+                       ]))])))
 
 
 (defn open-hospital-modal

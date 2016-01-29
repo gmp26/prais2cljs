@@ -132,6 +132,15 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     opacity: 1;
 }
 
+.highlight {
+    opacity: 0.6;
+}
+
+.highlight:hover {
+    opacity: 1;
+}
+
+
 .map-data {
     background-color: #f00;
     //border-bottom: 5px solid #f00;
@@ -353,6 +362,20 @@ td:first-child {
     color: #337ab7;
     font-weight: italic;
 }
+
+.annotation {
+    position: relative;
+    z-index: 200;
+    overflow: none;
+    display: inline-block;
+    right: 5px;
+    color: #337AB7;
+    font-size: 12px;
+    font-style: italic;
+    white-space: normal;
+    width: 100%;
+}
+
 /* button which opens hospital info modal */
 .h-info {
     cursor: pointer;
@@ -814,7 +837,7 @@ body { padding-top: 55px; }
     //height: 35px;
     border: none;
     border-radius: 25px;
-    width: 144px;
+    width: 146px;
     padding: 8px;
     margin-left:15px;
     opacity: 0.5;
@@ -826,6 +849,8 @@ body { padding-top: 55px; }
 
 .active.nav-item {
     opacity: 1;
+    border: 1px solid #475E63;
+    box-shadow: 2px 2px 2px #475E63;
 }
 
 ul.nav.navbar-nav.navbar-right {

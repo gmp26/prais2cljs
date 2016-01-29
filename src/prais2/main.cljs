@@ -159,7 +159,7 @@
           {:type "text"
            :placeholder "my tag"
            :value (rum/react logger/session-id)
-           :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent  %)))
+           :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
                             (close-start-modal %))
            :on-change #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
         ]]]

@@ -264,29 +264,50 @@
             :faqs [{:title "Why do some children need heart surgery?"
                     :glossary []
                     :body [:div
-                           [:p "Each year in the UK, about 7000 babies are born with a heart defect (called congenital heart disease). Congenital heart disease covers a wide range of problems from the relatively minor (such as a small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also develop problems with their heart as they grow up (for instance, through an infection) and also require hospital care (called acquired heart disease)."]]
+                           [:p "Each year in the UK, about 5000-6000 babies are born with a heart defect (called congenital heart disease). Congenital heart disease covers a wide range of problems from the relatively minor (such as a small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also develop problems with their heart as they grow up which require hospital care (called acquired heart disease). "]
+                           [:p "Read more about "
+                            [:a {:href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/"} "different heart conditions"]
+                            " and caring for children with heart conditions on the "
+                            [:a {:href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/"} "Children’s Heart Federation’s website."]]]
                     }
 
+                   (comment
+                     {:title "Where is this data from?"
+                      :glossary []
+                      :body [:div
+                             [:p [:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research) collects data and produces analysis to enable hospitals and healthcare improvement bodies to monitor and improve the quality of care and outcomes of children who need heart surgery. Data on every surgery or intervention performed on a child for heart problems is submitted to NICOR every 3 months, and each hospital undergoes independent checks of the quality of their submitted data."]
 
-                   {:title "Where is this data from?"
-                    :glossary []
-                    :body [:div
-                           [:p [:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research) collects data and produces analysis to enable hospitals and healthcare improvement bodies to monitor and improve the quality of care and outcomes of children who need heart surgery. Data on every surgery or intervention performed on a child for heart problems is submitted to NICOR every 3 months, and each hospital undergoes independent checks of the quality of their submitted data."]
+                             [:p "NICOR tracks the survival of these children by linking to the national register of deaths using NHS number and also from hospital records. Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the proportion of children surviving for about 40 common surgical procedures and, since 2013, also overall survival for each hospital."]
 
-                           [:p "NICOR tracks the survival of these children by linking to the national register of deaths using NHS number and also from hospital records. Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the proportion of children surviving for about 40 common surgical procedures and, since 2013, also overall survival for each hospital."]
+                             [:p "If a hospital’s survival outcomes are below a certain threshold, NICOR and the hospital together examine the data and the individual cases to understand whether any further action needs to be taken. In extreme cases, a hospital might stop doing surgery while action is taken to improve the service. You can read more this process on " [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/vwContent/Information%20for%20Patients?Opendocument"} "NICOR’s patient information pages"] " and in our FAQ section. In this website, we explain how survival statistics are used to support this decision making."]]
+                      })
 
-                           [:p "If a hospital’s survival outcomes are below a certain threshold, NICOR and the hospital together examine the data and the individual cases to understand whether any further action needs to be taken. In extreme cases, a hospital might stop doing surgery while action is taken to improve the service. You can read more this process on " [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/vwContent/Information%20for%20Patients?Opendocument"} "NICOR’s patient information pages"] " and in our FAQ section. In this website, we explain how survival statistics are used to support this decision making."]]
-                    }
-
-                   {:title "Why are survival rates monitored and published?"
+                   {:title "Why are survival rates after children's heart surgery monitored and published?"
                     :glossary [:survival-rate]
                     :body [:div
-                           [:p "In the 1990s, there were found to be problems with the standard of care for children having heart surgery at the Bristol Royal Infirmary with the proportion of children who died after surgery at Bristol being much higher than in other UK hospitals. The formal inquiry into the what happened (" [:a {:href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"} "The Bristol Inquiry 2001"] ") led to a number of changes, including a new compulsory national reporting system so that the proportion of children surviving to 30 days after surgery for all hospitals were published every year. Results that appear unusual compared to the rest of the UK are then checked further by the national audit body (NICOR)."]
+                           [:p [:a {:href  "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"}] [:img.thumbnail.pull-left
+                                   {:style {:width "100px"
+                                            :margin-right "20px"}
+                                    :src "assets/bristol.png"}] "In the 1990s, there were found to be problems with the standard of care for children having heart surgery at the Bristol Royal Infirmary with the proportion of children who died after surgery at Bristol being much higher than in other UK hospitals. The formal inquiry into the what happened (" [:a {:href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"} "The Bristol Inquiry 2001"] ") ) led to a number of changes, including a new compulsory national reporting system so that the proportion of children surviving to 30 days after surgery for all hospitals have been published every year since 2001. Results where there is some evidence that survival rates are lower than expected are checked further by the hospital and the national audit body (NICOR)."]
 
-                           [:p "Until 2013, NICOR only published survival rates for certain types of procedure because there was not a good way of putting overall survival rates into context (see above). But recent " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "research "] "has made this possible, and since 2013 NICOR has been publishing overall survival rates along with the “predicted range” for survival using the statistical model (see above). The calculation of the predicted range uses the same statistical method for all hospitals and is calculated without knowing what the survival rate at a hospital actually was."]
+                           #_[:p "Until 2013, NICOR only published survival rates for certain types of procedure because there was not a good way of putting overall survival rates into context (see above). But recent " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "research "] "has made this possible, and since 2013 NICOR has been publishing overall survival rates along with the “predicted range” for survival using the statistical model (see above). The calculation of the predicted range uses the same statistical method for all hospitals and is calculated without knowing what the survival rate at a hospital actually was."]
 
-                           [:p "The UK now has one of the strongest monitoring programmes in the world. Also, since reporting started, " [:a {:href "http://www.bbc.co.uk/news/health-32162803"} "survival rates have been improving"] " and now " [:strong "over 97% of children survive to at least one month after surgery."]]]
-                    }]}
+                           [:p "The UK now has one of the strongest monitoring programmes in the world. Since reporting started, " [:a {:href "http://www.bbc.co.uk/news/health-32162803"} "survival rates have been improving"] " and now " [:strong "over 97% of children survive to at least one month after surgery."]]]
+                    }
+
+                   {:title "How are survival rates monitored?"
+                    :glossary [:survival-rate]
+                    :body [:div
+                           [:p [:a {:href  "http://www.ucl.ac.uk/nicor/patients"}] [:img.thumbnail.pull-left
+                                   {:style {:width "100px"
+                                            :margin-right "20px"}
+                                    :src "assets/nicor.png"}] ]
+                           "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because no good way of putting overall survival rates into context for a hospital existed (see “What, Why and How?”). But research has now made this possible, and since 2013 NICOR has been publishing overall survival rates along with the predicted range for survival for each hospital using a statistical formula  (see “What, Why and How?”). The calculation of the predicted range uses the same statistical formula for all hospitals and is not influenced by what the survival rate at a hospital actually was."]
+                    }
+
+
+
+                   ]}
 
            {:section "Understanding the predicted range"
             :faqs [{:title "Why is a different survival range predicted for each hospital?"
@@ -499,11 +520,11 @@
     :dot "black"
     }
    ;; theme 12
-   {:low "#f9f9f9"
+   {:low "#f0f0f0"
     :inner "#566AF9"
     :outer-low "#C9CDFC"
     :outer-high "#C9CDFC"
-    :high "#f9f9f9"
+    :high "#f0f0f0"
     :header "#4F4763"
     :dot "black"
     }
