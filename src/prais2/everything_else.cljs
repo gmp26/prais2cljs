@@ -7,6 +7,7 @@
               [prais2.chrome :as chrome]
               [prais2.content :as content :refer [faq-sections]]))
 
+;; See http://jsfiddle.net/mtjhax/q4p5r/1/ for simple scrollspy
 
 (rum/defc render-everything-else [id]
   [:.container
