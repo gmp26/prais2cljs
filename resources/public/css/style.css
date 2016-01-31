@@ -538,6 +538,12 @@ td:first-child {
     width: 200px;
 }
 
+.partners {
+  z-index: 1000;
+  position: relative;
+  background-color: whitesmoke;
+}
+
 .footer {
   color: white;
   background-color: #475E63;
@@ -909,4 +915,12 @@ ul.nav.navbar-nav.navbar-right {
         font-size: 16px;
         max-width: 400px;
     }
+}
+
+/**
+ * Scrollspy
+ */
+#faq-sidebar li.active {
+    border-left: 2px solid black;
+    padding-left: 10px;
 }

@@ -105,7 +105,7 @@
 
 
 (rum/defc footer []
-  [:.container-fluid
+  [:.container-fluid.partners
    [:.row
     [:.col-sm-12 {:style {:padding-top "50px"
                           :border-top "1px solid black"
