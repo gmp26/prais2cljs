@@ -924,3 +924,11 @@ ul.nav.navbar-nav.navbar-right {
     border-left: 2px solid black;
     padding-left: 10px;
 }
+
+#faq-sidebar li ul {
+    display: none;
+}
+
+#faq-sidebar li.active ul {
+    display: block;
+}

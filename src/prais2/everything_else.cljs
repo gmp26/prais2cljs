@@ -16,11 +16,6 @@
 (defn faq-hash [& args]
   (str "#" (apply faq-id args)))
 
-#_(defn faq-hash
-  ([six] (str "#" (faq-id six)))
-  ([six fix] (str  "#" (faq-id six fix)))
-  )
-
 (def scrollspy
   {:did-mount (fn [state]
                 (.scrollspy (js/$ "body") (clj->js {:target "#faq-sidebar"}))
@@ -39,7 +34,7 @@
         [:li
          [:a {:href (faq-hash six)
               :data-target (faq-hash six)} (:section  section)]
-         #_[:ul.nav
+         [:ul.nav
           (let [faqs (:faqs section)]
             (for [fix (range (count faqs))
                   :let [faq (faqs fix)]]
