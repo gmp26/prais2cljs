@@ -26,7 +26,7 @@
   [:.container
    [:#sidebar.row {:style {:position "relative"}}
 
-    [:#faq-sidebar.col-md-3.affix {:style {:top "120px"}}
+    [:#faq-sidebar.col-sm-3.affix {:style {:top "120px"}}
      [:h1 content/title]
      [:ul.nav.nav-list
       (for [six (range (count faq-sections))
@@ -42,7 +42,7 @@
                [:a {:href (faq-hash six fix)} (:title faq)]]))]])
       ]]
 
-    [:#faqs.col-md-offset-4.col-md-8
+    [:#faqs.col-sm-offset-4.col-sm-8
 
      (for [six (range (count faq-sections))
            :let [section (faq-sections six)]]
