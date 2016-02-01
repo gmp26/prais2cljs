@@ -920,6 +920,14 @@ ul.nav.navbar-nav.navbar-right {
 /**
  * Scrollspy
  */
+
+@media screen and (max-width: 768px)
+{
+    #faq-sidebar {
+        display: none;
+    }
+}
+
 #faq-sidebar li.active {
     border-left: 2px solid black;
     padding-left: 10px;

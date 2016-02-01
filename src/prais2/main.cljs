@@ -225,23 +225,15 @@
        (prn "Route mismatch" page)
        (render-404)))])
 
-(rum/defc render-page < bs-open-popover rum/reactive []
+; add < bs-open-popover when start-modal is enabled
+(rum/defc render-page < rum/reactive []
   (let [{:keys [page section]} (rum/react core/app)]
     [:div
      (map-indexed key-with
-                  [(start-modal)
+                  [;(start-modal)
                    (page-choice page section)
                    (debug)])
      ]))
-
-
-#_(rum/defc render-page < bs-open-popover rum/cursored rum/cursored-watch [app]
-  [:div
-   (map-indexed key-with
-                [(start-modal)
-                 (page-choice @(rum/cursor app [:page]) @(rum/cursor app [:setion]))
-                 (debug)])
-   ])
 
 
 ;;
