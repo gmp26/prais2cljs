@@ -296,7 +296,8 @@
                                   :src "assets/nicor.png"}]]
                             "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because no good way of putting overall survival rates into context for a hospital existed
 (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "research"] " has now made this possible, and since 2013 NICOR has been publishing overall survival rates along with the predicted range for survival for each hospital using a statistical formula
-(see "[:a {:href "?#/intro"} "What, Why and How?"]"). The calculation of the predicted range uses the same statistical formula for all hospitals and is not influenced by what the survival rate at a hospital actually was."]
+" ;"(see "[:a {:href "?#/intro"} "What, Why and How?"]"). The calculation of the predicted range uses the same statistical formula for all hospitals and is not influenced by what the survival rate at a hospital actually was."
+                            ]
                            [:p "Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the proportion of children surviving for about 40 common surgical procedures and, since 2013, also overall survival for each hospital along with that hospital’s predicted range for survival. "]]
 
 
