@@ -232,10 +232,10 @@
 
 (def bar-comments
   {:inner "A dot in this area means that there is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
-   :outer-high "A dot in this area means that there is some evidence that chances of survival in the hospital were higher than predicted [add link]"
-   :outer-low "A dot in this area means that there is some evidence that chances of survival in the hospital were lower than predicted. [add link]"
-   :low "A dot to the left of the bands means that there is strong evidence that chances of survival in the hospital were lower than predicted. [add link]"
-   :high "A dot to the right of the bands means that there is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
+   :outer-high "A dot in this area means that there is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
+   :outer-low "A dot in this area means that there is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :low "A dot to the left of the bands means that there is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :high "A dot to the right of the bands means that there is strong evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
    })
 
 ;;;
@@ -245,17 +245,17 @@
 
 (def dot-comments
   {:inner "There is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
-   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted [add link]"
-   :outer-low "There is some evidence that chances of survival in the hospital were lower than predicted. [add link]"
-   :low "There is strong evidence that chances of survival in the hospital were lower than predicted. [add link]"
-   :high "There is strong evidence that chances of survival in the hospital were higher than predicted. [add link]"
+   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
+   :outer-low "There is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :low "There is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :high "There is strong evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
    })
 
 
 (def glossary {:survival-rate {:title "Survival rate"
                                :body  "The percentage of operations where the child survived at least 30 days after their operation."}
                :chance-factors {:title "Chance factors"
-                                :body "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “chance factors”."}})
+                                :body "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine data on them is collected. Together, we call these all “chance factors”."}})
 
 (def title "Everything else")
 
@@ -279,9 +279,7 @@
                            [:p [:a {:href  "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"}] [:img.thumbnail.pull-left
                                    {:style {:width "100px"
                                             :margin-right "20px"}
-                                    :src "assets/bristol.png"}] "In the 1990s, there were found to be problems with the standard of care for children having heart surgery at the Bristol Royal Infirmary with the proportion of children who died after surgery at Bristol being much higher than in other UK hospitals. The formal inquiry into the what happened (" [:a {:href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"} "The Bristol Inquiry 2001"] ") ) led to a number of changes, including a new compulsory national reporting system so that the proportion of children surviving to 30 days after surgery for all hospitals have been published every year since 2001. Results where there is some evidence that survival rates are lower than expected are checked further by the hospital and the national audit body (NICOR)."]
-
-                           #_[:p "Until 2013, NICOR only published survival rates for certain types of procedure because there was not a good way of putting overall survival rates into context (see above). But recent " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "research "] "has made this possible, and since 2013 NICOR has been publishing overall survival rates along with the “predicted range” for survival using the statistical model (see above). The calculation of the predicted range uses the same statistical method for all hospitals and is calculated without knowing what the survival rate at a hospital actually was."]
+                                    :src "assets/bristol.png"}] "In the 1990s, problems were found with the standard of care for children having heart surgery at the Bristol Royal Infirmary. The proportion of children who died after surgery at Bristol was much higher than other UK hospitals. There was a formal inquiry into what happened (" [:a {:href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"} "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new compulsory national reporting system so that the proportion of children surviving to 30 days after surgery for all hospitals have been published every year since 2001. Results where there is some evidence that survival rates are lower than expected are checked further by the hospital and the national audit body (NICOR)."]
 
                            [:p "The UK now has one of the strongest monitoring programmes in the world. Since reporting started, " [:a {:href "http://www.bbc.co.uk/news/health-32162803"} "survival rates have been improving"] " and now " [:strong "over 97% of children survive to at least one month after surgery."]]]
                     }
@@ -294,11 +292,11 @@
                                  {:style {:width "100px"
                                           :margin-right "20px"}
                                   :src "assets/nicor.png"}]]
-                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because no good way of putting overall survival rates into context for a hospital existed
-(see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "research"] " has now made this possible, and since 2013 NICOR has been publishing overall survival rates along with the predicted range for survival for each hospital using a statistical formula
-" ;"(see "[:a {:href "?#/intro"} "What, Why and How?"]"). The calculation of the predicted range uses the same statistical formula for all hospitals and is not influenced by what the survival rate at a hospital actually was."
+                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] "only published survival rates for certain types of procedure because there was no clear way to put overall survival rates for each hospital into context (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "researchers"] "have now made this possible by creating a statistical formula. Using this, NICOR has published overall survival rates along with the predicted range (dark blue bar) and extended predicted range (light blue bar) for survival for each hospital since 2013 (see "[:a {:href "?#/intro"} "What, Why and How?"]").  The predicted range is the range in which we expect to see each hospital’s observed survival ratethe majority of the time (19 times out of 20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
+
                             ]
-                           [:p "Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the proportion of children surviving for about 40 common surgical procedures and, since 2013, also overall survival for each hospital along with that hospital’s predicted range for survival. "]]
+                           [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
+                           [:p "Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the percentage of children surviving for about 40 common surgical procedures and, since 2013, has been able to also include overall survival rate for each hospital along with that hospital’s predicted range for survival."]]
 
 
                     }
@@ -310,60 +308,36 @@
                                 {:style {:width "150px"
                                          :margin-right "20px"}
                                  :src "assets/data-transfer.png"}]
-                            "Data on every surgery or intervention performed on a child for heart problems must be collected by each hospital performing such operations and then submitted every 3 months to the national audit body, "[:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health, the Care Quality Commission (CQC) and other NHS regulatory bodies."]
+                            "Each hospital must collect data on every surgery or intervention carried out on a child for heart problems. Every three months, hospitals must submit this data to the national audit body, "[:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health, the Care Quality Commission (CQC) and other NHS regulatory bodies."]
 
                            [:p "NICOR tracks the survival of these children by linking to the national register of deaths using patients’ NHS number and also from hospital records. NICOR statisticians then analyse the data every year to enable hospitals and healthcare improvement bodies to monitor and improve the quality of care and outcomes of children who need heart surgery."]
 
-                           [:p "If a hospital’s survival outcomes are below a certain threshold, NICOR and the hospital together examine the data and the individual cases to understand whether any further action needs to be taken. In extreme cases, a hospital might stop doing surgery while action is taken to improve the service. You can read more this process on " [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/vwContent/Information%20for%20Patients?Opendocument"} "NICOR’s patient information pages"] " and in our FAQ section. In this website, we explain how survival statistics are used to support this decision making."]]
+                           #_[:p "If a hospital’s survival outcomes are below a certain threshold, NICOR and the hospital together examine the data and the individual cases to understand whether any further action needs to be taken. In extreme cases, a hospital might stop doing surgery while action is taken to improve the service. You can read more this process on " [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/vwContent/Information%20for%20Patients?Opendocument"} "NICOR’s patient information pages"] " and in our FAQ section. In this website, we explain how survival statistics are used to support this decision making."]]
                     }
                    ]}
 
            {:section "Understanding the predicted range"
-            :faqs [{:title "Why is a different survival range predicted for each hospital?"
+            :faqs [{:title "Why is a survival range predicted for each individual hospital?"
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
-                           [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more severe conditions. We know that things like age, weight and other health problems also affect a child’s chances of survival."]
+                           [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more serious conditions. This affects a child's chances of survival, as do other factors such as age, weight and other health problems."]
 
-                           [:p "Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on children with a lower chance of survival. It would be unfair to then expect all hospitals to have the same survival rates each year. Circumstances also change from year to year, so we expect any hospital’s survival rate to vary a bit over time."]
+                           [:p "Some hospitals specialise in certain conditions that are particularly complicated, meaning they tend to operate on children with a lower chance of survival. It would therefore be unfair to expect all hospitals to have the same survival rates each year. Hospitals also treat different children each year, so we expect any hospital’s survival rate to vary from year to year."]
 
-                           [:p "The predicted range is based on a formula that uses recorded information about each operation a hospital performed over a 3 year period. Since each hospital operated on different patients, the predicted ranges will be different too. "]
+                           [:p "The predicted range (dark blue bar) is where we expect the hospital’s observed survival rate to be 19 times out of 20."]
 
-                           [:p "That’s why it doesn’t make sense to compare raw survival rates to each other. We compare a hospital’s observed survival rate only to its own predicted range."]
+                           [:p "It is based on a formula that uses recorded information about each operation a hospital performed over a 3 year period. Since each hospital operated on different patients, the predicted ranges for each hospital will be different. This is why it is not valid to compare raw survival rates to each other. It is " [:i "only valid"] " to compare a hospital’s observed survival rate to its own predicted range. "]
 
                            (comment "*** POSSIBLE IMAGES ***** - a snapshot from animation from factors going into the formula/machine and coming out with a predicted range? ")
                            ]
                     }
 
-                   {:title "Why are predicted ranges different widths for different hospitals? "
+                   {:title "Why does the width of the predicted range differ between hospitals?"
                     :glossary [:survival-rate]
-                    :body [:container
-                           [:.row
-                            [:p "The width of the predicted range is calculated so that we’d expect a hospital’s observed survival rate to be inside the predicted range 19 out of 20 times, regardless of how many operations it did or what children it treated. What children a hospital treated determines generally determines the position of the predicted range (i.e. it will be lower if a hospital treated more children with more complex medical problems). The number of operations a hospital performed influences the width of the predicted range, so that hospitals who do more operations have a narrower predicted range and those that do fewer operations have a wider predicted range."]
+                    :body [:div
+                           [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
 
-                            [:p "To see why this is the case, consider two illustrative hospitals, Hospital A and Hospital B. Over the same time period Hospital A has done 4 operations and Hospital B has done 15. To avoid over-complicating the example, let’s assume that the mathematical formula predicted the same chance of survival for each child at each hospital: a 97% chance of survival. Because these are small numbers of operations, we can write down all possible scenarios for what could have happened at each hospital and how often we would expect to see that scenario play out. "]
-                            [:p "The possible scenarios for Hospital A are shown below."]
-
-                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
-                                                         :src "assets/hypothetical.png"}]]
-
-                            [:p "Although the most likely scenario is that all children survive, the predicted range is set so that we expect a hospital’s observed survival rate (what actually happened) to be inside the predicted range at " [:strong "least 19 times out of 20"] ". From the picture, we can see that the scenario with 4 survivors happens 18 times out of 20, so " [:strong "not"] " often enough to be the only predicted outcome. We need include the scenario of 3 survivors into the predicted range. The " [:strong "predicted range is therefore set to 75% to 100% survival rate"] " (corresponding to 3 to 4 survivors from 4 operations). "]
-
-                            [:p "Let’s now do the same thing for the 15 operations at Hospital B."]
-                            ]
-
-                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
-                                                         :src "assets/hospital-b.png"}]]
-
-                           [:p "This time we expect the scenario of 15 survivors to happen 13 times out of 20 and the scenario with 14 survivors to happen 6 times out 20, so overall we expect either scenario to happen 19 times out of 20. Thus, for hospital B, " [:strong "the predicted range is 93% to 100% survival rate"] " (corresponding to 14 to 15 survivors). "]
-
-                           [:p "The two predicted ranges for the hospitals are shown below and you can see that Hospital B has a much narrower predicted range. You could think of this feature of predicted ranges as being a reflection of the fact that the more operations a hospital does, the more information we have to make a judgement of the chances of survival at that hospitals, and so the more precise our predictions can be. "]
-
-                           [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
-                                                        :src "assets/a-b-comparison.png"}]]
-
-                           [:p "NB. for a real hospital, children will not all have the same chances of survival because each child has a unique combination of medical condition, age, weight and other health problems."]
-
-                           ]}
+                    }
 
                    {:title "When looking at just one hospital, what does it mean if its survival is outside its predicted range?"
                     :glossary [:survival-rate]
@@ -372,31 +346,34 @@
 
                            [:p "There are three steps that lead to a hospital being outside its prediction range:"]
 
-                           [:ol
-                            [:li "the hospital and the Office of National Statistics supply data on each child to NICOR"]
-                            [:li "the statistical formula is then applied to all that hospital’s operations to calculate the predicted range for that hospital."]
-                            [:li [:i "what actually happened"] " for each child is then used to calculate the observed survival rate for that hospital, which then is seen to be outside of the predicted range."]
-                            ]
+                           [:h4 "Step 1"]
+                           [:p "Each hospital and the Office of National Statistics supply data on each child to NICOR"]
 
-                           [:h3 "Step 1"]
-                           [:p "Although the data submitted is usually of very high quality, there will always be some mistakes in large and complex datasets. If a hospital submits data where some of the data is very wrong (for instance wrong weights are recorded) or missing, then this will result in a wrong predicted range. "]
+                           [:p [:i "Although the data submitted is usually of very high quality, there will always be some mistakes in large and complex datasets. If a hospital submits data where some of the data is very wrong (for instance wrong weights are recorded) or missing, then this will result in a wrong predicted range. "]]
 
-                           [:h3 "Step 2"]
-                           [:p "Although the statistical formula as is as good as we can currently get it, it is not perfect. There will always be unique features about a child that affect that child’s chance of surviving that are not captured by routine data collection and so cannot be part of a formula. We will never be able to capture the whole medical picture of a child in a single formula! So, the predicted range is in that way our best guess for what the predicted range should be. "]
+                           [:h4 "Step 2"]
+                           [:p "The statistical formula is then applied to all operations at that hospital to calculate its overall predicted range."]
 
-                           [:h3 "Step 3"]
-                           [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply well to that hospital, then we consider that there is some or strong evidence that the chances of survival at that hospital are not as predicted. "]
+                           [:p [:i "Although the data submitted is usually of very high quality, there will always be some mistakes in large and complex datasets. If a hospital submits data where some of the data is very wrong (for instance wrong weights are recorded) or missing, then this will result in a wrong predicted range. "]]
 
-                           [:p "The strength of the evidence depends on where the observed survival is compared to the extended range. If it is outside the central predicted range but inside the extended range (expected 998 out of a 1000 times) then this is considered moderate evidence. If the observed survival is outside the extended range (only expected to happen 2 times out of a 1000), then this is considered strong evidence. "]
+                           [:h4 "Step 3"]
+                           [:p "“What actually happened” for each child is then used to calculate the observed survival rate for that hospital and compared to the predicted range."]
+
+                           [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply well to that hospital, then , we consider there is some or strong evidence that the chances of survival at that hospital are not as predicted, if the observed survival rate is outside the predicted range"]
+                           [:p "The strength of the evidence depends on where the observed survival is compared to the extended range. If it is outside the central predicted range (dark blue bar) but inside the extended range (light blue bar) (expected 998 out of a 1000 times) then this is considered moderate evidence. If the observed survival is outside the extended range (only expected to happen 2 times out of a 1000), then this is considered strong evidence. "]
+
+                           [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
+                                                        :src "assets/bars.png"}]]
+
                            ]
 
                     }
 
-                   {:title "ONLY when looking at ALL hospitals, what does it mean if any of the hospital’s have a survival outside their predicted range?"
+                   {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an observed survival rate outside their predicted range?"
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
 
-                           [:p "If we were looking only at one hospital, we’d only expect its survival to fall outside its predicted range 1 time in 20."]
+                           [:p "If we were looking at only one hospital, we’d expect its observed survival rate to fall outside its predicted range rarely, only 1 time in 20 if chances of survival at the hospitals match the formula."]
 
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
@@ -404,13 +381,13 @@
 
                            [:p "BUT, if we are looking at all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by chance about 8 times in 20! This is similar to the difference between flipping one coin and flipping many: if I only flip one coin there is a 50% probability that I’ll get one head whereas if I flipped, say, the four coins in a row the probability of me getting at least one head in the four throws goes up to 94%."]
 
-
+                           [:p "8 times in 20 means that it is not that rare that any one of these hospitals will have an observed survival rate that falls outside their predicted range. "]
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
 
                            [:p "So, on average, we’d anticipate that about half of NICOR’s annual reports to have at least one centre outside its range, either above or below, by chance alone."]
 
-                           [:p "Considering now the " [:i "extended predicted range"] ", if we are looking at all 14 hospitals at once we’d only expect one of them to be outside their extended range less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s observed survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
+                           [:p "Considering now the " [:i "extended predicted range"]" (light blue bar), if we are looking at all 14 hospitals at once we’d only expect one of them to be outside their extended range less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s observed survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
@@ -420,11 +397,11 @@
                    {:title "What happens if a hospital’s survival is outside its predicted range?"
                     :glossary [:chance-factors]
                     :body [:div
-                           [:p "The NHS and the national audit body, NICOR, want to understand whether there could be a reason that can be pinpointed for a hospital to be outside of its range"]
+                           [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason  why a hospital is outside of its range. "]
 
                            [:p "Because NICOR always looks at all 14 hospitals at once, it is not that rare for any single hospital to be outside its main predicted range but it is rare for any hospital to be outside its extended range (see also 2.4)"]
 
-                           [:p "If a hospital’s survival rate is below its predicted range (either the main or extended), everyone wants to be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or start to improve care if the national audit body decides that this is the reason."]
+                           [:p "If a hospital’s survival rate is " [:strong "below"] " its predicted range (either the main or extended), everyone wants to be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or start to improve care if the national audit body decides that this is the reason."]
 
                            [:p "If a hospital actual survival is below the predicted range, the "
                             [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/governance"} "National Congenital Heart Disease Audit Steering Committee "]
@@ -432,13 +409,13 @@
 
                            [:p "There are three main steps (see also 2.3)"]
 
-                           [:h3 "Step 1"]
+                           [:h4 "Step 1"]
                            [:p "The hospital is asked to recheck the data it submitted for any errors."]
 
-                           [:h3 "Step 2"]
+                           [:h4 "Step 2"]
                            [:p "If corrected data still leads to the hospital being outside its range, analysts check to see whether the hospital treated some children that are unlikely to have had their survival chances accurately predicted by the formula. For instance, if the hospital treated children with particularly complex health problems that are not captured by the formula."]
 
-                           [:h3 "Step 3"]
+                           [:h4 "Step 3"]
                            [:p "If the risk adjustment is considered adequate, then the hospital’s process of care are examined. For instance, how are care decisions made? What are the surgical protocols? How is intensive care managed?"]
 
                            [:p "The report on individual instances like this would then be published online by NICOR at the same time as the Annual Report."]
@@ -564,10 +541,16 @@
                     :body [:div
                            [:p "Yet to be written."]
                            ]}
-
-
                    ]}
 
+           {:section "Glossary of terms used"
+            :is-glossary true
+            :faqs [{:glossary-entry :survival-rate
+                    :title "Survival rate"
+                    :body  "The percentage of operations where the child survived at least 30 days after their operation."}
+                   {:glossary-entry :chance-factors
+                    :title "Chance factors"
+                    :body "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “chance factors”."}]}
            ])
 ;;;
   ;; These theme colours are selectable in the footer (at least till we decide on one)

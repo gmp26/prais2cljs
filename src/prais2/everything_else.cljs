@@ -22,6 +22,9 @@
                 state)
    })
 
+(defn make-glossary-map []
+  (into {} (mapcat (fn [g] {(:glossary-entry g) {:title (:title g) :body (:body g)}}) (:faqs (first (filter #(:is-glossary %) faq-sections))))))
+
 (rum/defc render-everything-else < scrollspy [faq-ref]
   [:.container
    [:#sidebar.row {:style {:position "relative"}}
@@ -55,7 +58,11 @@
             [:div.clearfix {:id (faq-id six fix)
                             :style {:padding-top "40px"} }
              [:h3  (:title faq)]
-             [:div (:body faq)]]))])
-     ]]
+             [:div (:body faq)]
+             (when (not (empty? (:glossary faq)))
+               [:p [:i "See " (interpose ", " (map name (:glossary faq))) " in the "
+                    [:a {:href (faq-hash 6)} "glossary"] "."]])]))]
+       )]
 
-])
+    ]]
+  )
