@@ -381,20 +381,20 @@
 
                            [:p "BUT, if we are looking at all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by chance about 8 times in 20! This is similar to the difference between flipping one coin and flipping many: if I only flip one coin there is a 50% probability that I’ll get one head whereas if I flipped, say, the four coins in a row the probability of me getting at least one head in the four throws goes up to 94%."]
 
-                           [:p "8 times in 20 means that it is not that rare that any one of these hospitals will have an observed survival rate that falls outside their predicted range. "]
+                           [:p "8 times in 20 means that it is not that rare that " [:strong "any"] " one of these hospitals will have an observed survival rate that falls outside their predicted range. "]
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
 
-                           [:p "So, on average, we’d anticipate that about half of NICOR’s annual reports to have at least one centre outside its range, either above or below, by chance alone."]
+                           [:p "So, on average, we’d anticipate that about half (8/20) of NICOR’s annual reports to have at least one centre outside its range, either above or below, by chance alone."]
 
-                           [:p "Considering now the " [:i "extended predicted range"]" (light blue bar), if we are looking at all 14 hospitals at once we’d only expect one of them to be outside their extended range less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s observed survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
+                           [:p "Considering now the " [:i "extended predicted range"]" (light blue bar). If we look at all 14 hospitals at once, we’d only expect one of them to be outside their extended range very rarely, less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s observed survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
 
                            ]}
 
-                   {:title "What happens if a hospital’s survival is outside its predicted range?"
+                   {:title "What happens if a hospital’s observed survival is outside its predicted range?"
                     :glossary [:chance-factors]
                     :body [:div
                            [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason  why a hospital is outside of its range. "]
@@ -423,20 +423,16 @@
                                                         :src "assets/outside-range.png"}]]
 
                            [:p "If a hospital’s survival rate is above its predicted range, we want to see if there is anything we can learn about best practice form that hospital so that it can be shared with other hospitals. "]
+
                            ]}
 
                   {:title "What is the risk adjustment method used by National Audit?"
                     :glossary []
                     :body [:div
-                           [:p "The National Audit body uses a risk adjustment method developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery) (See also the " [:a {:href "?#/intro"} "What, why, how"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more "]
+                           [:p "The National Audit body uses a risk adjustment method developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery) (See also the " [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more details."]
 
                            (comment "*** picture of formula churning away at PRAIS risk factors?***")
-                           (comment
-                             {:title "Why do the hospitals that do more operations have narrower ranges?"
-                              :glossary [:chance-factors :survival-rate]
-                              :body [:div
-                                     [:p "If a hospital does not carry out many operations, then chance factors can have a large impact on their overall survival rate, and so we need to allow more leeway between observed and predicted survival in order to rule out the influence of chance factors. The ranges get narrower as the hospitals do more operations."]]
-                              })
+
                            ]}]}
 
 
@@ -446,7 +442,7 @@
                    {:title "Are there any limitations to risk adjustment?"
                     :glossary []
                     :body [:div
-                           [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s observed survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ and there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
+                           [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s observed survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
 
                    {:title "How reliable are the data?"
                     :glossary []
@@ -459,7 +455,7 @@
                    {:title "What are the limitations of the data?"
                     :glossary [:chance-factors]
                     :body [:div
-                           [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about surgery outcomes. There are risk factors not routinely collected (for instance the size or relative severity of a child’s heart defect), which means these cannot be accounted for in our statistical prediction method. Different hospitals might also record the same heart condition slightly differently and this might affect the survival percentage predicted for these hospitals."]
+                           [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about surgery outcomes. There are risk factors not routinely collected (for instance the size of a hole in the heart), which means these cannot be accounted for in our statistical formula. "]
 
                            [:p "These data are also snapshots in time of what happened at each specialist hospital. A number of particularly challenging patients one year (in ways not accounted for in our prediction) or a run of chance factors could cause a very good hospital to have worse outcomes than predicted. So we need to be careful about reading too much into any single time period."]]
                     }
@@ -510,7 +506,7 @@
                            [:p [:img.thumbnail.pull-left
                                    {:style {:width "150px"
                                             :margin-right "20px"}
-                                    :src "assets/camlogo.png"}][:strong "University of Cambridge: Professor David Spiegelhalter"] " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and was part of the team that drew up the new patient information leaflets for breast screening. Mike Pearson… "]
+                                    :src "assets/camlogo.png"}][:strong "University of Cambridge: Professor David Spiegelhalter"] " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and was part of the team that drew up the new patient information leaflets for breast screening. " [:strong "Mike Pearson"] ", University of Cambridge , developed the data visualisations."]
 
                            [:p [:img.thumbnail.pull-left
                                    {:style {:width "100px"
