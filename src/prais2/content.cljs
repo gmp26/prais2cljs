@@ -354,7 +354,7 @@
                            [:h4 "Step 2"]
                            [:p "The statistical formula is then applied to all operations at that hospital to calculate its overall predicted range."]
 
-                           [:p [:i "Although the data submitted is usually of very high quality, there will always be some mistakes in large and complex datasets. If a hospital submits data where some of the data is very wrong (for instance wrong weights are recorded) or missing, then this will result in a wrong predicted range. "]]
+                           [:p [:i "Although the statistical formula as is as good as we can currently get it, it is not perfect. There will always be unique features about a child that affect its chance of survival that are not captured by routine data collection and so cannot be part of a formula. We will never be able to capture the whole medical picture of a child in a single formula! So, the predicted range is the best possible guess for what the predicted range should be and could be wrong."]]
 
                            [:h4 "Step 3"]
                            [:p "“What actually happened” for each child is then used to calculate the observed survival rate for that hospital and compared to the predicted range."]
