@@ -86,14 +86,15 @@
                        "&map-selection=" (:map-h-code app-state)
                        )]
     #_(prn "params = " params)
-    (POST sheets-logger-app
+    #_(POST sheets-logger-app
           :params params
           :handler sheets-success-handler
           :error-handler sheets-write-error
           :format {:write identity
                    :content-type "application/x-www-form-urlencoded"}
           :response-format :json
-          :keywords? true)))
+          :keywords? true)
+    nil))
 
 (defn write-log
   "write an event to the log"
