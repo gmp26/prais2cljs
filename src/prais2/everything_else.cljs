@@ -46,6 +46,7 @@
       ]]
 
     [:#faqs.col-sm-offset-4.col-sm-8
+     {:style {:padding-bottom "500px"}}
 
      (for [six (range (count faq-sections))
            :let [section (faq-sections six)]]

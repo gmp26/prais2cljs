@@ -97,7 +97,7 @@
        [:i.fa.fa-chevron-right]
        ]]
    [:.container
-    [:.row
+    [:.row {:style {:margin-bottom "100px"}}
      (what-why)
      (data)
      (everything-else)]]
