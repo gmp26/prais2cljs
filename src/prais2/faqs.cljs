@@ -13,7 +13,6 @@
     ] (mod index 3)))
 
 (rum/defc render-bubble-title [section-ix [index faq]]
-  (prn "render-bubble-title " index)
   [:div
    (let [pull (if (even? index) "on-left" "on-right")
          ixc (ix-col index)
@@ -35,6 +34,22 @@
                      (vec (zipmap (range) (:faqs faq-section)))))]
   )
 
+(rum/defc render-short-answer [answer]
+  [:div {:style {:margin-top "30px"}}
+   [:div {:style {:margin-top "0px"
+                  :width "80px"
+                  :font-size "21px"
+                  :font-weight 200
+                  :float "left"
+                  :clear "left"
+                  }} [:i.fa.fa-comment {:style {:color "#FFA500"
+                                                :font-size "50px"}}]]
+   [:div {:style {:font-size "21px"
+                  :font-weight 200
+                  :margin-bottom "40px"
+                  }}
+    answer]])
+
 (rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
     (prn "rendering glossary term " term)
@@ -49,6 +64,8 @@
                 (map #(render-glossary-term %) glossary))])
 
 (rum/defc render-faqs [faq-ref]
+
+  (prn "rendering " faq-ref)
   [:.container
    [:.row
     (if (= :top faq-ref)
@@ -63,19 +80,31 @@
        (let [[section-ix ix] faq-ref
              section (faq-sections section-ix)
              faq ((:faqs section) ix)
+             short-answer (:short-answer faq)
              glossary (:glossary faq)]
          [:div
-          [:h1 {:key 1} (:title faq)]
-          [:div {:key 2} (:body faq)]
+          [:h2 {:key 1}
+           [:div {:style {:margin-top "-32px"
+                          :width "80px"
+                          :float "left"}} [:i.fa.fa-question {:style {:font-size "100px"
+                                                                      :color "#FFA500"}}]]
+           [:div {:style {:margin-top "40px"}}
+            (:title faq)]]
+          (when short-answer
+            (do
+              (prn "rendering short answer for section " section-ix "." ix)
+              (render-short-answer short-answer)))
+          [:div {:key 2
+                 :style {:clear "both"}} (:body faq)]
           (when (> (count glossary) 0)
             (do
               (prn "rendering glossary " glossary)
               (render-glossary glossary)))
           [:button.btn.btn-primary
            {:key 3
+            :style {:margin-bottom "100px"}
             :on-click #(core/click->event-bus % :faqs :top)
             :on-touch-start #(core/click->event-bus % :faqs :top)
             }
            "Back"
-           ]
-          ])])]])
+           ]])])]])

@@ -64,23 +64,23 @@
   [:div
    [:.jumbotron
     {:style
-     {:background-image "url(assets/logotron.png)"
+     {;:background-image "url(assets/logotron.png)"
       :background-size "100%"
-      :color "#CCCCCC"}}
+      :color "#555555"}}
     [:.container
      [:.row
-      [:section.about
-       [:p "This site is to help people make sense of the published survival statistics about children’s heart surgery. Our website will help you:"
-        [:ul
-         [:li "explore what survival rates can and can’t tell you"]
-         [:li "understand how the NHS monitors children’s heart surgery"]
-         [:li "explore published results for UK hospitals"]]
-        #_[:p "Use the tabs or watch our animations to explore this site!"]
-        ]
-       #_(animation-1)
+      [:section.about.col-sm-offset-2.col-sm-8
+       [:p "This site is to help people make sense of the published survival statistics about children’s heart surgery. "]
+       [:p "Our website will help you:"]
+       [:ul {:style {:font-size "16px"
+                     :font-weight 200
+                     }}
+        [:li "explore what survival rates can and can’t tell you"]
+        [:li "understand how the NHS monitors children’s heart surgery"]
+        [:li "explore published results for UK hospitals"]]
        ]]
      ]
-    [:button.btn-primary.btn-lg.center-block.highlight
+    #_[:button.btn-primary.btn-lg.center-block.highlight
        {:role "button"
         :style
         {:position "relative"

@@ -275,6 +275,8 @@
 
                    {:title "Why are survival rates after children's heart surgery monitored and published?"
                     :glossary [:survival-rate]
+                    :short-answer "The NHS monitors survival rates after children’s heart surgery to check if recent survival rates at any hospital are much lower than predicted."
+
                     :body [:div
                            [:p [:a {:href  "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"}] [:img.thumbnail.pull-left
                                    {:style {:width "100px"
@@ -285,6 +287,7 @@
                     }
 
                    {:title "How are survival rates monitored?"
+                    :short-answer "Every year the national audit body publishes overall survival rates for each hospital for the previous 3 years. Each hospital’s survival rates are compared to what is predicted for that hospital by a statistical formula."
                     :glossary [:survival-rate]
                     :body [:div
                            [:p [:a {:href  "http://www.ucl.ac.uk/nicor/patients"}
@@ -292,7 +295,7 @@
                                  {:style {:width "100px"
                                           :margin-right "20px"}
                                   :src "assets/nicor.png"}]]
-                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] "only published survival rates for certain types of procedure because there was no clear way to put overall survival rates for each hospital into context (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "researchers"] "have now made this possible by creating a statistical formula. Using this, NICOR has published overall survival rates along with the predicted range (dark blue bar) and extended predicted range (light blue bar) for survival for each hospital since 2013 (see "[:a {:href "?#/intro"} "What, Why and How?"]").  The predicted range is the range in which we expect to see each hospital’s observed survival ratethe majority of the time (19 times out of 20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
+                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because there was no clear way to put overall survival rates for each hospital into context (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "researchers"] " have now made this possible by creating a statistical formula. Using this, NICOR has published overall survival rates along with the predicted range (dark blue bar) and extended predicted range (light blue bar) for survival for each hospital since 2013 (see "[:a {:href "?#/intro"} "What, Why and How?"]").  The predicted range is the range in which we expect to see each hospital’s observed survival ratethe majority of the time (19 times out of 20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
 
                             ]
                            [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
@@ -302,6 +305,7 @@
                     }
 
                    {:title "Where is this data from?"
+                    :short-answer "The data on what was wrong with each child’s heart and their operation comes from the hospital’s records, and the data on whether a child survived to 30 days comes from both the hospital and the Office of National Statistics."
                     :glossary []
                     :body [:div
                            [:p [:img.thumbnail.pull-left
@@ -317,7 +321,8 @@
                    ]}
 
            {:section "Understanding the predicted range"
-            :faqs [{:title "Why is a survival range predicted for each individual hospital?"
+            :faqs [{:title "Why is a different survival range predicted for each hospital?"
+                    :short-answer "The predicted range depends on how complex were the medical problems of the children who had operations. Each hospital treats different children and so each hospital will have a different predicted range."
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
                            [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more serious conditions. This affects a child's chances of survival, as do other factors such as age, weight and other health problems."]
@@ -333,6 +338,7 @@
                     }
 
                    {:title "Why does the width of the predicted range differ between hospitals?"
+                    :short-answer "Chance factors have a bigger influence on the observed survival rate for hospitals that do fewer operations, and so the predicted range is wider for hospitals that do fewer operations."
                     :glossary [:survival-rate]
                     :body [:div
                            [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
@@ -340,6 +346,7 @@
                     }
 
                    {:title "When looking at just one hospital, what does it mean if its survival is outside its predicted range?"
+                    :short-answer "There are four possible reasons for being outside the predicted range: inaccurate data, a risk model that for some reason doesn’t work well for that hospital, just by chance (1 time in 20), or the chances of survival at that hospital are different to what is predicted. "
                     :glossary [:survival-rate]
                     :body [:div
                            [:p "This is a difficult question and so the answer is a bit long!"]
@@ -354,12 +361,13 @@
                            [:h4 "Step 2"]
                            [:p "The statistical formula is then applied to all operations at that hospital to calculate its overall predicted range."]
 
-                           [:p [:i "Although the statistical formula as is as good as we can currently get it, it is not perfect. There will always be unique features about a child that affect its chance of survival that are not captured by routine data collection and so cannot be part of a formula. We will never be able to capture the whole medical picture of a child in a single formula! So, the predicted range is the best possible guess for what the predicted range should be and could be wrong."]]
+                           [:p [:i "Although the statistical formula as is as good as we can currently get it, it is not perfect. There will always be unique features about a child that affect its chance of survival that are not captured by routine data collection and so cannot be part of a formula formula (e.g. the size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single formula! So, the predicted range is the best possible guess for what the predicted range should be and could be wrong."]]
 
                            [:h4 "Step 3"]
                            [:p "“What actually happened” for each child is then used to calculate the observed survival rate for that hospital and compared to the predicted range."]
 
                            [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply well to that hospital, then , we consider there is some or strong evidence that the chances of survival at that hospital are not as predicted, if the observed survival rate is outside the predicted range"]
+
                            [:p "The strength of the evidence depends on where the observed survival is compared to the extended range. If it is outside the central predicted range (dark blue bar) but inside the extended range (light blue bar) (expected 998 out of a 1000 times) then this is considered moderate evidence. If the observed survival is outside the extended range (only expected to happen 2 times out of a 1000), then this is considered strong evidence. "]
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
@@ -370,6 +378,7 @@
                     }
 
                    {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an observed survival rate outside their predicted range?"
+                    :short-answer "When looking at many hospitals at once, we expect at least one hospital’s observed survival rate to be outside its predicted range about 8 times in 20. "
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
 
@@ -395,6 +404,7 @@
                            ]}
 
                    {:title "What happens if a hospital’s observed survival is outside its predicted range?"
+                    :short-answer "The national audit body works with the hospital to check the quality of the data and check the appropriateness of the statistical formula. If these are fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
                     :glossary [:chance-factors]
                     :body [:div
                            [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason  why a hospital is outside of its range. "]
@@ -426,7 +436,8 @@
 
                            ]}
 
-                  {:title "What is the risk adjustment method used by National Audit?"
+                   {:title "What is the risk adjustment method used by National Audit?"
+                    :short-answer "The statistical formula is based on a method called “Partial Risk Adjustment in Surgery” or PRAiS for short, developed by researchers at Great Ormond Street Hospital and University College London. "
                     :glossary []
                     :body [:div
                            [:p "The National Audit body uses a risk adjustment method developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery) (See also the " [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more details."]
@@ -440,11 +451,13 @@
             :faqs [
 
                    {:title "Are there any limitations to risk adjustment?"
+                    :short-answer "Yes – a child’s chances of survival can never be completely captured in a single formula. "
                     :glossary []
                     :body [:div
                            [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s observed survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
 
                    {:title "How reliable are the data?"
+                    :short-answer "The data are of very high quality and some of the best in the world."
                     :glossary []
                     :body [:div
                            [:p "The data come from the National Institute for Cardiovascular Outcomes Research (UCL NICOR) which collects national data for the National Heart Disease Audits. All hospitals performing heart surgery in children have to submit their data in a standard format to NICOR. All hospitals are independently audited each year as part of a data validation process (to check the quality of the data submitted)."]
@@ -453,6 +466,7 @@
                     }
 
                    {:title "What are the limitations of the data?"
+                    :short-answer "These data do not capture all the potential medical problems a child has and only represent a snapshot of survival outcomes. They cannot capture the full picture of the quality of care provided by a hospital."
                     :glossary [:chance-factors]
                     :body [:div
                            [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about surgery outcomes. There are risk factors not routinely collected (for instance the size of a hole in the heart), which means these cannot be accounted for in our statistical formula. "]
@@ -461,6 +475,7 @@
                     }
 
                    {:title "What about longer term survival and quality of life?"
+                    :short-answer "At the moment these are not reported. There is active research underway to work how to report long term survival and quality of life for children after heart surgery but it will be some years before this becomes part of routine national audit."
                     :glossary []
                     :body [:div
                            [:p "National audit data at the moment (as of 2016) only looks at what happens shortly after surgery. These data cannot tell us about longer term (e.g. 90 day, 1 year or 5 year) survival, or other outcomes such as post-surgery complication rates or the impact of surgery on the child or their family. There is a lot of " [:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"} "active research"] " going right now (due to finish around 2018) investigating how to capture, interpret and publish longer term survival and complication rates so hopefully this information will be available in the next 5 years."]
@@ -471,6 +486,7 @@
 
            {:section "My family or child"
             :faqs [{:title "Which hospital should I go to?"
+                    :short-answer "This website cannot tell you which hospital to go to. Please discuss this with your child’s clinical team or access the support offered by specialist charities such as the Children’s Heart Federation. "
                     :glossary []
                     :body [:div
                            [:p "You can use the national audit data to see how the different hospitals are doing compared to what is predicted from the statistical model for a particular time period. You can also use the " [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/vwContent/home"} "national audit website"] " to explore how many operations of each type a hospital does and survival outcomes for each of these. However, this cannot, in itself, tell you which hospital you should go to and does not provide proof that one hospital is “better” than any other. The safety or otherwise of a hospital " [:strong "cannot"] " be determined from survival data alone."]
@@ -483,6 +499,7 @@
                     }
 
                    {:title "Can the published data tell me about the risks for my child?"
+                    :short-answer "No. Your child’s clinical team will always know more about your child than the statistical formula can."
                     :glossary []
                     :body [:div
                            [:p "No, the published data cannot tell you about the risk for your child specifically – this will depend on other factors that are not necessarily captured in the national data. Your child’s specialist cardiologist and/or cardiac surgeon will be able to discuss this with you. These guides on " [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf"} "speaking to your child’s surgeon"] " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf"} "seeking a second opinion"] ", written by the Children’s Heart Federation, might also be helpful."]
@@ -496,33 +513,37 @@
             :faqs [{:title "About us"
                     :glossary []
                     :body [:div
-                           [:p [:img.thumbnail.pull-left
-                                   {:style {:width "150px"
-                                            :margin-right "20px"}
-                                    :src "assets/ucl-logo.png"}] [:strong "University College London: Dr Christina Pagel"] " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great Ormond Street Hospital, to help them use routinely collected data to improve NHS services. Her work currently focuses on two areas: 1) care for children requiring heart surgery and 2) how specialist intensive care is organised for children who need it (for whatever reason). "]
+                           [:.image-para [:p [:img.pull-left
+                                              {:style {:width "150px"
+                                                       :margin-right "20px"}
+                                               :src "assets/ucl-logo.png"}] [:strong "University College London: Dr Christina Pagel"] " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great Ormond Street Hospital, to help them use routinely collected data to improve NHS services. Her work currently focuses on two areas: 1) care for children requiring heart surgery and 2) how specialist intensive care is organised for children who need it (for whatever reason). "]
 
-                           [:p "Christina helped developed a statistical method called PRAiS to let specialist hospitals and the national audit body easily monitor survival outcomes after heart surgery in children. The UK National Audit Body that monitors paediatric congenital outcomes now uses this method in publishing their outcomes. In this project, Christina worked with Sense about Science, the University of Cambridge and the Children’s Heart Federation to develop these online resources to help people interpret the audit body’s published results. "]
+                            [:p "Christina helped developed a statistical method called PRAiS to let specialist hospitals and the national audit body easily monitor survival outcomes after heart surgery in children. The UK National Audit Body that monitors paediatric congenital outcomes now uses this method in publishing their outcomes. In this project, Christina worked with Sense about Science, the University of Cambridge and the Children’s Heart Federation to develop these online resources to help people interpret the audit body’s published results. "]]
+                           [:.image-para
+                            [:p [:img.pull-left
+                                 {:style {:width "150px"
+                                          :margin-right "20px"}
+                                  :src "assets/camlogo.png"}][:strong "University of Cambridge: Professor David Spiegelhalter"] " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and was part of the team that drew up the new patient information leaflets for breast screening. " [:strong "Mike Pearson"] ", University of Cambridge , developed the data visualisations."]]
 
-                           [:p [:img.thumbnail.pull-left
-                                   {:style {:width "150px"
-                                            :margin-right "20px"}
-                                    :src "assets/camlogo.png"}][:strong "University of Cambridge: Professor David Spiegelhalter"] " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and was part of the team that drew up the new patient information leaflets for breast screening. " [:strong "Mike Pearson"] ", University of Cambridge , developed the data visualisations."]
-
-                           [:p [:img.thumbnail.pull-left
-                                   {:style {:width "100px"
-                                            :margin-right "20px"}
-                                    :src "assets/kings-logo.png"}][:strong "King’s College London: Dr Tim Rakow… Dr Emily Blackshaw…. "]]
+                           [:.image-para
+                            [:p [:img.pull-left
+                                 {:style {:width "100px"
+                                          :margin-right "20px"}
+                                  :src "assets/KCLlogo.gif"}][:strong "King’s College London: Dr Tim Rakow… Dr Emily Blackshaw…. "]]]
 
 
-                           [:p {:style {:clear "both" }}
-                            [:img.thumbnail.pull-left
-                                   {:style {:width "150px"
-                                            :margin-right "20px"}
-                                    :src "assets/sas-logo.png"}] [:strong "Sense About Science"] ", a U.K.-based charity, works to put science and evidence in the hands of the public. They are a source of information, challenge misinformation, and champion sound science and evidence with the help of scientists, academics, and experts in various fields. They facilitated the workshops with parents, other interested users and members of the public who helped to co-develop the website. "]
-                           [:p [:img.thumbnail.pull-left
-                                   {:style {:width "60px"
-                                            :margin-right "20px"}
-                                    :src "assets/chf-logo.png"}][:strong "The Children’s Heart Federation"] " is the leading UK children’s heart charity and the main umbrella body for British CHD charities and voluntary organisations. They publicised this project among their members and coordinated the involvement of parents in our workshops. "]
+                           [:.image-para
+                            [:p {:style {:clear "both" }}
+                             [:img.pull-left
+                              {:style {:width "150px"
+                                       :margin-right "20px"}
+                               :src "assets/sas-logo.png"}] [:strong "Sense About Science"] ", a U.K.-based charity, works to put science and evidence in the hands of the public. They are a source of information, challenge misinformation, and champion sound science and evidence with the help of scientists, academics, and experts in various fields. They facilitated the workshops with parents, other interested users and members of the public who helped to co-develop the website. "]]
+
+                           [:.image-para
+                            [:p [:img.pull-left
+                                              {:style {:width "60px"
+                                                       :margin-right "20px"}
+                                               :src "assets/chf-logo.png"}][:strong "The Children’s Heart Federation"] " is the leading UK children’s heart charity and the main umbrella body for British CHD charities and voluntary organisations. They publicised this project among their members and coordinated the involvement of parents in our workshops. "]]
                            ]}
 
                    {:title "How we developed this site"

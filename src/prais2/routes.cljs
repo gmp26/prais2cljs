@@ -2,6 +2,7 @@
     (:require [secretary.core :as secretary :refer-macros [defroute]]
               [goog.events :as events]
               [goog.history.EventType :as EventType]
+              [cljs.reader :refer [read-string]]
               [cljs.core.async :refer [put!]]
               [prais2.core :as core]
               )
@@ -23,9 +24,11 @@
   (put! core/event-bus [:faqs :top])
 )
 
-(defroute faq "/faq/:id" [id]
-  (put! core/event-bus [:faqs id])
-  (prn "faq :id match")
+(defroute faq "/faq/:section/:id" [section id]
+  (let [s (.parseInt js/Number section)
+        f (.parseInt js/Number id)]
+    (put! core/event-bus [:show-faq [s f]])
+    (prn "faq :section :id match" s f))
 )
 
 (defroute homes "/home" []

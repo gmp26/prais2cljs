@@ -213,11 +213,12 @@
 
      (= page :faqs)
      (do
-       (.pushState js/history [] "" (routes/faqs))
+       (prn "section = " section)
+       (when (or (= :section :top) (= :section nil)) (.pushState js/history [] "" (routes/faqs {:section :top})))
        (map-indexed key-with
                     [(chrome/header)
-                     (render-everything-else section)
-                     #_(render-faqs section)
+                     #_(render-everything-else section)
+                     (render-faqs section)
                      (chrome/footer)]))
 
      :else
@@ -358,9 +359,10 @@
 
   (dispatch event-bus-pub :show-faq
             (fn [[_ faq-ref]]
-              (prn "nav to faq " faq-ref)
-              #_(render-faq faq-ref)
-              (swap! core/app #(assoc % :page :faqs :section faq-ref))))
+              (let [[sec id] faq-ref]
+                (prn "nav to faq " faq-ref " = " sec "," id)
+                (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                (swap! core/app #(assoc % :page :faqs :section faq-ref)))))
 
   ;;;
   ;; log-bus handling from here

@@ -103,7 +103,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   core/app)
 
 (defcard render-table
-  (render-table "data"))
+  (render-data "data"))
 
 #_(defcard sample-faq-7
   (rum-wrap (faq-content :faq7))

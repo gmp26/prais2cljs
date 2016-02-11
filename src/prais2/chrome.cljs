@@ -86,7 +86,7 @@
                :z-index 1;
                :left "0px"
                :top "3px"
-               :background-image "url(assets/logo2.png)"
+               :background-image "url(assets/logo3.png)"
                :background-repeat "no-repeat"
                :background-size "100%"
                :width "70px"
@@ -106,30 +106,17 @@
 
 (rum/defc footer []
   [:.container-fluid.partners
-   [:.row
-    [:.col-sm-12 {:style {:padding-top "50px"
-                          :border-top "1px solid black"
-                          }}
-     [:img
-      {:style {:height "50%"
-               :margin-right "20px"}
-       :src "assets/ucl-logo.png"}]
-     [:img
-      {:style {:height "50%"
-               :margin-right "20px"}
-       :src "assets/camlogo.png"}]
-     [:img
-      {:style {:height "50%"
-               :margin-right "20px"}
-       :src "assets/kings-logo.png"}]
-     [:img
-      {:style {:height "50%"
-               :margin-right "20px"}
-       :src "assets/sas-logo.png"}]
-     [:img
-      {:style {:height "50%"
-               :margin-right "20px"}
-       :src "assets/chf-logo.png"}]]]
+   [:.row {:style {:padding-top "50px"}}
+    [:img.img-responsive.col-sm-offset-2.col-sm-2
+     {:src "assets/ucl-logo.png"}]
+    [:img.img-responsive.col-sm-2
+     {:src "assets/camlogo.png"}]
+    [:img.img-responsive.col-sm-1
+     {:src "assets/KCLlogo.gif"}]
+    [:img.img-responsive.col-sm-2
+     {:src "assets/sas-logo.png"}]
+    [:img.img-responsive.col-sm-1
+     {:src "assets/chf-logo.png"}]]
    [:.row.footer
     [:.pull-right (logger/playback-controls)]
 
