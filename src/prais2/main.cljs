@@ -214,7 +214,8 @@
      (= page :faqs)
      (do
        (prn "section = " section)
-       (when (or (= :section :top) (= :section nil)) (.pushState js/history [] "" (routes/faqs {:section :top})))
+       (when (or (= section :top) (= section nil))
+         (.pushState js/history [] "" (routes/faqs {:section :top})))
        (map-indexed key-with
                     [(chrome/header)
                      #_(render-everything-else section)

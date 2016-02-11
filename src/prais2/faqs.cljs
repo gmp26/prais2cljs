@@ -63,15 +63,81 @@
    (map-indexed key-with
                 (map #(render-glossary-term %) glossary))])
 
+(rum/defc render-faq-menu []
+  )
+
+
 (rum/defc render-faqs [faq-ref]
 
   (prn "rendering " faq-ref)
-  [:.container
+  [:.container-fluid
    [:.row
     (if (= :top faq-ref)
-      [:#faqs.col-md-12
-       [:h1 content/title]
-       (map-indexed key-with
+      [:div
+       [:h1.col-md-12 content/title]
+       ;; new block menu
+
+       ;; column 1
+       [:div.col-sm-4
+        (let [section (content/faq-sections 0)]
+          [:div.faq-block.faq-nav-1
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [[ix faq] (map-indexed vector (:faqs section))]
+              [:li [:a {:href (str "#/faq/0/" ix)} (:title faq)]])]])
+
+        (let [section (content/faq-sections 2)]
+          [:div.faq-block.faq-nav-2
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])]
+
+
+       ;; column 2
+       [:div.col-sm-4
+        (let [section (content/faq-sections 1)]
+          [:div.faq-block.faq-nav-3
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])
+        ]
+
+       ;; column 3
+       [:div.col-sm-4
+        (let [section (content/faq-sections 3)]
+          [:div.faq-block.faq-nav-4
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])
+        (let [section (content/faq-sections 4)]
+          [:div.faq-block.faq-nav-4
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])
+        (let [section (content/faq-sections 5)]
+          [:div.faq-block.faq-nav-4
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])
+        (let [section (content/faq-sections 6)]
+          [:div.faq-block.faq-nav-4
+           [:h4 (:section section)]
+           [:ul.list-unstyled
+            (for [faq (:faqs section)]
+              [:li (:title faq)])]])
+
+]
+
+
+
+
+       ;; old bubble menu
+       #_(map-indexed key-with
                     (map render-section
                          (vec (zipmap (range) faq-sections))))
 

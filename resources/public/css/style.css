@@ -110,8 +110,10 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     //border-color:  #7FCDBB;
 }
 
+
 .well.intro {
     background-color:  #FC867A;
+
     opacity: 0.9;
     cursor: pointer;
 }
@@ -948,4 +950,59 @@ ul.nav.navbar-nav.navbar-right {
 
 .todo {
     background-color: yellow;
+}
+
+
+.faq-block {
+    padding: 10px;
+    margin: 20px 0px 20px 0px;
+    border: none;
+    color: white;
+    width: 100%;
+    border-radius: 2px;
+    box-shadow: 1px 1px 1px #CCCCCC;
+}
+
+.faq-block li {
+    padding: 5px;
+}
+
+.faq-block li a {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    color:white;
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+.faq-block li a:hover {
+    border: 1px solid white;
+    padding: 4px;
+    opacity: 1;
+}
+
+
+.faq-nav-1 {
+    background-color: #8B99FA;
+}
+
+.faq-nav-2 {
+    background-color: #FC867A;
+}
+
+.faq-nav-3 {
+    background-color: #FC8D59;
+}
+
+.faq-nav-4 {
+    background-color: #7FCDBB;
+}
+
+.faq-nav-5 {
+    background-color: #8B99FA;
+}
+
+.faq-nav-6 {
+    background-color: #FC867A;
 }
