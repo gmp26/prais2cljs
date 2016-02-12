@@ -603,7 +603,7 @@
   [:option {:value (name key)} (name key)])
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
-  [:.form-group.col-md-2
+  [:.form-group
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
@@ -615,7 +615,7 @@
 
 (rum/defc option-menu < rum/reactive [event-bus]
   [:nav.navbar.navbar-default.table-container
-   [:.container
+   [:.container-fluid
     [:navbar-form.form-inline.row
      [:.col-sm-2
       (map-indexed key-with

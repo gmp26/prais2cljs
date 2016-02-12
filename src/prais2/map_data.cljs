@@ -20,7 +20,7 @@
     [:.col-sm-6
      [:div.center-block (map/hospitals)]]
     (if (nil? (:map-h-code (rum/react core/app)))
-      [:div.col-sm-6
+      [:div.col-sm-6.col-xs-6 {:style {:padding-top "40px"}}
        [:img.img-responsive.center-block {:src "assets/big-icon.png"}]
        [:p.text-center "Click on a hospital or use the"]
        [:.center-block.btn.btn-info.disabled {:style {:width "80px"}}
