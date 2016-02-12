@@ -81,7 +81,8 @@
       }}
     (when true ;deep
       [:div
-       [:div {:style
+       [:div {:key 1
+              :style
               {:position "relative"
                :z-index 1;
                :left "0px"
@@ -99,7 +100,8 @@
 }}
 
         ]
-       [:h3 {:class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
+       [:h3 {:key 2
+             :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
     ]])
 
 
@@ -118,7 +120,7 @@
     [:img.img-responsive.col-sm-1
      {:src "assets/chf-logo.png"}]]
    [:.row.footer
-    [:.pull-right (logger/playback-controls)]
+    ;[:.pull-right (logger/playback-controls)]
 
 
     [:h3

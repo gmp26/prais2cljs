@@ -173,6 +173,7 @@
 ;; pager
 ;;;
 
+
 (rum/defc page-choice < rum/static [page section]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
@@ -256,7 +257,7 @@
             (close! in-chan))
           (do (handle event)
               (when (= event-bus-pub event-feed)
-                #_(prn "dispatched " event)
+
                 (logger/write-log event))
               (recur)))))))
 
@@ -350,10 +351,11 @@
 
   (dispatch event-bus-pub :show-faq
             (fn [[_ faq-ref]]
+              (prn faq-ref)
               (let [[sec id] faq-ref]
-                (prn "nav to faq " faq-ref " = " sec "," id)
-                (.pushState js/history [] "" (routes/faq {:section sec :id id}))
-                (swap! core/app #(assoc % :page :faqs :section faq-ref)))))
+                (do (prn "nav to faq " faq-ref " = " sec "," id)
+                    (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                    (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
   ;;;
   ;; log-bus handling from here

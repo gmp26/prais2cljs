@@ -66,10 +66,10 @@
 (rum/defc render-faq-block [sec-ix block-class]
   (let [section (content/faq-sections sec-ix)]
     [:div.faq-block {:class block-class}
-     [:h4 (:section section)]
-     [:ul.list-unstyled
+     [:h4 {:key 1} (:section section)]
+     [:ul.list-unstyled {:key 2}
       (for [[ix faq] (map-indexed vector (:faqs section))]
-        [:li [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]]))
+        [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]]))
 
 
 (rum/defc render-faq-top [faq-ref]
@@ -100,7 +100,7 @@
 
 
 (rum/defc render-faq-section [faq-ref]
-  [:#faq.col-md-10.col-md-offset-1
+  [:#faq.col-sm-10.col-sm-offset-1
      (let [[section-ix ix] faq-ref
            section (faq-sections section-ix)
            faq ((:faqs section) ix)

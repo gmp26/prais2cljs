@@ -17,7 +17,8 @@
 
 
 
-    [:.col-sm-6 (map/hospitals)]
+    [:.col-sm-6
+     [:div.center-block (map/hospitals)]]
     (if (nil? (:map-h-code (rum/react core/app)))
       [:div.col-sm-6
        [:img.img-responsive.center-block {:src "assets/big-icon.png"}]

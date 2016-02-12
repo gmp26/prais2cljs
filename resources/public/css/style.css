@@ -97,7 +97,8 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 .well.danger {
-    background-color: #FFBDB6;
+    background-color: #FC867A;
+    color: #ffffff;
 }
 
 .data {

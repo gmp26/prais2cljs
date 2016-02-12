@@ -26,9 +26,14 @@
 
 (defroute faq "/faq/:section/:id" [section id]
   (let [s (.parseInt js/Number section)
-        f (.parseInt js/Number id)]
-    (put! core/event-bus [:show-faq [s f]])
-    (prn "faq :section :id match" s f))
+        f (.parseInt js/Number id)
+        ap @core/app]
+    (if (not (and
+              (= (:page ap) :faqs)
+              (= (:section ap) [s f])))
+      (do
+        (put! core/event-bus [:show-faq [s f]])
+        (prn "faq :section :id match" s f))))
 )
 
 (defroute homes "/home" []

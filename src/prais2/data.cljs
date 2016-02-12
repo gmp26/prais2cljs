@@ -9,6 +9,7 @@
               [prais2.utils :as u :refer [px pc important key-with]]
               [prais2.logger :as logger]
               [clojure.string :as str]
+              [sablono.core :as sab]
               ))
 
 ;;;
@@ -270,13 +271,14 @@
         dotty (:dot bars)
         dotless (disj bars :dot)]
     [:div
-     [:.annotation text]
-     [:.chart-cell.annotated {:style {:background "#ffffff"
-                            :margin-left 0;(important (px axis-margin))
-                            :height "60px"
-                            :width "100%"
-                            :padding-right 0;last-pad-right
-                            }}
+     [:.annotation {:key 1} text]
+     [:.chart-cell.annotated {:key 2
+                              :style {:background "#ffffff"
+                                      :margin-left 0;(important (px axis-margin))
+                                      :height "60px"
+                                      :width "100%"
+                                      :padding-right 0;last-pad-right
+                                      }}
       [:div.bar-chart.annotated
        (map-indexed key-with
 
@@ -522,23 +524,21 @@
              :let [column-header (column-key headers)
                    info-handler #(core/click->event-bus % :open-hospital-modal h-code)]
              :when (:shown column-header)]
-         [:td {:key column-key
+         [:td {:key [h-code column-key]
                :style (merge {:maxWidth (px (:width column-header))
                               :whiteSpace "normal"
                               :height (px (:height column-header))}
                              (if (= column-key :h-name) {:minWidth (px 256)} {}))}
-          [:div {:key 1
-                 :style {:display "inline-block"
+          [:div {:style {:display "inline-block"
                          :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
            (str (column-key row) (when (= column-key :survival-rate) " %" ""))]
 
           (when (= column-key :h-name)
             [:button.btn.btn-link.btn-xs.h-info
-             {:key 2
-              :on-click info-handler
+             {:on-click info-handler
               :on-touch-start info-handler}
              h-code " " [:i.fa.fa-chevron-right]])])
-       [:td {:key :bars
+       [:td {:key [h-code :bars]
              :style {:background-color "#f0f0f0"}} (chart-cell row slider-axis-value)]])]])
 
 (rum/defc table1 < rum/reactive [app data event-bus]
@@ -617,11 +617,12 @@
   [:nav.navbar.navbar-default.table-container
    [:.container
     [:navbar-form.form-inline.row
-     (map-indexed key-with
-                  [(datasource-dropdown event-bus)
-                   (theme-dropdown event-bus)
-                   (chart-state-dropdown event-bus)
-                   ])]]])
+     [:.col-sm-2
+      (map-indexed key-with
+                   [(datasource-dropdown event-bus)
+                                        ;(theme-dropdown event-bus)
+                                        ;(chart-state-dropdown event-bus)
+                    ])]]]])
 
 (rum/defc interpretation
   [row]
@@ -656,10 +657,10 @@
                  [:h4 {:key 1} "Further web information"]
                  [:ul {:key 2}
                   [:li {:key 1} [:a (link1 1) (link1 2)]]
-                  (when link2 [:li [:a (link2 1) (link2 2)]])
-                  (when link3 [:li [:a (link3 1) (link3 2)]])
-                  (when link4 [:li [:a (link4 1) (link4 2)]])
-                  (when link5 [:li [:a (link5 1) (link5 2)]])
+                  (when link2 [:li {:key 2} [:a (link2 1) (link2 2)]])
+                  (when link3 [:li {:key 3} [:a (link3 1) (link3 2)]])
+                  (when link4 [:li {:key 4} [:a (link4 1) (link4 2)]])
+                  (when link5 [:li {:key 5} [:a (link5 1) (link5 2)]])
                   ]])))
 
 (rum/defc sample-hospital-intro-text []
@@ -672,17 +673,18 @@
   [h-code]
   (let [datasource (:datasource (rum/react core/app))
         selected-row (h-code ((rows-by-code datasource)))]
-    [:.data-summary
-     [:p "The hospital performed "
-      [:b (:n-ops selected-row) "  operations. "]]
-     [:p "After 30 days there were "
-      [:b (:n-survivors selected-row) " survivors "]
-      "and "
-      [:b (:n-deaths selected-row) " deaths"]
-      " had been recorded. "]
-     [:p
-      "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
-     ]))
+    (sab/html
+     [:.data-summary
+      [:p {:key 1} "The hospital performed "
+       [:b (:n-ops selected-row) "  operations. "]]
+      [:p {:key 2} "After 30 days there were "
+       [:b {:key 1} (:n-survivors selected-row) " survivors "]
+       "and "
+       [:b {:key 2} (:n-deaths selected-row) " deaths"]
+       " had been recorded. "]
+      [:p {:key 3}
+       "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
+      ])))
 
 (rum/defc hospital-header < rum/static
   [selected-row]
