@@ -368,7 +368,6 @@ td:first-child {
 .annotation {
     position: relative;
     z-index: 200;
-    overflow: none;
     display: inline-block;
     right: 5px;
     color: #337AB7;
@@ -449,9 +448,21 @@ td:first-child {
 .bar {
     vertical-align: middle;
     display: inline-table;
-    margin: 10px 0 0 !important;
+    margin: 10px 0 0; //!important;
     padding: 0 !important;
     height: 25px;
+}
+
+.chart-cell.annotated {
+    height: 30px !important;
+}
+
+.annotated .bar {
+    margin: 0px 0px 0px 0px;
+}
+
+.annotated .tooltip {
+    display: none;
 }
 
 .bar-chart{
@@ -1006,3 +1017,18 @@ ul.nav.navbar-nav.navbar-right {
 .faq-nav-6 {
     background-color: #FC867A;
 }
+
+/*
+ * Make bootstrap modals scrollable
+*/
+.modal {
+    overflow-y: none !important;
+    //max-height: none; !important;
+}
+
+.modal .modal-body {
+    max-height: 480px;
+    overflow-y: auto;
+}
+
+.

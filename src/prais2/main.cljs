@@ -72,12 +72,6 @@
     [:h4 {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
     [:ul.nav.nav-pills {:role "tablist"
                        :style {:clear "both"}}
-     [:li {:class (active? :example)
-                  :role "presentation"}
-      [:a#example-tab {:href "#"
-                       :aria-controls "example-data"
-                       :role "tab"
-                       :on-click #(core/click->event-bus % :data :example)} "Example"]]
 
      [:li {:class (active? :map)
            :role "presentation"}
@@ -97,10 +91,6 @@
 
 (rum/defc render-data-tab-panes < rum/reactive [data section]
   [:.tab-content
-   [:.tab-pane {:class (active? :example)
-                :id "example-data"}
-    (when (active? :example) (render-sample-data ))]
-
    [:.tab-pane {:class (active? :map)
                 :id "mapped-data"}
     (when (active? :map) (render-map-data ))]
@@ -351,7 +341,7 @@
               (prn "nav to data " section)
               (swap! core/app #(assoc % :page :data
                                       :section section
-                                      :detail-slider-axis-value (if (= section :example) 0.9 1)))))
+                                      :detail-slider-axis-value 1))))
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]

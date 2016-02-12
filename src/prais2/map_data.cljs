@@ -9,41 +9,29 @@
 
 (rum/defc render-map-data < rum/reactive []
   [:.container
-   [:.row
-    [:section
-     [:h2 "Mapped Data for April 2011 - March 2014"]
-     [:p
-      "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
-     [:p "This data is updated annually and covers the most recent three year report period."]
+   [:section.row
+    [:h2.col-sm-12 "Mapped Data for April 2011 - March 2014"]
+    [:p.col-sm-12
+     "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
+    [:p.col-sm-12 "This data is updated annually and covers the most recent three year report period."]
 
 
 
-     [:span
-      [:.map-container (map/hospitals)]
-      (if (nil? (:map-h-code (rum/react core/app)))
-        [:ul.detail-container
-         [:li "Either click on the relevant " [:img {:src "assets/icon.png"}] " button or use the map "
-          [:.btn.btn-info
-           "Menu " [:i.fa.fa-caret-down]]
-          " to see results and information for a specific hospital."]
-
-         [:li "Use the " [:.btn.btn-info "All UK"] " or " [:.btn.btn-info "Just London"]
-          " buttons to return to a wider view."]
-
-         [:li "Hover or tap features of the chart for more explanation."]
-         [:li "For an explanation for how the predicted ranges are calculated see the "
-          [:span.navbar-btn.nav-item.map-data {:style {:margin 0}} what-why]
-          " page."]
-         [:li "Further information is available on the "
-          [:span.navbar-btn.nav-item.faqs {:style {:margin 0}} everything-else
-           ]
-          " page."]
-         [:li "To see all hospitals together visit the "
-          [:button.btn.btn-primary
-           {:on-click #(core/click->event-bus % :data :table)
-            :on-touch-start #(core/click->event-bus % :data :table)} "List"]
-          " page."]]
-        [:.detail-container (data/hospital-detail (:map-h-code (rum/react core/app)))])]]]])
+    [:.col-sm-6 (map/hospitals)]
+    (if (nil? (:map-h-code (rum/react core/app)))
+      [:div.col-sm-6
+       [:img.img-responsive.center-block {:src "assets/big-icon.png"}]
+       [:p.text-center "Click on a hospital or use the"]
+       [:.center-block.btn.btn-info.disabled {:style {:width "80px"}}
+        "Menu " [:i.fa.fa-caret-down]]
+       [:div {:style {:margin-top "60px"
+                      :padding "10px"
+                      :box-shadow "1px 1px 4px #CCCCCC"}}
+        [:span "Return to a wider view with the "
+         [:.btn.btn-info.disabled "All UK"] " or "
+         [:.btn.btn-info.disabled "Just London"] " buttons."]]
+       ]
+      [:.col-sm-6 (data/hospital-detail (:map-h-code (rum/react core/app)))])]])
 
 
 (defn px [pixels] (str pixels "px"))

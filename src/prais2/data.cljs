@@ -129,24 +129,38 @@
                   :data-placement "bottom"}
     ])
 
-  ([slider hi-val lo-val bar-type fill text]
+  ([slider hi-val lo-val bar-type fill no-tip]
    (if (= fill "rgba(255,255,255,0)")
      [:div.bar {:style {:background-color fill
                         :width (str (bar-width slider (- hi-val lo-val)) "%")
                         }
                 }]
-     [:div.bar.btn {:style {:background-color fill
-                            :border-radius 0
-                            :width (str (bar-width slider (- hi-val lo-val)) "%")
-                            :text-align "right"
-                            }
-                    :data-toggle "tooltip"
-                    :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                    :data-delay 0
-                    :data-html true
-                    :data-trigger "hover"
-                    :data-placement "bottom"}
-      [:div.annotation text]])))
+     (if-not no-tip
+       [:div.bar.btn {:style {:background-color fill
+                              :border-radius 0
+                              :width (str (bar-width slider (- hi-val lo-val)) "%")
+                              :text-align "right"
+                              }
+                      :data-toggle "tooltip"
+                      :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                      :data-delay 0
+                      :data-html true
+                      :data-trigger "hover"
+                      :data-placement "bottom"}
+        ]
+       [:div.bar.btn {:style {:background-color fill
+                              :border-radius 0
+                              :width (str (bar-width slider (- hi-val lo-val)) "%")
+                              :text-align "right"
+                              }
+                      ;:data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                      ;:data-delay 0
+                      ;:data-html true
+                      ;:data-trigger "hover"
+                      ;:data-placement "bottom"
+                      }
+        ]
+       ))))
 
 
 
@@ -162,6 +176,22 @@
       :data-original-title (str (pc value) "<br>The observed survival rate"
 )
       :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
+              :display (if dotty "inline-block" "none")
+              :width px-size
+              :height px-size
+              :top (px (+ 10 (/ (- 25 size) 2)))
+              :position (if relative "relative" "absolute")
+              :left (str "calc("
+                         (percent->screen slider value)
+                         "% - "
+                         (Math.round (/ size 2))
+                         "px)"
+                         )}}]))
+
+(rum/defc dot-no-tip < rum/static rum/reactive [slider size value dotty & [relative]]
+  (let [px-size (px size)]
+    [:div.dot.btn
+     {:style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
               :height px-size
@@ -239,47 +269,51 @@
         colours (colour-map (:theme ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    [:.chart-cell {:style {:background "#ffffff"
-                           :margin-left (important (px axis-margin))
-                           :height "60px"
-                           :padding-right last-pad-right}}
-     [:div.bar-chart
-      (map-indexed key-with
+    [:div
+     [:.annotation text]
+     [:.chart-cell.annotated {:style {:background "#ffffff"
+                            :margin-left 0;(important (px axis-margin))
+                            :height "60px"
+                            :width "100%"
+                            :padding-right 0;last-pad-right
+                            }}
+      [:div.bar-chart.annotated
+       (map-indexed key-with
 
-                   (cond
-                     (= dotless #{})
+                    (cond
+                      (= dotless #{})
 
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
-                      (dot slider (dot-size slider) (:survival-rate row) dotty)]
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
+                       (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty)]
 
-                     (= dotless #{:inner})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
-                      (bar slider (:inner-low row) (:outer-low row) :outer-low "#ffffff")
-                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-                      (bar slider (:outer-high row) (:inner-high row) :outer-high "#ffffff")
-                      (bar slider 100 (:outer-high row) :high "#ffffff")
-                      (dot slider (dot-size slider) (:survival-rate row) dotty)
-                      ]
-
-
-                     (= dotless #{:outer})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
-                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-                      (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours))
-                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                      (bar slider 100 (:outer-high row) :high "#ffffff")
-                      (dot slider (dot-size slider) (:survival-rate row) dotty)
-                      ]
+                      (= dotless #{:inner})
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low "#ffffff" true)
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours) true)
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high "#ffffff" true)
+                       (bar slider 100 (:outer-high row) :high "#ffffff" true)
+                       (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty)
+                       ]
 
 
-                     (= dotless #{:inner :outer})
-                     [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" text)
-                      (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
-                      (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours))
-                      (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours))
-                      (bar slider 100 (:outer-high row) :high "#ffffff")
-                      (dot slider (dot-size slider) (:survival-rate row) dotty)
-                      ]))]]))
+                      (= dotless #{:outer})
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours) true)
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:outer-low colours) true)
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours) true)
+                       (bar slider 100 (:outer-high row) :high "#ffffff" true)
+                       (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty)
+                       ]
+
+
+                      (= dotless #{:inner :outer})
+                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
+                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours) true)
+                       (bar slider (:inner-high row) (:inner-low row) :inner (:inner colours) true)
+                       (bar slider (:outer-high row) (:inner-high row) :outer-high (:outer-high colours) true)
+                       (bar slider 100 (:outer-high row) :high "#ffffff" true)
+                       (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty true)
+                       ]))]]]))
 
 
 (rum/defc tick < rum/static [baseline value tick-height]
@@ -655,6 +689,27 @@
   [:h3 (:h-name selected-row)]
   )
 
+(rum/defc legend  < rum/reactive []
+  [:div {:style {:margin-bottom "40px"}}
+   [:div {:style {;:border "1px solid black"
+                  :border-radius "2px"
+                  :box-shadow "0px 0px 3px #CCCCCC"
+                  :padding "10px"}}
+    [:h4 {:style {:color "orange"}} "What does this mean?"]
+    (let [ap (rum/react core/app)
+          selected-row content/sample-hospital]
+      (map-indexed key-with [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
+                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
+                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the observed survival rate")
+                             #_(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
+                             #_(explain-interpretation)
+                             #_(interpretation selected-row)]))    ]])
+
+(rum/defc nav-aid []
+  [:p {:style {:font-style "italic"
+               :margin-top "20px"}} [:i.fa.fa-arrow-up {:style {:color "orange"}}] " Click or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br] [:i.fa.fa-arrow-down {:style {:color "orange"}}] " See below for further explanation of the bars and the dot."]
+)
+
 (rum/defc hospital-detail < rum/reactive
   [h-code]
   (let [ap (rum/react core/app)]
@@ -667,8 +722,11 @@
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (hospital-data h-code)
                        (interpretation selected-row)
-                       (hospital-charities h-code)])
-         )]
+                       (nav-aid)
+                       (hospital-charities h-code)
+                       (legend)])
+         )
+       ]
       [:#detail
        (let [selected-row content/sample-hospital]
 
@@ -678,6 +736,7 @@
                        (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (interpretation selected-row)
+                       (nav-aid)
                        ]))])))
 
 

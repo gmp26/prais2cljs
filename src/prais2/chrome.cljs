@@ -65,7 +65,7 @@
          (map-indexed #(key-with %1 (bs-nav-link
                                      (= active-key %2)
                                      (%2 nav-items)
-                                     (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :example :top)))))
+                                     (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
                       (keys nav-items))]]]]]))
 
 (rum/defc header < rum/reactive [& deep]

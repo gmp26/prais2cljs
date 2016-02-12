@@ -37,8 +37,8 @@
 (rum/defc data []
   [:.col-sm-4
    [:.well.home-nav.data
-    {:on-click #(core/click->event-bus % :data :example)
-     :on-touch-start #(core/click->event-bus % :data :example)}
+    {:on-click #(core/click->event-bus % :data :map)
+     :on-touch-start #(core/click->event-bus % :data :map)}
     [:i.fa.fa-table {:style {:font-size "140px"}}]
     [:h2 "Data"]
     [:p "Explore published survival statistics!"]

@@ -31,7 +31,7 @@
          (Header. "Outer Low"                   false      false   130   50
                   "A dot within the right hand dark blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
          (Header. "Inner Low"                   false      false   130   50
-                  "A dot in this area means that there is no evidence that the hospital’s survival rate is meaningfully different from what is predicted")
+                  "A dot in this area means that there is no evidence that the hospital’s survival rate is different from what is predicted")
          (Header. "Inner High"                  false      false   130   50
                   "A dot within the right hand dark blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
          (Header. "Outer High"                  false      false   130   50
@@ -231,7 +231,7 @@
 ;;;
 
 (def bar-comments
-  {:inner "A dot in this area means that there is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
+  {:inner "A dot in this area means that there is no evidence that the hospital’s survival rate is different from what is predicted"
    :outer-high "A dot in this area means that there is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
    :outer-low "A dot in this area means that there is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
    :low "A dot to the left of the bands means that there is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
@@ -244,7 +244,7 @@
 ;;;
 
 (def dot-comments
-  {:inner "There is no evidence that the hospital’s survival rate is meaningfully different from what is predicted"
+  {:inner "There is no evidence that the hospital’s survival rate is different from what is predicted"
    :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
    :outer-low "There is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
    :low "There is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
