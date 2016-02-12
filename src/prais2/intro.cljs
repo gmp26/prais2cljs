@@ -94,7 +94,7 @@
      ]]])
 
 (rum/defc key-points []
-  [:section.well.danger.col-sm-offset-2.col-sm-8
+  [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
     [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
@@ -166,7 +166,7 @@
       "seeking a second opinion"]    ", written by the Children’s Heart Federation, might also be helpful."]
 
     [:p
-     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data " [:span.todo "[link to relevant FAQ]"] ". "]]]
+     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a {:href "#/faq/2/3"} "What about longer term survival and quality of life?"]  ". "]]]
   )
 
 (rum/defc section-5-content []

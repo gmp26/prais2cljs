@@ -12,7 +12,7 @@
     "rgba(127, 187, 205, 1)"
     ] (mod index 3)))
 
-(rum/defc render-bubble-title [section-ix [index faq]]
+#_(rum/defc render-bubble-title [section-ix [index faq]]
   [:div
    (let [pull (if (even? index) "on-left" "on-right")
          ixc (ix-col index)
@@ -26,7 +26,7 @@
       ]
      )])
 
-(rum/defc render-section [[section-ix faq-section]]
+#_(rum/defc render-section [[section-ix faq-section]]
   [:.bubble-group
    [:h2 (:section faq-section)]
    (map-indexed key-with
