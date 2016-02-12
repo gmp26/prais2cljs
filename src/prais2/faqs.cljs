@@ -63,114 +63,84 @@
    (map-indexed key-with
                 (map #(render-glossary-term %) glossary))])
 
-(rum/defc render-faq-menu []
-  )
+(rum/defc render-faq-block [sec-ix block-class]
+  (let [section (content/faq-sections sec-ix)]
+    [:div.faq-block {:class block-class}
+     [:h4 (:section section)]
+     [:ul.list-unstyled
+      (for [[ix faq] (map-indexed vector (:faqs section))]
+        [:li [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]]))
+
+
+(rum/defc render-faq-top [faq-ref]
+  [:div
+   [:h1.col-md-12 content/title]
+   ;; new block menu
+
+   ;; column 1
+   [:div.col-sm-4
+    (render-faq-block 0 "faq-nav-1")
+    (render-faq-block 2 "faq-nav-2")]
+
+   ;; column 2
+   [:div.col-sm-4
+    (render-faq-block 1 "faq-nav-3")]
+
+   ;; column 3
+   [:div.col-sm-4
+    (render-faq-block 3 "faq-nav-4")
+    (render-faq-block 4 "faq-nav-4")
+    (render-faq-block 5 "faq-nav-4")
+    (render-faq-block 6 "faq-nav-4")]
+
+   ;; old bubble menu
+   #_(map-indexed key-with
+                  (map render-section
+                       (vec (zipmap (range) faq-sections))))])
+
+
+(rum/defc render-faq-section [faq-ref]
+  [:#faq.col-md-10.col-md-offset-1
+     (let [[section-ix ix] faq-ref
+           section (faq-sections section-ix)
+           faq ((:faqs section) ix)
+           short-answer (:short-answer faq)
+           glossary (:glossary faq)]
+       [:div
+        [:h2 {:key 1}
+         [:div {:style {:margin-top "-32px"
+                        :width "80px"
+                        :float "left"}} [:i.fa.fa-question {:style {:font-size "100px"
+                                                                    :color "#FFA500"}}]]
+         [:div {:style {:margin-top "40px"}}
+          (:title faq)]]
+        (when short-answer
+          (do
+            (prn "rendering short answer for section " section-ix "." ix)
+            (render-short-answer short-answer)))
+        [:div {:key 2
+               :style {:clear "both"}} (:body faq)]
+        (when (> (count glossary) 0)
+          (do
+            (prn "rendering glossary " glossary)
+            (render-glossary glossary)))
+        [:button.btn.btn-primary
+         {:key 3
+          :style {:margin-bottom "100px"}
+          :on-click #(core/click->event-bus % :faqs :top)
+          :on-touch-start #(core/click->event-bus % :faqs :top)
+          }
+         "Back"
+         ]])])
 
 
 (rum/defc render-faqs [faq-ref]
 
-  (prn "rendering " faq-ref)
   [:.container-fluid
    [:.row
+
     (if (= :top faq-ref)
-      [:div
-       [:h1.col-md-12 content/title]
-       ;; new block menu
-
-       ;; column 1
-       [:div.col-sm-4
-        (let [section (content/faq-sections 0)]
-          [:div.faq-block.faq-nav-1
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [[ix faq] (map-indexed vector (:faqs section))]
-              [:li [:a {:href (str "#/faq/0/" ix)} (:title faq)]])]])
-
-        (let [section (content/faq-sections 2)]
-          [:div.faq-block.faq-nav-2
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])]
-
-
-       ;; column 2
-       [:div.col-sm-4
-        (let [section (content/faq-sections 1)]
-          [:div.faq-block.faq-nav-3
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])
-        ]
-
-       ;; column 3
-       [:div.col-sm-4
-        (let [section (content/faq-sections 3)]
-          [:div.faq-block.faq-nav-4
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])
-        (let [section (content/faq-sections 4)]
-          [:div.faq-block.faq-nav-4
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])
-        (let [section (content/faq-sections 5)]
-          [:div.faq-block.faq-nav-4
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])
-        (let [section (content/faq-sections 6)]
-          [:div.faq-block.faq-nav-4
-           [:h4 (:section section)]
-           [:ul.list-unstyled
-            (for [faq (:faqs section)]
-              [:li (:title faq)])]])
-
-]
-
-
-
-
-       ;; old bubble menu
-       #_(map-indexed key-with
-                    (map render-section
-                         (vec (zipmap (range) faq-sections))))
-
-       ]
-      [:#faq.col-md-10.col-md-offset-1
-       (let [[section-ix ix] faq-ref
-             section (faq-sections section-ix)
-             faq ((:faqs section) ix)
-             short-answer (:short-answer faq)
-             glossary (:glossary faq)]
-         [:div
-          [:h2 {:key 1}
-           [:div {:style {:margin-top "-32px"
-                          :width "80px"
-                          :float "left"}} [:i.fa.fa-question {:style {:font-size "100px"
-                                                                      :color "#FFA500"}}]]
-           [:div {:style {:margin-top "40px"}}
-            (:title faq)]]
-          (when short-answer
-            (do
-              (prn "rendering short answer for section " section-ix "." ix)
-              (render-short-answer short-answer)))
-          [:div {:key 2
-                 :style {:clear "both"}} (:body faq)]
-          (when (> (count glossary) 0)
-            (do
-              (prn "rendering glossary " glossary)
-              (render-glossary glossary)))
-          [:button.btn.btn-primary
-           {:key 3
-            :style {:margin-bottom "100px"}
-            :on-click #(core/click->event-bus % :faqs :top)
-            :on-touch-start #(core/click->event-bus % :faqs :top)
-            }
-           "Back"
-           ]])])]])
+      (render-faq-top faq-ref)
+      (render-faq-section faq-ref)
+      )
+    ]])
