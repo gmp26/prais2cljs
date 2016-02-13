@@ -60,7 +60,7 @@
     [:p "Plus lots of other information!"]]
    ])
 
-(rum/defc render-home []
+(rum/defc render-home < rum/reactive[]
   [:div
    [:.jumbotron
     {:style
@@ -70,7 +70,12 @@
     [:.container
      [:.row
       [:section.about.col-sm-offset-2.col-sm-8
-       [:p "This site is to help people make sense of the published survival statistics about children’s heart surgery. "]
+       [:p "This site is to help people make sense of the "
+        (if (:show-nicor (rum/react core/app))
+          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"]
+          "published survival statistics")
+
+        " about children’s heart surgery. "]
        [:p "Our website will help you:"]
        [:ul {:style {:font-size "16px"
                      :font-weight 200
@@ -78,7 +83,9 @@
         [:li "explore what survival rates can and can’t tell you"]
         [:li "understand how the NHS monitors children’s heart surgery"]
         [:li "explore published results for UK hospitals"]]
-       ]]
+       ]
+      (when (:show-nicor (rum/react core/app))
+        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
      ]
     #_[:button.btn-primary.btn-lg.center-block.highlight
        {:role "button"

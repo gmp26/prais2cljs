@@ -31,7 +31,8 @@
                     :chart-state 3
                     :theme 12
                     :selected-h-code nil
-                    :map-h-code nil}))
+                    :map-h-code nil
+                    :show-nicor false}))
 
 (defn format-time-stamp [ts]
   (str (.format (js/moment ts) "DD-MMM-YYYY HH:mm:SS")))

@@ -111,7 +111,7 @@
                   [
                    (render-data-tabs section)
                    (render-data-tab-panes data section)
-                   (data/option-menu event-bus)])])
+                   ])])
 )
 
 (defn valid-session-id

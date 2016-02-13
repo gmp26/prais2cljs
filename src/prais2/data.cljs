@@ -603,7 +603,7 @@
   [:option {:value (name key)} (name key)])
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
-  [:.form-group
+  [:.form-group.col-sm-2
    [:label-for{:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
     {:value (name (:datasource (rum/react core/app)))
@@ -613,13 +613,23 @@
                    (key-option key)))]
    ])
 
+(rum/defc nicor-checkbox < rum/reactive []
+  [:.form-group.col-sm-2
+   [:label-for {:for "nicor-check"} "Show Nicor links "]
+   [:input {:type "checkbox"
+            :checked (:show-nicor (rum/react core/app))
+            :on-change #(swap! core/app update :show-nicor not)
+            }]]
+  )
+
 (rum/defc option-menu < rum/reactive [event-bus]
   [:nav.navbar.navbar-default.table-container
    [:.container-fluid
     [:navbar-form.form-inline.row
-     [:.col-sm-2
+     [:.col-sm-12
       (map-indexed key-with
                    [(datasource-dropdown event-bus)
+                    (nicor-checkbox)
                                         ;(theme-dropdown event-bus)
                                         ;(chart-state-dropdown event-bus)
                     ])]]]])

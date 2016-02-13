@@ -83,7 +83,8 @@
 
      [:h1.col-lg-12 "What, why, how?"]
 
-     [:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery."]
+     [:p.col-sg-12 "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
+     #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery."]
 
      (key-points)
      (section 1 "WHAT do we mean by survival statistics?" section-1-content)

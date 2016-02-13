@@ -6,6 +6,7 @@
               [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus]]
               [prais2.logger :as logger]
+              [prais2.data :as data]
               ))
 
 
@@ -119,6 +120,9 @@
      {:src "assets/sas-logo.png"}]
     [:img.img-responsive.col-sm-1
      {:src "assets/chf-logo.png"}]]
+   [:.row
+    [:.col-md-12
+     (data/option-menu event-bus)]]
    [:.row.footer
     ;[:.pull-right (logger/playback-controls)]
 
