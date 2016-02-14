@@ -378,7 +378,7 @@
                     }
 
                    {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an observed survival rate outside their predicted range?"
-                    :short-answer "When looking at many hospitals at once, we expect at least one hospital’s observed survival rate to be outside its predicted range about 8 times in 20. "
+                    :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s observed survival rate to be outside its predicted range about 8 times in 20. "
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
 
