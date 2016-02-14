@@ -544,6 +544,7 @@
 (rum/defc table1 < rum/reactive [app data event-bus]
   [:.table-container
    [:div.table-responsive
+    {:style {:overflow "visible"}}
     (table1-core (rum/react app)
                  data
                  event-bus

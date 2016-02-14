@@ -66,7 +66,8 @@
     {:style
      {;:background-image "url(assets/logotron.png)"
       :background-size "100%"
-      :color "#555555"}}
+      :color "#555555"
+      :margin 0}}
     [:.container
      [:.row
       [:section.about.col-sm-offset-2.col-sm-8
