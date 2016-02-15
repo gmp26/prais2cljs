@@ -41,7 +41,7 @@
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-simple.navbar-fixed-top {:margin-bottom 0}
+    [:nav.navbar.navbar-simple.navbar-fixed-top {:style {:max-height 0}}
      [:.navbar-inner
       [:.container {
                     :style {:background-color "#475E63"

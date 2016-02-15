@@ -79,11 +79,11 @@
 (rum/defc render-intro < (core/monitor-react "INTRO>" false)  [section-id]
   [:.container
    [:.row
-    [:#intro
+    [:#intro.col-sm-12
 
-     [:h1.col-lg-12 "What, why, how?"]
+     [:h1 "What, why, how?"]
 
-     [:p.col-sg-12 "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
+     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
      #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery."]
 
      (key-points)
@@ -106,9 +106,8 @@
 
 (rum/defc section-1-content []
   [:section.row
-   [:.col-lg-12
-    [:p "The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate. This is the percentage of operations where the child survived at least 30 days after their heart surgery."]
-    [:p "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."]]]
+   [:p.col-sm-12 "The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate. This is the percentage of operations where the child survived at least 30 days after their heart surgery."]
+   [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."]]
   )
 
 (rum/defc section-2-content []

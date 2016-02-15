@@ -68,24 +68,25 @@
 (rum/defc render-data-tabs [section]
   [:.container
    [:.row
-    [:h1 "Explore the data"]
-    [:h4 {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
-    [:ul.nav.nav-pills {:role "tablist"
-                       :style {:clear "both"}}
+    [:.col-sm-12
+     [:h1 "Explore the data"]
+     [:h4 {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
+     [:ul.nav.nav-pills {:role "tablist"
+                         :style {:clear "both"}}
 
-     [:li {:class (active? :map)
-           :role "presentation"}
-      [:a#map-tab {:href "#"
-                   :aria-controls "mapped-data"
-                   :role "tab"
-                   :on-click #(core/click->event-bus % :data :map)} "Map"]]
+      [:li {:class (active? :map)
+            :role "presentation"}
+       [:a#map-tab {:href "#"
+                    :aria-controls "mapped-data"
+                    :role "tab"
+                    :on-click #(core/click->event-bus % :data :map)} "Map"]]
 
-     [:li {:class (active? :table)
-           :role "presentation"}
-      [:a#table-tab {:href "#"
-           :aria-controls "data-table"
-           :role "tab"
-           :on-click #(core/click->event-bus % :data :table)} "List"]]]]])
+      [:li {:class (active? :table)
+            :role "presentation"}
+       [:a#table-tab {:href "#"
+                      :aria-controls "data-table"
+                      :role "tab"
+                      :on-click #(core/click->event-bus % :data :table)} "List"]]]]]])
 
 
 
