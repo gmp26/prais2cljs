@@ -89,7 +89,7 @@
      (key-points)
      (section 1 "WHAT do we mean by survival statistics?" section-1-content)
      (section 2 "WHY can survival rate data be difficult to interpret?" section-2-content)
-     (section 3 "HOW the NHS monitors survival rate?" section-3-content)
+     (section 3 "HOW does the NHS monitor survival rates?" section-3-content)
      (section 4 "What this site cannot do" section-4-content)
      (section 5 "What this site can do" section-5-content)
      ]]])
@@ -99,8 +99,8 @@
    [:h2 "Key points"]
    [:ul
     [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
-    [:li "The predicted range is calculated by a formula and depends only on the children treated at that hospital. It does not use any judgement about a hospital’s quality." ]
-    [:li "The survival rate for all UK hospitals is very high"]]])
+    [:li "The predicted range is calculated by a formula and depends only on the children treated at that hospital. It does not use any judgement about a hospital’s quality. A lower predicted range means a hospital treated children with more complex medical problems." ]
+    [:li "The survival rate for all UK hospitals is very high."]]])
 
 
 
