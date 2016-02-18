@@ -99,7 +99,7 @@
    [:h2 "Key points"]
    [:ul
     [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
-    [:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more"] " complex medical problems." ]
+    [:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
     [:li "The survival rate for all UK hospitals is very high."]]])
 
 
