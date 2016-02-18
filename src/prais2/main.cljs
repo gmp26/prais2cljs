@@ -70,7 +70,7 @@
    [:.row
     [:.col-sm-12
      [:h1 "Explore the data"]
-     [:h4 {:clear "both"} "View an illustrative example or the data presented in a map or a list"]
+     [:h4 {:clear "both"} "View the data presented in a map or a list"]
      [:ul.nav.nav-pills {:role "tablist"
                          :style {:clear "both"}}
 
