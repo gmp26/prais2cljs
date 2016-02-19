@@ -134,7 +134,7 @@
      [:li "the complexity of the surgical procedure.  "]
      ]
 
-    [:p "Knowing these factors for each patient, allows us to identify types of patient who are at greater or lesser risk even though we cannot predict exactly how a particular individual will respond."]
+    [:p "Knowing these factors for each patient allows us to identify types of patient who are at greater or lesser risk, even though we cannot predict exactly how a particular individual will respond."]
 
     [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital (the " [:strong "observed survival rate"] ") with its predicted range."]
 
@@ -166,7 +166,7 @@
       "seeking a second opinion"]    ", written by the Children’s Heart Federation, might also be helpful."]
 
     [:p
-     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a {:href "#/faq/2/3"} "What about longer term survival and quality of life?"]  ". "]]]
+     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a {:href "#/faq/2/3"} "What about longer term survival and quality of life?"]  ".) "]]]
   )
 
 (rum/defc section-5-content []
