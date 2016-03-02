@@ -136,9 +136,9 @@
 
     [:p "Knowing these factors for each patient allows us to identify types of patient who are at greater or lesser risk, even though we cannot predict exactly how a particular individual will respond."]
 
-    [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital (the " [:strong "observed survival rate"] ") with its predicted range."]
+    [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
-    [:p "If that hospital’s observed survival rate is within the ‘predicted range’, its results are in line with what we expect."]
+    [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect."]
     [:.bg-danger {:style {:border-radius "3px" :border "1px solid #DDD"}}
      [:p
       "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year!"]
