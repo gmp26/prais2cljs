@@ -16,5 +16,6 @@ pom.xml
 .nrepl-port
 bower_components
 resources/docs/eganimation_narrated\ v2.pptx
+resources/docs/animation/private
 *~
 .#*
