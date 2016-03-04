@@ -174,7 +174,7 @@
       :data-delay 0
       :data-trigger "hover"
       :data-html true
-      :data-original-title (str (pc value) "<br>The observed survival rate"
+      :data-original-title (str (pc value) "<br>The survival rate"
 )
       :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
@@ -713,7 +713,7 @@
           selected-row content/sample-hospital]
       (map-indexed key-with [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
                              (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the observed survival rate")
+                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the survival rate")
                              #_(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                              #_(explain-interpretation)
                              #_(interpretation selected-row)]))    ]])

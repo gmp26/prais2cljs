@@ -54,7 +54,7 @@
     component]])
 
 (rum/defc explain-interpretation []
-  [:.annotation  "We then add an interpretation of the observed survival rate"])
+  [:.annotation  "We then add an interpretation of the survival rate"])
 
 
 (rum/defc hospital-example < rum/reactive []
@@ -70,7 +70,7 @@
 
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the observed survival rate")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the survival rate")
                      #_(explanation )
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                      (explain-interpretation)
@@ -85,7 +85,7 @@
     [:section {:style {:max-width "800px"}}
      [:p]
      [:h3 {:data-title "Foo" :data-trigger "manual" :data-toggle "tooltip" :data-placement "bottom"}
-      "We present each hospital's observed survival in the context of its predicted range - see illustration below."]
+      "We present each hospital's survival in the context of its predicted range - see illustration below."]
 
      [:div {:style
             {:border-radius "5px"

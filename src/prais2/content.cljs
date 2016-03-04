@@ -295,7 +295,7 @@
                                  {:style {:width "100px"
                                           :margin-right "20px"}
                                   :src "assets/nicor.png"}]]
-                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because there was no clear way to put overall survival rates for each hospital into context (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "researchers"] " have now made this possible by creating a statistical formula. Using this, NICOR has published overall survival rates along with the predicted range (dark blue bar) and extended predicted range (light blue bar) for survival for each hospital since 2013 (see "[:a {:href "?#/intro"} "What, Why and How?"]").  The predicted range is the range in which we expect to see each hospital’s observed survival ratethe majority of the time (19 times out of 20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
+                            "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients"} "NICOR"] " only published survival rates for certain types of procedure because there was no clear way to put overall survival rates for each hospital into context (see "[:a {:href "?#/intro"} "What, Why and How?"] "). But " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "researchers"] " have now made this possible by creating a statistical formula. Using this, NICOR has published overall survival rates along with the predicted range (dark blue bar) and extended predicted range (light blue bar) for survival for each hospital since 2013 (see "[:a {:href "?#/intro"} "What, Why and How?"]").  The predicted range is the range in which we expect to see each hospital’s survival rate the majority of the time (19 times out of 20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
 
                             ]
                            [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
@@ -329,19 +329,19 @@
 
                            [:p "Some hospitals specialise in certain conditions that are particularly complicated, meaning they tend to operate on children with a lower chance of survival. It would therefore be unfair to expect all hospitals to have the same survival rates each year. Hospitals also treat different children each year, so we expect any hospital’s survival rate to vary from year to year."]
 
-                           [:p "The predicted range (dark blue bar) is where we expect the hospital’s observed survival rate to be 19 times out of 20."]
+                           [:p "The predicted range (dark blue bar) is where we expect the hospital’s survival rate to be 19 times out of 20."]
 
-                           [:p "It is based on a formula that uses recorded information about each operation a hospital performed over a 3 year period. Since each hospital operated on different patients, the predicted ranges for each hospital will be different. This is why it is not valid to compare raw survival rates to each other. It is " [:i "only valid"] " to compare a hospital’s observed survival rate to its own predicted range. "]
+                           [:p "It is based on a formula that uses recorded information about each operation a hospital performed over a 3 year period. Since each hospital operated on different patients, the predicted ranges for each hospital will be different. This is why it is not valid to compare raw survival rates to each other. It is " [:i "only valid"] " to compare a hospital’s survival rate to its own predicted range. "]
 
                            (comment "*** POSSIBLE IMAGES ***** - a snapshot from animation from factors going into the formula/machine and coming out with a predicted range? ")
                            ]
                     }
 
                    {:title "Why does the width of the predicted range differ between hospitals?"
-                    :short-answer "Chance factors have a bigger influence on the observed survival rate for hospitals that do fewer operations, and so the predicted range is wider for hospitals that do fewer operations."
+                    :short-answer "Chance factors have a bigger influence on the survival rate for hospitals that do fewer operations, and so the predicted range is wider for hospitals that do fewer operations."
                     :glossary [:survival-rate]
                     :body [:div
-                           [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
+                           [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
 
                     }
 
@@ -364,11 +364,11 @@
                            [:p [:i "Although the statistical formula as is as good as we can currently get it, it is not perfect. There will always be unique features about a child that affect its chance of survival that are not captured by routine data collection and so cannot be part of a formula formula (e.g. the size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single formula! So, the predicted range is the best possible guess for what the predicted range should be and could be wrong."]]
 
                            [:h4 "Step 3"]
-                           [:p "“What actually happened” for each child is then used to calculate the observed survival rate for that hospital and compared to the predicted range."]
+                           [:p "“What actually happened” for each child is then used to calculate the survival rate for that hospital and compared to the predicted range."]
 
-                           [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply well to that hospital, then , we consider there is some or strong evidence that the chances of survival at that hospital are not as predicted, if the observed survival rate is outside the predicted range"]
+                           [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply well to that hospital, then , we consider there is some or strong evidence that the chances of survival at that hospital are not as predicted, if the survival rate is outside the predicted range"]
 
-                           [:p "The strength of the evidence depends on where the observed survival is compared to the extended range. If it is outside the central predicted range (dark blue bar) but inside the extended range (light blue bar) (expected 998 out of a 1000 times) then this is considered moderate evidence. If the observed survival is outside the extended range (only expected to happen 2 times out of a 1000), then this is considered strong evidence. "]
+                           [:p "The strength of the evidence depends on where the survival rate is compared to the extended range. If it is outside the central predicted range (dark blue bar) but inside the extended range (light blue bar) (expected 998 out of a 1000 times) then this is considered moderate evidence. If the survival rate is outside the extended range (only expected to happen 2 times out of a 1000), then this is considered strong evidence. "]
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                         :src "assets/bars.png"}]]
@@ -377,12 +377,12 @@
 
                     }
 
-                   {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an observed survival rate outside their predicted range?"
-                    :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s observed survival rate to be outside its predicted range about 8 times in 20. "
+                   {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an survival rate outside their predicted range?"
+                    :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s survival rate to be outside its predicted range about 8 times in 20. "
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
 
-                           [:p "If we were looking at only one hospital, we’d expect its observed survival rate to fall outside its predicted range rarely, only 1 time in 20 if chances of survival at the hospitals match the formula."]
+                           [:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range rarely, only 1 time in 20 if chances of survival at the hospitals match the formula."]
 
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
@@ -390,20 +390,20 @@
 
                            [:p "BUT, if we are looking at all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by chance about 8 times in 20! This is similar to the difference between flipping one coin and flipping many: if I only flip one coin there is a 50% probability that I’ll get one head whereas if I flipped, say, the four coins in a row the probability of me getting at least one head in the four throws goes up to 94%."]
 
-                           [:p "8 times in 20 means that it is not that rare that " [:strong "any"] " one of these hospitals will have an observed survival rate that falls outside their predicted range. "]
+                           [:p "8 times in 20 means that it is not that rare that " [:strong "any"] " one of these hospitals will have an survival rate that falls outside their predicted range. "]
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
 
                            [:p "So, on average, we’d anticipate that about half (8/20) of NICOR’s annual reports to have at least one centre outside its range, either above or below, by chance alone."]
 
-                           [:p "Considering now the " [:i "extended predicted range"]" (light blue bar). If we look at all 14 hospitals at once, we’d only expect one of them to be outside their extended range very rarely, less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s observed survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
+                           [:p "Considering now the " [:i "extended predicted range"]" (light blue bar). If we look at all 14 hospitals at once, we’d only expect one of them to be outside their extended range very rarely, less than 1 time in 20 (actually about 1 time in 30). This is why a hospital’s survival rate being outside the extended predicted range is considered strong evidence that the chances of a patient surviving at that hospital are different to what is expected."]
 
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/not-rare.png"}]]
 
                            ]}
 
-                   {:title "What happens if a hospital’s observed survival is outside its predicted range?"
+                   {:title "What happens if a hospital’s survival is outside its predicted range?"
                     :short-answer "The national audit body works with the hospital to check the quality of the data and check the appropriateness of the statistical formula. If these are fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
                     :glossary [:chance-factors]
                     :body [:div
@@ -413,7 +413,7 @@
 
                            [:p "If a hospital’s survival rate is " [:strong "below"] " its predicted range (either the main or extended), everyone wants to be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or start to improve care if the national audit body decides that this is the reason."]
 
-                           [:p "If a hospital actual survival is below the predicted range, the "
+                           [:p "If a hospital actual survival rate is below the predicted range, the "
                             [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/governance"} "National Congenital Heart Disease Audit Steering Committee "]
                             " is notified. The Committee in turn notifies the Medical Director and the lead doctor for congenital heart disease at that hospital and a detailed examination of the hospital’s results takes place. There are established and "[:a {:href "https://www.gov.uk/government/publications/detection-and-management-of-outliers-guidance-prepared-by-national-clinical-audit-advisory-group"} "published procedures"] " involving the Royal College of Surgeons and/or the Care Quality Commission which can be put into action if the detailed assessment raises concerns about care."]
 
@@ -454,7 +454,7 @@
                     :short-answer "Yes – a child’s chances of survival can never be completely captured in a single formula. "
                     :glossary []
                     :body [:div
-                           [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s observed survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
+                           [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
 
                    {:title "How reliable are the data?"
                     :short-answer "The data are of very high quality and some of the best in the world."
