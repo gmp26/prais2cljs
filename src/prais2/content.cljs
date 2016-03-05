@@ -21,7 +21,7 @@
          (Header. "Longitude"                    false      false    0   0
                   "")
          (Header. "Number of Operations"        true       true     95   50
-                  "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014")
+                  "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014. Operations that occur within 30 days of each other are treated as a single operation.")
          (Header. "Number of Deaths"            false       true    75   50
                   "The number of operations where the child  died within 30 days of their operation, from any cause")
          (Header. "Number of Survivors"         false       true    85   50
