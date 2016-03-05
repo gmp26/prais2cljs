@@ -327,7 +327,7 @@
                     :body [:div
                            [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more serious conditions. This affects a child's chances of survival, as do other factors such as age, weight and other health problems."]
 
-                           [:p "Some hospitals specialise in certain conditions that are particularly complicated, meaning they tend to operate on children with a lower chance of survival. It would therefore be unfair to expect all hospitals to have the same survival rates each year. Hospitals also treat different children each year, so we expect any hospital’s survival rate to vary from year to year."]
+                           [:p "Some hospitals specialise in certain conditions that are particularly complicated, meaning they tend to operate on children with a lower chance of survival. It would therefore be unfair to expect all hospitals to have the same survival rates and it is not valid to simply compare hospitals' survival rates. Each hospital will also treat different children from year to year, so we expect any hospital’s survival rate to vary from year to year."]
 
                            [:p "The predicted range (dark blue bar) is where we expect the hospital’s survival rate to be 19 times out of 20."]
 
@@ -338,7 +338,7 @@
                     }
 
                    {:title "Why does the width of the predicted range differ between hospitals?"
-                    :short-answer "Chance factors have a bigger influence on the survival rate for hospitals that do fewer operations, and so the predicted range is wider for hospitals that do fewer operations."
+                    :short-answer "If a hospital does fewer operations, chance factors have a bigger influence on its overall survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
                     :glossary [:survival-rate]
                     :body [:div
                            [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
