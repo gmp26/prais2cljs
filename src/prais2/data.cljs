@@ -690,13 +690,13 @@
      [:.data-summary
       [:p {:key 1} "The hospital performed "
        [:b (:n-ops selected-row) "  operations. "]]
-      [:p {:key 2} "After 30 days there were "
+      [:p {:key 2} "Measured 30 days after surgery, "
        [:b {:key 1} (:n-survivors selected-row) " survivors "]
        "and "
        [:b {:key 2} (:n-deaths selected-row) " deaths"]
        " had been recorded. "]
       [:p {:key 3}
-       "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
+       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
       ])))
 
 (rum/defc hospital-header < rum/static
