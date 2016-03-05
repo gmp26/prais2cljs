@@ -720,7 +720,7 @@
 
 (rum/defc nav-aid []
   [:p {:style {:font-style "italic"
-               :margin-top "20px"}} [:i.fa.fa-arrow-up {:style {:color "orange"}}] " Click or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br] [:i.fa.fa-arrow-down {:style {:color "orange"}}] " See below for further explanation of the bars and the dot."]
+               :margin-top "20px"}} [:i.fa.fa-arrow-up {:style {:color "orange"}}] " Hover over or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br] [:i.fa.fa-arrow-down {:style {:color "orange"}}] " See below for further explanation of the bars and the dot."]
 )
 
 (rum/defc hospital-detail < rum/reactive
