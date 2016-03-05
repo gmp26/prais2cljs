@@ -138,10 +138,10 @@
 
     [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
-    [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect."]
+    [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect. For more information about how the NHS monitors survival rates see the 'Everything Else' section."]
     [:.bg-danger {:style {:border-radius "3px" :border "1px solid #DDD"}}
      [:p
-      "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year!"]
+      "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year."]
      [:p
       "That is why we only compare a hospital’s survival rate to its predicted range (from the statistical formula) and not to survival rates at other hospitals."]]]])
 
