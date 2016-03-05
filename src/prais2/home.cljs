@@ -29,8 +29,8 @@
      :on-touch-start #(core/click->event-bus % :intro :top)}
     [:i.fa.fa-question {:style {:font-size "140px"}}]
     [:h2 "What, why, how?"]
-    [:p [:strong "What"] " do we mean by survival statistics?"]
-    [:p [:strong "Why"] " are survival statistics after children’s heart surgery hard to interpret?"]
+    [:p [:strong "What"] " do we mean by survival rates?"]
+    [:p [:strong "Why"] " are survival rates after children’s heart surgery hard to interpret?"]
     [:p [:strong "How"] " does the NHS monitor them?"]]
    [:p [:strong "What"] " this site can and cannot do."]]
    ])
@@ -42,8 +42,8 @@
      :on-touch-start #(core/click->event-bus % :data :map)}
     [:i.fa.fa-table {:style {:font-size "140px"}}]
     [:h2 "Data"]
-    [:p "Explore published survival statistics!"]
-    [:p "Use the illustration to see how we present the statistics."]
+    [:p "Explore published survival data!"]
+    [:p "Use the illustration to see how we present the data."]
     [:p "Browse hospitals on a UK map"]
     [:p "Get an overview of all hospitals in a list"]]
    ])
@@ -55,7 +55,7 @@
      :on-touch-start #(core/click->event-bus % :faqs :top)}
     [:i.fa.fa-info {:style {:font-size "140px"}}]
     [:h2 "Everything else"]
-    [:p "More information about how survival statistics are monitored"]
+    [:p "More information about how survival rates are monitored"]
     [:p "What happens if there are any concerns about the data?"]
     [:p "More information about us, this website and external resources."]
     [:p "Plus lots of other information!"]]
@@ -74,8 +74,8 @@
       [:section.about.col-sm-offset-2.col-sm-8
        [:p "This site is to help people make sense of the "
         (if (:show-nicor (rum/react core/app))
-          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"]
-          "published survival statistics")
+          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival data"]
+          "published survival data")
 
         " about children’s heart surgery. "]
        [:p "Our website will help you:"]
