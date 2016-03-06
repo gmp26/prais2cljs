@@ -29,11 +29,11 @@
          (Header. "Observed Survival Rate %"    false      true     86   50
                   "The percentage of operations where the child survived at least 30 days after their operation. Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on children with a lower chance of survival. It would be unfair to then expect all hospitals to have the same survival rates each year")
          (Header. "Outer Low"                   false      false   130   50
-                  "A dot within the right hand dark blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
+                  "A dot within the left hand light blue band means that there is some evidence that chances of survival in the hospital were lower than predicted")
          (Header. "Inner Low"                   false      false   130   50
                   "A dot in this area means that there is no evidence that the hospital’s survival rate is different from what is predicted")
          (Header. "Inner High"                  false      false   130   50
-                  "A dot within the right hand dark blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
+                  "A dot within the right hand light blue band means that there is some evidence that chances of survival in the hospital were higher than predicted")
          (Header. "Outer High"                  false      false   130   50
                   nil)
          (Header. "Observed survival with predicted range"  false      false   0   100
@@ -231,11 +231,11 @@
 ;;;
 
 (def bar-comments
-  {:inner "A dot in this area means that there is no evidence that the hospital’s survival rate is different from what is predicted"
-   :outer-high "A dot in this area means that there is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
-   :outer-low "A dot in this area means that there is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
-   :low "A dot to the left of the bands means that there is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
-   :high "A dot to the right of the bands means that there is strong evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
+  {:inner "If the black dot is in this area then there is no evidence that the hospital’s survival rate is different from what is predicted"
+   :outer-high "If the black dot is in this area then there is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
+   :outer-low "If the black dot is in this area then there is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :low "If the black dot is in this area then there is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
+   :high "If the black dot is in this area then there is strong evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
    })
 
 ;;;
@@ -244,8 +244,8 @@
 ;;;
 
 (def dot-comments
-  {:inner "There is no evidence that the hospital’s survival rate is different from what is predicted"
-   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted"; " [add link]"
+  {:inner "There is no evidence that chances of survival in the hospital are different from predicted."
+   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
    :outer-low "There is some evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
    :low "There is strong evidence that chances of survival in the hospital were lower than predicted."; " [add link]"
    :high "There is strong evidence that chances of survival in the hospital were higher than predicted."; " [add link]"
