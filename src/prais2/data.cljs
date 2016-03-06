@@ -694,7 +694,7 @@
        [:b {:key 2} (:n-deaths selected-row) " deaths"]
        " had been recorded. "]
       [:p {:key 3}
-       "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
+       "The 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
       ])))
 
 (rum/defc hospital-header < rum/static
@@ -713,7 +713,7 @@
           selected-row content/sample-hospital]
       (map-indexed key-with [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
                              (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the survival rate")
+                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The black dot shows the survival rate")
                              #_(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                              #_(explain-interpretation)
                              #_(interpretation selected-row)]))    ]])
