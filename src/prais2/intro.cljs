@@ -83,13 +83,13 @@
 
      [:h1 "What, why, how?"]
 
-     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
-     #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery."]
+     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival data"] " about children’s heart surgery. "]
+     #_[:p.col-lg-12 "This site is to help people make sense of the published survival data about children’s heart surgery."]
 
      (key-points)
-     (section 1 "WHAT do we mean by survival statistics?" section-1-content)
-     (section 2 "WHY can survival rate data be difficult to interpret?" section-2-content)
-     (section 3 "HOW does the NHS monitor survival rates?" section-3-content)
+     (section 1 "WHAT do we mean by survival rate?" section-1-content)
+     (section 2 "WHY can data about survival be difficult to interpret?" section-2-content)
+     (section 3 "HOW does the NHS monitor hospitals that do children’s heart surgery?" section-3-content)
      (section 4 "What this site cannot do" section-4-content)
      (section 5 "What this site can do" section-5-content)
      ]]])
@@ -98,16 +98,16 @@
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
-    [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
-    [:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
+    [:li "If a higher percentage of patients survive at one hospital than another, it does not mean that it is a better hospital."]
+    [:li "The NHS compares the survival at each hospital to a predicted range of survival that is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
     [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
-    [:li "The 30-day survival rate for all UK hospitals is very high."]]])
+    [:li "The percentage of children that survive at least 30 days after heart surgery is very high at all UK hospitals."]]])
 
 
 
 (rum/defc section-1-content []
   [:section.row
-   [:p.col-sm-12 "The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate. This is the percentage of operations where the child survived at least 30 days after their heart surgery."]
+   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate."]
    [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."]]
   )
 
@@ -123,19 +123,19 @@
 (rum/defc section-3-content []
   [:section.row
    [:.col-lg-12
-    [:p "The NHS monitors survival rates by taking into account how ill the children were that the hospital treated. This is a fairer way of looking at survival rate data."]
+    [:p "The NHS monitors hospitals that perform children’s heart surgery by reviewing the 30-day survival rate for each hospital, taking into account how ill the children were that each hospital treated. This is a fairer way of looking at survival rate data."]
     [:p "Risk factors that affect a child’s chance of survival include:"]
     [:ul
      [:li
       "the age and weight of the child (other things being equal, the bigger and stronger a child is, the safer the surgery is); "]
 
-     [:li "what problem in the heart the surgery is trying to fix (some hearts have more complex defects than others); "]
+     [:li "what problem in the heart the surgery is trying to fix (some hearts have more complex problems than others); "]
 
      [:li "other health problems a child might have (e.g. a genetic syndrome); "]
      [:li "the complexity of the surgical procedure.  "]
      ]
 
-    [:p "Knowing these factors for each patient allows us to identify types of patient who are at greater or lesser risk, even though we cannot predict exactly how a particular individual will respond."]
+    [:p "Knowing these factors for each child allows us to predict the percentage of children within a group that will survive, even though we cannot predict exactly whether individual children will survive."]
 
     [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
