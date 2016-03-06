@@ -1,0 +1,138 @@
+diff --git a/src/prais2/content.cljs b/src/prais2/content.cljs
+index 72a9378..1eb5720 100644
+--- a/src/prais2/content.cljs
++++ b/src/prais2/content.cljs
+@@ -417,7 +417,7 @@
+ 
+                     }
+ 
+-                   {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an survival rate outside their predicted range?"
++                   {:title "When looking at ALL hospitals simultaneously, what does it mean if a hospital has a survival rate outside its predicted range?"
+                     :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s survival rate to be outside its predicted range about 8 times in 20. "
+                     :glossary [:chance-factors :survival-rate]
+                     :body [:div
+@@ -443,7 +443,7 @@
+ 
+                            ]}
+ 
+-                   {:title "What happens if a hospital’s survival is outside its predicted range?"
++                   {:title "What action is taken if a hospital’s survival rate is outside its predicted range?"
+                     :short-answer "The national audit body works with the hospital to check the quality of the data. If this is fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
+                     :glossary [:chance-factors]
+                     :body [:div
+@@ -487,7 +487,7 @@
+                            ]}]}
+ 
+ 
+-           {:section "Limitations of these results and the data"
++           {:section "Limitations of data and results"
+             :faqs [
+ 
+                    {:title "Are there any limitations to risk adjustment?"
+@@ -609,7 +609,7 @@
+                            [:p "Yet to be written"]]}
+                    ]}
+ 
+-           {:section "Further resources about understanding clinical data"
++           {:section "Further resources for understanding clinical data"
+             :faqs [{:title "Suggestions welcome"
+                     :glossary []
+                     :body [:div
+@@ -617,7 +617,7 @@
+                            ]}
+                    ]}
+ 
+-           {:section "Glossary of terms used"
++           {:section "Glossary"
+             :is-glossary true
+             :faqs [{:glossary-entry :survival-rate
+                     :title "Survival rate"
+diff --git a/src/prais2/home.cljs b/src/prais2/home.cljs
+index 047406a..a3ab2cd 100644
+--- a/src/prais2/home.cljs
++++ b/src/prais2/home.cljs
+@@ -26,8 +26,8 @@
+     [:h2 "What, why, how?"]
+     [:p [:strong "What"] " do we mean by survival statistics?"]
+     [:p [:strong "Why"] " are survival statistics after children’s heart surgery hard to interpret?"]
+-    [:p [:strong "How"] " does the NHS monitor them?"]]
+-   [:p [:strong "What"] " this site can and cannot do."]])
++    [:p [:strong "How"] " does the NHS monitor them?"]
++    [:p [:strong "What"] " this site can and cannot do."]]])
+ 
+ (rum/defc data []
+   [:.col-sm-4
+@@ -36,10 +36,10 @@
+      :on-touch-start #(core/click->event-bus % :data :map)}
+     [:i.fa.fa-table {:style {:font-size "140px"}}]
+     [:h2 "Data"]
+-    [:p "Explore published survival statistics!"]
+-    [:p "Use the illustration to see how we present the statistics."]
++    [:p "Explore published survival statistics"]
++    ;[:p "Use the illustration to see how we present the statistics."]
+     [:p "Browse hospitals on a UK map"]
+-    [:p "Get an overview of all hospitals in a list"]]])
++    [:p "View hospitals in a list"]]])
+ 
+ (rum/defc everything-else []
+   [:.col-sm-4
+@@ -48,10 +48,11 @@
+      :on-touch-start #(core/click->event-bus % :faqs :top)}
+     [:i.fa.fa-info {:style {:font-size "140px"}}]
+     [:h2 "Everything else"]
+-    [:p "More information about how survival statistics are monitored"]
+-    [:p "What happens if there are any concerns about the data?"]
+-    [:p "More information about us, this website and external resources."]
+-    [:p "Plus lots of other information!"]]])
++    [:p "How are survival statistics monitored?"]
++    [:p "What happens if the data raises concerns"]
++    ;[:p "More information about us, this website and external resources."]
++    ;[:p "Plus lots of other information!"]
++    ]])
+ 
+ (rum/defc render-home < rum/reactive[]
+   [:div
+@@ -77,7 +78,7 @@
+                      :font-weight 200}}
+         [:li "explore what survival rates can and can’t tell you"]
+         [:li "understand how the NHS monitors children’s heart surgery"]
+-        [:li "explore published results for UK hospitals"]]]
++        [:li "explore published chldren's heart surgery results for UK hospitals"]]]
+       (when (:show-nicor (rum/react core/app))
+         [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"}
+          [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]]]
+diff --git a/src/prais2/intro.cljs b/src/prais2/intro.cljs
+index 07e4502..0ea87f5 100644
+--- a/src/prais2/intro.cljs
++++ b/src/prais2/intro.cljs
+@@ -98,10 +98,14 @@
+   [:section.well.danger.col-sm-8
+    [:h2 "Key points"]
+    [:ul
+-    [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
+-    [:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
++    [:li "A higher survival rate does not imply a better hospital"]
++                                        ;    [:li "If one hospital has a higher survival rate than another hospital, it does not mean that it is better than the other"]
++
++    [:li "The predicted range, calculated by a formula, depends on the particular children treated at that hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
++    ;[:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
++
+     [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
+-    [:li "The 30-day survival rate for all UK hospitals is very high."]]])
++    [:li "The 30-day survival rate is very high for all UK hospitals."]]])
+ 
+ 
+ 
+diff --git a/src/prais2/map_data.cljs b/src/prais2/map_data.cljs
+index 839f0c4..1e632f5 100644
+--- a/src/prais2/map_data.cljs
++++ b/src/prais2/map_data.cljs
+@@ -10,7 +10,7 @@
+ (rum/defc render-map-data < rum/reactive []
+   [:.container
+    [:section.row
+-    [:h2.col-sm-12 "Mapped Data for April 2011 - March 2014"]
++    [:h2.col-sm-12 "Mapped data for April 2011 - March 2014"]
+     [:p.col-sm-12
+      "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
+     [:p.col-sm-12 "This data is updated annually and covers the most recent three year report period."]

@@ -417,7 +417,7 @@
 
                     }
 
-                   {:title "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an survival rate outside their predicted range?"
+                   {:title "When looking at ALL hospitals simultaneously, what does it mean if a hospital has a survival rate outside its predicted range?"
                     :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s survival rate to be outside its predicted range about 8 times in 20. "
                     :glossary [:chance-factors :survival-rate]
                     :body [:div
@@ -443,7 +443,7 @@
 
                            ]}
 
-                   {:title "What happens if a hospital’s survival is outside its predicted range?"
+                   {:title "What action is taken if a hospital’s survival rate is outside its predicted range?"
                     :short-answer "The national audit body works with the hospital to check the quality of the data. If this is fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
                     :glossary [:chance-factors]
                     :body [:div
@@ -487,7 +487,7 @@
                            ]}]}
 
 
-           {:section "Limitations of these results and the data"
+           {:section "Limitations of data and results"
             :faqs [
 
                    {:title "Are there any limitations to risk adjustment?"
@@ -609,7 +609,7 @@
                            [:p "Yet to be written"]]}
                    ]}
 
-           {:section "Further resources about understanding clinical data"
+           {:section "Further resources for understanding clinical data"
             :faqs [{:title "Suggestions welcome"
                     :glossary []
                     :body [:div
@@ -617,7 +617,7 @@
                            ]}
                    ]}
 
-           {:section "Glossary of terms used"
+           {:section "Glossary"
             :is-glossary true
             :faqs [{:glossary-entry :survival-rate
                     :title "Survival rate"
