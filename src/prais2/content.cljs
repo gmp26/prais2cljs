@@ -1,4 +1,5 @@
-(ns ^:figwheel-always prais2.content)
+(ns ^:figwheel-always prais2.content
+    (:require [rum.core :as rum]))
 
 ;;;
 ;; table structure
@@ -197,7 +198,7 @@
    :RHS [[:a {:href "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"}
           "Glasgow, Royal Hospital for Children"]
          [:a {:href "http://www.youngheart.info/"}
-        [:p "The Scottish Association for Children with Heart Disorders (SACHD)"]]]
+        "The Scottish Association for Children with Heart Disorders (SACHD)"]]
    :BRC [[:a
            {:href "http://www.uhbristol.nhs.uk/patients-and-visitors/your-hospitals/bristol-royal-hospital-for-children/the-paediatric-cardiac-service/"}
           "Bristol Royal Hospital for Children"]
@@ -212,8 +213,7 @@
           "Dublin, Our Lady's Children's Hospital"]
          [:a {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin"}
         "Heart Children Ireland"]]
-   :NHB [[:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx"} "Newcastle, Freeman Hospital"]
-         [:a {:href "http://www.thebromptonfountain.org.uk/"} "The Brompton Fountain"]]
+   :NHB [[:a {:href "http://www.thebromptonfountain.org.uk/"} "The Brompton Fountain"]]
    :ACH [[:a {:href "http://www.alderhey.nhs.uk/departments/cardiac/"} "Liverpool, Alder Hey Hospital"]
          [:a {:href "http://www.alderheycharity.org/"} "Alder Hey Charity"]]
    :GUY [[:a {:href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx"}
@@ -225,6 +225,46 @@
    :GOS [[:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"}
           "London, Great Ormond Street Hospital for Children"]
          [:a {:href "http://www.gosh.org/"} "Great Ormond Street Hospital Charity"]]})
+
+
+(def unassoc-charity-list
+  [
+   [:a {:href "www.chfed.org.uk"} "Children’s heart federation"]
+   [:a {:href "www.tinytickers.org"} "TINY TICKERS"]
+   [:a {:href "www.dhg.org.uk"} "DOWNS HEART GROUP"]
+   [:a {:href "www.patchesheartgroup.org"} "PATCHES HEART GROUP"]
+   [:a {:href "www.lagans.org.uk"} "LAGAN’S FOUNDATION"]
+   [:a {:href "www.lhm.org.uk"} "LITTLE HEARTS MATTER"]
+   [:a {:href "www.thesf.org.uk"} "SOMERVILLE FOUNDATION"]
+   [:a {:href "www.bhf.org.uk"} "BRITISH HEART FOUNDATION"]
+   [:a {:href "www.maxappeal.org.uk"} "MAX APPEAL"]
+   [:a {:href "www.heartline.org.uk"} "HEARTLINE FAMILIES"]
+   [:a {:href "www.younghearts.org.uk"} "YOUNG HEARTS"]
+   [:a {:href "www.heartrhythmcharity.org.uk"} "ARRHYTHMIA ALLIANCE"]
+   [:a {:href "www.c-r-y.org.uk"} "CRY – Cardiac Risk in the Young"]
+   [:a {:href "www.arc-uk.org"} "ARC – Antenatal Results and Choices"]
+   [:a {:href "www.benwilliamstrust.org.uk"} "BEN WILLIAMS TRUST"]
+   [:a {:href "www.youngheart.info"} "SACHD – Scottish Association of Children with Heart Disorders"]
+   [:a {:href "www.cardiomyopathy.org"} "CARDIOMYOPATHY UK"]
+   [:a {:href "www.heartchild.info"} "CHILDREN’S HEART ASSOCIATION"]
+   [:a {:href "www.chd-uk.co.uk"} "CHD-UK Congenital Heart Defects UK"]
+   [:a {:href "www.amelia-matters.org.uk"} "AMELIA MATTERS"]
+   [:a {:href "www.cafamily.org.uk"} "CONTACT A FAMILY"]
+   [:a {:href "www.22crew.org"} "THE22CREW"]
+   ])
+
+(rum/defc render-charity-list []
+  [:div
+   [:h3 "Charities"]
+   [:ul
+    (for [charity unassoc-charity-list]
+      [:li charity])]
+
+   [:h3 "Hospital Charities"]
+   [:ul
+    (for [h-code (keys hospital-metadata)]
+      (for [charity (h-code hospital-metadata)]
+        [:li charity]))]])
 
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
@@ -404,12 +444,12 @@
                            ]}
 
                    {:title "What happens if a hospital’s survival is outside its predicted range?"
-                    :short-answer "The national audit body works with the hospital to check the quality of the data and check the appropriateness of the statistical formula. If these are fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
+                    :short-answer "The national audit body works with the hospital to check the quality of the data. If this is fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
                     :glossary [:chance-factors]
                     :body [:div
-                           [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason  why a hospital is outside of its range. "]
+                           [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason why a hospital is outside of its range. "]
 
-                           [:p "Because NICOR always looks at all 14 hospitals at once, it is not that rare for any single hospital to be outside its main predicted range but it is rare for any hospital to be outside its extended range (see also 2.4)"]
+                           [:p "Because NICOR always looks at all 14 hospitals at once, it is not that rare for any single hospital to be outside its main predicted range but it is rare for any hospital to be outside its extended range (see also: " [:a {:href "#/faq/1/3"} "looking at ALL hospitals"] ")"]
 
                            [:p "If a hospital’s survival rate is " [:strong "below"] " its predicted range (either the main or extended), everyone wants to be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or start to improve care if the national audit body decides that this is the reason."]
 
@@ -417,22 +457,22 @@
                             [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/governance"} "National Congenital Heart Disease Audit Steering Committee "]
                             " is notified. The Committee in turn notifies the Medical Director and the lead doctor for congenital heart disease at that hospital and a detailed examination of the hospital’s results takes place. There are established and "[:a {:href "https://www.gov.uk/government/publications/detection-and-management-of-outliers-guidance-prepared-by-national-clinical-audit-advisory-group"} "published procedures"] " involving the Royal College of Surgeons and/or the Care Quality Commission which can be put into action if the detailed assessment raises concerns about care."]
 
-                           [:p "There are three main steps (see also 2.3)"]
+                           [:p "There are two main steps (see also: " [:a {:href "#faq/1/2"} "looking at just one hospital"] ")"]
 
                            [:h4 "Step 1"]
                            [:p "The hospital is asked to recheck the data it submitted for any errors."]
 
                            [:h4 "Step 2"]
-                           [:p "If corrected data still leads to the hospital being outside its range, analysts check to see whether the hospital treated some children that are unlikely to have had their survival chances accurately predicted by the formula. For instance, if the hospital treated children with particularly complex health problems that are not captured by the formula."]
+                           [:p "If the hospital’s survival rate is still below its predicted range but within the extended predicted range (i.e. in the light blue area) with the corrected data, then an internal hospital review is conducted to understand whether there is cause for concern. "]
+                           [:p "If the hospital’s survival rate is below the extended predicted range (outside the light blue area) with the corrected data, then an external review of the hospital’s processes and results would be instigated."]
+                           [:p "In all such cases, the reviews (whether internal or external) would be published online by NICOR at the same time as the Annual Report."]
 
-                           [:h4 "Step 3"]
-                           [:p "If the risk adjustment is considered adequate, then the hospital’s process of care are examined. For instance, how are care decisions made? What are the surgical protocols? How is intensive care managed?"]
+                           [:p "In all such cases, the reviews (whether internal or external) would be published online by NICOR at the same time as the Annual Report."]
 
-                           [:p "The report on individual instances like this would then be published online by NICOR at the same time as the Annual Report."]
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                         :src "assets/outside-range.png"}]]
 
-                           [:p "If a hospital’s survival rate is above its predicted range, we want to see if there is anything we can learn about best practice form that hospital so that it can be shared with other hospitals. "]
+                           [:p "If a hospital’s survival rate is above its predicted range, we want to see if there is anything we can learn about best practice form that hospital so that it can be shared with other hospitals. However, no formal reviews are instigated in cases where survival is higher than the predicted range."]
 
                            ]}
 
@@ -481,7 +521,16 @@
                            [:p "National audit data at the moment (as of 2016) only looks at what happens shortly after surgery. These data cannot tell us about longer term (e.g. 90 day, 1 year or 5 year) survival, or other outcomes such as post-surgery complication rates or the impact of surgery on the child or their family. There is a lot of " [:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"} "active research"] " going right now (due to finish around 2018) investigating how to capture, interpret and publish longer term survival and complication rates so hopefully this information will be available in the next 5 years."]
 
                            [:p "The data also can’t tell us about how or why a hospital achieved the recorded results, so it cannot, by itself, tell us whether one hospital offers better or worse quality care than any other. These data cannot tell you what the results are likely to be next year. It also cannot tell us anything about what happens to children who never get operated on for whatever reason, since data on these children is not currently submitted to national audit. "]]
-                    }]
+                    }
+
+                   {:title "Why is survival to 30 days used as the main survival measure?"
+                    :short-answer "Survival to 30 days is a more objective measure than survival to hospital discharge, since different types of hospital have different treatment pathways for very sick patients (for instance some will transfer patients to another hospital or some to local palliative care). "
+                    :glossary []
+                    :body [:div
+                           [:p "Two very common measures used for looking at a hospital’s outcomes are “survival at discharge from hospital” and “30 day survival”. Survival at discharge is often used in other contexts as it’s the easiest to obtain – it is included within standard hospital records. However, survival to discharge does depend on the treatment and discharge pathways at that hospital. For instance, some hospitals will transfer very sick patients to other, more specialised hospitalised, meaning that more patients will be alive at discharge from that hospital than the specialised hospital. Some hospitals might have close links with local palliative care services and so might discharge patients to these services if further treatment is considered unavailing. Again, such hospitals with have more patients alive at discharge compared to a hospital that look after the sickest patients until they die. "]
+                           [:p "Therefore, if it is available, “30 day survival” is considered a more objective and preferable statistic than “survival to hospital discharge”, since it does not depend on the hospital’s discharge pathways."]
+                           [:p "While longer term survival is extremely important (see [link to longer term survival FAQ]), 30-day survival was initially chosen as it more straightforward to link this outcome to a child’s surgery and post-operative care than a longer range survival  period which might, for instance, incorporate further treatment at different hospitals. The other important aspect of monitoring 30-day survival, particularly within hospitals, is that any worrying outcomes can be investigated very quickly since the survival outcomes are available (locally) within 30 days of a child’s operation."]]}
+                   ]
             }
 
            {:section "My family or child"
@@ -507,7 +556,15 @@
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                         :src "assets/my-child-risks.png"}]]
 
-                           ]}]}
+                           ]}
+
+                   {:title "Further resources for families of children with heart problems"
+;                    :short-answer ""
+                    :glossary []
+                    :body [:div
+                           (render-charity-list)
+                           ]}
+                   ]}
 
            {:section "Who developed this site and how"
             :faqs [{:title "About us"

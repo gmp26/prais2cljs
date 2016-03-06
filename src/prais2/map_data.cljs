@@ -84,8 +84,7 @@
    [:.row
     [:section {:style {:max-width "800px"}}
      [:p]
-     [:h3 {:data-title "Foo" :data-trigger "manual" :data-toggle "tooltip" :data-placement "bottom"}
-      "We present each hospital's survival in the context of its predicted range - see illustration below."]
+     [:h3 {:data-title "Foo" :data-trigger "manual" :data-toggle "tooltip" :data-placement "bottom"}      "We present each hospital's survival in the context of its predicted range - see illustration below."]
 
      [:div {:style
             {:border-radius "5px"

@@ -860,7 +860,7 @@ body { padding-top: 55px; }
     width: 160px;
     padding: 8px;
     margin-left:15px;
-    opacity: 0.5;
+    opacity: 0.8;
 }
 
 .nav-item:focus {
@@ -869,8 +869,9 @@ body { padding-top: 55px; }
 
 .active.nav-item {
     opacity: 1;
+    font-weight: bold;
     border: 1px solid #475E63;
-    box-shadow: 2px 2px 2px #475E63;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
 }
 
 
