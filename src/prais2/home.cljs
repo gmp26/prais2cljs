@@ -26,8 +26,8 @@
     [:h2 "What, why, how?"]
     [:p [:strong "What"] " do we mean by survival statistics?"]
     [:p [:strong "Why"] " are survival statistics after children’s heart surgery hard to interpret?"]
-    [:p [:strong "How"] " does the NHS monitor them?"]]
-   [:p [:strong "What"] " this site can and cannot do."]])
+    [:p [:strong "How"] " does the NHS monitor them?"]
+    [:p [:strong "What"] " this site can and cannot do."]]])
 
 (rum/defc data []
   [:.col-sm-4
@@ -36,10 +36,10 @@
      :on-touch-start #(core/click->event-bus % :data :map)}
     [:i.fa.fa-table {:style {:font-size "140px"}}]
     [:h2 "Data"]
-    [:p "Explore published survival statistics!"]
-    [:p "Use the illustration to see how we present the statistics."]
+    [:p "Explore published survival statistics"]
+    ;[:p "Use the illustration to see how we present the statistics."]
     [:p "Browse hospitals on a UK map"]
-    [:p "Get an overview of all hospitals in a list"]]])
+    [:p "View hospitals in a list"]]])
 
 (rum/defc everything-else []
   [:.col-sm-4
@@ -48,10 +48,11 @@
      :on-touch-start #(core/click->event-bus % :faqs :top)}
     [:i.fa.fa-info {:style {:font-size "140px"}}]
     [:h2 "Everything else"]
-    [:p "More information about how survival statistics are monitored"]
-    [:p "What happens if there are any concerns about the data?"]
-    [:p "More information about us, this website and external resources."]
-    [:p "Plus lots of other information!"]]])
+    [:p "How are survival statistics monitored?"]
+    [:p "What happens if the data raises concerns"]
+    ;[:p "More information about us, this website and external resources."]
+    ;[:p "Plus lots of other information!"]
+    ]])
 
 (rum/defc render-home < rum/reactive[]
   [:div
@@ -77,7 +78,7 @@
                      :font-weight 200}}
         [:li "explore what survival rates can and can’t tell you"]
         [:li "understand how the NHS monitors children’s heart surgery"]
-        [:li "explore published results for UK hospitals"]]]
+        [:li "explore published chldren's heart surgery results for UK hospitals"]]]
       (when (:show-nicor (rum/react core/app))
         [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"}
          [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]]]
