@@ -98,10 +98,10 @@
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
-    [:li "If one hospital has a higher survival rate than another hospital it does not mean that it is better than the other"]
-    [:li "The predicted range is calculated by a formula and depends " [:b "only"] " on the children treated at that hospital. A " [:b "lower"] " predicted range means a hospital treated children with " [:b "more complex"] " medical problems." ]
+    [:li "A higher survival rate does not imply a better hospital."]
+    [:li "The predicted range, calculated by a formula, depends on the particular children treated at that hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
     [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
-    [:li "The 30-day survival rate for all UK hospitals is very high."]]])
+    [:li "The 30-day survival rate is very high for all UK hospitals."]]])
 
 
 

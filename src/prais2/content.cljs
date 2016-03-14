@@ -224,7 +224,7 @@
          [:a {:href "http://www.bch.org.uk"} "Birmingham Children’s Hospital Charity"]]
    :GOS [[:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"}
           "London, Great Ormond Street Hospital for Children"]
-         [:a {:href "http://www.gosh.org/"} "Great Ormond Street Hospital Charity"]]})
+         [:a {:href "http://www.gosh.org/"} "Great Ormond Street Hospital Charity GOSHCC"]]})
 
 
 (def unassoc-charity-list
@@ -244,7 +244,6 @@
    [:a {:href "www.c-r-y.org.uk"} "CRY – Cardiac Risk in the Young"]
    [:a {:href "www.arc-uk.org"} "ARC – Antenatal Results and Choices"]
    [:a {:href "www.benwilliamstrust.org.uk"} "BEN WILLIAMS TRUST"]
-   [:a {:href "www.youngheart.info"} "SACHD – Scottish Association of Children with Heart Disorders"]
    [:a {:href "www.cardiomyopathy.org"} "CARDIOMYOPATHY UK"]
    [:a {:href "www.heartchild.info"} "CHILDREN’S HEART ASSOCIATION"]
    [:a {:href "www.chd-uk.co.uk"} "CHD-UK Congenital Heart Defects UK"]
@@ -263,8 +262,10 @@
    [:h3 "Hospital Charities"]
    [:ul
     (for [h-code (keys hospital-metadata)]
-      (for [charity (h-code hospital-metadata)]
-        [:li charity]))]])
+      [:li [:b (first (h-code hospital-metadata))]
+       [:ul
+        (for [charity (rest (h-code hospital-metadata))]
+          [:li charity])]])]])
 
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
@@ -292,7 +293,9 @@
    })
 
 
-(def glossary {:survival-rate {:title "Survival rate"
+(def glossary {:risk-adjustment {:title "Risk Adjustment"
+                                 :body "Since hospitals treat different children and different children have different chances of survival, we cannot not expect hospitals to have the same survival rate. To understand a hospital’s survival rate we need to put its rate into the context of what children that hospital treated. Combining different risk factors (such as age, weight, complexity of heart disease) into a single formula to calculate the predicted range means we can put a hospital’s survival rate into context. This overall process is called “risk adjustment” and the formula is a “risk adjustment method”. "}
+               :survival-rate {:title "Survival rate"
                                :body  "The percentage of operations where the child survived at least 30 days after their operation."}
                :chance-factors {:title "Chance factors"
                                 :body "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine data on them is collected. Together, we call these all “chance factors”."}})
@@ -348,11 +351,7 @@
                     :short-answer "The data on what was wrong with each child’s heart and their operation comes from the hospital’s records, and the data on whether a child survived to 30 days comes from both the hospital and the Office of National Statistics."
                     :glossary []
                     :body [:div
-                           [:p [:img.thumbnail.pull-left
-                                {:style {:width "150px"
-                                         :margin-right "20px"}
-                                 :src "assets/data-transfer.png"}]
-                            "Each hospital must collect data on every surgery or intervention carried out on a child for heart problems. Every three months, hospitals must submit this data to the national audit body, "[:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health, the Care Quality Commission (CQC) and other NHS regulatory bodies."]
+                           [:p "Each hospital must collect data on every surgery or intervention carried out on a child for heart problems. Every three months, hospitals must submit this data to the national audit body, "[:a {:href "http://www.ucl.ac.uk/nicorum/patients"} "NICOR "] "(The National Institute for Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health, the Care Quality Commission (CQC) and other NHS regulatory bodies."]
 
                            [:p "NICOR tracks the survival of these children by linking to the national register of deaths using patients’ NHS number and also from hospital records. NICOR statisticians then analyse the data every year to enable hospitals and healthcare improvement bodies to monitor and improve the quality of care and outcomes of children who need heart surgery."]
 
@@ -478,7 +477,7 @@
 
                    {:title "What is the risk adjustment method used by National Audit?"
                     :short-answer "The statistical formula is based on a method called “Partial Risk Adjustment in Surgery” or PRAiS for short, developed by researchers at Great Ormond Street Hospital and University College London. "
-                    :glossary []
+                    :glossary [:risk-adjustment]
                     :body [:div
                            [:p "The National Audit body uses a risk adjustment method developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery) (See also the " [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more details."]
 
@@ -492,7 +491,7 @@
 
                    {:title "Are there any limitations to risk adjustment?"
                     :short-answer "Yes – a child’s chances of survival can never be completely captured in a single formula. "
-                    :glossary []
+                    :glossary [:risk-adjustment]
                     :body [:div
                            [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
 
@@ -552,10 +551,6 @@
                     :glossary []
                     :body [:div
                            [:p "No, the published data cannot tell you about the risk for your child specifically – this will depend on other factors that are not necessarily captured in the national data. Your child’s specialist cardiologist and/or cardiac surgeon will be able to discuss this with you. These guides on " [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf"} "speaking to your child’s surgeon"] " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf"} "seeking a second opinion"] ", written by the Children’s Heart Federation, might also be helpful."]
-
-                           [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
-                                                        :src "assets/my-child-risks.png"}]]
-
                            ]}
 
                    {:title "Further resources for families of children with heart problems"
