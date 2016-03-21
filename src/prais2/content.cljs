@@ -427,7 +427,7 @@
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
                                                          :src "assets/rare.png"}]]
 
-                           [:p "BUT, if we are looking at all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by chance about 8 times in 20! This is similar to the difference between flipping one coin and flipping many: if I only flip one coin there is a 50% probability that I’ll get one head whereas if I flipped, say, the four coins in a row the probability of me getting at least one head in the four throws goes up to 94%."]
+                           [:p "BUT, if we are looking at all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by chance about 8 times in 20! This is similar to the situation where you hear a friend won a good prize in a raffle. This may be surprising, but it becomes a lot less surprising when you hear they bought 100 tickets. Just as this gave them more chances of winning, the more hospitals we look at, the more likely it becomes that at least one will fall outside its range, even if survival at all the hospitals matches the formula."]
 
                            [:p "8 times in 20 means that it is not that rare that " [:strong "any"] " one of these hospitals will have an survival rate that falls outside their predicted range. "]
                            [:.col-sm-8 [:img.thumbnail {:style {:width "100%"}
