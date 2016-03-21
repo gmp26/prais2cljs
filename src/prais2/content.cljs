@@ -475,11 +475,11 @@
 
                            ]}
 
-                   {:title "What is the risk adjustment method used by National Audit?"
-                    :short-answer "The statistical formula is based on a method called “Partial Risk Adjustment in Surgery” or PRAiS for short, developed by researchers at Great Ormond Street Hospital and University College London. "
-                    :glossary [:risk-adjustment]
+                   {:title "Where did the formula used by National Audit to calculate the predicted range come from?"
+                    :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS for short, developed by researchers at Great Ormond Street Hospital and University College London. "
+                    :glossary []
                     :body [:div
-                           [:p "The National Audit body uses a risk adjustment method developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery) (See also the " [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more details."]
+                           [:p "The National Audit body uses a formula developed by researchers at Great Ormond Street Hospital and University College London called PRAiS (Partial Risk Adjustment in Surgery. See also the " [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS"} "academic literature"] " if you are interested in learning more details."]
 
                            (comment "*** picture of formula churning away at PRAIS risk factors?***")
 
@@ -489,11 +489,11 @@
            {:section "Limitations of these results and the data"
             :faqs [
 
-                   {:title "Are there any limitations to risk adjustment?"
+                   {:title "Are there any limitations to using a formula?"
                     :short-answer "Yes – a child’s chances of survival can never be completely captured in a single formula. "
                     :glossary [:risk-adjustment]
                     :body [:div
-                           [:p "Yes there are. Risk adjustment allows for fairer assessment of a hospital’s survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
+                           [:p "Yes there are. Taking the different risks for each child into account in a formula (called 'risk adjustment') allows for fairer assessment of a hospital’s survival rate by putting into context (see also the " [:a {:href "?#/intro"} "What, why, how?"] " section),  but it still cannot make it completely fair. It is always ‘partial’ as there will always be information about important risk factors that are not routinely collected and so cannot be captured by risk adjustment methods (see also 2.3). Any statistical formula has to be developed on existing data and so the data will be typically at least a year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected (for instance more complete data) or new methods of surgical or medical management. Often, these statistical formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
 
                    {:title "How reliable are the data?"
                     :short-answer "The data are of very high quality and some of the best in the world."
