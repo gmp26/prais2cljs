@@ -22,7 +22,7 @@
          (Header. "Longitude"                    false      false    0   0
                   "")
          (Header. "Number of Operations"        true       true     95   50
-                  "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014")
+                  "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014. Operations that occur within 30 days of each other are treated as a single operation.")
          (Header. "Number of Deaths"            false       true    75   50
                   "The number of operations where the child  died within 30 days of their operation, from any cause")
          (Header. "Number of Survivors"         false       true    85   50
@@ -342,7 +342,7 @@
 
                             ]
                            [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
-                           [:p "Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the percentage of children surviving for about 40 common surgical procedures and, since 2013, has been able to also include overall survival rate for each hospital along with that hospital’s predicted range for survival."]]
+                           [:p "Each year, NICOR publishes a report of survival over the previous 3 years for each hospital in the UK and Ireland. It reports the percentage of children surviving for about 40 common surgical procedures and, since 2013, has been able to also include overall survival rate for all heart operations at each hospital along with that hospital’s predicted range for survival. Note that operations that occur within 30 days of each other are treated as a single operation when reporting overall survival."]]
 
 
                     }
