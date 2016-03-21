@@ -562,8 +562,10 @@
               "(0-16 years old). "
               "This data is updated annually and covers the most recent 3 year report period.")]
      [:p "Previous reporting periods can be selected at the bottom of the table.
-    Clicking on a hospital code will bring up specific information for that hospital along with an interpretation of its survival rate. It is only valid to compare a hospital's survival rate to its predicted range and not to other hospitals [link to Everything Else]."]
+    Clicking on a hospital code will bring up specific information for that hospital along with an interpretation of its survival rate. "]
      [:p "You can use your mouse to hover over the chart to bring up more explanation."]
+     [:p "It is only valid to compare a hospital's survival rate to its predicted range and not to other hospitals [link to Everything Else]. The survival rate for all hospitals is very high."]
+     
      ]
     (table1 app data event-bus)]])
 
@@ -688,13 +690,13 @@
      [:.data-summary
       [:p {:key 1} "The hospital performed "
        [:b (:n-ops selected-row) "  operations. "]]
-      [:p {:key 2} "After 30 days there were "
+      [:p {:key 2} "Measured 30 days after surgery, "
        [:b {:key 1} (:n-survivors selected-row) " survivors "]
        "and "
        [:b {:key 2} (:n-deaths selected-row) " deaths"]
        " had been recorded. "]
       [:p {:key 3}
-       "The observed 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
+       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
       ])))
 
 (rum/defc hospital-header < rum/static
