@@ -24,10 +24,11 @@
      :on-touch-start #(core/click->event-bus % :intro :top)}
     [:i.fa.fa-question {:style {:font-size "140px"}}]
     [:h2 "What, why, how?"]
-    [:p [:strong "What"] " do we mean by survival statistics?"]
-    [:p [:strong "Why"] " are survival statistics after children’s heart surgery hard to interpret?"]
-    [:p [:strong "How"] " does the NHS monitor them?"]
-    [:p [:strong "What"] " this site can and cannot do."]]])
+    [:p [:strong "What"] " do we mean by survival rates?"]
+    [:p [:strong "Why"] " are survival rates after children’s heart surgery hard to interpret?"]
+    [:p [:strong "How"] " does the NHS monitor them?"]]
+   [:p [:strong "What"] " this site can and cannot do."]]
+   ])
 
 (rum/defc data []
   [:.col-sm-4
@@ -68,9 +69,9 @@
       [:section.about.col-sm-offset-2.col-sm-8
        [:p "This site is to help people make sense of the "
         (if (:show-nicor (rum/react core/app))
-          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"}
-           "published survival statistics"]
-          "published survival statistics")
+          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival data"]
+          "published survival data")
+
         " about children’s heart surgery. "]
        [:p "Our website will help you:"]
        [:ul {:style {:font-size "16px"
