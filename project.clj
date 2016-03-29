@@ -19,11 +19,13 @@
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
                  [rum "0.6.0"]
+                 [figwheel-sidecar "0.5.0"]
 ;                 [jayq "2.5.4"]
                  ]
 
   :plugins [[lein-cljsbuild "1.1.1"]
-            [lein-figwheel "0.5.0-1"]]
+            ;[lein-figwheel "0.5.0-1"]
+            ]
 
   :source-paths ["src"]
 
@@ -31,17 +33,7 @@
                                     "target"]
 
   :cljsbuild {
-              :builds [{:id "devcards"
-                        :source-paths ["src"]
-                        :figwheel { :devcards true
-                                    :on-jsload "prais2.main/on-js-reload"}
-                        :compiler { :main       "prais2.devcards"
-                                   :asset-path "js/compiled/devcards_out"
-                                   :output-to  "resources/public/js/compiled/devcards.js"
-                                   :output-dir "resources/public/js/compiled/devcards_out"
-                                   :source-map-timestamp true }}
-
-                       {:id "dev"
+              :builds [{:id "dev"
                         :source-paths ["src"]
 
                         :figwheel {:websocket-host "localhost"
@@ -59,6 +51,16 @@
                                    :warnings {:single-segment-namespace false}
                                    :source-map-timestamp true
                                    :optimizations :none}}
+
+                       {:id "devcards"
+                        :source-paths ["src"]
+                        :figwheel {:devcards true
+                                   :on-jsload "prais2.main/on-js-reload"}
+                        :compiler { :main       "prais2.devcards"
+                                   :asset-path "js/compiled/devcards_out"
+                                   :output-to  "resources/public/js/compiled/devcards.js"
+                                   :output-dir "resources/public/js/compiled/devcards_out"
+                                   :source-map-timestamp true }}
 
                        {:id "min"
                         :source-paths ["src"]
