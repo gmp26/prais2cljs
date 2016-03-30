@@ -1,6 +1,5 @@
 /resources/public/js/compiled/**
 .DS_Store
-*/.DS_Store
 figwheel_server.log
 pom.xml
 *jar
@@ -14,6 +13,29 @@ pom.xml
 .lein-plugins/
 .repl
 .nrepl-port
+
+# User-specific stuff:
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/dictionaries
+.idea/vcs.xml
+.idea/jsLibraryMappings.xml
+
+# Sensitive or high-churn files:
+.idea/dataSources.ids
+.idea/dataSources.xml
+.idea/dataSources.local.xml
+.idea/sqlDataSources.xml
+.idea/dynamic.xml
+.idea/uiDesigner.xml
+
+# Gradle:
+.idea/gradle.xml
+.idea/libraries
+.idea/compiler.xml
+.idea/encodings.xml
+.idea/misc.xml
+
 bower_components
 resources/docs/eganimation_narrated\ v2.pptx
 resources/docs/animation/private
