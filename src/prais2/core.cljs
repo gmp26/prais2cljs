@@ -21,7 +21,10 @@
 (defn ready [handler]
   (.ready (js/$ js/document) handler))
 
-(defonce app (atom {:datasource :2014
+;;
+;; todo: configure this?
+;;
+(defonce app (atom {:datasource :2015
                     :page :home
                     :section :map
                     :sort-by nil

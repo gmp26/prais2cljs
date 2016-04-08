@@ -31,13 +31,20 @@
    table-rows
    ))
 
+;;
+;; todo: generalise dataset
+;;
 (defn make-datasource [datasource]
   (into []
         (concat [content/header-row]
-                (if (= datasource :2014)
-                  (:2014  content/datasources)
+                (if (number? (js.parseInt (name datasource)))
+                  (datasource  content/datasources)
                   (add-markers (datasource content/datasources))
-                  ))))
+                  )
+                #_(if (= datasource :2014)
+                    (:2014  content/datasources)
+                    (add-markers (datasource content/datasources))
+                    ))))
 
 (defn table-data
   "datasource switchable hospital results table"
@@ -553,11 +560,14 @@
                  (first data)
                  )]])
 
+;;
+;; todo: configure title according to dataset
+;;
 (rum/defc list-tab [app data event-bus]
   [:div
    [:.container
     [:.row
-     [:h2 "List data for April 2011 – March 2014"]
+     [:h2 "List data for April 2012 – March 2015"]
      [:p (str "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children "
               "(0-16 years old). "
               "This data is updated annually and covers the most recent 3 year report period.")]
