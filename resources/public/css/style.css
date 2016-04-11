@@ -76,12 +76,62 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 /**
  * Chrome
  */
-.home-nav {
+.jumbotron.home {
+    background-color: #CCDDFF;
+    color: #4F4763;
+      :background-size "100%"
+      :color "#555555"
+      :margin 0
+      :padding-top "10px"
+      :padding-bottom "10px"}}
+    }
+
+#home-nav {
     margin: 40px 0px 10px 0px;
     border: none;
     color: white;
     height: 500px;
 }
+
+#home-nav .active {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+    opacity: 0.7;
+    cursor: pointer;
+    position: relative;
+}
+
+#home-nav .active:hover {
+    opacity: 1;
+}
+
+#home-nav .active .chevron {
+    display:  block;
+    position: absolute;
+    top:      10px;
+    right:    10px;
+}
+
+#home-nav .active .title {
+    display: inline-block;
+    padding-left: 10px;
+    font-size: 25px;
+}
+
+.well.intro {
+    background-color:  #FC867A;
+}
+
+.well.data {
+    background-color:  #FC8D59;
+}
+
+.well.faqs {
+    background-color: #7FCDBB;
+}
+
 
 .home {
     background-color: #8B99FA
@@ -112,28 +162,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 }
 
 
-.well.intro {
-    background-color:  #FC867A;
-
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.well.data {
-    background-color:  #FC8D59;
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.well.faqs {
-    background-color: #7FCDBB;
-    opacity: 0.9;
-    cursor: pointer;
-}
-
-.well:hover {
-    opacity: 1;
-}
 
 .highlight {
     opacity: 0.6;

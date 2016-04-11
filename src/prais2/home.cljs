@@ -19,11 +19,13 @@
 
 (rum/defc what-why []
   [:.col-sm-4
-   [:.well.home-nav.intro
-    {:on-click #(core/click->event-bus % :intro :top)
-     :on-touch-start #(core/click->event-bus % :intro :top)}
-    [:i.fa.fa-question {:style {:font-size "140px"}}]
-    [:h2 "What, why, how?"]
+   [:#home-nav.well.intro
+    [:.active
+     {:on-click       #(core/click->event-bus % :intro :top)
+      :on-touch-start #(core/click->event-bus % :intro :top)}
+     [:i.fa.fa-question {:style {:font-size "140px"}}]
+     [:.chevron [:i.fa.fa-chevron-right]]
+     [:.title "What, why, how?"]]
     [:p [:strong "What"] " do we mean by survival rates?"]
     [:p [:strong "Why"] " are survival rates after children’s heart surgery hard to interpret?"]
     [:p [:strong "How"] " does the NHS monitor them?"]
@@ -32,22 +34,26 @@
 
 (rum/defc data []
   [:.col-sm-4
-   [:.well.home-nav.data
-    {:on-click #(core/click->event-bus % :data :map)
-     :on-touch-start #(core/click->event-bus % :data :map)}
-    [:i.fa.fa-table {:style {:font-size "140px"}}]
-    [:h2 "Data"]
+   [:#home-nav.well.data
+    [:.active
+     {:on-click       #(core/click->event-bus % :data :map)
+      :on-touch-start #(core/click->event-bus % :data :map)}
+     [:i.fa.fa-table {:style {:font-size "140px"}}]
+     [:.chevron [:i.fa.fa-chevron-right]]
+     [:.title "Data"]]
     [:p "Explore published survival statistics"]
     [:p "Browse hospitals on a UK map"]
     [:p "View hospitals in a list"]]])
 
 (rum/defc everything-else []
   [:.col-sm-4
-   [:.well.home-nav.faqs
-    {:on-click #(core/click->event-bus % :faqs :top)
-     :on-touch-start #(core/click->event-bus % :faqs :top)}
-    [:i.fa.fa-info {:style {:font-size "140px"}}]
-    [:h2 "Everything else"]
+   [:#home-nav.well.faqs
+    [:.active
+     {:on-click       #(core/click->event-bus % :faqs :top)
+      :on-touch-start #(core/click->event-bus % :faqs :top)}
+     [:i.fa.fa-info {:style {:font-size "140px"}}]
+     [:.chevron [:i.fa.fa-chevron-right]]
+     [:.title "Everything else"]]
     [:p "How are survival statistics monitored"]
     [:p "What happens if the data raises concerns?"]
     [:p "Information for families?"]
@@ -56,14 +62,8 @@
 
 (rum/defc render-home < rum/reactive[]
   [:div
-   [:.jumbotron
-    {:style
-     {;:background-image "url(assets/logotron.png)"
-      :background-size "100%"
-      :color "#555555"
-      :margin 0
-      :padding-top "10px"
-      :padding-bottom "10px"}}
+   [:.jumbotron.home
+
     [:.container
      [:.row
       [:section.about.col-sm-offset-2.col-sm-8

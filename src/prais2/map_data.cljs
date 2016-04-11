@@ -10,7 +10,7 @@
 (rum/defc render-map-data < rum/reactive []
   [:.container
    [:section.row
-    [:h2.col-sm-12 "Mapped data for April 2012 - March 2015"]
+    [:h2.col-sm-12 "Mapped data for April 2011 - March 2014"]
     [:p.col-sm-12
      "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
     [:p.col-sm-12 "This data is updated annually and covers the most recent three year report period."]

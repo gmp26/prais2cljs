@@ -24,7 +24,7 @@
 ;;
 ;; todo: configure this?
 ;;
-(defonce app (atom {:datasource :2015
+(defonce app (atom {:datasource :2014
                     :page :home
                     :section :map
                     :sort-by nil

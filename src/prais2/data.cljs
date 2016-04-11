@@ -567,7 +567,7 @@
   [:div
    [:.container
     [:.row
-     [:h2 "List data for April 2012 – March 2015"]
+     [:h2 "List data for April 2011 – March 2014"]
      [:p (str "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children "
               "(0-16 years old). "
               "This data is updated annually and covers the most recent 3 year report period.")]
@@ -607,8 +607,7 @@
      :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
     (map-indexed key-with
                  (for [n (range (count content/colour-map-options))]
-                   (integer-option n)))]
-   ])
+                   (integer-option n)))]])
 
 (rum/defc key-option < rum/static [key]
   [:option {:value (name key)} (name key)])
@@ -621,8 +620,7 @@
      :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
-                   (key-option key)))]
-   ])
+                   (key-option key)))]])
 
 (rum/defc nicor-checkbox < rum/reactive []
   [:.form-group.col-sm-2
@@ -630,8 +628,7 @@
    [:input {:type "checkbox"
             :checked (:show-nicor (rum/react core/app))
             :on-change #(swap! core/app update :show-nicor not)
-            }]]
-  )
+            }]])
 
 (rum/defc option-menu < rum/reactive [event-bus]
   [:nav.navbar.navbar-default.table-container
