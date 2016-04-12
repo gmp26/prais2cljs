@@ -36,7 +36,13 @@
 
     (if (nil? (:map-h-code (rum/react core/app)))
       [:.col-sm-6.col-xs-7.col-md-7 (hospital-list)]
-      [:.col-sm-6.col-xs-7.col-md-7 (data/hospital-detail (:map-h-code (rum/react core/app)))])]])
+      [:.col-sm-6.col-xs-7.col-md-7
+       [:div.clearfix
+        [:button.btn.btn-primary.pull-left {:type      "button"
+                                            :on-click  #(core/click->event-bus % :reset-map-to-home nil)
+                                            :tab-index 0}
+         [:i.fa.fa-chevron-left] " Back"]]
+       (data/hospital-detail (:map-h-code (rum/react core/app)))])]])
 
 
        #_[:col-sm-6.col-xs-6 {:style {:margin "40px 0px"}}
