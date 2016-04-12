@@ -219,7 +219,7 @@
     :tab-index 0}
    "All UK"])
 
-(rum/defc menu-button []
+#_(rum/defc menu-button []
   [:button#drop1.btn-info.h-button.map-menu.dropdown-toggle
    {:type "button"
     :data-toggle "dropdown"
@@ -240,17 +240,18 @@
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))
 
-(rum/defc hospital-dropdown []
+#_(rum/defc hospital-dropdown []
   [:.dropdown
    (map-indexed key-with [(menu-button) (hospital-list)])
    ])
 
 (rum/defc hospitals < map-view rum/reactive []
-  [:div
-   [:div {:key 2}
+  [:div.row
+   [:.col-xs-12 {:key 2}
     [:#open-map.hospital-map {:tab-index 0 :key 1}
      (london-button)
      (home-button)
-     (hospital-dropdown)]
+     ;     (hospital-dropdown)
+     ]
     [:#popup {:key 2}]
     ]])

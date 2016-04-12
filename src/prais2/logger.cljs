@@ -5,7 +5,6 @@
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
               [cognitect.transit :as sit]
-              [cljsjs.moment :as moment]
               [cljsjs.jquery]
               [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
               [cljs.reader :as r]

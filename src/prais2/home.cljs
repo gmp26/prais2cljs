@@ -29,8 +29,7 @@
     [:p [:strong "What"] " do we mean by survival rates?"]
     [:p [:strong "Why"] " are survival rates after children’s heart surgery hard to interpret?"]
     [:p [:strong "How"] " does the NHS monitor them?"]
-    [:p [:strong "What"] " this site can and cannot do."]]
-   ])
+    [:p [:strong "What"] " this site can and cannot do."]]])
 
 (rum/defc data []
   [:.col-sm-4

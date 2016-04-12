@@ -88,9 +88,12 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 
 .home-nav.well {
     color: #ffffff;
-    margin: 40px 0px 10px 0px;
+    margin: 20px 0px 10px 0px;
     border: none;
-    //height: 500px;
+}
+
+.home-nav.well.vis-sm-block {
+   height:500px;;
 }
 
 .home-nav .active {
@@ -637,15 +640,29 @@ td:first-child {
     padding: 10px;
 }
 
-
 /***
  * MAP CSS
  **/
+ul.h-nav {
+    border: 1px solid #CCCCCC;
+}
+
+ul.h-nav li {
+    list-style-type: none;
+    padding: 10px 10px 7px 0px;
+    border-bottom: 1px solid #CCCCCC;
+    cursor: pointer;
+}
+
+ul.h-nav li:last-of-type {
+    border-bottom: none;
+}
+
 .hospital-map {
-    width: 320px;
+    //width: 320px;
     height: 480px;
+    min-width: 220px;
     position: relative;
-    border: 1px solid grey;
 }
 
 .ol-rotate {
@@ -882,26 +899,30 @@ body { padding-top: 55px; }
 
 .nav-item {
     color: rgb(255,255,255);
-    //height: 35px;
     border: none;
-    border-radius: 25px;
+    border-radius: 5px;
     width: 160px;
     padding: 8px;
     margin-left:15px;
-    opacity: 0.8;
 }
 
 .nav-item:focus {
     outline: none;
 }
 
-.active.nav-item {
-    opacity: 1;
-    font-weight: bold;
-    border: 1px solid #475E63;
-    box-shadow: 1px 1px 1px rgba(0,0,0,0.4);
+.nav-item:hover {
+    border: 1px solid white;
 }
 
+.nav-item.active {
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.nav-item.active:hover {
+    font-weight: bold;
+    border: 2px solid white;
+}
 
 ul.nav.navbar-nav.navbar-right {
     margin: 0 -5px;
@@ -916,9 +937,7 @@ ul.nav.navbar-nav.navbar-right {
     display: inline;
 }
 
-.nav-item:hover {
-    opacity: 1;
-}
+
 .nav-item.simple-title {
     color: rgba(255,255,255,1);
 }

@@ -1,11 +1,25 @@
 (ns ^:figwheek-always prais2.map-data
     (:require [rum.core :as rum]
+              [cljs.core.async :refer [<! put! timeout]]
               [prais2.chrome :refer [what-why everything-else]]
               [prais2.utils :refer [key-with]]
               [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
               [prais2.content :as content]
               [prais2.data :as data]
               [prais2.open-layers-map :as map]))
+
+
+(rum/defc hospital-item [row]
+          [:li [:a
+                {:tab-index 0
+                 :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
+                (:h-name row) [:i.fa.fa-chevron-right.pull-right]]])
+
+(rum/defc hospital-list < rum/reactive []
+          (let [rows ((:datasource (rum/react core/app)) content/datasources)]
+            [:ul.h-nav.col-sm.6.col-md-8
+             (map-indexed key-with (map hospital-item rows))]))
+
 
 (rum/defc render-map-data < rum/reactive []
   [:.container
@@ -17,22 +31,26 @@
 
 
 
-    [:.col-sm-6
-     [:div.center-block {:style {:margin-bottom "40px"}} (map/hospitals)]]
+    [:.hospital-map.col-sm-6.col-md-4.col-xs-5
+     (map/hospitals)]
+
     (if (nil? (:map-h-code (rum/react core/app)))
-      [:div.col-sm-6.col-xs-6 {:style {:margin "40px 0px"}}
-       [:img.center-block {:src "assets/big-icon.png"}]
-       [:p.text-center "Click on a hospital or use the"]
-       [:.center-block.btn.btn-info.disabled {:style {:width "80px"}}
-        "Menu " [:i.fa.fa-caret-down]]
-       [:div {:style {:margin-top "60px"
-                      :padding "10px"
-                      :box-shadow "1px 1px 4px #CCCCCC"}}
-        [:span "Return to a wider view with the "
-         [:.btn.btn-info.disabled "All UK"] " or "
-         [:.btn.btn-info.disabled "Just London"] " buttons."]]
-       ]
-      [:.col-sm-6 (data/hospital-detail (:map-h-code (rum/react core/app)))])]])
+      [:.col-sm-6.col-xs-7.col-md-7 (hospital-list)]
+      [:.col-sm-6.col-xs-7.col-md-7 (data/hospital-detail (:map-h-code (rum/react core/app)))])]])
+
+
+       #_[:col-sm-6.col-xs-6 {:style {:margin "40px 0px"}}
+        [:img {:src "assets/icon.png"}]
+        [:p "Click on a hospital or use the menu"]
+        [:.btn.btn-info.disabled {:style {:width "80px"}}
+         "Menu " [:i.fa.fa-caret-down]]
+        [:div {:style {:margin-top "60px"
+                       :padding    "10px"
+                       :box-shadow "1px 1px 4px #CCCCCC"}}
+         [:span "Return to a wider view with the "
+          [:.btn.btn-info.disabled "All UK"] " or "
+          [:.btn.btn-info.disabled "Just London"] " buttons."]]
+        ]
 
 
 (defn px [pixels] (str pixels "px"))

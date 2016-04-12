@@ -30,7 +30,8 @@
   :source-paths ["src"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled"
-                                    "target"]
+                                    "target"
+                                    "resources/public/css-c"]
 
   :cljsbuild {
               :builds [{:id "dev"
