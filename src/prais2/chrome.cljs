@@ -84,21 +84,22 @@
       [:div
        [:div {:key 1
               :style
-              {:position "relative"
-               :z-index 1;
-               :left "0px"
-               :top "3px"
-               :background-image "url(assets/logo3.png)"
-               :background-repeat "no-repeat"
-               :background-size "100%"
-               :width "70px"
-               :height "80px"
-               :border "none"
-               :color "white"
-               :text-align "right"
-               :float "left"
-               :margin-left "30px"
-}}
+                   {:transform         "translate(0, -7px) rotate(180deg)"
+                    :position          "relative"
+                    :z-index           1
+                    :left              "0px"
+                    :top               "3px"
+                    :background-image  "url(assets/logo3.png)"
+                    :background-repeat "no-repeat"
+                    :background-size   "100%"
+                    :width             "70px"
+                    :height            "80px"
+                    :border            "none"
+                    :color             "white"
+                    :text-align        "right"
+                    :float             "left"
+                    :margin-left       "30px"
+                    }}
 
         ]
        [:h3 {:key 2

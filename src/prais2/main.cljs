@@ -355,7 +355,7 @@
               (prn faq-ref)
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
-                    (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                    ;(.pushState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
   ;;;
