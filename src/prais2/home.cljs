@@ -19,7 +19,7 @@
 
 (rum/defc what-why []
   [:.col-sm-4
-   [:#home-nav.well.intro
+   [:.home-nav.well.intro
     [:.active
      {:on-click       #(core/click->event-bus % :intro :top)
       :on-touch-start #(core/click->event-bus % :intro :top)}
@@ -34,7 +34,7 @@
 
 (rum/defc data []
   [:.col-sm-4
-   [:#home-nav.well.data
+   [:.home-nav.well.data
     [:.active
      {:on-click       #(core/click->event-bus % :data :map)
       :on-touch-start #(core/click->event-bus % :data :map)}
@@ -47,7 +47,7 @@
 
 (rum/defc everything-else []
   [:.col-sm-4
-   [:#home-nav.well.faqs
+   [:.home-nav.well.faqs
     [:.active
      {:on-click       #(core/click->event-bus % :faqs :top)
       :on-touch-start #(core/click->event-bus % :faqs :top)}

@@ -79,21 +79,21 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 .jumbotron.home {
     background-color: #CCDDFF;
     color: #4F4763;
-      :background-size "100%"
-      :color "#555555"
-      :margin 0
-      :padding-top "10px"
-      :padding-bottom "10px"}}
+    background-size: 100%;
+    color: #555555;
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
     }
 
-#home-nav {
+.home-nav.well {
+    color: #ffffff;
     margin: 40px 0px 10px 0px;
     border: none;
-    color: white;
-    height: 500px;
+    //height: 500px;
 }
 
-#home-nav .active {
+.home-nav .active {
     border: 2px solid white;
     border-radius: 10px;
     padding: 10px;
@@ -103,18 +103,18 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     position: relative;
 }
 
-#home-nav .active:hover {
+.home-nav .active:hover {
     opacity: 1;
 }
 
-#home-nav .active .chevron {
+.home-nav .active .chevron {
     display:  block;
     position: absolute;
     top:      10px;
     right:    10px;
 }
 
-#home-nav .active .title {
+.home-nav .active .title {
     display: inline-block;
     padding-left: 10px;
     font-size: 25px;
