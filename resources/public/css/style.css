@@ -586,7 +586,7 @@ td:first-child {
 .partners {
   z-index: 1000;
   position: relative;
-  background-color: whitesmoke;
+  background-color: #222222;//whitesmoke;
 }
 
 .footer {
@@ -595,6 +595,11 @@ td:first-child {
   padding: 20px 60px;
   font-size: 14px;
   margin: 50px -15px 0px;
+}
+
+.partners .collab-logo {
+display: inline;
+margin-bottom: 10px;
 }
 
 #intro th {

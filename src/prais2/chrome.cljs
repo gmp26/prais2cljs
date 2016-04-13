@@ -111,18 +111,18 @@
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row {:style {:padding-top "50px"}}
-    [:img.img-responsive.col-sm-offset-2.col-sm-2
+    [:img.img-responsive.col-sm-offset-2.col-sm-2.collab-logo
      {:src "assets/ucl-logo.png"}]
-    [:img.img-responsive.col-sm-2
+    [:img.img-responsive.col-sm-2.collab-logo
      {:src "assets/camlogo.png"}]
-    [:img.img-responsive.col-sm-1
+    [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/KCLlogo.gif"}]
-    [:img.img-responsive.col-sm-2
+    [:img.img-responsive.col-sm-2.collab-logo
      {:src "assets/sas-logo.png"}]
-    [:img.img-responsive.col-sm-1
+    [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/chf-logo.png"}]]
    [:.row
-    [:.col-md-12
+    [:.col-md-8
      (data/option-menu event-bus)]]
    [:.row.footer
     ;[:.pull-right (logger/playback-controls)]

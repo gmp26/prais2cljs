@@ -316,8 +316,8 @@
                                  :body  "Since hospitals treat different children and different children have different chances of survival, we cannot not expect hospitals to have the same survival rate. To understand a hospital’s survival rate we need to put its rate into the context of what children that hospital treated. Combining different risk factors (such as age, weight, complexity of heart disease) into a single formula to calculate the predicted range means we can put a hospital’s survival rate into context. This overall process is called “risk adjustment” and the formula is a “risk adjustment method”. "}
                :survival-rate   {:title "Survival rate"
                                  :body  "The percentage of operations where the child survived at least 30 days after their operation."}
-               :chance-factors  {:title "Chance factors"
-                                 :body  "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine data on them is collected. Together, we call these all “chance factors”."}})
+               :unforeseen-factors  {:title "Unforeseen factors"
+                                 :body  "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine data on them is collected. Together, we call these all “unforeseen factors”."}})
 
 (def title "Everything else")
 
@@ -380,7 +380,7 @@
                    {:section "Understanding the predicted range"
                     :faqs    [{:title        "Why is a different survival range predicted for each hospital?"
                                :short-answer "The predicted range depends on how complex were the medical problems of the children who had operations. Each hospital treats different children and so each hospital will have a different predicted range."
-                               :glossary     [:chance-factors :survival-rate]
+                               :glossary     [:unforeseen-factors :survival-rate]
                                :body         [:div
                                               [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more serious conditions. This affects a child's chances of survival, as do other factors such as age, weight and other health problems."]
 
@@ -395,10 +395,10 @@
                                }
 
                               {:title        "Why does the width of the predicted range differ between hospitals?"
-                               :short-answer "If a hospital does fewer operations, chance factors have a bigger influence on its overall survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
+                               :short-answer "If a hospital does fewer operations, unforeseen factors have a bigger influence on its overall survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
                                :glossary     [:survival-rate]
                                :body         [:div
-                                              [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, chance factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
+                                              [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, unforeseen factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
 
                                }
 
@@ -436,7 +436,7 @@
 
                               {:title        "When looking at ALL hospitals simultaneously , what does it mean if any of the hospitals have an survival rate outside their predicted range?"
                                :short-answer "When looking at all 14 hospitals at once, we expect at least one hospital’s survival rate to be outside its predicted range about 8 times in 20. "
-                               :glossary     [:chance-factors :survival-rate]
+                               :glossary     [:unforeseen-factors :survival-rate]
                                :body         [:div
 
                                               [:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range rarely, only 1 time in 20 if chances of survival at the hospitals match the formula."]
@@ -462,7 +462,7 @@
 
                               {:title        "What happens if a hospital’s survival is outside its predicted range?"
                                :short-answer "The national audit body works with the hospital to check the quality of the data. If this is fine, the hospital and the audit body explore the processes of care at that hospital. If these bring to light any concerns, the NHS and the hospital work together to improve care, which might include temporarily suspending heart surgery at that centre. "
-                               :glossary     [:chance-factors]
+                               :glossary     [:unforeseen-factors]
                                :body         [:div
                                               [:p "For these cases, the NHS and the national audit body, NICOR, want to understand if there is a reason why a hospital is outside of its range. "]
 
@@ -524,11 +524,11 @@
 
                               {:title        "What are the limitations of the data?"
                                :short-answer "These data do not capture all the potential medical problems a child has and only represent a snapshot of survival outcomes. They cannot capture the full picture of the quality of care provided by a hospital."
-                               :glossary     [:chance-factors]
+                               :glossary     [:unforeseen-factors]
                                :body         [:div
                                               [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about surgery outcomes. There are risk factors not routinely collected (for instance the size of a hole in the heart), which means these cannot be accounted for in our statistical formula. "]
 
-                                              [:p "These data are also snapshots in time of what happened at each specialist hospital. A number of particularly challenging patients one year (in ways not accounted for in our prediction) or a run of chance factors could cause a very good hospital to have worse outcomes than predicted. So we need to be careful about reading too much into any single time period."]]
+                                              [:p "These data are also snapshots in time of what happened at each specialist hospital. A number of particularly challenging patients one year (in ways not accounted for in our prediction) or a run of unforeseen factors could cause a very good hospital to have worse outcomes than predicted. So we need to be careful about reading too much into any single time period."]]
                                }
 
                               {:title        "What about longer term survival and quality of life?"
@@ -635,9 +635,9 @@
                     :faqs        [{:glossary-entry :survival-rate
                                    :title          "Survival rate"
                                    :body           "The percentage of operations where the child survived at least 30 days after their operation."}
-                                  {:glossary-entry :chance-factors
-                                   :title          "Chance factors"
-                                   :body           "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “chance factors”."}]}
+                                  {:glossary-entry :unforeseen-factors
+                                   :title          "Unforeseen factors"
+                                   :body           "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due to the inevitable inability to predict the future with certainty – all people are physically unique and will react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our inability to predict precisely is also partly because there are factors that we suspect may influence the outcome but cannot be included in the statistical method either because these factors are difficult to define or no routine data on them is collected. Together, we call these all “unforeseen factors”."}]}
                    ])
 ;;;
 ;; These theme colours are selectable in the footer (at least till we decide on one)

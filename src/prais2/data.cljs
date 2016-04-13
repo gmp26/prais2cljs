@@ -537,8 +537,12 @@
                               :height (px (:height column-header))}
                              (if (= column-key :h-name) {:minWidth (px 256)} {}))}
           [:div {:style {:display "inline-block"
+                         :cursor (if (= column-key :h-name) "pointer" "auto")
                          :width (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
-           (str (column-key row) (when (= column-key :survival-rate) " %" ""))]
+           (if (= column-key :h-name)
+             [:a {:on-touch-start info-handler
+                  :on-click info-handler} (column-key row)]
+             (str (column-key row) (when (= column-key :survival-rate) " %" "")))]
 
           (when (= column-key :h-name)
             [:button.btn.btn-link.btn-xs.h-info
@@ -578,7 +582,8 @@
       [:a {:href "/#/faqs"} "Everything Else"]]
      [:p "You can use your mouse to hover over the chart to bring up more explanation."]
      ]
-    (table1 app data event-bus)]])
+    (table1 app data event-bus)
+    [:div {:style {:height "40px"}}]]])
 
 
 (defn get-chart-state
@@ -617,24 +622,27 @@
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
   [:.form-group.col-sm-2
-   [:label-for{:for "data-selector"} "Datasource "]
+   [:label-for{:for "data-selector"
+               :style {:color "#ffffff"}} "Datasource "]
    [:select#data-selector.form-control.input-sm
-    {:value (name (:datasource (rum/react core/app)))
+    {:style {:max-width "120px"}
+     :value (name (:datasource (rum/react core/app)))
      :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
                    (key-option key)))]])
 
 (rum/defc nicor-checkbox < rum/reactive []
-  [:.form-group.col-sm-2
-   [:label-for {:for "nicor-check"} "Show Nicor links "]
+  [:.form-group.col-sm-6
+   [:label-for {:for "nicor-check"
+                :style {:color "#ffffff"}} "Show Nicor links "]
    [:input {:type "checkbox"
             :checked (:show-nicor (rum/react core/app))
             :on-change #(swap! core/app update :show-nicor not)
             }]])
 
 (rum/defc option-menu < rum/reactive [event-bus]
-  [:nav.navbar.navbar-default.table-container
+  [:nav.navbar.navbar-inverse.table-container
    [:.container-fluid
     [:navbar-form.form-inline.row
      [:.col-sm-12

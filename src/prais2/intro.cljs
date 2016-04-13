@@ -11,7 +11,7 @@
 
 
 (rum/defc section [section-id section-title section-content]
-  [:section.col-sm-12.pull-left
+  [:section.col-sm-8.pull-left
    {:id section-id}
    [:h2 section-title]
    (section-content)])
@@ -114,10 +114,10 @@
 (rum/defc section-2-content []
   [:section.row
    (animation-2)
-   [:p.col-lg-6
+   [:p.col-lg-12
     "Heart disease covers a wide range of disorders, from relatively minor to more severe conditions. Some hospitals specialise in severe conditions and tend to operate on children with a lower chance of survival. Also, every child is unique and may respond differently to treatment (surgery, drugs, postoperative care)."]
 
-   [:p.col-lg-6
+   [:p.col-lg-12
     "It would therefore be unfair to expect all hospitals to have directly comparable survival rates: we should take into account how ill the children were that the hospitals treated. In other words, if one hospital has a higher survival rate than another hospital this is not necessarily evidence that one hospital is better than the other – it could indicate that the second hospital treated children with more severe problems. "]])
 
 (rum/defc section-3-content []
