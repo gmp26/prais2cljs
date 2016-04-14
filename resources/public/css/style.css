@@ -77,7 +77,7 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
  * Chrome
  */
 .jumbotron.home {
-    background-color: #CCDDFF;
+    background-color: #ffffff; //#CCDDFF;
     color: #4F4763;
     background-size: 100%;
     color: #555555;

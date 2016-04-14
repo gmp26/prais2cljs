@@ -398,7 +398,7 @@
                                :short-answer "If a hospital does fewer operations, unforeseen factors have a bigger influence on its overall survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
                                :glossary     [:survival-rate]
                                :body         [:div
-                                              [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula.  regardless of how many operations it did or what children it treated. When a hospital does fewer operations, unforeseen factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
+                                              [:p "The predicted range (dark blue bar) for each hospital shows the range where we expect to see the observed survival rate 19 times out of 20 if the hospital is performing as predicted by the formula regardless of how many operations it did or what children it treated. When a hospital does fewer operations, unforeseen factors have a bigger influence on the overall outcome, and so it has a wider predicted range than a hospital that does many operations. "]]
 
                                }
 
