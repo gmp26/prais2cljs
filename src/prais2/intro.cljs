@@ -84,7 +84,7 @@
      [:h1 "What, why, how?"]
 
      [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
-     #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery."]
+     #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery in the UK and Ireland."]
 
      (key-points)
      (section 1 "WHAT do we mean by survival statistics?" section-1-content)
@@ -101,13 +101,13 @@
     [:li "A higher survival rate does not imply a better hospital."]
     [:li "The predicted range, calculated by a formula, depends on the particular children treated at that hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
     [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
-    [:li "The 30-day survival rate is very high for all UK hospitals."]]])
+    [:li "The 30-day survival rate is very high for all hospitals in the UK and Ireland."]]])
 
 
 
 (rum/defc section-1-content []
   [:section.row
-   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate."]
+   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate. Ireland also submits its data to the same audit body."]
    [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."]]
   )
 
