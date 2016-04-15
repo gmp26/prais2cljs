@@ -41,7 +41,7 @@
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Data"]]
     [:p "Explore published survival statistics"]
-    [:p "Browse hospitals on a UK map"]
+    [:p "Browse hospitals on a UK & Ireland map"]
     [:p "View hospitals in a list"]]])
 
 (rum/defc everything-else []
@@ -71,13 +71,13 @@
           [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival data"]
           "published survival data")
 
-        " about children’s heart surgery. "]
+        " about children’s heart surgery in the UK and Ireland. "]
        [:p "Our website will help you:"]
        [:ul {:style {:font-size "16px"
                      :font-weight 200}}
         [:li "explore what survival rates can and can’t tell you"]
         [:li "understand how the NHS monitors children’s heart surgery"]
-        [:li "explore published data for UK hospitals"]]]
+        [:li "explore published data for hospitals in the UK and Ireland"]]]
       (when (:show-nicor (rum/react core/app))
         [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"}
          [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]]]
