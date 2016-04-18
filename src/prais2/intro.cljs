@@ -83,7 +83,7 @@
 
      [:h1 "What, why, how?"]
 
-     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival statistics"] " about children’s heart surgery. "]
+     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival statistics"] " about children’s heart surgery. "]
      #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery in the UK and Ireland."]
 
      (key-points)
@@ -154,16 +154,16 @@
      " If you are concerned about your child’s treatment plan "
      [:b "please speak with your child’s cardiologist or surgeon"]
      ". You can also access the support available from national charities such as the "
-     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf"}
+     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"}
       "Children’s Heart Federation"]
      " or "
-     [:a {:href "http://www.lhm.org.uk/"}
+     [:a {:href "http://www.lhm.org.uk/" :target "_blank"}
       "Little Hearts Matter"]
      " or local charities for your specialist children’s hospital (hospital map tab for individual hospital charities). These guides on "
-     [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf"}
+     [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"}
       "speaking to your child’s surgeon"]
      " or "
-     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf"}
+     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"}
       "seeking a second opinion"]    ", written by the Children’s Heart Federation, might also be helpful."]
 
     [:p

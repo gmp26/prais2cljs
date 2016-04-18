@@ -68,7 +68,7 @@
       [:section.about.col-sm-offset-2.col-sm-8
        [:p "This site is to help people make sense of the "
         (if (:show-nicor (rum/react core/app))
-          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"} "published survival data"]
+          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival data"]
           "published survival data")
 
         " about children’s heart surgery in the UK and Ireland. "]
@@ -79,7 +79,7 @@
         [:li "understand how the NHS monitors children’s heart surgery"]
         [:li "explore published data for hospitals in the UK and Ireland"]]]
       (when (:show-nicor (rum/react core/app))
-        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report"}
+        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
          [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]]]
    [:.container
     [:.row {:style {:margin-bottom "100px"}}
