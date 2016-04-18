@@ -53,10 +53,14 @@
      [:i.fa.fa-info {:style {:font-size "140px"}}]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Everything else"]]
-    [:p "How are survival statistics monitored"]
+    
     [:p "What happens if the data raises concerns?"]
-    [:p "Information for families?"]
-    [:p "More detail"]
+    [:p "More detail about how survival statistics are monitored"]
+    [:p "Limitations of this data"]
+    [:p "Information for families"]
+  
+    [:p "About us and this website"]
+    
     ]])
 
 (rum/defc render-home < rum/reactive[]
