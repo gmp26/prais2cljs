@@ -65,11 +65,12 @@
 
 (rum/defc render-faq-block [sec-ix block-class]
   (let [section (content/faq-sections sec-ix)]
-    [:div.faq-block {:class block-class}
-     [:h4 {:key 1} (:section section)]
-     [:ul.list-unstyled {:key 2}
-      (for [[ix faq] (map-indexed vector (:faqs section))]
-        [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]]))
+    (when-not (:is-glossary section)
+      [:div.faq-block {:class block-class}
+       [:h4 {:key 1} (:section section)]
+       [:ul.list-unstyled {:key 2}
+        (for [[ix faq] (map-indexed vector (:faqs section))]
+          [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]])))
 
 
 (rum/defc render-faq-top [faq-ref]
@@ -91,7 +92,8 @@
     (render-faq-block 3 "faq-nav-4")
     (render-faq-block 4 "faq-nav-4")
     (render-faq-block 5 "faq-nav-4")
-    (render-faq-block 6 "faq-nav-4")]
+    ;(render-faq-block 6 "faq-nav-4")
+    ]
 
    ;; old bubble menu
    #_(map-indexed key-with
