@@ -92,9 +92,9 @@
                      (data/hospital-header selected-row)
                      (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap) 5)
 
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the survival rate")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "The predicted range: we expect the hospital's survival rate to be inside this bar 19 times out of 20")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "The extended predicted range: we expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
+                     (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "Survival rate: the black dot shows the hospital's survival rate")
                      #_(explanation )
                      (data/annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
                      (explain-interpretation)
@@ -108,7 +108,7 @@
    [:.row
     [:section {:style {:max-width "800px"}}
      [:p]
-     [:h3 {:data-title "Foo" :data-trigger "manual" :data-toggle "tooltip" :data-placement "bottom"}      "We present each hospital's survival in the context of its predicted range - see illustration below."]
+     [:h3 {:data-title "Foo" :data-trigger "manual" :data-toggle "tooltip" :data-placement "bottom"}      "We present each hospital's survival rate in the context of its predicted range - see illustration below."]
 
      [:div {:style
             {:border-radius "5px"
