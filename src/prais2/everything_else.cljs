@@ -16,7 +16,7 @@
 (defn faq-hash [& args]
   (str "#" (apply faq-id args)))
 
-(def scrollspy
+#_(def scrollspy
   {:did-mount (fn [state]
                 (.scrollspy (js/$ "body") (clj->js {:target "#faq-sidebar"}))
                 state)
@@ -25,7 +25,7 @@
 (defn make-glossary-map []
   (into {} (mapcat (fn [g] {(:glossary-entry g) {:title (:title g) :body (:body g)}}) (:faqs (first (filter #(:is-glossary %) faq-sections))))))
 
-(rum/defc render-everything-else < scrollspy [faq-ref]
+(rum/defc render-everything-else  [faq-ref]
   [:.container
    [:#sidebar.row {:style {:position "relative"}}
 

@@ -579,7 +579,7 @@
       "Clicking on a hospital code will bring up specific information for that hospital along with "
       "an interpretation of its survival rate. It is only valid to compare a hospital's survival rate "
       "to its predicted range and not to other hospitals "
-      [:a {:href "/#/faqs"} "Everything Else"]]
+      [:a {:href "#/faqs"} "Everything Else"]]
      [:p "You can use your mouse to hover over the chart to bring up more explanation."]
      ]
     (table1 app data event-bus)
@@ -723,6 +723,7 @@
 (rum/defc legend  < rum/reactive []
   [:div {:style {:margin-bottom "40px"}}
    [:div {:style {;:border "1px solid black"
+                  :background-color "#ffffff"
                   :border-radius "2px"
                   :box-shadow "0px 0px 3px #CCCCCC"
                   :padding "10px"}}

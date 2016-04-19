@@ -79,12 +79,17 @@
 (rum/defc render-intro < (core/monitor-react "INTRO>" false)  [section-id]
   [:.container
    [:.row
-    [:#intro.col-sm-12
+    [:.col-sm-8
 
      [:h1 "What, why, how?"]
 
-     [:p "This site is to help people make sense of the " [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival statistics"] " about children’s heart surgery. "]
-     #_[:p.col-lg-12 "This site is to help people make sense of the published survival statistics about children’s heart surgery in the UK and Ireland."]
+     [:p "This site is to help people make sense of the "
+      [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
+       "published survival statistics"] " about children’s heart surgery. "]
+
+     [:img.thumbnail {:style {:width "100%"} :src "assets/keypoint-slides.png"}]]
+
+    [:#intro.col-sm-12
 
      (key-points)
      (section 1 "WHAT do we mean by survival statistics?" section-1-content)
@@ -113,7 +118,7 @@
 
 (rum/defc section-2-content []
   [:section.row
-   (animation-2)
+   ;(animation-2)
    [:p.col-lg-12
     "Heart disease covers a wide range of disorders, from relatively minor to more severe conditions. Some hospitals specialise in severe conditions and tend to operate on children with a lower chance of survival. Also, every child is unique and may respond differently to treatment (surgery, drugs, postoperative care)."]
 

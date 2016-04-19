@@ -4,7 +4,8 @@
               [prais2.core :as core]
               [prais2.utils :refer [key-with]]
               [prais2.chrome :as chrome]
-              [prais2.content :as content :refer [faq-sections]]))
+              [prais2.content :as content :refer [faq-sections]]
+              [prais2.data :as data]))
 
 (defn ix-col [index]
   (["rgba(127, 205, 187, 1)"
@@ -68,9 +69,15 @@
     (when-not (:is-glossary section)
       [:div.faq-block {:class block-class}
        [:h4 {:key 1} (:section section)]
+       (when (= sec-ix 1)
+         [:video {:controls "true"
+                  :style {:width "100%"}
+                  :src "assets/predicted-range.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
-          [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]])))
+          [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
+       (when (= sec-ix 1)
+         (data/legend))])))
 
 
 (rum/defc render-faq-top [faq-ref]
@@ -79,16 +86,16 @@
    ;; new block menu
 
    ;; column 1
-   [:div.col-sm-4
+   [:div.col-sm-3
     (render-faq-block 0 "faq-nav-1")
     (render-faq-block 2 "faq-nav-2")]
 
    ;; column 2
-   [:div.col-sm-4
+   [:div.col-sm-6
     (render-faq-block 1 "faq-nav-3")]
 
    ;; column 3
-   [:div.col-sm-4
+   [:div.col-sm-3
     (render-faq-block 3 "faq-nav-4")
     (render-faq-block 4 "faq-nav-4")
     (render-faq-block 5 "faq-nav-4")

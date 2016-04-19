@@ -68,6 +68,10 @@
 (rum/defc render-data-tabs [section]
   [:.container
    [:.row
+    [:.col-sm-12 {:style {:max-width "600px"}}
+     [:video {:src "assets/two-minute-guide.mp4"
+              :controls "true"
+              :style {:width "100%"}}]]
     [:.col-sm-12
      [:h1 "Explore the data"]
      [:h4 {:clear "both"} "View the data presented in a map or a list"]
