@@ -6,7 +6,7 @@
 
 
   :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.170"]
+                 [org.clojure/clojurescript "1.7.228"]
                  [org.clojure/core.async "0.2.374"]
                  [cljs-ajax "0.5.1"]
                  [cljsjs/openlayers "3.5.0-1"]
@@ -18,9 +18,8 @@
 
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
-                 [rum "0.6.0"]
+                 [rum "0.8.3"]
                  [figwheel-sidecar "0.5.0"]
-;                 [jayq "2.5.4"]
                  ]
 
   :plugins [[lein-cljsbuild "1.1.1"]
@@ -32,6 +31,19 @@
   :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                     "target"
                                     "resources/public/css-c"]
+  :profiles {
+             :dev {:source-paths ["pages"]
+                   :dependencies
+                   [;[cljsjs/react-dom-server "15.0.1-1"]
+                    ]}
+             :perf {:source-paths ["perf"]
+                    :dependencies
+                    [[enlive "1.1.6"]
+                     [criterium "0.4.4"]
+                     [hiccup "1.0.5"]]}}
+
+  :aliases {"package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
+            "perf"    ["with-profile" "perf" "run" "-m" "rum.perf"]}
 
   :cljsbuild {
               :builds [{:id "dev"
@@ -52,6 +64,24 @@
                                    :warnings {:single-segment-namespace false}
                                    :source-map-timestamp true
                                    :optimizations :none}}
+
+                       {:id "pages"
+                        :source-paths ["src"]
+                        :compiler {:output-to "resources/public/js/compiled/examples.js"
+                                   :output-dir "resources/public/js/compiled/"
+                                   :main "prais2.examples"
+                                   :externs ["externs/bootstrap.js"
+                                             "externs/jquery.js"
+                                             "externs/sliders.js"]
+                                   :optimizations :advanced
+                                   :source-map "resources/public/js/compiled/examples.js.map"
+                                   :compiler-stats true
+                                   :pretty-print false
+                                   :parallel-build true
+                                   :closure-warnings {:non-standard-jsdoc :off}
+                                   :warnings {:externs-validation :off
+                                              :non-standard-jsdoc :off}
+                                   }}
 
                        {:id "devcards"
                         :source-paths ["src"]
@@ -99,7 +129,7 @@
              ;; #! /bin/sh
              ;; emacsclient -n +$2 $1
              ;;
-             :open-file-command "emacsclient"
+             :open-file-command "emacs -n $2 $1"
 
              ;; if you want to disable the REPL
              ;; :repl false

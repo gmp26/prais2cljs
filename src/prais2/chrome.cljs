@@ -9,8 +9,6 @@
               [prais2.data :as data]
               ))
 
-
-
 (defn rgba-string
   "return CSS rgba string"
   [[r g b a]]
@@ -35,20 +33,16 @@
   [:li
    [:button.navbar-btn {:on-click click-handler
                         :class (str (if active? " active " " ") (:class nav-item))}
-    [:i.fa {:class (str "fa-" (:icon nav-item))
-            :style {:font-size "22px"}}]
+    [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
+
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-simple.navbar-fixed-top {:style {:max-height 0}}
+    [:nav.navbar.navbar-simple.navbar-fixed-top
      [:.navbar-inner
       [:.container {
-                    :style {:background-color "#475E63"
-                            ;:opacity 0.95
-                            :width "100%"
-                            :height "55px"
-                            }
+
                     }
        [:.navbar-header {:key 1}
         [:button.navbar-toggle.collapsed {:key 1
@@ -72,39 +66,11 @@
 (rum/defc header < rum/reactive [& deep]
   [:div
    (bs-fixed-navbar (:page (rum/react core/app)))
-   [:div.blurred
-    {:style
-     {:width "100%"
-      :height "80px"
-      :background-color "#4F4763"
-      :color "rgba(255,255,255,0.5)"
-      :position "relative"
-      }}
-    (when true ;deep
-      [:div
-       [:div {:key 1
-              :style
-                   {:transform         "translate(0, -7px) rotate(180deg)"
-                    :position          "relative"
-                    :z-index           1
-                    :left              "0px"
-                    :top               "3px"
-                    :background-image  "url(assets/logo3.png)"
-                    :background-repeat "no-repeat"
-                    :background-size   "100%"
-                    :width             "70px"
-                    :height            "80px"
-                    :border            "none"
-                    :color             "white"
-                    :text-align        "right"
-                    :float             "left"
-                    :margin-left       "30px"
-                    }}
-
-        ]
-       [:h3 {:key 2
-             :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
-    ]])
+   (when true
+     [:.chrome-head-rel
+      [:h3 {:key 2
+            :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
+   ])
 
 
 

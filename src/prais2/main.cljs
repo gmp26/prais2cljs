@@ -228,8 +228,7 @@
   (let [{:keys [page section]} (rum/react core/app)]
     [:div
      (map-indexed key-with
-                  [;(start-modal)
-                   (page-choice page section)
+                  [(page-choice page section)
                    ;(debug)
                    ])
      ]))
