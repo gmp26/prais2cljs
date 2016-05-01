@@ -440,7 +440,7 @@
                              [:div
                               [:p [:a {:href   "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
                                        :target "_blank"}]
-                               [:img.thumbnail.pull-left {:style {:width "100px" :margin-right "20px"} :src "assets/bristol.png"}]
+                               [:img.thumbnail.pull-left.w100 {:src "assets/bristol.png"}]
                                "In the 1990s, problems were found with the standard of care for children having heart surgery at the Bristol
                                Royal Infirmary. The proportion of children who died after surgery at Bristol was much higher than other UK
                                hospitals. There was a formal inquiry into what happened ("
@@ -812,7 +812,7 @@
                :body
                          [:div
                           [:.image-para
-                           [:p [:img.pull-left {:style {:width "150px" :margin-right "20px"} :src "assets/ucl-logo.png"}]
+                           [:p [:img.pull-left.w150 {:src "assets/ucl-logo.png"}]
                             [:strong "University College London: Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great
@@ -828,8 +828,8 @@
                             [:strong "Dr Andrew Wilshere"] " for designing our logo! "]]
 
                           [:.image-para
-                           [:p [:img.pull-left {:style {:width "150px" :margin-right "20px"} :src "assets/camlogo.png"}]
-                            [:strong "University of Cambridge: Professor David Spiegelhalter"]
+                           [:p [:img.pull-left.w150 {:src "assets/camlogo-old.png"}]
+                            [:strong "Professor David Spiegelhalter"]
                             " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond
                             Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical
                             team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and
@@ -841,11 +841,11 @@
                             [:a {:href "https://qudos.com" :target "_blank"} "Qudos"] "."]]
 
                           [:.image-para
-                           [:p [:img.pull-left {:style {:width "100px" :margin-right "20px"} :src "assets/KCLlogo.gif"}]
+                           [:p [:img.pull-left.w100 {:src "assets/KCLlogo.gif"}]
                             [:strong "King’s College London: Dr Tim Rakow… Dr Emily Blackshaw…. "]]]
 
                           [:.image-para
-                           [:p {:style {:clear "both"}} [:img.pull-left {:style {:width "150px" :margin-right "20px"} :src "assets/sas-logo.png"}]
+                           [:p {:style {:clear "both"}} [:img.pull-left.w100 {:src "assets/sas-logo.png"}]
                             [:strong "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
          the public. They are a source of information, challenge misinformation, and champion sound science and evidence
          with the help of scientists, academics, and experts in various fields. For this project, they facilitated the
@@ -853,7 +853,7 @@
          over four sets of two workshops and stopped the academics going into too much mathematical detail! "]]
 
                           [:.image-para
-                           [:p [:img.pull-left {:style {:width "60px" :margin-right "20px"} :src "assets/chf-logo.png"}]
+                           [:p [:img.pull-left.w100 {:src "assets/chf-logo.png"}]
                             [:strong "The Children’s Heart Federation"] " is the main umbrella body for British CHD charities and
          voluntary organisations. They publicised this project among their members and coordinated the involvement of
          parents of children who had heart surgery in our workshops."]]

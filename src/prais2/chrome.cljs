@@ -41,9 +41,7 @@
   (let [nav-item (active-key nav-items)]
     [:nav.navbar.navbar-simple.navbar-fixed-top
      [:.navbar-inner
-      [:.container {
-
-                    }
+      [:.container
        [:.navbar-header {:key 1}
         [:button.navbar-toggle.collapsed {:key 1
                                           :type "button"
@@ -63,20 +61,20 @@
                                      (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
                       (keys nav-items))]]]]]))
 
+
 (rum/defc header < rum/reactive [& deep]
   [:div
    (bs-fixed-navbar (:page (rum/react core/app)))
-   (when true
-     [:.chrome-head-rel
-      [:h3 {:key 2
-            :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
-   ])
 
+   [:.chrome-head-rel
+    [:div {:key 1}]                                         ;;styled logo
+    [:h3 {:key 2
+          :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
 
 (rum/defc footer []
   [:.container-fluid.partners
-   [:.row {:style {:padding-top "50px"}}
+   [:.row
     [:img.img-responsive.col-sm-offset-2.col-sm-2.collab-logo
      {:src "assets/ucl-logo.png"}]
     [:img.img-responsive.col-sm-2.collab-logo
@@ -87,13 +85,11 @@
      {:src "assets/sas-logo.png"}]
     [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/chf-logo.png"}]]
-   [:.row
+   #_[:.row
     [:.col-md-8
      (data/option-menu event-bus)]]
    [:.row.footer
     ;[:.pull-right (logger/playback-controls)]
-
-
     [:h3
      "Funding acknowledgement"]
     [:p
@@ -101,6 +97,4 @@
     [:h3
      "Department of Health disclaimer"]
     [:p
-     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
-    ]]
-  )
+     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
