@@ -16,6 +16,7 @@ pom.xml
 .lein-plugins/
 .repl
 .nrepl-port
+.sass-cache/
 
 # User-specific stuff:
 .idea/workspace.xml
