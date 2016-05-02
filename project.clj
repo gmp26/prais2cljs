@@ -19,13 +19,24 @@
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
                  [rum "0.8.3"]
-                 [figwheel-sidecar "0.5.0"]
+                 [figwheel-sidecar "0.5.1"]
+
+                 [com.stuartsierra/component "0.3.1"]
                  ]
 
   :plugins [[lein-cljsbuild "1.1.1"]
             ;[lein-figwheel "0.5.0-1"]
             [lein-sass "0.3.7"]
             ]
+
+  :sass {:src "sass"
+         :output-directory "resources/public/styles"
+
+         ;; other options (provided are default values):
+         ;; :delete-output-dir true
+         :source-maps true
+         :style :compressed
+         }
 
   :source-paths ["src"]
 

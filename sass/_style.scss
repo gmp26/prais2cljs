@@ -6,9 +6,6 @@
     margin: 0 20px;
 }
 
-i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
-    color: black;
-}
 
 @media print {
     .screenable {
@@ -207,54 +204,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 .well.map-data {
     border: none;
     background-color: #f00;
-}
-
-.simple-navbar {
-    display: block;
-    border-bottom: 3px solid #275F55;
-    width: 100%;
-    padding-left: 30px;
-}
-
-.simple-navbar h1 {
-    display: inline-block;
-    padding: 7px 0 0 0;
-    margin: 10px 5px -4px 5px;
-    height: 43px;
-    font-size: 22px;
-}
-
-.simple-buttons {
-    margin-right: 25px;
-}
-
-.simple-link {
-    cursor: pointer;
-    border: 1px solid
-    border-style: solid;
-    border-bottom-width: 5px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: inline-block;
-    margin: 13px 5px 0px 5px;
-    text-align: center;
-    height: 40px;
-    padding: 5px 0 0 0;
-    width: 135px;
-    font-size: 18px;
-}
-
-.simple-link:hover {
-    border-bottom-width: 8px;
-    vertical-align: bottom;
-}
-
-.simple-link.active {
-    font-weight: bold;
-    vertical-align: bottom;
-    color: #fff;
-    border-bottom-width: 8px;
-    vertical-align: bottom;
 }
 
 /**
@@ -866,9 +815,6 @@ i.fa.black {
     margin: 20px 5px 20px 0px;
     box-shadow: 2px 2px 6px grey;
 }
-
-body { padding-top: 55px; }
-
 
 .navbar-simple .brand {
  	/*padding-top: 15px;

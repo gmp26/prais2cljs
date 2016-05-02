@@ -66,44 +66,45 @@
   (if (= (:section @core/app) section) "active" nil))
 
 (rum/defc render-data-tabs [section]
-  [:.container
-   [:.row
-    [:.col-sm-12 {:style {:max-width "600px"}}
-     [:video {:src "assets/two-minute-guide.mp4"
-              :controls "true"
-              :style {:width "100%"}}]]
-    [:.col-sm-12
-     [:h1 "Explore the data"]
-     [:h4 {:clear "both"} "View the data presented in a map or a list"]
-     [:ul.nav.nav-pills {:role "tablist"
-                         :style {:clear "both"}}
+  [:.row
+   [:.col-sm-offset-1.col-sm-10 {:style {:max-width "600px"}}
+    [:video {:src "assets/two-minute-guide.mp4"
+             :controls "true"
+             :style {:width "100%"}}]]
+   [:.col-sm-offset-1.col-sm-10
+    [:h1 "Explore the data"]
+    [:h4 {:clear "both"} "View the data presented in a map or a list"]
+    [:ul.nav.nav-pills {:role "tablist"
+                        :style {:clear "both"}}
 
-      [:li {:class (active? :map)
-            :role "presentation"}
-       [:a#map-tab {:href "#"
-                    :aria-controls "mapped-data"
-                    :role "tab"
-                    :on-click #(core/click->event-bus % :data :map)} "Map"]]
+     [:li {:class (active? :map)
+           :role "presentation"}
+      [:a#map-tab {:href "#"
+                   :aria-controls "mapped-data"
+                   :role "tab"
+                   :on-click #(core/click->event-bus % :data :map)} "Map"]]
 
-      [:li {:class (active? :table)
-            :role "presentation"}
-       [:a#table-tab {:href "#"
-                      :aria-controls "data-table"
-                      :role "tab"
-                      :on-click #(core/click->event-bus % :data :table)} "List"]]]]]])
+     [:li {:class (active? :table)
+           :role "presentation"}
+      [:a#table-tab {:href "#"
+                     :aria-controls "data-table"
+                     :role "tab"
+                     :on-click #(core/click->event-bus % :data :table)} "List"]]]]])
 
 
 
 (rum/defc render-data-tab-panes < rum/reactive [data section]
-  [:.tab-content
-   [:.tab-pane {:class (active? :map)
+  [:row.tab-content
+   [:.tab-pane.col-sm-12 {:class (active? :map)
                 :id "mapped-data"}
-    (when (active? :map) (render-map-data ))]
+    (when (active? :map)
+      (render-map-data ))]
 
-   [:.tab-pane {:class (active? :table)
+   [:.tab-pane.col-sm-12 {:class (active? :table)
                 :id "data-table"}
-    (when (active? :table) (data/modal))
-    (data/list-tab core/app data event-bus)]]
+    (when (active? :table)
+      (do (data/modal)
+          (data/list-tab core/app data event-bus)))]]
 )
 
 (rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
@@ -111,7 +112,7 @@
   (let [app (rum/react core/app)
         data ((data/table-data (:datasource app)))
         section (:section app)]
-    [:div
+    [:div.container-fluid
      (map-indexed key-with
                   [
                    (render-data-tabs section)
