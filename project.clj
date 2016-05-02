@@ -24,6 +24,7 @@
 
   :plugins [[lein-cljsbuild "1.1.1"]
             ;[lein-figwheel "0.5.0-1"]
+            [lein-sass "0.3.7"]
             ]
 
   :source-paths ["src"]

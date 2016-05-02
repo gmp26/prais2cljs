@@ -462,7 +462,7 @@
                :body
                              [:div
                               [:p [:a {:href "http://www.ucl.ac.uk/nicor/patients" :target "_blank"}
-                                   [:img.thumbnail.pull-left {:style {:width "100px" :margin-right "20px"} :src "assets/nicor.png"}]]
+                                   [:img.thumbnail.pull-left.w100 {:src "assets/nicor.png"}]]
                                "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients" :target "_blank"} "NICOR"]
                                " only published survival rates for certain "
                                [:a {:href   "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
@@ -845,7 +845,7 @@
                             [:strong "King’s College London: Dr Tim Rakow… Dr Emily Blackshaw…. "]]]
 
                           [:.image-para
-                           [:p {:style {:clear "both"}} [:img.pull-left.w100 {:src "assets/sas-logo.png"}]
+                           [:p [:img.pull-left.w100 {:src "assets/sas-logo.png"}]
                             [:strong "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
          the public. They are a source of information, challenge misinformation, and champion sound science and evidence
          with the help of scientists, academics, and experts in various fields. For this project, they facilitated the

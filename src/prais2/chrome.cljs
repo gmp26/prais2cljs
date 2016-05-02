@@ -81,7 +81,7 @@
      {:src "assets/camlogo.png"}]
     [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/KCLlogo.gif"}]
-    [:img.img-responsive.col-sm-2.collab-logo
+    [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/sas-logo.png"}]
     [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/chf-logo.png"}]]

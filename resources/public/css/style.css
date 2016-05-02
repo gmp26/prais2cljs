@@ -1052,7 +1052,10 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 }
 
 .image-para {
-    margin-top: 60px;
+  margin-bottom: 30px;
+  clear: both;
+  margin-top: 22px;
+  min-height: 70px;
 }
 
 .todo {
