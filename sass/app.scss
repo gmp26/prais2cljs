@@ -1,11 +1,11 @@
 /*
 see http://www.sitepoint.com/bootstrap-sass-installation-and-customisation/
 */
-@import "_customVariables.scss";
+@import "customVariables";
 @import "bootstrap";
 
-@import "_style.scss";
+@import "style";
 
-@import "_custom.scss";
-@import "_chrome.scss";
-@import "_data-table.scss";
+@import "custom";
+@import "chrome";
+@import "data-table";

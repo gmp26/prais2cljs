@@ -66,6 +66,7 @@
   (if (= (:section @core/app) section) "active" nil))
 
 (rum/defc render-data-tabs [section]
+
   [:.row
    [:.col-sm-offset-1.col-sm-10 {:style {:max-width "600px"}}
     [:video {:src "assets/two-minute-guide.mp4"

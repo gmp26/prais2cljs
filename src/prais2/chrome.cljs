@@ -31,7 +31,7 @@
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
-   [:button.navbar-btn {:on-click click-handler
+   [:a.navbar-btn {:on-click click-handler
                         :class (str (if active? " active " " ") (:class nav-item))}
     [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])

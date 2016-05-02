@@ -141,7 +141,7 @@
              ;; #! /bin/sh
              ;; emacsclient -n +$2 $1
              ;;
-             :open-file-command "emacs -n $2 $1"
+             :open-file-command "open-in-intellij"          ;"emacs -n $2 $1"
 
              ;; if you want to disable the REPL
              ;; :repl false
