@@ -267,70 +267,70 @@
 
 (def unassoc-charity-list
   [
-   [:a {:href "www.amelia-matters.org.uk" :target "_blank"} "Amelia Matters: supporting children born with congenital
+   [:a {:href "//www.amelia-matters.org.uk" :target "_blank"} "Amelia Matters: supporting children born with congenital
     heart disease."]
 
-   [:a {:href "www.arc-uk.org" :target "_blank"} "Antenatal Results and Choices (ARC): helping parents and healthcare
+   [:a {:href "//www.arc-uk.org" :target "_blank"} "Antenatal Results and Choices (ARC): helping parents and healthcare
     professionals through antenatal screening and its consequences"]
 
-   [:a {:href "www.heartrhythmcharity.org.uk" :target "_blank"} "Arrhythmia Alliance: improving the diagnosis, treatment
+   [:a {:href "//www.heartrhythmcharity.org.uk" :target "_blank"} "Arrhythmia Alliance: improving the diagnosis, treatment
     and quality of life for all those affected by arrhythmias."]
 
-   [:a {:href "www.benwilliamstrust.org.uk" :target "_blank"} "Ben Williams Trust: supports children with abnormal heart
+   [:a {:href "//www.benwilliamstrust.org.uk" :target "_blank"} "Ben Williams Trust: supports children with abnormal heart
     rhythms (arrhythmias) and their families "]
 
-   [:a {:href "www.bhf.org.uk" :target "_blank"} "British Heart Foundation: working to fight against cardiovascular
+   [:a {:href "//www.bhf.org.uk" :target "_blank"} "British Heart Foundation: working to fight against cardiovascular
     disease."]
 
-   [:a {:href "www.c-r-y.org.uk" :target "_blank"} "Cardiac Risk in the Young (CRY): preventing young sudden cardiac
+   [:a {:href "//www.c-r-y.org.uk" :target "_blank"} "Cardiac Risk in the Young (CRY): preventing young sudden cardiac
     deaths through awareness, screening and research, and supporting affected families."]
 
-   [:a {:href "www.cardiomyopathy.org" :target "_blank"} "Cardiomyopathy UK: providing support to patients and families
+   [:a {:href "//www.cardiomyopathy.org" :target "_blank"} "Cardiomyopathy UK: providing support to patients and families
     and promoting research for the disease cardiomyopathy"]
 
-   [:a {:href "www.heartchild.info" :target "_blank"} "Children’s Heart Association: supporting families of children
+   [:a {:href "//www.heartchild.info" :target "_blank"} "Children’s Heart Association: supporting families of children
     with a heart condition."]
 
-   [:a {:href "www.chfed.org.uk" :target "_blank"} "Children’s Heart Federation: the main umbrella body for British
+   [:a {:href "//www.chfed.org.uk" :target "_blank"} "Children’s Heart Federation: the main umbrella body for British
     congenital heart disease charities and voluntary organisations."]
 
-   [:a {:href "www.chd-uk.co.uk" :target "_blank"} "Congenital Heart Defects UK: educating and raising awareness of
+   [:a {:href "//www.chd-uk.co.uk" :target "_blank"} "Congenital Heart Defects UK: educating and raising awareness of
     congenital heart defects and supporting patients and families."]
 
-   [:a {:href "www.cafamily.org.uk" :target "_blank"} "Contact a family: a national charity for families with disabled
+   [:a {:href "//www.cafamily.org.uk" :target "_blank"} "Contact a family: a national charity for families with disabled
     children, providing information, advice and support."]
 
-   [:a {:href "www.dhg.org.uk" :target "_blank"} "Down’s Heart Group: a charity offering support and information
+   [:a {:href "//www.dhg.org.uk" :target "_blank"} "Down’s Heart Group: a charity offering support and information
     relating to heart conditions associated with Down's Syndrome."]
 
-   [:a {:href "www.heartline.org.uk" :target "_blank"} "Heartline: supports children with heart disorders and their
+   [:a {:href "//www.heartline.org.uk" :target "_blank"} "Heartline: supports children with heart disorders and their
     families, whatever the condition wherever it is treated"]
 
-   [:a {:href "www.lagans.org.uk" :target "_blank"} "Lagan’s Foundation: offers home respite and support services for
+   [:a {:href "//www.lagans.org.uk" :target "_blank"} "Lagan’s Foundation: offers home respite and support services for
      young children with heart defects or feeding issues."]
 
-   [:a {:href "www.lhm.org.uk" :target "_blank"} "Little Hearts Matter: offers support and information, and raises
+   [:a {:href "//www.lhm.org.uk" :target "_blank"} "Little Hearts Matter: offers support and information, and raises
     awareness of those affected when a child has only half a heart."]
 
-   [:a {:href "www.maxappeal.org.uk" :target "_blank"} "Max Appeal: Supports families affected by DiGeorge syndrome,
+   [:a {:href "//www.maxappeal.org.uk" :target "_blank"} "Max Appeal: Supports families affected by DiGeorge syndrome,
      VCFS and 22q11.2 deletion."]
 
-   [:a {:href "www.younghearts.org.uk" :target "_blank"} "Oxford Young Hearts:  support children with heart conditions
+   [:a {:href "//www.younghearts.org.uk" :target "_blank"} "Oxford Young Hearts:  support children with heart conditions
      and their families in the counties served by the Oxford University Hospitals NHS Trust. "]
 
-   [:a {:href "www.patchesheartgroup.org" :target "_blank"} "Patches Heart Group: a support group for children with
+   [:a {:href "//www.patchesheartgroup.org" :target "_blank"} "Patches Heart Group: a support group for children with
     congenital heart defects / aquired heart conditions and their families in the community."]
 
-   [:a {:href "www.youngheart.info" :target "_blank"} "The Scottish Association for Children with Heart Disorders
+   [:a {:href "//www.youngheart.info" :target "_blank"} "The Scottish Association for Children with Heart Disorders
      (SACHD): supports children and young adults with congenital heart disorders, and the families in Scotland."]
 
-   [:a {:href "www.thesf.org.uk" :target "_blank"} "Somerville Foundation: supports young people and adults born with a
+   [:a {:href "//www.thesf.org.uk" :target "_blank"} "Somerville Foundation: supports young people and adults born with a
     heart condition."]
 
-   [:a {:href "www.22crew.org" :target "_blank"} "The 22 Crew:  A charity providing resources for patients with 22q
+   [:a {:href "//www.22crew.org" :target "_blank"} "The 22 Crew:  A charity providing resources for patients with 22q
      deletion and their families."]
 
-   [:a {:href "www.tinytickers.org" :target "_blank"} "Tiny tickers: improving the detection, care and treatment of
+   [:a {:href "//www.tinytickers.org" :target "_blank"} "Tiny tickers: improving the detection, care and treatment of
     babies with serious heart conditions"]
    ])
 
@@ -807,7 +807,7 @@
 
    {:section "Who developed this site and how"
     :faqs
-             [{:title    "About us (MIKE LINK to all organisations: UCL CORU for UCL; DS stats lab (?), KCL Tim’s group; Sense about Science, CHF)…. "
+             [{:title    "About us"
                :glossary []
                :body
                          [:div
