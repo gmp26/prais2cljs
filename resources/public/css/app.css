@@ -6691,5 +6691,35 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     color: black;
 }
 */
+section.short-answer {
+  margin-top: 30px; }
+  section.short-answer .icon {
+    margin-top: 0px;
+    width: 80px;
+    font-size: 21px;
+    font-weight: 200;
+    float: left;
+    clear: left; }
+    section.short-answer .icon .fa-comment {
+      color: #FFA500;
+      font-size: 50px; }
+  section.short-answer .reply {
+    font-size: 21px;
+    font-weight: 200;
+    margin-bottom: 40px; }
+
+.faq .query {
+  margin-top: -32px;
+  width: 80px;
+  float: left; }
+  .faq .query .fa-question {
+    font-size: 100px;
+    color: #FFA500; }
+.faq .title {
+  margin-top: 40px; }
+.faq .body {
+  clear: both; }
+.faq .back {
+  margin-bottom: 60px; }
 
 /*# sourceMappingURL=app.css.map */
