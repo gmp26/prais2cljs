@@ -3,46 +3,12 @@
 /* navbar */
 
 
-.navbar-simple .brand {
- 	/*padding-top: 15px;
-	padding-bottom: 15px;*/
 
-        color: white;
-        padding: 6px 0px 15px 10px;
-        width: 95px;
-        height: 52px;
-}
-.navbar-simple .navbar-inner {
-	filter: none !important;
-}
-.navbar-simple .navbar-inner .nav {
+.navbar-inner .nav {
 	float: right;
 }
 
-/*
-.navbar-simple .navbar-inner .nav li a {
-	background: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	color: #777;
-	font-size: 13px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	font-weight: 600;
-}
-.navbar-simple .navbar-inner .nav li a:hover {
-	background: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	color: #bf3604;
-}
-.navbar-simple .navbar-inner .nav li.active a {
-	color: #bf3604;
-}
 
-*/
 /* ------ */
 
 .navbar-prais2 {
@@ -69,16 +35,35 @@
     border: none;
     border-radius: 5px;
     width: 160px;
+    //padding: 8px;
+    margin-left:10px;
+}
+
+/* needed to override bootstrap navbar-nav > li > a default padding */
+.navbar-nav li a.navbar-btn {
     padding: 8px;
-    margin-left:15px;
 }
 
-.nav-item:focus {
-    outline: none;
-}
 
-.nav-item:hover {
+.nav > li > .navbar-btn.nav-item:hover, .nav > li > .navbar-btn.nav-item:focus {
     border: 1px solid white;
+    color: #fff;
+}
+
+.nav > li {
+    .home:hover, .home:focus {
+      background-color: $home-over;
+      border: 2px solid white;
+    }
+    .intro:hover, .intro:focus {
+      background-color: $intro-over;
+    }
+    .data:hover, .data:focus {
+      background-color: $data-over;
+    }
+    .faqs:hover, .faqs:focus {
+      background-color: $faqs-over;
+    }
 }
 
 .nav-item.active {
@@ -86,13 +71,17 @@
     border: 2px solid white;
 }
 
-.nav-item.active:hover {
-    font-weight: bold;
-    border: 2px solid white;
+/* background for vertical navbar only */
+@media (max-width: $screen-sm-min) {
+  .collapse.in ul.nav.navbar-nav.navbar-right {
+    border-radius: 5px;
+    background-color: rgba(0,0,0,0.2);
+  }
 }
 
 ul.nav.navbar-nav.navbar-right {
     margin: 0 -5px;
+    padding-right: 10px;
 }
 
 ul.nav.navbar-nav.navbar-right .fa {
@@ -100,7 +89,7 @@ ul.nav.navbar-nav.navbar-right .fa {
 }
 
 .in .nav-item {
-    display: inline;
+    display: block;
 }
 
 .nav-item.simple-title {

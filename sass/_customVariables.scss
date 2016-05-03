@@ -6,6 +6,19 @@ $bootstrap-sass-asset-helper: false !default;
 
 //== Colors
 //
+
+$home: #8B99FA;
+$home-over: darken($home, 10%);
+
+$intro: #FC867A;
+$intro-over: darken($intro, 10%);
+
+$data: #FC8D59;
+$data-over: darken($data, 10%);
+
+$faqs: #7FCDBB;
+$faqs-over:darken($faqs, 10%);
+
 //## Gray and brand colors for use across Bootstrap.
 
 $gray-base:              #000 !default;
