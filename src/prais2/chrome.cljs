@@ -9,8 +9,6 @@
               [prais2.data :as data]
               ))
 
-
-
 (defn rgba-string
   "return CSS rgba string"
   [[r g b a]]
@@ -33,23 +31,17 @@
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
-   [:button.navbar-btn {:on-click click-handler
+   [:a.navbar-btn {:on-click click-handler
                         :class (str (if active? " active " " ") (:class nav-item))}
-    [:i.fa {:class (str "fa-" (:icon nav-item))
-            :style {:font-size "22px"}}]
+    [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
+
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
-    [:nav.navbar.navbar-simple.navbar-fixed-top {:style {:max-height 0}}
+    [:nav.navbar.navbar-simple.navbar-fixed-top
      [:.navbar-inner
-      [:.container {
-                    :style {:background-color "#475E63"
-                            ;:opacity 0.95
-                            :width "100%"
-                            :height "55px"
-                            }
-                    }
+      [:.container
        [:.navbar-header {:key 1}
         [:button.navbar-toggle.collapsed {:key 1
                                           :type "button"
@@ -69,65 +61,35 @@
                                      (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
                       (keys nav-items))]]]]]))
 
+
 (rum/defc header < rum/reactive [& deep]
   [:div
    (bs-fixed-navbar (:page (rum/react core/app)))
-   [:div.blurred
-    {:style
-     {:width "100%"
-      :height "80px"
-      :background-color "#4F4763"
-      :color "rgba(255,255,255,0.5)"
-      :position "relative"
-      }}
-    (when true ;deep
-      [:div
-       [:div {:key 1
-              :style
-                   {:transform         "translate(0, -7px) rotate(180deg)"
-                    :position          "relative"
-                    :z-index           1
-                    :left              "0px"
-                    :top               "3px"
-                    :background-image  "url(assets/logo3.png)"
-                    :background-repeat "no-repeat"
-                    :background-size   "100%"
-                    :width             "70px"
-                    :height            "80px"
-                    :border            "none"
-                    :color             "white"
-                    :text-align        "right"
-                    :float             "left"
-                    :margin-left       "30px"
-                    }}
 
-        ]
-       [:h3 {:key 2
-             :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]])
-    ]])
-
+   [:.chrome-head-rel
+    [:div {:key 1}]                                         ;;styled logo
+    [:h3 {:key 2
+          :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
 
 (rum/defc footer []
   [:.container-fluid.partners
-   [:.row {:style {:padding-top "50px"}}
+   [:.row
     [:img.img-responsive.col-sm-offset-2.col-sm-2.collab-logo
      {:src "assets/ucl-logo.png"}]
     [:img.img-responsive.col-sm-2.collab-logo
      {:src "assets/camlogo.png"}]
     [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/KCLlogo.gif"}]
-    [:img.img-responsive.col-sm-2.collab-logo
+    [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/sas-logo.png"}]
     [:img.img-responsive.col-sm-1.collab-logo
      {:src "assets/chf-logo.png"}]]
-   [:.row
+   #_[:.row
     [:.col-md-8
      (data/option-menu event-bus)]]
    [:.row.footer
     ;[:.pull-right (logger/playback-controls)]
-
-
     [:h3
      "Funding acknowledgement"]
     [:p
@@ -135,6 +97,4 @@
     [:h3
      "Department of Health disclaimer"]
     [:p
-     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
-    ]]
-  )
+     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])

@@ -13,6 +13,7 @@
     "rgba(127, 187, 205, 1)"
     ] (mod index 3)))
 
+
 #_(rum/defc render-bubble-title [section-ix [index faq]]
   [:div
    (let [pull (if (even? index) "on-left" "on-right")

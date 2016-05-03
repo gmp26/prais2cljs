@@ -6,9 +6,6 @@
     margin: 0 20px;
 }
 
-i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
-    color: black;
-}
 
 @media print {
     .screenable {
@@ -76,20 +73,43 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 /**
  * Chrome
  */
+.chrome-head-rel {
+    width: 100%;
+    height: 80px;
+    background-color: #4F4763;
+    color: rgba(255,255,255,0.5);
+    position: relative;
+}
+
+/* site logo */
+.chrome-head-rel div {
+    transform:         translate(0, -7px) rotate(180deg);
+    position:          relative;
+    z-index:           1;
+    margin-left:       30px;
+    top:               3px;
+    background-image:  url(../assets/logo3.png);
+    background-repeat: no-repeat;
+    background-size:   100%;
+    width:             70px;
+    height:            80px;
+    float:             left;
+}
+
 .jumbotron.home {
-    background-color: #ffffff; //#CCDDFF;
-    color: #4F4763;
-    background-size: 100%;
-    color: #555555;
-    margin: 0;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    }
+  background-color: #ffffff; //#CCDDFF;
+  color: #4F4763;
+  background-size: 100%;
+  color: #555555;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
 
 .home-nav.well {
-    color: #ffffff;
-    margin: 20px 0px 10px 0px;
-    border: none;
+  color: #ffffff;
+  margin: 20px 0px 10px 0px;
+  border: none;
 }
 
 .home-nav.well.vis-sm-block {
@@ -184,54 +204,6 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
 .well.map-data {
     border: none;
     background-color: #f00;
-}
-
-.simple-navbar {
-    display: block;
-    border-bottom: 3px solid #275F55;
-    width: 100%;
-    padding-left: 30px;
-}
-
-.simple-navbar h1 {
-    display: inline-block;
-    padding: 7px 0 0 0;
-    margin: 10px 5px -4px 5px;
-    height: 43px;
-    font-size: 22px;
-}
-
-.simple-buttons {
-    margin-right: 25px;
-}
-
-.simple-link {
-    cursor: pointer;
-    border: 1px solid
-    border-style: solid;
-    border-bottom-width: 5px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    display: inline-block;
-    margin: 13px 5px 0px 5px;
-    text-align: center;
-    height: 40px;
-    padding: 5px 0 0 0;
-    width: 135px;
-    font-size: 18px;
-}
-
-.simple-link:hover {
-    border-bottom-width: 8px;
-    vertical-align: bottom;
-}
-
-.simple-link.active {
-    font-weight: bold;
-    vertical-align: bottom;
-    color: #fff;
-    border-bottom-width: 8px;
-    vertical-align: bottom;
 }
 
 /**
@@ -586,7 +558,17 @@ td:first-child {
 .partners {
   z-index: 1000;
   position: relative;
-  background-color: #222222;//whitesmoke;
+  background-color: #637F84;
+}
+
+.partners .row {
+    padding-top: 50px;
+}
+
+.partners .row img {
+    padding: 20px;
+    min-width: 100px;
+    max-width: 250px;
 }
 
 .footer {
@@ -834,157 +816,6 @@ i.fa.black {
     box-shadow: 2px 2px 6px grey;
 }
 
-body { padding-top: 55px; }
-
-
-.navbar-simple .brand {
- 	/*padding-top: 15px;
-	padding-bottom: 15px;*/
-
-        color: white;
-        padding: 6px 0px 15px 10px;
-        width: 95px;
-        height: 52px;
-}
-.navbar-simple .navbar-inner {
-//	background: #fff;
-	filter: none !important;
-//	box-shadow: 0 2px 15px rgba(0,0,0,0.25);
-//	-moz-box-shadow: 0 2px 15px rgba(0,0,0,0.25);
-//	-webkit-box-shadow: 0 2px 15px rgba(0,0,0,0.25);
-//
-}
-.navbar-simple .navbar-inner .nav {
-	float: right;
-//	border-bottom: 1px solid rgba(0,0,0,0.2);
-}
-.navbar-simple .navbar-inner .nav li a {
-	background: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	color: #777;
-	font-size: 13px;
-	padding-top: 15px;
-	padding-bottom: 15px;
-	font-weight: 600;
-}
-.navbar-simple .navbar-inner .nav li a:hover {
-	background: none;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-	color: #bf3604;
-}
-.navbar-simple .navbar-inner .nav li.active a {
-	color: #bf3604;
-}
-
-/* ------ */
-
-.navbar-prais2 {
-    margin-bottom: 0px;
-    background-color: rgba(71, 94, 99, 0);
-}
-
-.navbar-toggle {
-    border: 1px solid #ffffff;
-}
-.navbar-toggle .icon-bar {
-    background-color: #ffffff;
-}
-
-
-#navbar.navbar-collapse.collapse.in {
-    background-color: none;
-    float: right;
-    padding-right: 15px;
-    border-width: 0;
-}
-
-.nav-item {
-    color: rgb(255,255,255);
-    border: none;
-    border-radius: 5px;
-    width: 160px;
-    padding: 8px;
-    margin-left:15px;
-}
-
-.nav-item:focus {
-    outline: none;
-}
-
-.nav-item:hover {
-    border: 1px solid white;
-}
-
-.nav-item.active {
-    font-weight: bold;
-    border: 2px solid white;
-}
-
-.nav-item.active:hover {
-    font-weight: bold;
-    border: 2px solid white;
-}
-
-ul.nav.navbar-nav.navbar-right {
-    margin: 0 -5px;
-//    background-color: rgba(255,255,255,0.9);
-//    padding:0px 15px 0px 0px;
-
-//    margin: 7px -42px;
-
-}
-
-.in .nav-item {
-    display: inline;
-}
-
-
-.nav-item.simple-title {
-    color: rgba(255,255,255,1);
-}
-
-.main-title { float: left;
-              clear: none;
-              color: #CCDDFF;
-              width: calc(100% - 160px);
-              position: relative;
-              top: 5px;
-              left: 20px;
-              text-align: left;
-              z-index: 100;
-              padding: 0;
-              margin: 0;
-              font-size: 16px;
-            }
-
-@media screen and (min-width: 550px) {
-    .main-title {
-        top: 10px;
-        font-size: 26px;
-        max-width: 400px;
-    }
-}
-
-@media screen and (max-width: 549px) {
-    .main-title {
-        top: 15px;
-        font-size: 20px;
-        max-width: 400px;
-    }
-}
-
-@media screen and (max-width: 450px) {
-    .main-title {
-        top: 20px;
-        font-size: 16px;
-        max-width: 400px;
-    }
-}
-
 /**
  * Scrollspy
  */
@@ -1010,7 +841,10 @@ ul.nav.navbar-nav.navbar-right {
 }
 
 .image-para {
-    margin-top: 60px;
+  margin-bottom: 30px;
+  clear: both;
+  margin-top: 22px;
+  min-height: 70px;
 }
 
 .todo {
@@ -1085,4 +919,14 @@ ul.nav.navbar-nav.navbar-right {
     overflow-y: auto;
 }
 
-.
+img.pull-left {
+    margin-right: 20px;
+}
+
+.w100 {
+    width: 100px;
+}
+
+.w150 {
+    width: 150px;
+}
