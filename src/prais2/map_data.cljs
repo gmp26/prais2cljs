@@ -22,41 +22,28 @@
 
 
 (rum/defc render-map-data < rum/reactive []
-          [:section.col-sm-offset-1.col-sm-10
-           [:h2 "Mapped data for April 2011 - March 2014"]
-           [:p
-            "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
-           [:p
-            "This data is updated annually and covers the most recent three year report period."]
+          [:div
+           [:section.col-sm-offset-1.col-sm-10
+            [:h2 "Mapped data for April 2011 - March 2014"]
+            [:p
+             "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
+            [:p
+             "This data is updated annually and covers the most recent three year report period."]]
 
 
 
-           [:.hospital-map.col-sm-6.col-md-4.col-xs-5
+           [:.hospital-map.col-sm-6.col-md-5.col-xs-12
             (map/hospitals)]
 
            (if (nil? (:map-h-code (rum/react core/app)))
-             [:.col-sm-6.col-xs-7.col-md-7 (hospital-list)]
-             [:.col-sm-6.col-xs-7.col-md-7
+             [:.col-sm-6.col-xs-12.col-md-7 (hospital-list)]
+             [:.col-sm-6.col-xs-12.col-md-7
               [:div.clearfix
-               [:button.btn.btn-primary.pull-left {:type "button"
-                                                   :on-click #(core/click->event-bus % :reset-map-to-home nil)
+               [:button.btn.btn-primary.pull-left {:type      "button"
+                                                   :on-click  #(core/click->event-bus % :reset-map-to-home nil)
                                                    :tab-index 0}
                 [:i.fa.fa-chevron-left] " Back"]]
               (data/hospital-detail (:map-h-code (rum/react core/app)))])])
-
-
-       #_[:col-sm-6.col-xs-6 {:style {:margin "40px 0px"}}
-        [:img {:src "assets/icon.png"}]
-        [:p "Click on a hospital or use the menu"]
-        [:.btn.btn-info.disabled {:style {:width "80px"}}
-         "Menu " [:i.fa.fa-caret-down]]
-        [:div {:style {:margin-top "60px"
-                       :padding    "10px"
-                       :box-shadow "1px 1px 4px #CCCCCC"}}
-         [:span "Return to a wider view with the "
-          [:.btn.btn-info.disabled "All UK"] " or "
-          [:.btn.btn-info.disabled "Just London"] " buttons."]]
-        ]
 
 
 (defn px [pixels] (str pixels "px"))
