@@ -70,44 +70,49 @@
 
    [:.col-sm-offset-1.col-sm-10
     [:h1 "Explore the data"]
-    [:h4 {:clear "both"} "View the data presented in a map or a list"]
-    [:ul.nav.nav-pills {:role "tablist"}
+    [:h4 "View the data presented in a map or a list."]
+    [:p "The two minute guide explains how we present the results, while the second animation reveals how we arrive at a predicted
+    range for each hospital's survival rate."]
 
-     [:li {:class (active? :animation)
-           :role "presentation"}
-      [:a#map-tab {:href "#"
-                   :aria-controls "mapped-data"
-                   :role "tab"
-                   :on-click #(core/click->event-bus % :data :animation)} "Two minute guide"]]
+    [:ul.nav.nav-pills {:role "tablist"}
 
      [:li {:class (active? :map)
            :role "presentation"}
       [:a#map-tab {:href "#"
                    :aria-controls "mapped-data"
                    :role "tab"
-                   :on-click #(core/click->event-bus % :data :map)} "Map"]]
+                   :on-click #(core/click->event-bus % :data :map)}
+       [:i.fa.fa-map-marker] " Map"]]
 
      [:li {:class (active? :table)
            :role "presentation"}
       [:a#table-tab {:href "#"
                      :aria-controls "data-table"
                      :role "tab"
-                     :on-click #(core/click->event-bus % :data :table)} "List"]]]]])
+                     :on-click #(core/click->event-bus % :data :table)}
+       [:i.fa.fa-table] " List"]]
+
+     [:li {:class (active? :animation)
+           :role "presentation"}
+      [:a#map-tab {:href "#"
+                   :aria-controls "mapped-data"
+                   :role "tab"
+                   :on-click #(core/click->event-bus % :data :animation)}
+       [:i.fa.fa-video-camera] " Two minute guide"]]
+
+     [:li {:class (active? :animation2)
+           :role "presentation"}
+      [:a#map-tab {:href "#"
+                   :aria-controls "mapped-data"
+                   :role "tab"
+                   :on-click #(core/click->event-bus % :data :animation2)}
+       [:i.fa.fa-video-camera] " Calculating the predicted range"]]
+     ]]])
 
 
 
 (rum/defc render-data-tab-panes < rum/reactive [data section]
   [:row.tab-content
-   [:.tab-pane.col-sm-12 {:class (active? :animation)
-                          :id    "mapped-data"}
-    (when (active? :animation)
-      [:section.col-sm-offset-1.col-sm-10
-       [:h2 "A two minute guide to how we present the results"]
-       [:p
-        "After viewing the guide, click on Map or List to view the recent results."]
-
-       [:video {:src      "assets/Animation1-animatic1.mp4"
-                :controls "true"}]])]
 
    [:.tab-pane.col-sm-12 {:class (active? :map)
                           :id "mapped-data"}
@@ -118,7 +123,24 @@
                 :id "data-table"}
     (data/modal)
     (when (active? :table)
-      (data/list-tab core/app data event-bus))]]
+      (data/list-tab core/app data event-bus))]
+
+   [:.tab-pane.col-sm-12 {:class (active? :animation)
+                          :id    "mapped-data"}
+    (when (active? :animation)
+      [:section.col-sm-offset-1.col-sm-10
+       [:h2 "A two minute guide to how we present the results"]
+       [:video {:src      "assets/Animation1-animatic1.mp4"
+                :controls "true"}]])]
+
+   [:.tab-pane.col-sm-12 {:class (active? :animation2)
+                          :id    "mapped-data"}
+    (when (active? :animation2)
+      [:section.col-sm-offset-1.col-sm-10
+       ;[:h2 "How is the predicted range calculated?"]
+       [:video {:src      "assets/predicted-range.mp4"
+                :controls "true"}]])]
+   ]
 )
 
 (rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
