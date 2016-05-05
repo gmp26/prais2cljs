@@ -26,8 +26,8 @@
   [:.col-sm-4
    [:.home-nav.well.data
     [:.active
-     {:on-click       #(core/click->event-bus % :data :map)
-      :on-touch-start #(core/click->event-bus % :data :map)}
+     {:on-click       #(core/click->event-bus % :data :animation)
+      :on-touch-start #(core/click->event-bus % :data :animation)}
      [:i.fa.fa-table.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Data"]]

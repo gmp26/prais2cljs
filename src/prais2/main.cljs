@@ -15,7 +15,7 @@
               [prais2.chrome :as chrome]
               [prais2.intro :refer [render-intro]]
               [prais2.home :refer [render-home]]
-              [prais2.map-data :refer [render-map-data render-sample-data]]
+              [prais2.map-data :refer [render-map-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
               [cljsjs.jquery]
@@ -67,15 +67,18 @@
 (rum/defc render-data-tabs [section]
 
   [:.row
-   [:.col-sm-offset-1.col-sm-10 {:style {:max-width "600px"}}
-    [:video {:src "assets/two-minute-guide.mp4"
-             :controls "true"
-             :style {:width "100%"}}]]
+
    [:.col-sm-offset-1.col-sm-10
     [:h1 "Explore the data"]
     [:h4 {:clear "both"} "View the data presented in a map or a list"]
-    [:ul.nav.nav-pills {:role "tablist"
-                        :style {:clear "both"}}
+    [:ul.nav.nav-pills {:role "tablist"}
+
+     [:li {:class (active? :animation)
+           :role "presentation"}
+      [:a#map-tab {:href "#"
+                   :aria-controls "mapped-data"
+                   :role "tab"
+                   :on-click #(core/click->event-bus % :data :animation)} "Two minute guide"]]
 
      [:li {:class (active? :map)
            :role "presentation"}
@@ -95,10 +98,21 @@
 
 (rum/defc render-data-tab-panes < rum/reactive [data section]
   [:row.tab-content
+   [:.tab-pane.col-sm-12 {:class (active? :animation)
+                          :id    "mapped-data"}
+    (when (active? :animation)
+      [:section.col-sm-offset-1.col-sm-10
+       [:h2 "A two minute guide to how we present the results"]
+       [:p
+        "After viewing the guide, click on Map or List to view the recent results."]
+
+       [:video {:src      "assets/Animation1-animatic1.mp4"
+                :controls "true"}]])]
+
    [:.tab-pane.col-sm-12 {:class (active? :map)
-                :id "mapped-data"}
+                          :id "mapped-data"}
     (when (active? :map)
-      (render-map-data ))]
+      (render-map-data))]
 
    [:.tab-pane.col-sm-12 {:class (active? :table)
                 :id "data-table"}

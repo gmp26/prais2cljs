@@ -6668,6 +6668,22 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     .legend .box h4 {
       color: orange; }
 
+.chart-cell {
+  background: #ffffff;
+  margin-left: 20px;
+  padding-right: 40px; }
+
+.chart-cell.annotated {
+  background: #ffffff;
+  margin-left: 0;
+  height: 60px;
+  width: 100%;
+  padding-right: 0; }
+
+.axis-container {
+  margin-left: 20px;
+  width: calc(100% - 60px); }
+
 /* nav aid */
 p.nav-aid {
   font-style: italic;

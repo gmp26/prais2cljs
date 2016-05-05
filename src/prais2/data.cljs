@@ -208,9 +208,7 @@
         bars (chart-states (:chart-state ap))
         dotty (:dot bars)
         dotless (disj bars :dot)]
-    [:.chart-cell {:style {:background "#ffffff"
-                           :margin-left (important (px axis-margin))
-                           :padding-right last-pad-right}}
+    [:.chart-cell
      [:div.bar-chart
       (map-indexed key-with
 
@@ -253,12 +251,7 @@
         dotless (disj bars :dot)]
     [:div
      [:.annotation {:key 1} text]
-     [:.chart-cell.annotated {:key 2
-                              :style {:background "#ffffff"
-                                      :margin-left 0
-                                      :height "60px"
-                                      :width "100%"
-                                      :padding-right 0}}
+     [:.chart-cell.annotated {:key 2}
       [:div.bar-chart.annotated
        (map-indexed key-with
 
@@ -404,8 +397,7 @@
 
   ([slider-axis-value tick-height]
    [:.axis-container
-    {:style {:margin-left (px axis-margin)
-             :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+    ;{:style {:margin-left (px axis-margin) :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
     (rum/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
 

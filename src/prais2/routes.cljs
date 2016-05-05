@@ -56,7 +56,7 @@
 
 (defroute datas "/data" []
   (prn "datas route")
-  (put! core/event-bus [:data :map])
+  (put! core/event-bus [:data :animation])
 )
 
 (defroute data "/data/:id" [id]

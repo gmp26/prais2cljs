@@ -242,52 +242,9 @@ of headers for field names and then discarding the first header row from the res
           (reset! log-state-index (dec ix))
           (reset! log-states parsed-tsv))))))
 
-(rum/defc paste-box < rum/reactive []
-  [:#paste-box.paste-class.collapse
-   [:br {:key 1}]
-   [:p {:key 2} "To load a recorded session, copy rows from"
-    [:a.btn.btn-link {:href log-sheet-url :target "_blank" :style {:font-size "16px" :padding "0 4px 4px 4px" }} "the session log"]
-    "using a filtered view and paste them into the textbox here."]
-   [:.alert.alert-info {:key 3} "To create or view the spreadsheet using a session filter, go to 'Data > Filter views...' in the sheet menu."
-    [:br]
-    "Set the filter range to include the ip address and/or session-id columns and use the cell buttons at the top of those to filter for a single user's session."]
-   #_[:form {:key 4}
-    [:.form-group {:key 1}
-     [:textarea {:placeholder "Paste rows from the session log here."
-                 :name "pasted-session"
-                 :id "pasted-session"
-                 :rows 10
-                 :cols 50
-                 :title "paste-session"
-                                        ;:on-change #(reset! tsv-log (.. % -nativeEvent -target -value))
-                                        ;:value (rum/react tsv-log)
-                 }
-      ]]
-    [:button.btn.btn-primary {:key 2
-                              :on-click #(click->log-bus % :parse-session nil)
-                              :on-touch-start #(click->log-bus % :parse-session nil)}
-     "Load pasted session"]]])
-
-
-(rum/defc playback-controls < rum/reactive [id]
-
-  [:div {:id id}
-    #_(reset-control)
-   " "
-   #_[:.btn-group
-    (undo-control)
-    (redo-control)]
-   " "
-   [:.btn-group
-    (load-control)]
-
-   (paste-box)
-   ])
-
 
 (defn edit-session-log []
   (core/el ""))
-
 
 ;;;
 ;; Following experimented with catching page unloads. Not worth it here...

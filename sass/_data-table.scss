@@ -23,6 +23,30 @@
     }
 }
 
+$extra-right: 40px;
+$axis-margin: 20px;
+$last-pad-right: 40px;
+$axis-adjust: $extra-right + $axis-margin;
+
+.chart-cell {
+    background: #ffffff;
+    margin-left: $axis-margin; // (important (px axis-margin))
+    padding-right: $last-pad-right;
+}
+
+.chart-cell.annotated {
+    background: #ffffff;
+    margin-left: 0;
+    height: 60px;
+    width: 100%;
+    padding-right: 0;
+}
+
+.axis-container {
+    margin-left: $axis-margin;
+    width: calc(100% - #{$axis-adjust});
+}
+
 /* nav aid */
 p.nav-aid {
     font-style: italic;

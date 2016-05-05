@@ -16,55 +16,6 @@
    [:h2 section-title]
    (section-content)])
 
-(rum/defc panel [parent-id header-id header body-id body]
-  [:section.panel.panel-default.clearfix
-   [:.panel-heading {:id header-id
-                     :on-click #(.collapse (js/$ (str "#" body-id)) "toggle")
-                     :role "tab"
-                     :style {:background-color "rgba(127, 205, 187, 0.41)"
-                             :cursor "pointer"}}
-    [:h2.panel-title {:style {:font-size "22px"}}
-     [:a {:role "button"
-          :data-toggle "collapse"
-          :data-parent (str "#" parent-id)
-          :href (str "#" body-id)
-          :aria-expanded false
-          :aria-controls body-id}
-      header]]]
-   [:.panel-collapse.collapse
-    {:id body-id
-     :role "tabpanel"
-     :aria-labelledby header-id}
-    [:.panel-body (body)]]
-   ])
-
-(rum/defc animation-2 []
-  [:.col-lg-6
-   {:style {
-            :margin-left "10px"
-            :margin-right "10px"
-            :padding-right "10px"
-            :width "500px"
-            :height "300px"
-            :background-color "black"
-            :color "white"
-            }}
-
-   [:h2.col-md-offset-2  "Animation"]
-
-])
-
-(rum/defc accordion [id & panels]
-  [:.panel-group {:id id :role "tablist" :aria-multiselectable "true"}
-   #_(prn (count panels))
-   (map-indexed key-with panels)])
-
-(rum/defc collapsible-section [parent-id section-id section-title section-content]
-  (panel parent-id
-         (str parent-id "-sec-" section-id)
-         section-title
-         (str parent-id "-body-" section-id)
-         section-content))
 
 (declare key-points)
 (declare section-1-content)
@@ -74,21 +25,17 @@
 (declare section-5-content)
 (declare section-6-content)
 
-;; look at http://materializecss.com/
 
+;; look at http://materializecss.com/
 (rum/defc render-intro < (core/monitor-react "INTRO>" false)  [section-id]
   [:.container
    [:.row
     [:.col-sm-8
-
      [:h1 "What, why, how?"]
-
      [:p "This site is to help people make sense of the "
       [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
        "published survival statistics"] " about children’s heart surgery. "]
-
-     [:img.thumbnail {:style {:width "100%"} :src "assets/keypoint-slides.png"}]]
-
+     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]]
     [:#intro.col-sm-12
 
      (key-points)
@@ -145,7 +92,7 @@
     [:p "The national audit body (NICOR) uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over the previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
     [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect. For more information about how the NHS monitors survival rates see the 'Everything Else' section."]
-    [:.bg-danger {:style {:border-radius "3px" :border "1px solid #DDD"}}
+    [:.bg-danger
      [:p
       "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year."]
      [:p
