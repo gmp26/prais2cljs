@@ -2,6 +2,11 @@
 /*
 see http://www.sitepoint.com/bootstrap-sass-installation-and-customisation/
 */
+/*
+ * Colours used in predicted range and extended predicted range charts
+ * WARNING - these are not active since the theme selector needed to set these in code
+ * - see prais2.content:1021 - theme 12 was selected.
+ */
 /*!
  * Bootstrap v3.3.6 (http://getbootstrap.com)
  * Copyright 2011-2015 Twitter, Inc.
@@ -5866,30 +5871,6 @@ button.close {
 
   .printable {
     margin-top: 110px !important; } }
-/**
- * Chrome
- */
-.chrome-head-rel {
-  width: 100%;
-  height: 80px;
-  background-color: #4F4763;
-  color: rgba(255, 255, 255, 0.5);
-  position: relative; }
-
-/* site logo */
-.chrome-head-rel div {
-  transform: translate(0, -7px) rotate(180deg);
-  position: relative;
-  z-index: 1;
-  margin-left: 30px;
-  top: 3px;
-  background-image: url(../assets/logo3.png);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  width: 70px;
-  height: 80px;
-  float: left; }
-
 .jumbotron.home {
   background-color: #ffffff;
   color: #4F4763;
@@ -6207,11 +6188,9 @@ td:first-child {
   /*1px solid #dddddd;*/
   position: relative !important;
   white-space: nowrap;
-  display: inline-block;
-  /*background-color: white !important;*/ }
+  display: inline-block; }
 
 .chart-cell {
-  background-color: #f9f9f9;
   height: 50px; }
 
 .dropdown > ul {
@@ -6557,11 +6536,6 @@ body {
 .navbar-inner .nav {
   float: right; }
 
-/* ------ */
-.navbar-prais2 {
-  margin-bottom: 0px;
-  background-color: rgba(71, 94, 99, 0); }
-
 .navbar-toggle {
   border: 1px solid #ffffff; }
 
@@ -6625,7 +6599,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
   max-height: 0; }
 
 .navbar-inner .container {
-  background-color: #475E63;
+  background-color: #337AB7;
   opacity: 0.95;
   width: 100%;
   height: 55px; }
@@ -6633,7 +6607,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 .main-title {
   float: left;
   clear: none;
-  color: #CCDDFF;
+  color: #dbe9f5;
   width: calc(100% - 160px);
   position: relative;
   top: 5px;
@@ -6659,11 +6633,36 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     top: 20px;
     font-size: 16px;
     max-width: 400px; } }
+/*------- TITLE  --------- */
+/**
+ * Chrome
+ */
+.chrome-head-rel {
+  width: 100%;
+  height: 80px;
+  background-color: #63a0d4;
+  color: #dbe9f5;
+  position: relative; }
+
+/* site logo */
+.chrome-head-rel div {
+  transform: translate(0, -7px) rotate(180deg);
+  position: relative;
+  z-index: 1;
+  margin-left: 30px;
+  top: 3px;
+  background-image: url(../assets/logo3.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  width: 70px;
+  height: 80px;
+  float: left; }
+
 /*------- FOOTER --------- */
 .partners {
   z-index: 1000;
   position: relative;
-  background-color: #637F84; }
+  background-color: #63a0d4; }
 
 .partners .row {
   padding-top: 50px; }
@@ -6675,7 +6674,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 
 .footer {
   color: white;
-  background-color: #475E63;
+  background-color: #337AB7;
   padding: 20px 60px;
   font-size: 14px;
   margin: 50px -15px 0px; }
@@ -6691,35 +6690,5 @@ i.fa.fa-sort, i.fa.fa-sort-asc, i.fa.fa-sort-desc {
     color: black;
 }
 */
-section.short-answer {
-  margin-top: 30px; }
-  section.short-answer .icon {
-    margin-top: 0px;
-    width: 80px;
-    font-size: 21px;
-    font-weight: 200;
-    float: left;
-    clear: left; }
-    section.short-answer .icon .fa-comment {
-      color: #FFA500;
-      font-size: 50px; }
-  section.short-answer .reply {
-    font-size: 21px;
-    font-weight: 200;
-    margin-bottom: 40px; }
-
-.faq .query {
-  margin-top: -32px;
-  width: 80px;
-  float: left; }
-  .faq .query .fa-question {
-    font-size: 100px;
-    color: #FFA500; }
-.faq .title {
-  margin-top: 40px; }
-.faq .body {
-  clear: both; }
-.faq .back {
-  margin-bottom: 60px; }
 
 /*# sourceMappingURL=app.css.map */

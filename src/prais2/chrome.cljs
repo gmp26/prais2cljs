@@ -68,8 +68,7 @@
 
    [:.chrome-head-rel
     [:div {:key 1}]                                         ;;styled logo
-    [:h3 {:key 2
-          :class "main-title"} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
+    [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
 
 (rum/defc footer []

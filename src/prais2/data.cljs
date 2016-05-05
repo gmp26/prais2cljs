@@ -114,7 +114,6 @@
 (rum/defc zero-bar < rum/static [slider value]
   [:div.bar {:style {:background-color "#eeeeee"
                      :width "calc(25px - )"
-                     ;:width (str (bar-width slider value) "%")
                      }}])
 
 
@@ -134,15 +133,13 @@
                   :data-delay 0
                   :data-html true
                   :data-trigger "hover"
-                  :data-placement "bottom"}
-    ])
+                  :data-placement "bottom"}])
 
   ([slider hi-val lo-val bar-type fill no-tip]
    (if (= fill "rgba(255,255,255,0)")
      [:div.bar {:style {:background-color fill
                         :width (str (bar-width slider (- hi-val lo-val)) "%")
-                        }
-                }]
+                        }}]
      (if-not no-tip
        [:div.bar.btn {:style {:background-color fill
                               :border-radius 0
@@ -154,8 +151,7 @@
                       :data-delay 0
                       :data-html true
                       :data-trigger "hover"
-                      :data-placement "bottom"}
-        ]
+                      :data-placement "bottom"}]
        [:div.bar.btn {:style {:background-color fill
                               :border-radius 0
                               :width (str (bar-width slider (- hi-val lo-val)) "%")
@@ -166,11 +162,7 @@
                       ;:data-html true
                       ;:data-trigger "hover"
                       ;:data-placement "bottom"
-                      }
-        ]
-       ))))
-
-
+                      }]))))
 
 
 (rum/defc dot < rum/static rum/reactive bs-tooltip [slider size value dotty & [relative]]
@@ -181,8 +173,7 @@
       :data-delay 0
       :data-trigger "hover"
       :data-html true
-      :data-original-title (str (pc value) "<br>The survival rate"
-)
+      :data-original-title (str (pc value) "<br>The survival rate")
       :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
@@ -193,8 +184,8 @@
                          (percent->screen slider value)
                          "% - "
                          (Math.round (/ size 2))
-                         "px)"
-                         )}}]))
+                         "px)")}}]))
+
 
 (rum/defc dot-no-tip < rum/static rum/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
@@ -222,8 +213,7 @@
   (Math.round (- 12 (* 7 (- 1 slider)))))
 
 
-(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
-                   #{:inner :outer} #{:inner}])
+(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot} #{:inner :outer} #{:inner}])
 
 
 (rum/defc chart-cell < bs-tooltip rum/reactive [row slider]
