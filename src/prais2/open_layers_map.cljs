@@ -219,15 +219,6 @@
     :tab-index 0}
    "All UK"])
 
-#_(rum/defc menu-button []
-  [:button#drop1.btn-info.h-button.map-menu.dropdown-toggle
-   {:type "button"
-    :data-toggle "dropdown"
-    :aria-haspopup "true"
-    :aria-expanded "true"
-    :tab-index 0}
-   "Menu " [:i.fa.fa-caret-down]])
-
 (rum/defc hospital-item [row]
   [:li [:a
         {:tab-index 0

@@ -48,7 +48,7 @@
 
 (defn px [pixels] (str pixels "px"))
 
-(rum/defc annotate [note placement top left]
+#_(rum/defc annotate [note placement top left]
   [:#tip1.tooltip.in {:role "tooltip"
                       :class placement
                       :style {:top (px top)

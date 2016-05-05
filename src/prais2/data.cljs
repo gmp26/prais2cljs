@@ -17,10 +17,12 @@
 ;;;
 (defn colour-map [theme] (content/colour-map-options theme))
 
+
 (defn index-by
   "create an index on a table"
   [table key-fn]
     (into {} (map (juxt key-fn identity) table)))
+
 
 (defn add-markers [table-rows]
   (map-indexed
@@ -28,35 +30,28 @@
      (let [lat (+ 50.7 (/ index 3))
            lon (+ -2.6 (* 0.8 (mod index 3)))]
        (assoc row :h-lat lat :h-lon lon)))
-   table-rows
-   ))
+   table-rows))
 
-;;
-;; todo: generalise dataset
-;;
+
 (defn make-datasource [datasource]
   (into []
         (concat [content/header-row]
                 (if (number? (js.parseInt (name datasource)))
                   (datasource  content/datasources)
-                  (add-markers (datasource content/datasources))
-                  )
-                #_(if (= datasource :2014)
-                    (:2014  content/datasources)
-                    (add-markers (datasource content/datasources))
-                    ))))
+                  (add-markers (datasource content/datasources))))))
+
 
 (defn table-data
   "datasource switchable hospital results table"
   [datasource]
-  (memoize (fn []
-             (make-datasource datasource))))
+  (memoize (fn [] (make-datasource datasource))))
+
 
 (defn rows-by-code
   "datasource switchable hospital results indexed by hospital code"
   [datasource]
-  (memoize (fn []
-             (index-by ((table-data datasource)) #(keyword (:h-code %))))))
+  (memoize (fn [] (index-by ((table-data datasource)) #(keyword (:h-code %))))))
+
 
 (defn sort-on-column
   "sort a column"
@@ -68,81 +63,67 @@
       (swap! app #(assoc % :sort-ascending (not sort-mode)))
       (swap! app #(assoc % :sort-ascending true :sort-by column-key)))))
 
+
 (defn handle-sort
   "handle sort click"
   [app column-key]
   (let [ap @app]
     (sort-on-column app column-key)))
 
+
 (def chart-width 100)
+
 
 ;;  "the minimum outer-low value across all rows"
 (defn min-outer-low []
   (* 2 (int (/ (apply min (map :outer-low (rest ((table-data (:datasource @core/app)))))) 2))))
+
 
 (defn bar-scale
   "value to pixel-width scale-factor controlled by slider in [0-1]"
   [slider]
   (/ chart-width (- 100 (* (min-outer-low) slider))))
 
+
 (defn percent->screen
   "percent-value to slider compensated value"
   [slider value]
   (let [origin (* (min-outer-low) slider)]
-    (* 100 (/ (- value origin) (- 100 origin))))
-  )
+    (* 100 (/ (- value origin) (- 100 origin)))))
+
 
 (defn bar-width
   "return percentage-width for a bar"
   [slider value]
-  (* value (bar-scale slider))
-  )
+  (* value (bar-scale slider)))
 
 
 ;;;
-;; graphics
+;; graphic renders
 ;;;
-
-;; test square: insert to check mixin behviour
-(rum/defc square < rum/static [slider value fill]
-  [:div.bar {:style
-             {:background-color (important fill)
-              :height (px 10)
-              :width (px 10)}}])
-
-
-(rum/defc zero-bar < rum/static [slider value]
-  [:div.bar {:style {:background-color "#eeeeee"
-                     :width "calc(25px - )"
-                     ;:width (str (bar-width slider value) "%")
-                     }}])
-
 
 (rum/defc bar < rum/static
   ([slider hi-val lo-val bar-type fill]
-   [:div.bar {:style {:background-color fill
-                      :width (str (bar-width slider (- hi-val lo-val)) "%")
-                      }
-              }]
-   [:div.bar.btn {:style {:background-color fill
+
+    [:div.bar {:style {:background-color fill
+                      :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
+
+    [:div.bar.btn {:style {:background-color fill
                           :border-radius 0
                           :width (str (bar-width slider (- hi-val lo-val)) "%")
-                          :text-align "right"
-                          }
+                          :text-align "right"}
                   :data-toggle "tooltip"
                   :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
                   :data-delay 0
                   :data-html true
                   :data-trigger "hover"
-                  :data-placement "bottom"}
-    ])
+                  :data-placement "bottom"}])
+
 
   ([slider hi-val lo-val bar-type fill no-tip]
    (if (= fill "rgba(255,255,255,0)")
      [:div.bar {:style {:background-color fill
-                        :width (str (bar-width slider (- hi-val lo-val)) "%")
-                        }
-                }]
+                        :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
      (if-not no-tip
        [:div.bar.btn {:style {:background-color fill
                               :border-radius 0
@@ -171,8 +152,6 @@
        ))))
 
 
-
-
 (rum/defc dot < rum/static rum/reactive bs-tooltip [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot.btn
@@ -181,8 +160,7 @@
       :data-delay 0
       :data-trigger "hover"
       :data-html true
-      :data-original-title (str (pc value) "<br>The survival rate"
-)
+      :data-original-title (str (pc value) "<br>The survival rate")
       :style {:background-color (:dot (colour-map (:theme (rum/react core/app))))
               :display (if dotty "inline-block" "none")
               :width px-size
@@ -195,6 +173,7 @@
                          (Math.round (/ size 2))
                          "px)"
                          )}}]))
+
 
 (rum/defc dot-no-tip < rum/static rum/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
@@ -214,7 +193,9 @@
 
 
 (def extra-right 40)
+
 (def last-pad-right (important (px extra-right)))
+
 (def axis-margin 20)
 
 
@@ -251,7 +232,6 @@
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]
 
-
                      (= dotless #{:outer})
                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
                       (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours))
@@ -260,7 +240,6 @@
                       (bar slider 100 (:outer-high row) :high (:high colours))
                       (dot slider (dot-size slider) (:survival-rate row) dotty)
                       ]
-
 
                      (= dotless #{:inner :outer})
                      [(bar slider (:outer-low row) (* (min-outer-low) slider) :low (:low colours))
@@ -281,11 +260,10 @@
      [:.annotation {:key 1} text]
      [:.chart-cell.annotated {:key 2
                               :style {:background "#ffffff"
-                                      :margin-left 0;(important (px axis-margin))
+                                      :margin-left 0
                                       :height "60px"
                                       :width "100%"
-                                      :padding-right 0;last-pad-right
-                                      }}
+                                      :padding-right 0}}
       [:div.bar-chart.annotated
        (map-indexed key-with
 
@@ -304,7 +282,6 @@
                        (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty)
                        ]
 
-
                       (= dotless #{:outer})
                       [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
                        (bar slider (:inner-low row) (:outer-low row) :outer-low (:outer-low colours) true)
@@ -313,7 +290,6 @@
                        (bar slider 100 (:outer-high row) :high "#ffffff" true)
                        (dot-no-tip slider (dot-size slider) (:survival-rate row) dotty)
                        ]
-
 
                       (= dotless #{:inner :outer})
                       [(bar slider (:outer-low row) (* (min-outer-low) slider) :low "#ffffff" true)
@@ -336,8 +312,8 @@
                                     "solid "
                                     "dashed ")
                                   "black")}}
-       [:span.tick-label (pc value)]]
-      )))
+       [:span.tick-label (pc value)]])))
+
 
 (rum/defc ticks < rum/static [slider-axis-value tick-count tick-height]
   (let [baseline (* (min-outer-low) slider-axis-value)
@@ -351,6 +327,7 @@
     [:div
      (for [value tick-values]
        (rum/with-key (tick baseline value tick-height) value))]))
+
 
 (rum/defc slider-labels []
   [:.slider-label
@@ -378,8 +355,10 @@
                   (.on slider "change" handler)
                   state'))
 
+
    :transfer-state (fn [old new]
                      (assoc new ::slider (::slider old)))
+
 
    :will-unmount (fn [state]
                    (let [slider (::slider state)
@@ -391,6 +370,7 @@
                        (.destroy slider))
                      (dissoc state ::slider ::handler)))})
 
+
 (rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum/static [state value min max step]
   #_(prn "called slider-control with " value)
   (let [s [:#slider.slider
@@ -400,6 +380,7 @@
       (.setValue slider value))
     s))
 
+
 (rum/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
   #_(prn "called detail-slider-control with " value)
   (let [s [:#detail-slider.slider
@@ -407,11 +388,10 @@
         slider (::slider state)]
     (when slider
       (.setValue slider value))
-
     s))
 
 ;;;
-;; TODO - sort out what to do when multiple sliders are on a page
+;; Note: multiple sliders on the same page will fail
 ;;;
 (rum/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
   #_(prn "called map-detail-slider-control with " value)
@@ -421,8 +401,6 @@
     (when slider
       (.setValue slider value))
     s))
-
-
 
 
 (rum/defc axis-container < rum/static
@@ -435,9 +413,11 @@
              :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
     (rum/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
+
 (rum/defc slider-title [headers]
   [:p {:key :p}
    (:title (:observed headers))])
+
 
 (rum/defc table-header < rum/static bs-popover [background ap header column-key event-bus]
   [:th {:on-click #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key))
@@ -447,8 +427,7 @@
                 :vertical-align "top"
                 :cursor (if (:sortable header) "pointer" "auto")
                 :background-color background
-                :color "#ffffff !important"
-                }}
+                :color "#ffffff !important"}}
    (when (:sortable header) [:i {:key :icon
                                  :class (str  "right fa fa-sort"
                                               (if (= column-key (:sort-by ap))
@@ -476,6 +455,7 @@
     [:br {:key :br}]
     (:title header)]])
 
+
 (rum/defc slider-widget < rum/static
   ([headers control slider-axis-value]
    (slider-widget headers control slider-axis-value 69))
@@ -488,8 +468,8 @@
                   (control slider-axis-value 0 1 0.02)
                   (axis-container slider-axis-value tick-height)])]))
 
-(rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
 
+(rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
   (let [baseline (Math.round (* (min-outer-low) slider-axis-value))]
     #_(prn "table-head called")
     [:thead
@@ -509,14 +489,12 @@
                 }}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (slider-widget headers slider-control slider-axis-value 748)
-        ]]]]))
+        (slider-widget headers slider-control slider-axis-value 748)]]]]))
 
 
 (rum/defc table1-core [ap data event-bus sort-key sort-direction headers rows]
   [:table.table.table-bordered {:cell-spacing "0"}
    (rum/with-key (table-head ap headers (keys headers) event-bus (:slider-axis-value ap)) :thead)
-
    [:tbody {:key :tbody}
     (for [row (if sort-key
                 (let [sorted (sort-by sort-key (rest data))]
@@ -525,12 +503,14 @@
           :let [h-code (:h-code row)
                 slider-axis-value (:slider-axis-value ap)
                 ]]
+
       [:tr {:key h-code
             :class (if (= (keyword h-code) (:selected-h-code ap)) "info" "")}
        (for [column-key (keys headers)
              :let [column-header (column-key headers)
                    info-handler #(core/click->event-bus % :open-hospital-modal h-code)]
              :when (:shown column-header)]
+
          [:td {:key [h-code column-key]
                :style (merge {:maxWidth (px (:width column-header))
                               :whiteSpace "normal"

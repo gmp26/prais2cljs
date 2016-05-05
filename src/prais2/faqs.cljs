@@ -14,56 +14,25 @@
     ] (mod index 3)))
 
 
-#_(rum/defc render-bubble-title [section-ix [index faq]]
-  [:div
-   (let [pull (if (even? index) "on-left" "on-right")
-         ixc (ix-col index)
-         faq-ref [section-ix index]]
-     [:div
-      [:.bubble {:class pull :style {:background-color ixc}
-                 :on-click #(core/click->event-bus % :show-faq faq-ref)
-                 :on-touch-start #(core/click->event-bus % :show-faq faq-ref)
-                 }
-       (:title faq)]
-      ]
-     )])
-
-#_(rum/defc render-section [[section-ix faq-section]]
-  [:.bubble-group
-   [:h2 (:section faq-section)]
-   (map-indexed key-with
-                (map #(render-bubble-title section-ix %1)
-                     (vec (zipmap (range) (:faqs faq-section)))))]
-  )
-
 (rum/defc render-short-answer [answer]
-  [:div {:style {:margin-top "30px"}}
-   [:div {:style {:margin-top "0px"
-                  :width "80px"
-                  :font-size "21px"
-                  :font-weight 200
-                  :float "left"
-                  :clear "left"
-                  }} [:i.fa.fa-comment {:style {:color "#FFA500"
-                                                :font-size "50px"}}]]
-   [:div {:style {:font-size "21px"
-                  :font-weight 200
-                  :margin-bottom "40px"
-                  }}
-    answer]])
+  [:section.short-answer
+   [:.icon [:i.fa.fa-comment]]
+   [:.reply answer]])
+
 
 (rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
-    (prn "rendering glossary term " term)
     [:dl
      [:dt [:i (:title entry)]]
      [:dd (:body entry)]]))
+
 
 (rum/defc render-glossary [glossary]
   [:div
    [:hr]
    (map-indexed key-with
                 (map #(render-glossary-term %) glossary))])
+
 
 (rum/defc render-faq-block [sec-ix block-class]
   (let [section (content/faq-sections sec-ix)]
@@ -110,7 +79,7 @@
 
 
 (rum/defc render-faq-section [faq-ref]
-  [:#faq.col-sm-10.col-sm-offset-1
+  [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
      (let [[section-ix ix] faq-ref
            section (faq-sections section-ix)
            faq ((:faqs section) ix)
@@ -118,25 +87,19 @@
            glossary (:glossary faq)]
        [:div
         [:h2 {:key 1}
-         [:div {:style {:margin-top "-32px"
-                        :width "80px"
-                        :float "left"}} [:i.fa.fa-question {:style {:font-size "100px"
-                                                                    :color "#FFA500"}}]]
-         [:div {:style {:margin-top "40px"}}
-          (:title faq)]]
+         [:div.query [:i.fa.fa-question]]
+         [:div.title (:title faq)]]
         (when short-answer
           (do
             (prn "rendering short answer for section " section-ix "." ix)
             (render-short-answer short-answer)))
-        [:div {:key 2
-               :style {:clear "both"}} (:body faq)]
+        [:div.body {:key 2} (:body faq)]
         (when (> (count glossary) 0)
           (do
             (prn "rendering glossary " glossary)
             (render-glossary glossary)))
-        [:button.btn.btn-primary
+        [:button.btn.btn-primary.back
          {:key 3
-          :style {:margin-bottom "100px"}
           :on-click #(core/click->event-bus % :faqs :top)
           :on-touch-start #(core/click->event-bus % :faqs :top)
           }

@@ -1,0 +1,42 @@
+section.short-answer {
+    margin-top: 30px;
+    .icon{
+        margin-top: 0px;
+        width: 80px;
+        font-size: 21px;
+        font-weight: 200;
+        float: left;
+        clear: left;
+        .fa-comment {
+            color: #FFA500;
+            font-size: 50px;
+        }
+    }
+
+    .reply {
+        font-size: 21px;
+        font-weight: 200;
+        margin-bottom: 40px;
+    }
+}
+
+.faq {
+    .query {
+        margin-top: -32px;
+        width: 80px;
+        float: left;
+        .fa-question {
+            font-size: 100px;
+            color: #FFA500;
+        }
+    }
+    .title {
+        margin-top: 40px;
+    }
+    .body {
+        clear: both;
+    }
+    .back {
+        margin-bottom: 60px;
+    }
+}
