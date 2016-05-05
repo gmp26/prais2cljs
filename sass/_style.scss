@@ -70,31 +70,6 @@
     }
 }
 
-/**
- * Chrome
- */
-.chrome-head-rel {
-    width: 100%;
-    height: 80px;
-    background-color: #4F4763;
-    color: rgba(255,255,255,0.5);
-    position: relative;
-}
-
-/* site logo */
-.chrome-head-rel div {
-    transform:         translate(0, -7px) rotate(180deg);
-    position:          relative;
-    z-index:           1;
-    margin-left:       30px;
-    top:               3px;
-    background-image:  url(../assets/logo3.png);
-    background-repeat: no-repeat;
-    background-size:   100%;
-    width:             70px;
-    height:            80px;
-    float:             left;
-}
 
 .jumbotron.home {
   background-color: #ffffff; //#CCDDFF;
@@ -144,24 +119,24 @@
 }
 
 .well.intro {
-    background-color:  #FC867A;
+    background-color:  $intro;
 }
 
 .well.data {
-    background-color:  #FC8D59;
+    background-color:  $data;
 }
 
 .well.faqs {
-    background-color: #7FCDBB;
+    background-color: $faqs;
 }
 
 
 .home {
-    background-color: #8B99FA
+    background-color: $home;
 }
 
 .intro {
-    background-color: #FC867A;
+    background-color: $intro;
     //border-bottom: 5px solid  rgba(0, 174, 239, 1);
 }
 
@@ -170,7 +145,7 @@
 }
 
 .well.danger {
-    background-color: #FC867A;
+    background-color: $intro;
     color: #ffffff;
 }
 
@@ -179,9 +154,7 @@
 }
 
 .faqs {
-    background-color: #7FCDBB;
-    //border-bottom: 5px solid rgba(127, 205, 187, 1);
-    //border-color:  #7FCDBB;
+    background-color: $faqs;
 }
 
 
@@ -482,11 +455,9 @@ td:first-child {
     position: relative !important;
     white-space: nowrap;
     display: inline-block;
-    /*background-color: white !important;*/
 }
 
 .chart-cell {
-    background-color: #f9f9f9;
     height: 50px;
 }
 
@@ -854,27 +825,27 @@ i.fa.black {
 
 
 .faq-nav-1 {
-    background-color: #8B99FA;
+    background-color: $home;
 }
 
 .faq-nav-2 {
-    background-color: #FC867A;
+    background-color: $intro;
 }
 
 .faq-nav-3 {
-    background-color: #FC8D59;
+    background-color: $data;
 }
 
 .faq-nav-4 {
-    background-color: #7FCDBB;
+    background-color: $faqs;
 }
 
 .faq-nav-5 {
-    background-color: #8B99FA;
+    background-color: $home;
 }
 
 .faq-nav-6 {
-    background-color: #FC867A;
+    background-color: $intro;
 }
 
 /*

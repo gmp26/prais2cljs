@@ -135,8 +135,7 @@
                       :data-delay 0
                       :data-html true
                       :data-trigger "hover"
-                      :data-placement "bottom"}
-        ]
+                      :data-placement "bottom"}]
        [:div.bar.btn {:style {:background-color fill
                               :border-radius 0
                               :width (str (bar-width slider (- hi-val lo-val)) "%")
@@ -147,9 +146,7 @@
                       ;:data-html true
                       ;:data-trigger "hover"
                       ;:data-placement "bottom"
-                      }
-        ]
-       ))))
+                      }]))))
 
 
 (rum/defc dot < rum/static rum/reactive bs-tooltip [slider size value dotty & [relative]]
@@ -171,8 +168,7 @@
                          (percent->screen slider value)
                          "% - "
                          (Math.round (/ size 2))
-                         "px)"
-                         )}}]))
+                         "px)")}}]))
 
 
 (rum/defc dot-no-tip < rum/static rum/reactive [slider size value dotty & [relative]]
@@ -203,8 +199,7 @@
   (Math.round (- 12 (* 7 (- 1 slider)))))
 
 
-(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot}
-                   #{:inner :outer} #{:inner}])
+(def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot} #{:inner :outer} #{:inner}])
 
 
 (rum/defc chart-cell < bs-tooltip rum/reactive [row slider]
@@ -503,14 +498,12 @@
           :let [h-code (:h-code row)
                 slider-axis-value (:slider-axis-value ap)
                 ]]
-
       [:tr {:key h-code
             :class (if (= (keyword h-code) (:selected-h-code ap)) "info" "")}
        (for [column-key (keys headers)
              :let [column-header (column-key headers)
                    info-handler #(core/click->event-bus % :open-hospital-modal h-code)]
              :when (:shown column-header)]
-
          [:td {:key [h-code column-key]
                :style (merge {:maxWidth (px (:width column-header))
                               :whiteSpace "normal"

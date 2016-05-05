@@ -7,6 +7,12 @@ $bootstrap-sass-asset-helper: false !default;
 //== Colors
 //
 
+$dark-base: #337AB7; //#475E63;
+$dark-lighter: lighten($dark-base, 15%);
+
+$title-background: lighten($dark-base, 15%); //#00D8CE; //#4F4763;
+$title-colour: lighten($title-background, 30%); //#CCDDFF;
+
 $home: #8B99FA;
 $home-over: darken($home, 10%);
 
@@ -18,6 +24,20 @@ $data-over: darken($data, 10%);
 
 $faqs: #7FCDBB;
 $faqs-over:darken($faqs, 10%);
+
+/*
+ * Colours used in predicted range and extended predicted range charts
+ * WARNING - these are not active since the theme selector needed to set these in code
+ * - see prais2.content:1021 - theme 12 was selected.
+ */
+$low:        #f0f0f0;
+$inner:      #566AF9;
+$outer-low:  #C9CDFC;
+$outer-high: #C9CDFC;
+$high:       #f0f0f0;
+$header:     $title-background; // unused
+$dot:        #000000;
+
 
 //## Gray and brand colors for use across Bootstrap.
 
