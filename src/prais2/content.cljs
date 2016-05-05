@@ -566,8 +566,8 @@
                               [:p "The chances of survival for children at the hospital could genuinely be much higher or lower than what is
        predicted, which would make it more likely that the hospital’s survival rate would lie outside its predicted
        range. The national audit process is intended to check that no hospital in the UK and Ireland has chances of
-       survival much lower than predicted. See “What happens if a hospital’s survival is below its predicted range” to
-       find out what happens in such situations. (MIKE LINK TO FAQ what happens if outside range) "]]}
+       survival much lower than predicted. See " [:a {:href "#/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
+       find out what happens in such situations."]]}
 
               {:title        "When looking at ALL hospitals simultaneously, what does it mean if any of the hospitals have a survival
      rate outside their predicted range?"
@@ -774,7 +774,7 @@
                               [:p "You can also access the support available from national charities such as the "
                                [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "Children’s Heart Federation"]
                                " or " [:a {:href "http://www.lhm.org.uk/" :target "_blank"} "Little Hearts Matter"]
-                               " or local charities for your specialist children’s hospital (MIKE LINK TO CHARITY FAQ).
+                               " or " [:a {:href "#/faq/3/2"} "local charities for your specialist children’s hospital"] ".
                                These guides on "
                                [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"} "speaking to your child’s surgeon"]
                                " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "seeking a second opinion"]

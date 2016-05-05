@@ -103,9 +103,9 @@
 
    [:.tab-pane.col-sm-12 {:class (active? :table)
                 :id "data-table"}
+    (data/modal)
     (when (active? :table)
-      (do (data/modal)
-          (data/list-tab core/app data event-bus)))]]
+      (data/list-tab core/app data event-bus))]]
 )
 
 (rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
@@ -118,8 +118,7 @@
                   [
                    (render-data-tabs section)
                    (render-data-tab-panes data section)
-                   ])])
-)
+                   ])]))
 
 (defn valid-session-id
   ([session-id]

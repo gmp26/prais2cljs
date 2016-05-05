@@ -466,22 +466,17 @@
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
   (let [baseline (Math.round (* (min-outer-low) slider-axis-value))]
-    #_(prn "table-head called")
     [:thead
      [:tr
       (for [column-key column-keys :when (-> headers column-key :shown)]
         (rum/with-key (table-header (:header (colour-map (:theme  ap)))
-                                  ap
-                                  (column-key headers)
-                                  column-key
-                                  event-bus)
-          [column-key "head"]))
+                                    ap
+                                    (column-key headers)
+                                    column-key
+                                    event-bus)
+                      [column-key "head"]))
       [:th
-       {:key :last
-        :style {:width "auto"
-                :background-color (:header (colour-map (:theme ap)))
-                :color "#ffffff !important"
-                }}
+       {:key :last}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
         (slider-widget headers slider-control slider-axis-value 748)]]]]))
@@ -527,8 +522,7 @@
 
 (rum/defc table1 < rum/reactive [app data event-bus]
   [:.table-container
-   [:div.table-responsive
-    {:style {:overflow "visible"}}
+   [:div.table-responsive.data-table
     (table1-core (rum/react app)
                  data
                  event-bus
@@ -554,8 +548,7 @@
      [:a {:href "#/faqs"} "Everything Else"]]
     [:p "You can use your mouse to hover over the chart to bring up more explanation."]]
 
-   (table1 app data event-bus)
-   [:div {:style {:height "40px"}}]])
+   (table1 app data event-bus)])
 
 
 (defn get-chart-state
@@ -594,11 +587,9 @@
 
 (rum/defc datasource-dropdown < rum/reactive [event-bus]
   [:.form-group.col-sm-2
-   [:label-for{:for "data-selector"
-               :style {:color "#ffffff"}} "Datasource "]
+   [:label-for {:for "data-selector"} "Datasource "]
    [:select#data-selector.form-control.input-sm
-    {:style {:max-width "120px"}
-     :value (name (:datasource (rum/react core/app)))
+    {:value (name (:datasource (rum/react core/app)))
      :on-change #(put! event-bus [:change-datasource (keyword (.. % -target -value))])}
     (map-indexed key-with
                  (for [key (keys content/datasources)]
@@ -606,8 +597,7 @@
 
 (rum/defc nicor-checkbox < rum/reactive []
   [:.form-group.col-sm-6
-   [:label-for {:for "nicor-check"
-                :style {:color "#ffffff"}} "Show Nicor links "]
+   [:label-for {:for "nicor-check"} "Show Nicor links "]
    [:input {:type "checkbox"
             :checked (:show-nicor (rum/react core/app))
             :on-change #(swap! core/app update :show-nicor not)
@@ -621,8 +611,8 @@
       (map-indexed key-with
                    [(datasource-dropdown event-bus)
                     (nicor-checkbox)
-                                        ;(theme-dropdown event-bus)
-                                        ;(chart-state-dropdown event-bus)
+                    ;;(theme-dropdown event-bus)
+                    ;;(chart-state-dropdown event-bus)
                     ])]]]])
 
 (rum/defc interpretation
@@ -646,8 +636,8 @@
 
              :else
              "Oops - no text for this"
-             ))]
-  )
+             ))])
+
 
 (rum/defc hospital-charities < rum/reactive [h-code]
   (let [ap (rum/react core/app)
@@ -661,14 +651,15 @@
                   (when link2 [:li {:key 2} [:a (link2 1) (link2 2)]])
                   (when link3 [:li {:key 3} [:a (link3 1) (link3 2)]])
                   (when link4 [:li {:key 4} [:a (link4 1) (link4 2)]])
-                  (when link5 [:li {:key 5} [:a (link5 1) (link5 2)]])
-                  ]])))
+                  (when link5 [:li {:key 5} [:a (link5 1) (link5 2)]])]])))
+
 
 (rum/defc sample-hospital-intro-text []
   [:i {:key :sintros}
-   [:p.note {:key 1} "You can move the slider button left to see the rates plotted on the full 0-100% range of possible survival rates, or right to focus on the detail near 100%"]
-   [:p.note {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]
-   #_[:p.note {:key 3} "Now use the map menu or click on a hospital location to see the real results and links to further information."]])
+   [:p.note {:key 1} "You can move the slider button left to see the rates plotted on the full 0-100% range of possible
+   survival rates, or right to focus on the detail near 100%"]
+   [:p.note {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]])
+
 
 (rum/defc hospital-data < rum/reactive
   [h-code]
@@ -684,35 +675,35 @@
        [:b {:key 2} (:n-deaths selected-row) " deaths"]
        " had been recorded. "]
       [:p {:key 3}
-       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]
-      ])))
+       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]])))
 
 (rum/defc hospital-header < rum/static
   [selected-row]
-  [:h3 (:h-name selected-row)]
-  )
+  [:h3 (:h-name selected-row)])
+
 
 (rum/defc legend  < rum/reactive []
-  [:div {:style {:margin-bottom "40px"}}
-   [:div {:style {;:border "1px solid black"
-                  :background-color "#ffffff"
-                  :border-radius "2px"
-                  :box-shadow "0px 0px 3px #CCCCCC"
-                  :padding "10px"}}
-    [:h4 {:style {:color "orange"}} "What does this mean?"]
+  [:.legend
+   [:.box
+    [:h4 "What does this mean?"]
     (let [ap (rum/react core/app)
           selected-row content/sample-hospital]
-      (map-indexed key-with [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner} "We expect the hospital's survival rate to be inside this bar 19 times out of 20")
-                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer} "We expect the hospital's survival rate to be inside this bar 998 times out of a 1000")
-                             (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot} "The dot indicates the survival rate")
-                             #_(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer :inner :dot} "when combined")
-                             #_(explain-interpretation)
-                             #_(interpretation selected-row)]))    ]])
+      (map-indexed key-with
+                   [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner}
+                                          "We expect the hospital's survival rate to be inside this bar
+                                          19 times out of 20")
+                    (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer}
+                                          "We expect the hospital's survival rate to be inside this bar
+                                          998 times out of a 1000")
+                    (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
+                                          "The dot indicates the survival rate")]))]])
+
 
 (rum/defc nav-aid []
-  [:p {:style {:font-style "italic"
-               :margin-top "20px"}} [:i.fa.fa-arrow-up {:style {:color "orange"}}] " Hover over or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br] [:i.fa.fa-arrow-down {:style {:color "orange"}}] " See below for further explanation of the bars and the dot."]
-)
+  [:p.nav-aid
+   [:i.fa.fa-arrow-up] " Hover over or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br]
+   [:i.fa.fa-arrow-down] " See below for further explanation of the bars and the dot."])
+
 
 (rum/defc hospital-detail < rum/reactive
   [h-code]
@@ -728,20 +719,16 @@
                        (interpretation selected-row)
                        (nav-aid)
                        (hospital-charities h-code)
-                       (legend)])
-         )
-       ]
+                       (legend)]))]
       [:#detail
        (let [selected-row content/sample-hospital]
-
          (map-indexed key-with
                       [(sample-hospital-intro-text)
                        (hospital-header selected-row)
                        (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (interpretation selected-row)
-                       (nav-aid)
-                       ]))])))
+                       (nav-aid)]))])))
 
 
 (defn open-hospital-modal
@@ -750,10 +737,12 @@
   (.modal (js/$ "#rowModal"))
 )
 
+
 (defn close-hospital-modal
   []
   (swap! core/app #(assoc % :selected-h-code nil))
   (.modal (js/$ "#rowModal") "hide")  )
+
 
 (rum/defc modal  < rum/reactive []
   (let [ap (rum/react core/app)
@@ -766,11 +755,8 @@
                             }
      [:.modal-dialog {:role "document"}
       [:.modal-content
-
        [:.modal-body {:key 1}
-
         (hospital-detail selected-h-code)]
-
        [:.modal-footer {:key 2}
         [:button.btn.btn-default
          {:type "button"
