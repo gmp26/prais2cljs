@@ -17,7 +17,6 @@
               [prais2.home :refer [render-home]]
               [prais2.map-data :refer [render-map-data render-sample-data]]
               [prais2.faqs :refer [render-faqs]]
-              [prais2.everything-else :refer [render-everything-else]]
               [prais2.logger :as logger :refer [log-bus-pub]]
               [cljsjs.jquery]
               ;;[jayq.core :refer [$]]

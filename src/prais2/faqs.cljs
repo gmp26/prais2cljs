@@ -41,7 +41,6 @@
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
          [:video {:controls "true"
-                  :style {:width "100%"}
                   :src "assets/predicted-range.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]

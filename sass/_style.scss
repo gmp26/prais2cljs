@@ -793,61 +793,6 @@ i.fa.black {
     background-color: yellow;
 }
 
-
-.faq-block {
-    padding: 10px;
-    margin: 20px 0px 20px 0px;
-    border: none;
-    color: white;
-    width: 100%;
-    border-radius: 2px;
-    box-shadow: 1px 1px 1px #CCCCCC;
-}
-
-.faq-block li {
-    padding: 5px;
-}
-
-.faq-block li a {
-    display: block;
-    width: 100%;
-    padding: 5px;
-    color:white;
-    opacity: 0.8;
-    text-decoration: none;
-}
-
-.faq-block li a:hover {
-    border: 1px solid white;
-    padding: 4px;
-    opacity: 1;
-}
-
-
-.faq-nav-1 {
-    background-color: $home;
-}
-
-.faq-nav-2 {
-    background-color: $intro;
-}
-
-.faq-nav-3 {
-    background-color: $data;
-}
-
-.faq-nav-4 {
-    background-color: $faqs;
-}
-
-.faq-nav-5 {
-    background-color: $home;
-}
-
-.faq-nav-6 {
-    background-color: $intro;
-}
-
 /*
  * Make bootstrap modals scrollable
 */

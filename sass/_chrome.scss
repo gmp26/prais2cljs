@@ -32,6 +32,7 @@
 /* needed to override bootstrap navbar-nav > li > a default padding */
 .navbar-nav li a.navbar-btn {
     padding: 8px;
+    cursor: pointer;
 }
 
 
@@ -167,6 +168,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 /*------- FOOTER --------- */
 
 .partners {
+    margin-top: 40px;
     z-index: 1000;
     position: relative;
     background-color: $dark-lighter;

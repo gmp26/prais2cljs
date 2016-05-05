@@ -8,22 +8,13 @@
             [prais2.open-layers-map :as map]
             [cljsjs.jquery]))
 
-(rum/defc animation-1 []
-  [:.col-sm-offset-3.col-sm-6
-   {:style {
-            :width "500px"
-            :height "300px"
-            :background-color "black"
-            :color "white"}}
-   [:h2.col-sm-offset-2 "Animation 1"]])
-
 (rum/defc what-why []
   [:.col-sm-4
    [:.home-nav.well.intro
     [:.active
      {:on-click       #(core/click->event-bus % :intro :top)
       :on-touch-start #(core/click->event-bus % :intro :top)}
-     [:i.fa.fa-question {:style {:font-size "140px"}}]
+     [:i.fa.fa-question.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "What, why, how?"]]
     [:p [:strong "What"] " do we mean by survival rates?"]
@@ -37,7 +28,7 @@
     [:.active
      {:on-click       #(core/click->event-bus % :data :map)
       :on-touch-start #(core/click->event-bus % :data :map)}
-     [:i.fa.fa-table {:style {:font-size "140px"}}]
+     [:i.fa.fa-table.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Data"]]
     [:p "Explore published survival statistics"]
@@ -50,7 +41,7 @@
     [:.active
      {:on-click       #(core/click->event-bus % :faqs :top)
       :on-touch-start #(core/click->event-bus % :faqs :top)}
-     [:i.fa.fa-info {:style {:font-size "140px"}}]
+     [:i.fa.fa-info.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Everything else"]]
     [:p "How are survival statistics monitored"]
@@ -60,30 +51,24 @@
     ]])
 
 (rum/defc render-home < rum/reactive[]
-  [:div
-   [:.jumbotron.home
+  [:.container
+   [:.jumbotron.home.row
+    [:section.about.col-xs-offset-1.col-sm-10
+     [:p "This site is to help people make sense of the "
+      (if (:show-nicor (rum/react core/app))
+        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival data"]
+        "published survival data")
 
-    [:.container
-     [:.row
-      [:section.about.col-sm-offset-2.col-sm-8
-       [:p "This site is to help people make sense of the "
-        (if (:show-nicor (rum/react core/app))
-          [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival data"]
-          "published survival data")
-
-        " about children’s heart surgery in the UK and Ireland. "]
-       [:p "Our website will help you:"]
-       [:ul {:style {:font-size "16px"
-                     :font-weight 200}}
-        [:li "explore what survival rates can and can’t tell you"]
-        [:li "understand how the NHS monitors children’s heart surgery"]
-        [:li "explore published data for hospitals in the UK and Ireland"]]]
-      (when (:show-nicor (rum/react core/app))
-        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
-         [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]]]
-   [:.container
-    [:.row {:style {:margin-bottom "100px"}}
-     (what-why)
-     (data)
-     (everything-else)]]
-   ])
+      " about children’s heart surgery in the UK and Ireland. "]
+     [:p "Our website will help you:"]
+     [:ul
+      [:li "explore what survival rates can and can’t tell you"]
+      [:li "understand how the NHS monitors children’s heart surgery"]
+      [:li "explore published data for hospitals in the UK and Ireland"]]]
+    (when (:show-nicor (rum/react core/app))
+      [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
+       [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
+   [:.row
+    (what-why)
+    (data)
+    (everything-else)]])

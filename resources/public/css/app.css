@@ -6464,49 +6464,6 @@ i.fa.black {
 .todo {
   background-color: yellow; }
 
-.faq-block {
-  padding: 10px;
-  margin: 20px 0px 20px 0px;
-  border: none;
-  color: white;
-  width: 100%;
-  border-radius: 2px;
-  box-shadow: 1px 1px 1px #CCCCCC; }
-
-.faq-block li {
-  padding: 5px; }
-
-.faq-block li a {
-  display: block;
-  width: 100%;
-  padding: 5px;
-  color: white;
-  opacity: 0.8;
-  text-decoration: none; }
-
-.faq-block li a:hover {
-  border: 1px solid white;
-  padding: 4px;
-  opacity: 1; }
-
-.faq-nav-1 {
-  background-color: #8B99FA; }
-
-.faq-nav-2 {
-  background-color: #FC867A; }
-
-.faq-nav-3 {
-  background-color: #FC8D59; }
-
-.faq-nav-4 {
-  background-color: #7FCDBB; }
-
-.faq-nav-5 {
-  background-color: #8B99FA; }
-
-.faq-nav-6 {
-  background-color: #FC867A; }
-
 /*
  * Make bootstrap modals scrollable
 */
@@ -6557,7 +6514,8 @@ body {
 
 /* needed to override bootstrap navbar-nav > li > a default padding */
 .navbar-nav li a.navbar-btn {
-  padding: 8px; }
+  padding: 8px;
+  cursor: pointer; }
 
 .nav > li > .navbar-btn.nav-item:hover, .nav > li > .navbar-btn.nav-item:focus {
   border: 1px solid white;
@@ -6660,6 +6618,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 
 /*------- FOOTER --------- */
 .partners {
+  margin-top: 40px;
   z-index: 1000;
   position: relative;
   background-color: #736790; }
@@ -6683,11 +6642,17 @@ nav.navbar.navbar-simple.navbar-fixed-top {
   display: inline;
   margin-bottom: 10px; }
 
+.jumbotron.home ul {
+  font-size: 16px;
+  font-weight: 200; }
+
+.home-nav .big {
+  font-size: 140px; }
+
 /* Data tab */
 /* Table styles are mostly dynamic*/
 .data-table {
-  overflow: visible;
-  margin-bottom: 40px; }
+  overflow: visible; }
   .data-table th {
     width: auto;
     background-color: #4F4763;
@@ -6738,7 +6703,52 @@ section.short-answer {
   margin-top: 40px; }
 .faq .body {
   clear: both; }
-.faq .back {
-  margin-bottom: 60px; }
+
+.faq-block {
+  padding: 10px;
+  margin: 20px 0px 0px 0px;
+  border: none;
+  color: white;
+  width: 100%;
+  border-radius: 2px;
+  box-shadow: 1px 1px 1px #CCCCCC; }
+
+.faq-block li {
+  padding: 5px; }
+
+.faq-block li a {
+  display: block;
+  width: 100%;
+  padding: 5px;
+  color: white;
+  opacity: 0.8;
+  text-decoration: none; }
+
+.faq-block li a:hover {
+  border: 1px solid white;
+  padding: 4px;
+  opacity: 1; }
+
+.faq-nav-1 {
+  background-color: #8B99FA; }
+
+.faq-nav-2 {
+  background-color: #FC867A; }
+
+.faq-nav-3 {
+  background-color: #FC8D59; }
+
+.faq-nav-4 {
+  background-color: #7FCDBB; }
+
+.faq-nav-5 {
+  background-color: #8B99FA; }
+
+.faq-nav-6 {
+  background-color: #FC867A; }
+
+/* video control styles */
+video {
+  width: 100%; }
 
 /*# sourceMappingURL=app.css.map */
