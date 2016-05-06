@@ -5,6 +5,14 @@ Communicating the risks of infant surgery.
 ## Development builds
 
 
+> We've switched the main development build to use IntelliJ (community edition with the Cursive plugin) plus Figwheel.
+> To run SASS as part of the build follow the Fighwel instructions for working with cursive, but make a
+> run configuration that uses script/figwheel.clj rather than script/repl.clj.
+
+> Instructions below are for a SASS-less emacs build. You can switch to this by changing the project.clj
+> figwheel dependencies back to the default figwheel setup so figwheel-sidecar is no longer used. If you do this
+> you'll also need to add in SASS. Probably easiest to add it to gulp.
+
 There are two development builds - one for [devcards](https://github.com/bhauman/devcards) and one for the PRAIS2 site. The devcards build is good for testing and visualising code and site components. You can switch between these two options at run time.
 
 

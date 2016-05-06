@@ -48,3 +48,4 @@ resources/public/css/app.*
 .#*
 ~*
 .idea/inspectionProfiles/
+tmp/

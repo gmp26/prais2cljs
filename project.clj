@@ -29,20 +29,11 @@
             [lein-sass "0.3.7"]
             ]
 
-  :sass {:src "sass"
-         :output-directory "resources/public/styles"
-
-         ;; other options (provided are default values):
-         ;; :delete-output-dir true
-         :source-maps true
-         :style :compressed
-         }
-
   :source-paths ["src"]
 
   :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                     "target"
-                                    "resources/public/css-c"]
+                                    "resources/public/css"]
   :profiles {
              :dev {:source-paths ["pages"]
                    :dependencies

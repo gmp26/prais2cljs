@@ -40,8 +40,9 @@
       [:div.faq-block {:class block-class}
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
-         [:video {:controls "true"
-                  :src "assets/predicted-range.mp4"}])
+         [:video {:controls true
+                  :preload  true
+                  :src      "assets/predicted-range.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
