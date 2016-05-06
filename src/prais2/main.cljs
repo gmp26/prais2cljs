@@ -215,6 +215,9 @@
 ;;;
 
 
+(defn deselect-all []
+  (swap! app assoc :map-h-code nil :selected-h-code nil))
+
 (rum/defc page-choice < rum/static [page section]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
@@ -222,6 +225,7 @@
      (= page :home)
      (do
        (.pushState js/history [] "" (routes/homes))
+       (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
                      (render-home)
@@ -230,6 +234,7 @@
      (= page :intro)
      (do
        (.pushState js/history [] "" (routes/intros))
+       (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
                      (render-intro section)
@@ -238,6 +243,7 @@
      (= page :data)
      (do
        (.pushState js/history [] "" (routes/datas))
+       (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
                      (render-data section)
@@ -246,6 +252,7 @@
      (= page :faqs)
      (do
        (prn "section = " section)
+       (deselect-all)
        (when (or (= section :top) (= section nil))
          (.pushState js/history [] "" (routes/faqs {:section :top})))
        (map-indexed key-with
