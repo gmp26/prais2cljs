@@ -17,6 +17,7 @@ pom.xml
 .repl
 .nrepl-port
 .sass-cache/
+node_modules/
 
 # User-specific stuff:
 .idea/workspace.xml
