@@ -1,10 +1,100 @@
-.jumbotron.home ul {
-    font-size: 16px;
-    font-weight:200;
+
+
+.jumbotron.home {
+  background-color: #ffffff; //#CCDDFF;
+  color: #4F4763;
+  background-size: 100%;
+  color: #555555;
+  margin: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  ul {
+      font-size: 16px;
+      font-weight:200;
+  }
 }
 
 .home-nav {
     .big  {
         font-size: 140px;
     }
+    .active {
+        border: 2px solid white;
+        border-radius: 10px;
+        padding: 10px;
+        margin-bottom: 10px;
+        opacity: 0.7;
+        cursor: pointer;
+        position: relative;
+        .chevron {
+            display:  block;
+            position: absolute;
+            top:      10px;
+            right:    10px;
+        }
+        .title {
+             display: inline-block;
+             padding-left: 10px;
+             font-size: 25px;
+        }
+    }
+    .active:hover {
+        opacity: 1;
+    }
 }
+
+.home-nav.well {
+  color: #ffffff;
+  margin: 20px 0px 10px 0px;
+  border: none;
+  .vis-sm-block {
+     height:500px;;
+  }
+}
+
+.home {
+    background-color: $home;
+}
+
+.intro {
+    background-color: $intro;
+}
+
+.data {
+    background-color: rgba(252, 141, 89, 1);
+}
+
+.faqs {
+    background-color: $faqs;
+}
+
+
+.well.intro {
+    background-color:  $intro;
+}
+
+.well.data {
+    background-color:  $data;
+}
+
+.well.faqs {
+    background-color: $faqs;
+}
+
+.well h2 {
+    margin-top: 0px;
+}
+
+.well.danger {
+    background-color: $intro;
+    color: #ffffff;
+}
+
+.highlight {
+    opacity: 0.6;
+}
+
+.highlight:hover {
+    opacity: 1;
+}
+

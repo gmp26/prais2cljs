@@ -1,0 +1,110 @@
+/***
+ * MAP CSS
+ **/
+ul.h-nav {
+    border: 1px solid #CCCCCC;
+}
+
+ul.h-nav li {
+    list-style-type: none;
+    padding: 10px 10px 7px 0px;
+    border-bottom: 1px solid #CCCCCC;
+    cursor: pointer;
+}
+
+ul.h-nav li:last-of-type {
+    border-bottom: none;
+}
+
+.hospital-map {
+    //width: 320px;
+    height: 480px;
+    min-width: 220px;
+    position: relative;
+}
+
+.ol-rotate {
+    opacity: 0 !important;
+    cursor: inherit !important;
+}
+
+#popup {
+    pointer-events: none;
+    width: 200px;
+}
+
+.map-buttons {
+    width: 350px;
+    height: 100%;
+}
+
+.h-button {
+    display: block;
+    position: absolute;
+    z-index: 500;
+    top: 10px;
+    border-radius: 5px;
+    left: 95px;
+}
+
+.london-button {
+    display: block;
+    position: absolute;
+    z-index: 500;
+    top: 10px;
+    border-radius: 5px;
+    left: 150px;
+}
+
+.map-menu {
+    display: block;
+    position: absolute;
+    z-index: 500;
+    top: 10px;
+    left: 245px;
+}
+
+.dropdown-menu {
+    font-size: 12px;
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.ol-attribution li {
+    font-size: 160%;
+}
+
+.map-container {
+    display: inline-table;
+    width: 320px;
+}
+
+.detail-container {
+    display: inline-table;
+    vertical-align: top;
+    padding-top: 10px;
+    padding-left: 30px;
+    min-width: 320px;
+    width: calc(100% - 320px);
+}
+
+.detail-container li {
+    padding-bottom: 20px;
+    //line-height: 200%;
+}
+
+i.fa.red {
+    color: #ff0000;
+}
+
+i.fa.black {
+    color: #000000;
+}
+
+#paste-box a.btn.btn-link {
+    color: #0df;
+}
+
+#paste-box textarea {
+    color: #000;
+}

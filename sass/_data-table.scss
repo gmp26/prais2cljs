@@ -1,3 +1,4 @@
+
 /* Data tab */
 
 .nav-pills > li > a {
@@ -58,4 +59,361 @@ p.nav-aid {
     .fa {
         color: orange;
     }
+}
+
+
+/* ------ */
+/**
+ * Data table
+ */
+.table-container {
+    max-width: 1200px;
+    margin: auto auto;
+}
+
+.table {
+    margin: 0 !important;
+    min-width: 883px;
+    overflow: visible;
+}
+
+th {
+    padding: 10px 10px 0px 10px !important;
+}
+
+/* header info buttons */
+a.btn.btn-primary.btn-xs.info {
+    color: white;
+}
+
+
+th:first-child {
+    min-width: 200px;
+}
+
+th:last-child {
+    padding: 0px !important;
+    min-width: 266px;
+}
+
+#intro th {
+    padding: 10px 10px 10px 10px !important;
+    min-width: 266px;
+    font-size: 1.2em;
+}
+
+td {
+    text-align: center;
+    vertical-align: middle !important;
+    position: relative;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+td:first-child {
+    padding-left: 10px !important;
+    text-align: left;
+}
+
+.hide {
+    display: none;
+}
+
+.slider-container {
+    position: relative;
+    padding: 10px 0px 0px !important;
+    margin: 0 !important;
+    min-width: 300px;
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    vertical-align: top;
+}
+
+.slider-container p {
+    margin-bottom: 0;
+}
+
+.slider {
+    margin: 0 !important;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    max-width: 100% !important;
+    width: 80% !important;
+    padding: 0px !important;
+    vertical-align: top;
+    cursor: pointer;
+    float: left;
+}
+
+.slider input {
+    cursor: pointer;
+    padding:0 !important;
+    margin: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 100% !important;
+    display: inline-block !important;
+}
+
+.slider-label {
+    margin: auto auto;
+    font-size: 12px;
+    max-width: 80%;
+    width: 80%;
+    height: 15px;
+    display: block;
+}
+
+/* unused
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+*/
+
+.axis-container {
+    position: relative;
+    margin-left: 15px;
+    clear: both;
+}
+
+.tick {
+    width: 1px;
+    height: 738px;
+    padding-top: 0px;
+    margin: 0;
+    top: 0px;
+    position: absolute;
+    z-index: 1000;
+    border-left: 1px dashed black;
+}
+
+.tick-label {
+    position: relative;
+    margin-left: -16px;
+    z-index: 1001;
+    font-weight: 200 !important;
+    font-size: 18px;
+    color: #ffffff;
+}
+
+/*
+#detail {
+}
+*/
+
+#detail .axis-container {
+    height: 20px;
+}
+
+#detail .tick {
+    //height: 69px;
+}
+
+#detail .tick-label {
+    color: #000000;
+}
+
+.note {
+    font-size: 14px;
+    color: #337ab7;
+    font-weight: italic;
+}
+
+.annotation {
+    position: relative;
+    z-index: 200;
+    display: inline-block;
+    right: 5px;
+    color: #337AB7;
+    font-size: 12px;
+    font-style: italic;
+    white-space: normal;
+    width: 100%;
+}
+
+/* button which opens hospital info modal */
+.h-info {
+    cursor: pointer;
+    float: right;
+    display: inline-block;
+    width: 45px;
+    height: 100%;
+    border: 1px solid #2e6da4;;
+    border-radius: 5px;
+    padding: 2px 0;
+}
+.h-info:hover {
+    background-color: #337ab7;
+    color: white;
+    text-decoration: none;
+}
+
+.modal-open .modal {
+    overflow-x: visible;
+    overflow-y: visible;
+}
+
+.modal-body {
+    margin: 0px 20px;
+}
+
+.modal.tick {
+    width: 1px;
+    height: 65px;
+    padding-top: 0px;
+    margin: 0;
+    top: -15px;
+    position: absolute;
+    z-index: 2000;
+    border-left: 1px dashed black;
+    display: inline-block;
+}
+
+.modal.tick-label {
+    position: relative;
+    margin-left: -16px;
+    z-index: 2001;
+    font-weight: 200 !important;
+    font-size: 18px;
+    color: black;
+    display: inline-block;
+}
+
+#axis {
+    width: 100%;
+    height: 2px;
+    padding: 0;
+    margin-top: 0px;
+    background-color: red;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+    border: 1px solid white;
+    background-color: black;
+    position: absolute;
+    top: 7px;
+    padding:0;
+    margin:0;
+}
+
+.bar {
+    vertical-align: middle;
+    display: inline-table;
+    margin: 10px 0 0; //!important;
+    padding: 0 !important;
+    height: 25px;
+}
+
+.chart-cell.annotated {
+    height: 30px !important;
+}
+
+.annotated .bar {
+    margin: 0px 0px 0px 0px;
+}
+
+.annotated .tooltip {
+    display: none;
+}
+
+.bar-chart{
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100%;
+    width: 100%;
+    height: 100%;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top: none; /*1px solid #dddddd;*/
+    position: relative !important;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+.chart-cell {
+    height: 50px;
+}
+
+.dropdown > ul {
+    display: none;
+}
+.dropdown .fa-caret-up {
+    display: none;
+}
+
+.dropdown.open > ul {
+    display: block;
+}
+
+.dropdown.open .fa-caret-down {
+    display: none;
+}
+.dropdown.open .fa-caret-up {
+    display: inline;
+}
+
+
+/* options */
+.options {
+    width: 500px;
+    padding: 20px;
+    margin: 20px;
+    background-color: #fff;
+    border: 1px solid grey;
+    border-color: #ddd;
+    border-width: 1px;
+    border-radius: 4px 4px 0 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.popover-title {
+    background-color: #578fd2;
+    color: white;
+}
+
+.popover-content {
+    color: black;
+}
+
+.tooltip {
+    border-radius: 50%;
+    max-width: 400px !important;
+}
+
+.tooltip-inner {
+    font-size: 14px;
+    background-color: #ffffff;
+    color: black;
+    border: 1px solid black;
+}
+
+.tooltip-arrow {
+    font-size: 20px;
+    color: white;
+    background-color: #ffffff;
+}
+
+
+
+th {
+    background-color: #343456;
+    color: rgba(255,255,255,0.7);
+    padding: 20px;
+}
+
+
+.bg-danger {
+    padding: 10px;
 }

@@ -5,10 +5,11 @@ see http://www.sitepoint.com/bootstrap-sass-installation-and-customisation/
 @import "bootstrap";
 
 @import "style";
-
+@import "print";
 @import "custom";
 @import "chrome";
 @import "home";
+@import "data-map";
 @import "data-table";
 @import "faqs";
 @import "video";

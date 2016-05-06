@@ -327,36 +327,36 @@
 
 ;; returns a bootstrap slider mixin
 (defn bs-slider [hashed-id change-key]
-  {:did-mount (fn [state]
-                (let [slider (new js/Slider hashed-id
-                                  (clj->js {
-                                            :tooltip "hide"
-                                            :min 0
-                                            :max 1
-                                            :step 0.02
-                                            :value (change-key @core/app)
-                                            }))
-                      handler #(put! event-bus [change-key (.getValue slider)])
-                      state' (assoc state ::slider slider ::handler handler)]
+  {:did-mount      (fn [state]
+                     (let [slider (new js/Slider hashed-id
+                                       (clj->js {
+                                                 :tooltip "hide"
+                                                 :min     0
+                                                 :max     1
+                                                 :step    0.02
+                                                 :value   (change-key @core/app)
+                                                 }))
+                           handler #(put! event-bus [change-key (.getValue slider)])
+                           state' (assoc state ::slider slider ::handler handler)]
 
-                  #_(.on slider "slide" handler)
-                  (.on slider "change" handler)
-                  state'))
+                       #_(.on slider "slide" handler)
+                       (.on slider "change" handler)
+                       state'))
 
 
    :transfer-state (fn [old new]
                      (assoc new ::slider (::slider old)))
 
 
-   :will-unmount (fn [state]
-                   (let [slider (::slider state)
-                         handler (::handler state)]
-                     #_(prn "unmounting slider")
-                     (when  slider
-                       (when handler (.off slider "slide" handler))
-                       (when handler (.off slider "change" handler))
-                       (.destroy slider))
-                     (dissoc state ::slider ::handler)))})
+   :will-unmount   (fn [state]
+                     (let [slider (::slider state)
+                           handler (::handler state)]
+                       (prn (str "unmounting slider " slider))
+                       (when slider
+                         (when handler (.off slider "slide" handler))
+                         (when handler (.off slider "change" handler))
+                         (.destroy slider))
+                       (dissoc state ::slider ::handler)))})
 
 
 (rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum/static [state value min max step]
@@ -471,7 +471,8 @@
        {:key :last}
        [:.slider-container
         {:style {:height (px (:height (:observed headers)))}}
-        (slider-widget headers slider-control slider-axis-value 748)]]]]))
+        (slider-widget headers slider-control slider-axis-value 748)
+        ]]]]))
 
 
 (rum/defc table1-core [ap data event-bus sort-key sort-direction headers rows]
