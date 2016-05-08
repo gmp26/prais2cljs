@@ -130,7 +130,9 @@
     (when (active? :animation)
       [:section.col-sm-offset-1.col-sm-10
        [:h2 "A two minute guide to how we present the results"]
-       [:video {:src      "assets/Animation1-animatic1.mp4"
+       [:video {:src      "assets/how-animatic1.mp4"
+                :controls "true"}]
+       [:video {:src      "assets/how-animatic2.mp4"
                 :controls "true"}]])]
 
    [:.tab-pane.col-sm-12 {:class (active? :animation2)
@@ -138,8 +140,11 @@
     (when (active? :animation2)
       [:section.col-sm-offset-1.col-sm-10
        ;[:h2 "How is the predicted range calculated?"]
-       [:video {:src      "assets/predicted-range.mp4"
-                :controls "true"}]])]
+       [:video {:src      "assets/pr-animatic1.mp4"
+                :controls "true"}]
+       [:video {:src      "assets/pr-animatic2.mp4"
+                :controls "true"}]
+       ])]
    ]
 )
 

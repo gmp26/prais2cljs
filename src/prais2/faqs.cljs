@@ -42,7 +42,7 @@
        (when (= sec-ix 1)
          [:video {:controls true
                   :preload  true
-                  :src      "assets/predicted-range.mp4"}])
+                  :src      "assets/pr-animatic2.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
