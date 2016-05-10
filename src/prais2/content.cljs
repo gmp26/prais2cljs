@@ -836,13 +836,19 @@
                             was part of the team that drew up the new national patient information leaflets for breast cancer screening.
                             For this project, David helped write the content, especially the language around the statistical formula and
                             predicted range.  "
-                            [:strong "Mike Pearson"] ", University of Cambridge,  developed the website and data visualisations,
+                            [:strong "Mike Pearson"] ", developed the website and data visualisations,
                             working closely with the animation team, "
                             [:a {:href "https://qudos.com" :target "_blank"} "Qudos"] "."]]
 
                           [:.image-para
                            [:p [:img.pull-left.w100 {:src "assets/KCLlogo.gif"}]
-                            [:strong "King’s College London: Dr Tim Rakow… Dr Emily Blackshaw…. "]]]
+                            [:strong "Dr Tim Rakow"] " is a Reader in Psychology
+                            who studies how people make choices and how best to provide information to help people make decisions.
+                            He has previously worked with the cardiologists and heart surgeons at Great Ormond Street looking at
+                            their decisions about surgery, and with Professor Spiegelhalter on the public’s understanding of
+                            complex statistical information. For this project, he worked with Emily Blackshaw, another psychologist
+                            at King’s College London, to run experiments that examined which types of explanation and graphics
+                            would be the best ones for us to include in this website."]]
 
                           [:.image-para
                            [:p [:img.pull-left.w100 {:src "assets/sas-logo.png"}]

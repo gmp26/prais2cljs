@@ -130,10 +130,11 @@
     (when (active? :animation)
       [:section.col-sm-offset-1.col-sm-10
        [:h2 "A two minute guide to how we present the results"]
-       [:video {:src      "assets/how-animatic1.mp4"
+       [:video {:src      "assets/how-animatic3.mp4"
                 :controls "true"}]
-       [:video {:src      "assets/how-animatic2.mp4"
-                :controls "true"}]])]
+       ;[:video {:src      "assets/how-animatic1.mp4" :controls "true"}]
+       ;[:video {:src      "assets/how-animatic2.mp4" :controls "true"}]
+       ])]
 
    [:.tab-pane.col-sm-12 {:class (active? :animation2)
                           :id    "mapped-data"}
