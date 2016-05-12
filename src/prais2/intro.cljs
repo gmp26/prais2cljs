@@ -35,7 +35,8 @@
      [:p "This site is to help people make sense of the "
       [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
        "published survival statistics"] " about children’s heart surgery. "]
-     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]]
+     ;     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]
+     ]
     [:#intro.col-sm-12
 
      (key-points)
