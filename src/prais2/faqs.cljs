@@ -5,7 +5,8 @@
               [prais2.utils :refer [key-with]]
               [prais2.chrome :as chrome]
               [prais2.content :as content :refer [faq-sections]]
-              [prais2.data :as data]))
+              [prais2.data :as data]
+              [prais2.mugshots :as mugs]))
 
 (defn ix-col [index]
   (["rgba(127, 205, 187, 1)"
@@ -42,7 +43,7 @@
        (when (= sec-ix 1)
          [:video {:controls true
                   :preload  true
-                  :src      "assets/pr-animatic2.mp4"}])
+                  :src      "assets/pr-animatic3.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
@@ -89,11 +90,16 @@
         [:h2 {:key 1}
          [:div.query [:i.fa.fa-question]]
          [:div.title (:title faq)]]
+
+
         (when short-answer
           (do
             (prn "rendering short answer for section " section-ix "." ix)
             (render-short-answer short-answer)))
-        [:div.body {:key 2} (:body faq)]
+        [:div.body {:key 2}
+         (when (= [4 0] faq-ref)
+           (rum/with-key (mugs/mugshots) 4))
+         (:body faq)]
         (when (> (count glossary) 0)
           (do
             (prn "rendering glossary " glossary)

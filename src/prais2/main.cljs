@@ -141,10 +141,9 @@
     (when (active? :animation2)
       [:section.col-sm-offset-1.col-sm-10
        ;[:h2 "How is the predicted range calculated?"]
-       [:video {:src      "assets/pr-animatic1.mp4"
-                :controls "true"}]
-       [:video {:src      "assets/pr-animatic2.mp4"
-                :controls "true"}]
+       [:video {:src      "assets/pr-animatic3.mp4" :controls "true"}]
+       ;[:video {:src      "assets/pr-animatic1.mp4" :controls "true"}]
+       ;[:video {:src      "assets/pr-animatic2.mp4" :controls "true"}]
        ])]
    ]
 )

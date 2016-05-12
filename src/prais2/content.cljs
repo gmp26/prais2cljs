@@ -2,6 +2,12 @@
   (:require [rum.core :as rum]))
 
 ;;;
+;; About us mugshot list
+;;;
+(defn get-mugshots []
+  ["christina" "david" "tim" "mike"])
+
+;;;
 ;; table structure
 ;;;
 (defrecord Header [title sortable shown width height content])
@@ -809,8 +815,7 @@
     :faqs
              [{:title    "About us"
                :glossary []
-               :body
-                         [:div
+               :body     [:div
                           [:.image-para
                            [:p [:img.pull-left.w150 {:src "assets/ucl-logo.png"}]
                             [:strong "University College London: Dr Christina Pagel"]
