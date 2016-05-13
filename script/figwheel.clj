@@ -32,7 +32,7 @@
                 :optimizations :none}}]})
 
 (def sass-config
-  {:executable-path "/usr/bin/sass" ; e.g. /usr/local/bin/sass
+  {:executable-path "/usr/local/bin/sass" ; e.g. /usr/local/bin/sass
    :input-dir "sass" ; location of the sass/scss files
    :output-dir "resources/public/css"})
 
