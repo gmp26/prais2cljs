@@ -874,18 +874,18 @@
                :glossary []
                :body
                          [:div
-                          [:p "We developed this site in just over a year from April 2015 to launch in May 2016. "]
+                          [:p "We developed this site in just over a year from April 2015 to launch in June 2016. "]
 
                           [:p "The academic mathematicians and statisticians wrote first drafts of the content in May 2015, with feedback
        from communication experts at Sense about Science and the academic psychologists at King’s College London. Over
-       the next 10 months, Sense about Science held four sets of two workshops each to test the web content: each time
+       the next 10 months, Sense about Science held four sets of two workshops each, to test the web content. At each stage,
        one workshop was with interested potential users (e.g. press officers; health journalists; policy people) and the
-       other workshop was with parents of children who had heart surgery. At each stage, we asked new people to come to
-       the workshop so we could get fresh impressions. "]
+       other workshop was with parents of children who had heart surgery. We asked new people to come to
+       the workshops at each stage so we could get fresh impressions. "]
 
                           [:p "As the website took shape in the autumn of 2015, the academic psychologists at King’s College London did
        formal tests of specific sentences and concepts discussed in the website to see if one way of explaining the
-       concepts worked better than the other and to pinpoint where there was possibility for confusions. We also shared
+       concepts worked better than another and to pinpoint where there was possibility for confusion. We also shared
        the evolving website with the clinical community including surgeons, intensive care doctors, data experts and
        cardiologists, to incorporate their feedback too. "]
 
@@ -897,7 +897,7 @@
        their input than it would otherwise have been. Any niggles that remain are our responsibility alone.  "]
 
                           [:p "We would also like to thank our funder, the UK National Institute of Health Research, for encouraging us to
-       think ambitiously about how to develop this site and gave us the time and money to do it! "]]}]}
+       think ambitiously about how to develop this site and giving us the time and money to do it! "]]}]}
 
    #_{:section "Further resources about understanding clinical data"
       :faqs
