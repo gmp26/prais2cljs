@@ -408,13 +408,13 @@
    {:title "Survival rate"
     :body  "The percentage of operations where the child survived at least 30 days after their operation."}
    :unforeseen-factors
-   {:title "Unforeseen factors"
+   {:title "Unforeseeable factors"
     :body  "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due
     to the inevitable inability to predict the future with certainty – all people are physically unique and will react
     slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our
     inability to predict precisely is also partly because there are factors that we suspect may influence the outcome
     but cannot be included in the statistical formula because no routine data on them is collected. Together, we call
-    these all “unforeseen factors”."}})
+    these all “unforeseeable factors”."}})
 
 (def title "Everything else")
 
@@ -453,8 +453,8 @@
                                [:a {:href   "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
                                     :target "_blank"} "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new
              compulsory national reporting system so that the proportion of children surviving to 30 days after surgery
-             for all hospitals have been published every year since 2001. Results where there is some evidence that survival
-             rates are lower than expected are checked further by the hospital and the national audit body (NICOR)."]
+             for all hospitals have been published every year since 2001. When there is some evidence that survival
+             rates were lower than expected, the results are checked further by the hospital and the national audit body (NICOR)."]
 
                               [:p "The UK and Ireland now have one of the strongest monitoring programmes in the world. Since reporting started, "
                                [:a {:href "http://www.bbc.co.uk/news/health-32162803" :target "_blank"} "survival rates have been improving"] "
@@ -475,7 +475,7 @@
                                     :target "_blank"} "types of procedure"] " because there was no clear way to put overall survival rates for
              each hospital into context (see " [:a {:href "?#/intro"} "What, Why and How?"] "). But "
                                [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank"} "researchers"]
-                               " have now made this possible by creating a statistical formula. Using this formula, NICOR has published overall
+                               " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
                                years for each hospital since 2013 (see " [:a {:href "?#/intro"} "What, Why and How?"] ").  The predicted range
         is the range in which we expect to see each hospital’s survival rate the majority of the time (19 times out of
@@ -533,8 +533,7 @@
                              [:div
                               [:p "The predicted range for each hospital shows the range where we expect to see the observed survival rate if
        the hospital is performing as predicted by the formula, regardless of how many operations it did or what children
-       it treated. When a hospital does fewer operations, unforeseen factors have a bigger influence on the overall
-       outcome, and so it has a wider predicted range than a hospital that does many operations."]]}
+       it treated. The predicted range varies with the number of operations a hospital has done, and has to do with the unforeseeable factors that occur. We know that sometimes unforeseeable factors will affect a child’s survival – though, of course, we cannot predict exactly what they will be and when they will occur. In a smaller hospital performing 100 operations per year, even one more or fewer child surviving due to unforeseeable factors could make a big difference to its overall survival rate, whereas it would have less impact on the overall survival rate of a larger hospital performing 1000 operations. This is why hospitals doing more operations have a narrower predicted range than hospitals doing fewer operations."]]}
 
               {:title        "When looking at just one hospital, what does it mean if its survival is outside its predicted range?"
                :short-answer "There are four possible reasons for being outside the predicted range: inaccurate data, a formula
