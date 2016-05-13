@@ -409,12 +409,13 @@
     :body  "The percentage of operations where the child survived at least 30 days after their operation."}
    :unforeseen-factors
    {:title "Unforeseeable factors"
-    :body  "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due
+    :body  
+    [:p "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due
     to the inevitable inability to predict the future with certainty – all people are physically unique and will react
-    slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. Our
-    inability to predict precisely is also partly because there are factors that we suspect may influence the outcome
-    but cannot be included in the statistical formula because no routine data on them is collected. Together, we call
-    these all “unforeseeable factors”."}})
+    slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another."]
+  
+  [:p "There are also factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine audit data on them is collected, for instance the size of a hole in the heart."] 
+  [:p "Together, we call these all “unforeseeable factors”."]}})
 
 (def title "Everything else")
 
