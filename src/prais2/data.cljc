@@ -1,16 +1,29 @@
-(ns ^:figwheel-always prais2.data
-    (:require-macros [cljs.core.async.macros :refer [go]])
-    (:require [rum.core :as rum]
-              [cljsjs.jquery]
-              [cljsjs.bootstrap]
-              [cljs.core.async :refer [put! <! timeout]]
-              [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
-              [prais2.content :as content]
-              [prais2.utils :as u :refer [px pc important key-with]]
-              [prais2.logger :as logger]
-              [clojure.string :as str]
-              [sablono.core :as sab]
-              ))
+?#(:clj (ns prais2.data
+           (:require-macros [cljs.core.async.macros :refer [go]])
+           (:require [rum.core :as rum]
+                     [cljsjs.jquery]
+                     [cljsjs.bootstrap]
+                     [cljs.core.async :refer [put! <! timeout]]
+                     [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
+                     [prais2.content :as content]
+                     [prais2.utils :as u :refer [px pc important key-with]]
+                     [prais2.logger :as logger]
+                     [clojure.string :as str]
+                     [sablono.core :as sab]
+                     )))
+#?(:cljs (ns ^:figwheel-always prais2.data
+           (:require-macros [cljs.core.async.macros :refer [go]])
+           (:require [rum.core :as rum]
+                     [cljsjs.jquery]
+                     [cljsjs.bootstrap]
+                     [cljs.core.async :refer [put! <! timeout]]
+                     [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
+                     [prais2.content :as content]
+                     [prais2.utils :as u :refer [px pc important key-with]]
+                     [prais2.logger :as logger]
+                     [clojure.string :as str]
+                     [sablono.core :as sab]
+                     )))
 
 ;;;
 ;; datasource utilities
@@ -21,16 +34,16 @@
 (defn index-by
   "create an index on a table"
   [table key-fn]
-    (into {} (map (juxt key-fn identity) table)))
+  (into {} (map (juxt key-fn identity) table)))
 
 
 (defn add-markers [table-rows]
   (map-indexed
-   (fn [index row]
-     (let [lat (+ 50.7 (/ index 3))
-           lon (+ -2.6 (* 0.8 (mod index 3)))]
-       (assoc row :h-lat lat :h-lon lon)))
-   table-rows))
+    (fn [index row]
+      (let [lat (+ 50.7 (/ index 3))
+            lon (+ -2.6 (* 0.8 (mod index 3)))]
+        (assoc row :h-lat lat :h-lon lon)))
+    table-rows))
 
 
 (defn make-datasource [datasource]
@@ -106,47 +119,47 @@
   ([slider hi-val lo-val bar-type fill]
 
     [:div.bar {:style {:background-color fill
-                      :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
+                       :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
 
     [:div.bar.btn {:style {:background-color fill
-                          :border-radius 0
-                          :width (str (bar-width slider (- hi-val lo-val)) "%")
-                          :text-align "right"}
-                  :data-toggle "tooltip"
-                  :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                  :data-delay 0
-                  :data-html true
-                  :data-trigger "hover"
-                  :data-placement "bottom"}])
+                           :border-radius 0
+                           :width (str (bar-width slider (- hi-val lo-val)) "%")
+                           :text-align "right"}
+                   :data-toggle "tooltip"
+                   :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                   :data-delay 0
+                   :data-html true
+                   :data-trigger "hover"
+                   :data-placement "bottom"}])
 
 
   ([slider hi-val lo-val bar-type fill no-tip]
-   (if (= fill "rgba(255,255,255,0)")
-     [:div.bar {:style {:background-color fill
-                        :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
-     (if-not no-tip
-       [:div.bar.btn {:style {:background-color fill
-                              :border-radius 0
-                              :width (str (bar-width slider (- hi-val lo-val)) "%")
-                              :text-align "right"
-                              }
-                      :data-toggle "tooltip"
-                      :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                      :data-delay 0
-                      :data-html true
-                      :data-trigger "hover"
-                      :data-placement "bottom"}]
-       [:div.bar.btn {:style {:background-color fill
-                              :border-radius 0
-                              :width (str (bar-width slider (- hi-val lo-val)) "%")
-                              :text-align "right"
-                              }
-                      ;:data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                      ;:data-delay 0
-                      ;:data-html true
-                      ;:data-trigger "hover"
-                      ;:data-placement "bottom"
-                      }]))))
+    (if (= fill "rgba(255,255,255,0)")
+      [:div.bar {:style {:background-color fill
+                         :width (str (bar-width slider (- hi-val lo-val)) "%")}}]
+      (if-not no-tip
+        [:div.bar.btn {:style {:background-color fill
+                               :border-radius 0
+                               :width (str (bar-width slider (- hi-val lo-val)) "%")
+                               :text-align "right"
+                               }
+                       :data-toggle "tooltip"
+                       :data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                       :data-delay 0
+                       :data-html true
+                       :data-trigger "hover"
+                       :data-placement "bottom"}]
+        [:div.bar.btn {:style {:background-color fill
+                               :border-radius 0
+                               :width (str (bar-width slider (- hi-val lo-val)) "%")
+                               :text-align "right"
+                               }
+                       ;:data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
+                       ;:data-delay 0
+                       ;:data-html true
+                       ;:data-trigger "hover"
+                       ;:data-placement "bottom"
+                       }]))))
 
 
 (rum/defc dot < rum/static rum/reactive bs-tooltip [slider size value dotty & [relative]]
@@ -360,45 +373,45 @@
 
 
 (rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum/static [state value min max step]
-  #_(prn "called slider-control with " value)
-  (let [s [:#slider.slider
-           [:input {:type "text" :value value}]]
-        slider (::slider state)]
-    (when slider
-      (.setValue slider value))
-    s))
+           #_(prn "called slider-control with " value)
+           (let [s [:#slider.slider
+                    [:input {:type "text" :value value}]]
+                 slider (::slider state)]
+             (when slider
+               (.setValue slider value))
+             s))
 
 
 (rum/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
-  #_(prn "called detail-slider-control with " value)
-  (let [s [:#detail-slider.slider
-           [:input {:type "text" :value value}]]
-        slider (::slider state)]
-    (when slider
-      (.setValue slider value))
-    s))
+           #_(prn "called detail-slider-control with " value)
+           (let [s [:#detail-slider.slider
+                    [:input {:type "text" :value value}]]
+                 slider (::slider state)]
+             (when slider
+               (.setValue slider value))
+             s))
 
 ;;;
 ;; Note: multiple sliders on the same page will fail
 ;;;
 (rum/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum/static [state value min max step]
-  #_(prn "called map-detail-slider-control with " value)
-  (let [s [:#map-detail-slider.slider
-           [:input {:type "text" :value value}]]
-        slider (::slider state)]
-    (when slider
-      (.setValue slider value))
-    s))
+           #_(prn "called map-detail-slider-control with " value)
+           (let [s [:#map-detail-slider.slider
+                    [:input {:type "text" :value value}]]
+                 slider (::slider state)]
+             (when slider
+               (.setValue slider value))
+             s))
 
 
 (rum/defc axis-container < rum/static
   ([slider-axis-value]
-   (axis-container slider-axis-value 69))
+    (axis-container slider-axis-value 69))
 
   ([slider-axis-value tick-height]
-   [:.axis-container
-    ;{:style {:margin-left (px axis-margin) :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
-    (rum/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
+    [:.axis-container
+     ;{:style {:margin-left (px axis-margin) :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
+     (rum/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
 
 (rum/defc slider-title [headers]
@@ -445,15 +458,15 @@
 
 (rum/defc slider-widget < rum/static
   ([headers control slider-axis-value]
-   (slider-widget headers control slider-axis-value 69))
+    (slider-widget headers control slider-axis-value 69))
 
   ([headers control slider-axis-value tick-height]
-   [:div
-    (map-indexed key-with
-                 [(slider-title headers)
-                  (slider-labels)
-                  (control slider-axis-value 0 1 0.02)
-                  (axis-container slider-axis-value tick-height)])]))
+    [:div
+     (map-indexed key-with
+                  [(slider-title headers)
+                   (slider-labels)
+                   (control slider-axis-value 0 1 0.02)
+                   (axis-container slider-axis-value tick-height)])]))
 
 
 (rum/defc table-head < rum/static [ap headers column-keys event-bus slider-axis-value]
@@ -659,16 +672,16 @@
   (let [datasource (:datasource (rum/react core/app))
         selected-row (h-code ((rows-by-code datasource)))]
     (sab/html
-     [:.data-summary
-      [:p {:key 1} "The hospital performed "
-       [:b (:n-ops selected-row) "  operations. "]]
-      [:p {:key 2} "Measured 30 days after surgery, "
-       [:b {:key 1} (:n-survivors selected-row) " survivors "]
-       "and "
-       [:b {:key 2} (:n-deaths selected-row) " deaths"]
-       " had been recorded. "]
-      [:p {:key 3}
-       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]])))
+      [:.data-summary
+       [:p {:key 1} "The hospital performed "
+        [:b (:n-ops selected-row) "  operations. "]]
+       [:p {:key 2} "Measured 30 days after surgery, "
+        [:b {:key 1} (:n-survivors selected-row) " survivors "]
+        "and "
+        [:b {:key 2} (:n-deaths selected-row) " deaths"]
+        " had been recorded. "]
+       [:p {:key 3}
+        "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]])))
 
 (rum/defc hospital-header < rum/static
   [selected-row]
@@ -728,7 +741,7 @@
   [h-code]
   (swap! core/app #(assoc % :selected-h-code (keyword h-code)))
   (.modal (js/$ "#rowModal"))
-)
+  )
 
 
 (defn close-hospital-modal

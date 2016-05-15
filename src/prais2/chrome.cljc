@@ -5,8 +5,8 @@
       #?(:cljs [cljsjs.bootstrap])
       [rum.core :as rum]
       [prais2.utils :refer [key-with]]
-      [prais2.core :as core :refer [event-bus]]
-      [prais2.logger :as logger]
+      #?(:cljs [prais2.core :as core :refer [event-bus]])
+      #?(:cljs [prais2.logger :as logger])
       [prais2.data :as data]
       ))
 
@@ -19,9 +19,10 @@
 
 (defrecord  Nav-item [long-title short-title class icon])
 
-(def nbsp (unescapeEntities "&nbsp;"))
+#?(:cljs (def nbsp (unescapeEntities "&nbsp;")))
+#?(:clj (def nbsp " "))
 (def what-why (str "What," nbsp "why," nbsp "how?"))
-(def everything-else (str "Everything" (unescapeEntities "&nbsp;") "else"))
+(def everything-else (str "Everything" nbsp "else"))
 
 (def nav-items {
                 :home (Nav-item. "Home" "Home" "nav-item home" "home")
@@ -29,6 +30,8 @@
                 :data  (Nav-item. "Data" "Explore the data" "nav-item data" "table")
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info")})
 
+(defn go-to-page [event page-key]
+  (core/click->event-bus event page-key (if (= page-key :data) :map :top)))
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
@@ -36,7 +39,6 @@
                    :class (str (if active? " active " " ") (:class nav-item))}
     [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
-
 
 (rum/defc bs-fixed-navbar  [active-key]
   (let [nav-item (active-key nav-items)]
@@ -59,7 +61,7 @@
          (map-indexed #(key-with %1 (bs-nav-link
                                      (= active-key %2)
                                      (%2 nav-items)
-                                     (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
+                                     (fn [e] (go-to-page e %2))))
                       (keys nav-items))]]]]]))
 
 

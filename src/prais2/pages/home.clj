@@ -2,7 +2,8 @@
   (require [rum.core :as rum]
            [prais2.components.head :refer [head]]
            [prais2.components.body :refer [body]]
-           [prais2.pages.static-home :refer [static-home]]))
+    ;[prais2.pages.static-home :refer [static-home]]
+           ))
 
 (def page
   (str "<!doctype html>"
