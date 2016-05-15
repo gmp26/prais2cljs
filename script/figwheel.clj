@@ -6,8 +6,8 @@
 
 (def figwheel-config
   {:figwheel-options {
-                      :css-dirs ["resources/public/css"]
-                      }
+                      :css-dirs ["resources/public/css"]}
+
    :build-ids ["dev"]
    :all-builds
    [{:id "dev"
@@ -22,8 +22,8 @@
      :compiler {:main "prais2.main"
                 :externs ["externs/bootstrap.js"
                           "externs/jquery.js"
-                          "externs/sliders.js"
-                          ]
+                          "externs/sliders.js"]
+
                 :asset-path "js/compiled/out"
                 :output-to "resources/public/js/compiled/prais2.js"
                 :output-dir "resources/public/js/compiled/out"

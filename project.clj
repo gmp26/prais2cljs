@@ -5,13 +5,13 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.7.228"]
                  [org.clojure/core.async "0.2.374"]
                  [cljs-ajax "0.5.1"]
                  [cljsjs/openlayers "3.5.0-1"]
                  [cljsjs/moment "2.10.6-0"]
-                 [cljsjs/papaparse "4.1.1-1"]
+                 ;  [cljsjs/papaparse "4.1.1-1"]
 
                  [cljsjs/jquery "1.9.1-0"]
                  [cljsjs/bootstrap "3.3.6-0"]
@@ -19,15 +19,15 @@
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
                  [rum "0.8.3"]
-                 [figwheel-sidecar "0.5.1"]
+                 [figwheel-sidecar "0.5.1"]]
 
-                 [com.stuartsierra/component "0.3.1"]
-                 ]
+                 ; [com.stuartsierra/component "0.3.1"]
 
-  :plugins [[lein-cljsbuild "1.1.1"]
+  :main ^:skip-aot prais2.examples-page
+  :plugins [[lein-cljsbuild "1.1.1"]]
             ;[lein-figwheel "0.5.0-1"]
-            [lein-sass "0.3.7"]
-            ]
+            ;[lein-sass "0.3.7"]
+
 
   :source-paths ["src"]
 
@@ -35,17 +35,22 @@
                                     "target"
                                     "resources/public/css"]
   :profiles {
+             :make-home {:main prais2.pages.home}
+
              :dev {:source-paths ["pages"]
                    :dependencies
-                   [;[cljsjs/react-dom-server "15.0.1-1"]
-                    ]}
+                   []};[cljsjs/react-dom-server "15.0.1-1"]
+
              :perf {:source-paths ["perf"]
                     :dependencies
                     [[enlive "1.1.6"]
                      [criterium "0.4.4"]
                      [hiccup "1.0.5"]]}}
 
-  :aliases {"package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
+  :aliases {"home"    ["with-profile" "make-home" "run"]
+            "package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
+            "build"   ["run" "-m" "prais2.examples-page"]
+            "debug"   ["repl" "-m" "prais2.examples-page"]
             "perf"    ["with-profile" "perf" "run" "-m" "rum.perf"]}
 
   :cljsbuild {
@@ -59,8 +64,8 @@
                         :compiler {:main "prais2.main"
                                    :externs ["externs/bootstrap.js"
                                              "externs/jquery.js"
-                                             "externs/sliders.js"
-                                             ]
+                                             "externs/sliders.js"]
+
                                    :asset-path "js/compiled/out"
                                    :output-to "resources/public/js/compiled/prais2.js"
                                    :output-dir "resources/public/js/compiled/out"
@@ -83,8 +88,8 @@
                                    :parallel-build true
                                    :closure-warnings {:non-standard-jsdoc :off}
                                    :warnings {:externs-validation :off
-                                              :non-standard-jsdoc :off}
-                                   }}
+                                              :non-standard-jsdoc :off}}}
+
 
                        {:id "devcards"
                         :source-paths ["src"]
@@ -94,7 +99,7 @@
                                    :asset-path "js/compiled/devcards_out"
                                    :output-to  "resources/public/js/compiled/devcards.js"
                                    :output-dir "resources/public/js/compiled/devcards_out"
-                                   :source-map-timestamp true }}
+                                   :source-map-timestamp true}}
 
                        {:id "min"
                         :source-paths ["src"]
@@ -106,8 +111,8 @@
                                    :optimizations :advanced
                                    :closure-warnings {:non-standard-jsdoc :off}
                                    :warnings {:externs-validation :off
-                                              :non-standard-jsdoc :off}
-                                   }}]}
+                                              :non-standard-jsdoc :off}}}]}
+
 
   :figwheel {
              ;; :http-server-root "public" ;; default and assumes "resources"
@@ -132,11 +137,11 @@
              ;; #! /bin/sh
              ;; emacsclient -n +$2 $1
              ;;
-             :open-file-command "open-in-intellij"          ;"emacs -n $2 $1"
+             :open-file-command "open-in-intellij"})          ;"emacs -n $2 $1"
 
              ;; if you want to disable the REPL
              ;; :repl false
 
              ;; to configure a different figwheel logfile path
              ;; :server-logfile "tmp/logs/figwheel-logfile.log"
-             })
+

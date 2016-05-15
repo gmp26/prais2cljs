@@ -40,14 +40,14 @@
         
         :will-unmount
         (fn [state]
-          (js/clearInterval (::interval state))) }
+          (js/clearInterval (::interval state)))}
      :clj {}))
 
 
 ;; Using custom mixin
 (rum/defc watches-count < (periodic-refresh 1000) [ref]
   [:span (count #?(:cljs (.-watches ref)
-                   :clj  (.getWatches ^clojure.lang.IRef ref))) ])
+                   :clj  (.getWatches ^clojure.lang.IRef ref)))])
 
 
 ;; Generic board utils
@@ -74,4 +74,4 @@
     [:br]
     "Board watches: " (watches-count *board)
     [:br]
-    "Color watches: " (watches-count *color) ])
+    "Color watches: " (watches-count *color)])

@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.logger
     (:require [rum.core :as rum]
               [clojure.string :as str]
-              [cljsjs.papaparse]
+      ;[cljsjs.papaparse]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
               [cognitect.transit :as sit]

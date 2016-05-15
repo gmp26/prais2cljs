@@ -1,15 +1,13 @@
 (ns ^:figwheel-always prais2.core
-    (:require-macros [cljs.core.async.macros :refer [go-loop]]
-                   ;[jayq.macros :refer [ready]]
-                     )
-    (:require [rum.core :as rum]
-              ;[jayq.core :refer [$ on]]
-              [cljsjs.jquery]
-              [cljsjs.bootstrap]
-              [cljs.core.async :refer [chan <! pub put!]]
-              [prais2.utils :as u :refer [key-with]]
-              [goog.events :as events]
-              [prais2.chan :refer [scroll-chan-events]]
+
+  (:require [rum.core :as rum]
+    #?(:cljs [cljsjs.jquery])
+    #?(:cljs [cljsjs.bootstrap])
+    #?(:cljs [cljs.core.async.macros :refer-macros [go-loop]])
+    #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
+    #?(:clj [clojure.core.async :refer [chan <! pub put!]])
+            [prais2.utils :as u :refer [key-with]]
+    #?(:cljs [goog.events :as events])
             ))
 
 ;;;
@@ -58,40 +56,31 @@
 
 ;; mixin to initialise bootstrap collapse code
 (def bs-collapse
-  {:did-mount (fn [state]
-                (ready
-                 #(.collapse (js/$ "[data-toggle=\"collapse\"]")))
-                state)
-   })
+  #?(:cljs {:did-mount (fn [state]
+                         (ready
+                           #(.collapse (js/$ "[data-toggle=\"collapse\"]")))
+                         state)
+            })
+  #?(:clj {}))
+
 
 ;; mixin to initialise bootstrap tooltip code
 (def bs-tooltip
-  {:did-mount (fn [state]
-                (ready
-                 #(.tooltip (.tooltip (js/$ "[data-toggle=\"tooltip\"]"))))
-                state)
-   })
+  #?(:cljs {:did-mount (fn [state]
+                         (ready
+                           #(.tooltip (.tooltip (js/$ "[data-toggle=\"tooltip\"]"))))
+                         state)
+            })
+  #?(:clj {}))
 
 ;; mixin to initialise bootstrap t code code
 (def bs-popover
-  {:did-mount (fn [state]
-                (ready
-                 #(.popover (js/$ "[data-toggle=\"popover\"]")))
-                state)
-   })
-
-;; mixin to monitor react state changes
-(defn monitor-react
-  ([label]
-   {
-    :did-mount #(do (prn (str label " did-mount " %1)) %1)
-    :will-unmount #(do (prn (str label " will-unmount " %1)) %1)
-    })
-  ([label enabled]
-   {
-    :did-mount #(do (if enabled (prn (str label " did-mount " %1))) %1)
-    :will-unmount #(do (if enabled (prn (str label " will-unmount " %1))) %1)
-    }))
+  #?(:cljs {:did-mount (fn [state]
+                         (ready
+                           #(.popover (js/$ "[data-toggle=\"popover\"]")))
+                         state)
+            })
+  #?(:clj {}))
 
 ;;;
 ;; Define an event bus carrying [topic message]

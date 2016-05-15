@@ -30,11 +30,11 @@
     [:dt "Tick: "]
     [:dd (input core/*speed) " ms"]
     [:dt "Time:"]
-    [:dd (core/watches-count core/*clock) " watches"]
-])
+    [:dd (core/watches-count core/*clock) " watches"]])
+
 
 
 #?(:cljs
-(defn mount! [mount-el]
-  (rum/mount (controls) mount-el)))
+   (defn mount! [mount-el]
+     (rum/mount (controls) mount-el)))
 

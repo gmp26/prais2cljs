@@ -1,13 +1,14 @@
 (ns ^:figwheel-always prais2.chrome
-    (:require [goog.string :refer [unescapeEntities]]
-              [rum.core :as rum]
-              [cljsjs.jquery]
-              [cljsjs.bootstrap]
-              [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus]]
-              [prais2.logger :as logger]
-              [prais2.data :as data]
-              ))
+    (:require
+      #?(:cljs [goog.string :refer [unescapeEntities]])
+      #?(:cljs [cljsjs.jquery])
+      #?(:cljs [cljsjs.bootstrap])
+      [rum.core :as rum]
+      [prais2.utils :refer [key-with]]
+      [prais2.core :as core :refer [event-bus]]
+      [prais2.logger :as logger]
+      [prais2.data :as data]
+      ))
 
 (defn rgba-string
   "return CSS rgba string"
