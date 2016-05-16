@@ -1,12 +1,8 @@
 (ns prais2.home
   (:require [rum.core :as rum]
             [prais2.core :as core]
-            [prais2.content :as content]
-            [prais2.data :as data]
-            [prais2.chrome :as chrome]
             [prais2.utils :as u :refer [key-with]]
-            [prais2.open-layers-map :as map]
-            [cljsjs.jquery]))
+            ))
 
 (rum/defc what-why []
   [:.col-sm-4
@@ -54,7 +50,7 @@
     
     ]])
 
-(rum/defc render-home < rum/reactive[]
+(rum/defc render-home < rum/reactive []
   [:.container
    [:.jumbotron.home.row
     [:section.about.col-xs-offset-1.col-sm-10

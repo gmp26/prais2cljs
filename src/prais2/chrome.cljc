@@ -1,13 +1,15 @@
 (ns ^:figwheel-always prais2.chrome
-    (:require [goog.string :refer [unescapeEntities]]
-              [rum.core :as rum]
-              [cljsjs.jquery]
-              [cljsjs.bootstrap]
-              [prais2.utils :refer [key-with]]
-              [prais2.core :as core :refer [event-bus]]
-              [prais2.logger :as logger]
-              [prais2.data :as data]
-              ))
+    (:require
+      #?(:cljs [goog.string :refer [unescapeEntities]])
+      [rum.core :as rum]
+      #?(:cljs [cljsjs.jquery])
+      #?(:cljs [cljsjs.bootstrap])
+      [prais2.utils :refer [key-with]]
+      #?(:cljs [prais2.core :as core :refer [event-bus]])
+      #?(:clj [prais2.core :as core])
+      ;[prais2.logger :as logger]
+      ;[prais2.data :as data]
+      ))
 
 (defn rgba-string
   "return CSS rgba string"
@@ -18,9 +20,11 @@
 
 (defrecord  Nav-item [long-title short-title class icon])
 
-(def nbsp (unescapeEntities "&nbsp;"))
+#?(:cljs (def nbsp (unescapeEntities "&nbsp;")))
+#?(:clj (def nbsp " "))                  ;; not yet sure how to handle entities in java rum hiccup
+
 (def what-why (str "What," nbsp "why," nbsp "how?"))
-(def everything-else (str "Everything" (unescapeEntities "&nbsp;") "else"))
+(def everything-else (str "Everything" nbsp "else"))
 
 (def nav-items {
                 :home (Nav-item. "Home" "Home" "nav-item home" "home")
@@ -55,11 +59,14 @@
          [:span.icon-bar {:key 4}]]]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
-         (map-indexed #(key-with %1 (bs-nav-link
-                                     (= active-key %2)
-                                     (%2 nav-items)
-                                     (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
-                      (keys nav-items))]]]]]))
+
+         #?(:cljs                                           ;only supply real button click handlers once we're loaded
+            (map-indexed #(key-with %1 (bs-nav-link
+                                         (= active-key %2)
+                                         (%2 nav-items)
+                                         (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
+                         (keys nav-items)))
+         ]]]]]))
 
 
 (rum/defc header < rum/reactive [& deep]
@@ -88,7 +95,7 @@
     [:.col-md-8
      (data/option-menu event-bus)]]
    [:.row.footer
-    ;[:.pull-right (logger/playback-controls)]
+    ;[:.pull-right (logger/playback-controls)]             ;;WARNING - likely to break clj compilation
     [:h3
      "Funding acknowledgement"]
     [:p

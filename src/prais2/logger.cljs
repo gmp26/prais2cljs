@@ -27,6 +27,8 @@
   []
   (if (integer? @log-state-index) (@log-states @log-state-index) nil))
 
+(defn format-time-stamp [ts]
+  (str (.format (js/moment ts) "DD-MMM-YYYY HH:mm:SS")))
 
 (def ip-address (atom nil))
 
@@ -134,12 +136,12 @@
   (for [log-entry log]
     (do
       (#_prn "log->csv " log-entry)
-      #_(apply str (interpose "," (concat [(core/format-time-stamp (:time-stamp log-entry))
+      #_(apply str (interpose "," (concat [(format-time-stamp (:time-stamp log-entry))
                                          (name (:event-key log-entry))
                                          (:event-data log-entry)]
                                           (into [] (map second (:app-state log-entry))))))
 
-      (apply str (interpose "," (concat [(core/format-time-stamp (log-entry 0))
+      (apply str (interpose "," (concat [(format-time-stamp (log-entry 0))
                                          (name (log-entry 1))
                                          (log-entry 2)]
                                         (into [] (map second (log-entry 3)))))))))
