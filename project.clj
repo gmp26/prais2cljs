@@ -34,7 +34,8 @@
   :clean-targets ^{:protect false} ["resources/public/js/compiled"
                                     "target"
                                     "resources/public/css"]
-  :profiles {
+
+  :profiles {:make-home {:main prais2.pages.home}
              :dev {:source-paths ["pages"]
                    :dependencies
                    [;[cljsjs/react-dom-server "15.0.1-1"]
@@ -45,7 +46,8 @@
                      [criterium "0.4.4"]
                      [hiccup "1.0.5"]]}}
 
-  :aliases {"package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
+  :aliases {"home"    ["with-profile" "make-home" "run"]
+            "package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
             "perf"    ["with-profile" "perf" "run" "-m" "rum.perf"]}
 
   :cljsbuild {
