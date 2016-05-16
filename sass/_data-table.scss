@@ -179,7 +179,7 @@ td:first-child {
 
 .axis-container {
     position: relative;
-    margin-left: 15px;
+    margin-left: 20px;
     clear: both;
 }
 
@@ -203,17 +203,8 @@ td:first-child {
     color: #ffffff;
 }
 
-/*
-#detail {
-}
-*/
-
 #detail .axis-container {
     height: 20px;
-}
-
-#detail .tick {
-    //height: 69px;
 }
 
 #detail .tick-label {
@@ -405,14 +396,11 @@ td:first-child {
     background-color: #ffffff;
 }
 
-
-
 th {
     background-color: #343456;
     color: rgba(255,255,255,0.7);
     padding: 20px;
 }
-
 
 .bg-danger {
     padding: 10px;
