@@ -15,6 +15,6 @@
             ))
 
      (defn -main [& args]
-       (println " Writing \"resources/public/home.html\" ")
-       (spit "resources/public/home.html" page)
+       (println " Writing \"resources/public/index.html\" ")
+       (spit "resources/public/index.html" page)
        )))

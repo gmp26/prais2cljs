@@ -36,17 +36,13 @@
                                     "resources/public/css"]
 
   :profiles {:make-home {:main prais2.pages.home}
-             :dev {:source-paths ["pages"]
-                   :dependencies
-                   [;[cljsjs/react-dom-server "15.0.1-1"]
-                    ]}
+             :dev {:source-paths ["pages"]}
              :perf {:source-paths ["perf"]
-                    :dependencies
-                    [[enlive "1.1.6"]
-                     [criterium "0.4.4"]
-                     [hiccup "1.0.5"]]}}
+                    :dependencies [[enlive "1.1.6"]
+                                   [criterium "0.4.4"]
+                                   [hiccup "1.0.5"]]}}
 
-  :aliases {"home"    ["with-profile" "make-home" "run"]
+  :aliases {"home"    ["do" ["clean"] ["cljsbuild" "once" "min"] ["with-profile" "make-home" "run"]]
             "package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
             "perf"    ["with-profile" "perf" "run" "-m" "rum.perf"]}
 
