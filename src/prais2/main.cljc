@@ -18,8 +18,7 @@
               [prais2.map-data :refer [render-map-data]]
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
-              [cljsjs.jquery]
-              ;;[jayq.core :refer [$]]
+              #?(:cljs [cljsjs.jquery])
 
               [cljsjs.moment :as moment]))
 
@@ -160,7 +159,7 @@
                    (render-data-tab-panes data section)
                    ])]))
 
-(defn valid-session-id
+#_(defn valid-session-id
   ([session-id]
    (#(not (or (nil? %) (= "" %))) session-id))
   ([]

@@ -1,13 +1,11 @@
 (ns ^:figwheel-always prais2.core
-    #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
   (:require
     [rum.core :as rum]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
-    [prais2.utils :as u :refer [key-with]]
-    #?(:cljs [goog.events :as events])
-            ))
+    #?(:clj [clojure.core.async :refer [chan <! pub put!]])
+    [prais2.utils :as u :refer [key-with]]))
 
 ;;;
 ;; define app state once so it doesn't re-initialise on reload.

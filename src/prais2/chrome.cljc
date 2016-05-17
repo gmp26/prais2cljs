@@ -59,7 +59,6 @@
          [:span.icon-bar {:key 4}]]]
        [:#navbar.navbar-collapse.collapse {:key 2}
         [:ul.nav.navbar-nav.navbar-right {:key 1}
-
          #?(:cljs                                           ;only supply real button click handlers once we're loaded
             (map-indexed #(key-with %1 (bs-nav-link
                                          (= active-key %2)
