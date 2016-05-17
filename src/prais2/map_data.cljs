@@ -16,7 +16,7 @@
                 (:h-name row) [:i.fa.fa-chevron-right.pull-right]]])
 
 (rum/defc hospital-list < rum/reactive []
-          (let [rows ((:datasource (rum/react core/app)) content/datasources)]
+          (let [rows (sort-by :h-name ((:datasource (rum/react core/app)) content/datasources))]
             [:ul.h-nav.col-sm.6.col-md-8
              (map-indexed key-with (map hospital-item rows))]))
 
@@ -32,12 +32,12 @@
 
 
 
-           [:.hospital-map.col-sm-6.col-md-5.col-xs-12
+           [:.hospital-map.col-sm-6.col-md-4.col-xs-12
             (map/hospitals)]
 
            (if (nil? (:map-h-code (rum/react core/app)))
-             [:.col-sm-6.col-xs-12.col-md-7 (hospital-list)]
-             [:.col-sm-6.col-xs-12.col-md-7
+             [:.col-sm-6.col-xs-12.col-md-8 (hospital-list)]
+             [:.col-sm-6.col-xs-12.col-md-8
               [:div.clearfix
                [:button.btn.btn-primary.pull-left {:type      "button"
                                                    :on-click  #(core/click->event-bus % :reset-map-to-home nil)
