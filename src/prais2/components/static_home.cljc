@@ -3,7 +3,6 @@
             [prais2.home :refer [render-home]]
             [prais2.chrome :as chrome]))
 
-
 (rum.core/defc static-home []
   [:div
    (chrome/header)

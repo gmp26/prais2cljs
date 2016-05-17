@@ -2,12 +2,11 @@
     (:require [rum.core :as rum]
               [prais2.core :as core]
               [prais2.content :as content]
-              [prais2.data :as data]
+      ;[prais2.data :as data]
               [prais2.chrome :as chrome]
               [prais2.utils :as u :refer [key-with]]
-              [prais2.open-layers-map :as map]
-              [cljsjs.jquery
-               ]))
+              #_[prais2.open-layers-map :as map]
+              #_[cljsjs.jquery]))
 
 
 (rum/defc section [section-id section-title section-content]
@@ -27,7 +26,7 @@
 
 
 ;; look at http://materializecss.com/
-(rum/defc render-intro < (core/monitor-react "INTRO>" false)  [section-id]
+(rum/defc render-intro < (core/monitor-react "INTRO>" false)  []
   [:.container
    [:.row
     [:.col-sm-8
