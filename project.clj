@@ -35,7 +35,7 @@
                                     "target"
                                     "resources/public/css"]
 
-  :profiles {:make-home {:main prais2.pages.home}
+  :profiles {:make-home {:main prais2.pages.generator}
              :dev {:source-paths ["pages"]}
              :perf {:source-paths ["perf"]
                     :dependencies [[enlive "1.1.6"]
@@ -43,7 +43,7 @@
                                    [hiccup "1.0.5"]]}}
 
   :aliases {"home"    ["do" ["clean"] ["cljsbuild" "once" "min"]
-                       ["run" "-m" "prais2.pages.home"]
+                       ["run" "-m" "prais2.pages.generator"]
                        ;["with-profile" "make-home" "run"]
                        ]
             "package" ["do" ["clean"] ["cljsbuild" "once" "pages"] ["run" "-m" "prais2.examples-page"]]
