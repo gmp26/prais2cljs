@@ -3,10 +3,10 @@
             [prais2.components.static-home :refer [static-home]]
             [prais2.components.analytics :refer [analytics]]))
 
-(rum/defc body []
+(rum/defc body [content]
   [:body
 
-   #?(:clj [:#app (static-home)])
+   #?(:clj [:#app (content)])
    #?(:cljs [:#app                                          ; the spinner is unused now!
              [:i.fa.fa-spinner.fa-pulse
               {:style {:font-size "100px"

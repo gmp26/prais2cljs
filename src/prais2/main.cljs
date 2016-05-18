@@ -242,7 +242,7 @@
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
-                     (render-intro section)
+                     (render-intro)
                      (chrome/footer)]))
 
      (= page :data)
