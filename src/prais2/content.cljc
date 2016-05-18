@@ -93,7 +93,7 @@
     (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1481 30 1451 98.0 95.2 95.8 97.6 98.1 nil)
     (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1881 30 1851 98.4 96.6 97.0 98.4 98.7 nil)]
 
- :2013
+   :2013
    [(Row. "Belfast, Royal Victoria Hospital" "RVB" 54.594167 -5.953666 232 4 228 98.3 95.3 96.6 99.6 100.0 nil)
     (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 483 10 473 97.9 94.6 95.7 98.6 99.2 nil)
     (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 570 12 558 97.9 95.1 96.1 98.6 99.3 nil)
@@ -356,19 +356,19 @@
    ])
 
 (rum/defc render-charity-list []
-          [:div
-           [:h3 "Charities"]
-           [:ul
-            (for [charity unassoc-charity-list]
-              [:li charity])]
+  [:div
+   [:h3 "Charities"]
+   [:ul
+    (for [charity unassoc-charity-list]
+      [:li charity])]
 
-           [:h3 "Hospital Charities"]
-           [:ul
-            (for [h-code (keys hospital-metadata)]
-              [:li [:b (first (h-code hospital-metadata))]
-               [:ul
-                (for [charity (rest (h-code hospital-metadata))]
-                  [:li charity])]])]])
+   [:h3 "Hospital Charities"]
+   [:ul
+    (for [h-code (keys hospital-metadata)]
+      [:li [:b (first (h-code hospital-metadata))]
+       [:ul
+        (for [charity (rest (h-code hospital-metadata))]
+          [:li charity])]])]])
 
 ;;;
 ;; Comment on the meaning of each range. These texts appear in bar-chart tooltips
@@ -395,7 +395,6 @@
 ;; Comment on the meaning of the dot when it appears in the given range.
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
-
 (def dot-comments
   {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
 
@@ -424,13 +423,14 @@
     :body  "The percentage of operations where the child survived at least 30 days after their operation."}
    :unforeseen-factors
    {:title "Unforeseeable factors"
-    :body  
-    [:p "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due
+    :body  [:div
+            [:p "It is impossible to predict precisely what is going to happen in an individual operation. This is partly due
     to the inevitable inability to predict the future with certainty – all people are physically unique and will react
     slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another."]
-  
-  [:p "There are also factors that we suspect may influence the outcome but cannot be included in the statistical formula because no routine audit data on them is collected, for instance the size of a hole in the heart."] 
-  [:p "Together, we call these all “unforeseeable factors”."]}})
+
+            [:p "There are also factors that we suspect may influence the outcome but cannot be included in the statistical
+  formula because no routine audit data on them is collected, for instance the size of a hole in the heart."]
+            [:p "Together, we call these all “unforeseeable factors”."]]}})
 
 (def title "Everything else")
 

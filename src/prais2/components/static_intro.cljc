@@ -5,7 +5,7 @@
 
 
 (rum.core/defc static-intro []
-               [:div
-                (chrome/header)
-                (render-intro)
-                (chrome/footer)])
+  [:div
+   (chrome/header)
+   (render-intro)
+   (chrome/footer)])

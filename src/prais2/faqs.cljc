@@ -5,7 +5,7 @@
               [prais2.utils :refer [key-with]]
               [prais2.chrome :as chrome]
               [prais2.content :as content :refer [faq-sections]]
-              [prais2.data :as data]
+              #?(:cljs [prais2.data :as data])
               [prais2.mugshots :as mugs]))
 
 (defn ix-col [index]
@@ -47,8 +47,8 @@
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
-       (when (= sec-ix 1)
-         (data/legend))])))
+       #?(:cljs (when (= sec-ix 1)
+                  (data/legend)))])))
 
 
 (rum/defc render-faq-top [faq-ref]
@@ -90,7 +90,6 @@
         [:h2 {:key 1}
          [:div.query [:i.fa.fa-question]]
          [:div.title (:title faq)]]
-
 
         (when short-answer
           (do
