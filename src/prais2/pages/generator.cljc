@@ -28,7 +28,7 @@
        (let [[section ix] faq-ref]
          (str "<!doctype html>"
               (rum/render-static-markup (head "faq "))
-              (rum/render-static-markup (body (static-faqs faq-ref)))
+              (rum/render-static-markup (body #(static-faqs faq-ref)))
               )))
 
      (defn write-html [path html]
@@ -41,7 +41,7 @@
          (do                                                ;(println "section = " section)
              (doseq [ix (range (count (:faqs (faq-sections section))))]
                (do                                          ;(println "ix = " ix)
-                   (write-html (str "resources/public/faq-" section "-" ix) (faq-page [section ix])))))))
+                   (write-html (str "resources/public/faq-" section "-" ix ".html") (faq-page [section ix])))))))
 
      (defn -main [& args]
        (write-html "resources/public/index.html" home-page)
