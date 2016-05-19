@@ -1,12 +1,13 @@
 (ns ^:figwheel-always prais2.routes
-    (:require [secretary.core :as secretary :refer-macros [defroute]]
-              [goog.events :as events]
-              [goog.history.EventType :as EventType]
-              [cljs.reader :refer [read-string]]
-              [cljs.core.async :refer [put!]]
-              [prais2.core :as core]
-              )
-    (:import goog.History))
+  (:require [secretary.core :as secretary :refer-macros [defroute]]
+            [goog.events :as events]
+            [goog.history.EventType :as EventType]
+            [cljs.reader :refer [read-string]]
+            [cljs.core.async :refer [put!]]
+            [prais2.core :as core]
+            )
+  (:import goog.History)
+  )
 
 
 (enable-console-print!)
@@ -14,7 +15,18 @@
 ;;;
 ;; basic hashbang routing to configure some options
 ;;;
-(secretary/set-config! :prefix "#")
+;(secretary/set-config! :prefix "#")
+
+;;
+;; When the user presses the back or forwards button, onpopstate is fired.
+;; We use this to dispatch the new URL in javascript.
+;;
+(set! (.-onpopstate js/window) #(do
+                                 (prn "popstate")
+                                 (js/console.log %)
+                                 (when-not (.-isNavigation %)
+                                   (js/console.log "Token set programmatically"))
+                                 (secretary/dispatch! (.. js/window -location -pathname))))
 
 
 ;;;
@@ -33,7 +45,7 @@
               (= (:section ap) [s f])))
       (do
         (put! core/event-bus [:show-faq [s f]])
-        (prn "faq :section :id match" s f))))
+        (prn "faq match" s f))))
 )
 
 (defroute homes "/home" []
@@ -65,13 +77,14 @@
   ;(put! core/event-bus [:data id])
 )
 
-#_(defroute home "/" []
-  (prn "home match")
+(defroute index "/" []
+  (prn "index match")
 )
 
 (defroute other "*" []
   (prn "* match")
 )
+
 
 
 ;; history configuration.
@@ -85,6 +98,14 @@
 ;; Note that this history handling must happen after route definitions for it
 ;; to kick in on initial page load.
 ;;
-(let [h (History. false false "dummy")]
+(defonce history (let [h (History. false false "dummy")]
+                   (goog.events/listen h EventType/NAVIGATE #(do (prn "NAVIGATE")
+                                                                 (.log js/console %)
+                                                                 (secretary/dispatch! (.-token %))))
+                   (doto h (.setEnabled true))
+                   h))
+
+; old code
+#_(let [h (History. false false "dummy")]
   (goog.events/listen h EventType/NAVIGATE #(secretary/dispatch! (.-token %)))
   (doto h (.setEnabled true)))

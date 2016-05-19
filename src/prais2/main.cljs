@@ -440,5 +440,7 @@
 ;; optionally do something on app reload
 ;;
 (defn on-js-reload []
+  (enable-console-print!)
+  (.log js/console "reloading")
   (prn "Reloaded")
   (put! event-bus [:reloading nil]))

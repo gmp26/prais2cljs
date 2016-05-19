@@ -45,10 +45,7 @@
     [:p "More detail about how survival statistics are monitored"]
     [:p "Limitations of this data"]
     [:p "Information for families"]
-  
-    [:p "About us and this website"]
-    
-    ]])
+    [:p "About us and this website"]]])
 
 (rum/defc render-home < rum/reactive []
   [:.container
@@ -58,7 +55,6 @@
       (if (:show-nicor (rum/react core/app))
         [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival data"]
         "published survival data")
-
       " about children’s heart surgery in the UK and Ireland. "]
      [:p "Our website will help you:"]
      [:ul
