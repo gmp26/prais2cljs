@@ -892,7 +892,7 @@
 
                           [:p "If you have any comments about the website please email: (MIKE: Generic email)"]]}
 
-              #_{:title    "Contact us"
+              {:title    "Contact us"
                :glossary []
                :body
                          [:div
@@ -901,7 +901,7 @@
                           ; Add David's institute
                           [:p "For reporting technical problems, please email mike@childrensheartsurgery.info."]
                           [:p "For questions about the audit process or any individual hospital's results, please contact the national audit body "
-                           [:a {:href "https://www.ucl.ac.uk/nicor"} "NICOR".]]]}
+                           [:a {:href "https://www.ucl.ac.uk/nicor"} "NICOR"]]]}
 
               {:title    "How we developed this site"
                :glossary []
