@@ -496,13 +496,14 @@
                                " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
                                years for each hospital since 2013 (see " [:a {:href "?#/intro"} "What, Why and How?"] ").  The predicted range
-        is the range in which we expect to see each hospital’s survival rate the majority of the time (19 times out of
-        20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
+        is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a {:href "#/faqs"} "How is the predicted range calculated?"] "). "
                                ]
                               [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and
        this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
                               [:p "Operations that occur within 30 days of each other are treated as a single operation when reporting overall
-       survival."]]}
+       survival."]
+                              [:p "NICOR publishes all its reports " [:a {:target "_blank"
+                                                                          :href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument"} "here"] ". "]]}
 
               {:title        "Where is this data from?"
                :short-answer "The data on each child’s operation and what was wrong with their heart comes from the hospital’s

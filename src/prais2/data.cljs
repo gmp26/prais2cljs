@@ -320,7 +320,7 @@
 (rum/defc slider-labels []
   [:.slider-label
    [:div.pull-left {:key :left}
-    [:i.fa.fa-long-arrow-left {:key :full}] " full range"]
+    [:i.fa.fa-long-arrow-left {:key :full}] " full view"]
    [:div.pull-right {:key :right}
     "full detail " [:i.fa.fa-long-arrow-right {:key :detail}]]])
 
