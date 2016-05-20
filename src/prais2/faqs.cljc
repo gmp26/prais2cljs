@@ -46,7 +46,7 @@
                   :src      "assets/pr-animatic3.mp4"}])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
-          [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]
+          [:li {:key ix} [:a {:href (str "/faq/" sec-ix "/" ix)} (:title faq)]])]
        #?(:cljs (when (= sec-ix 1)
                   (data/legend)))])))
 

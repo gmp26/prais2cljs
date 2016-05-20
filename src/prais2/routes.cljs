@@ -79,7 +79,8 @@
 
 (defroute index "/" []
   (prn "index match")
-)
+  (put! core/event-bus [:home :top])
+  )
 
 (defroute other "*" []
   (prn "* match")
@@ -101,7 +102,8 @@
 (defonce history (let [h (History. false false "dummy")]
                    (goog.events/listen h EventType/NAVIGATE #(do (prn "NAVIGATE")
                                                                  (.log js/console %)
-                                                                 (secretary/dispatch! (.-token %))))
+                                                                 ;(secretary/dispatch! (.-token %))
+                                                                 ))
                    (doto h (.setEnabled true))
                    h))
 

@@ -563,13 +563,13 @@
 
                               [:h4 "1. Inaccurate data"]
                               [:p "Each hospital and the Office of National Statistics supply data on each child to the national audit body.
-       Although the " [:a {:href "#/faq/2/1"} "data submitted is of very high quality"] ", there will always be some
+       Although the " [:a {:href "/faq/2/1"} "data submitted is of very high quality"] ", there will always be some
        inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong (for
        instance wrong weights are recorded) or missing, then this will result in a wrong predicted range."]
 
                               [:h4 "2. The formula doesn’t work well for that hospital"]
                               [:p "The statistical formula is applied to all operations at that hospital to calculate its overall predicted
-       range of survival. Although " [:a {:href "#/faq/2/0"} "the formula as is as good as we can currently get it"] ", it is not perfect.
+       range of survival. Although " [:a {:href "/faq/2/0"} "the formula as is as good as we can currently get it"] ", it is not perfect.
        There will always be unique features about a child that affect their
        chance of survival that are not captured by national data collection and so cannot be part of a formula (e.g. the
        size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single
@@ -587,7 +587,7 @@
                               [:p "The chances of survival for children at the hospital could genuinely be much higher or lower than what is
        predicted, which would make it more likely that the hospital’s survival rate would lie outside its predicted
        range. The national audit process is intended to check that no hospital in the UK and Ireland has chances of
-       survival much lower than predicted. See " [:a {:href "#/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
+       survival much lower than predicted. See " [:a {:href "/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
        find out what happens in such situations."]]}
 
               {:title        "When looking at ALL hospitals simultaneously, what does it mean if any of the hospitals have a survival
@@ -657,7 +657,7 @@
 
                               [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
        any single hospital to be outside its predicted range but it is rare for any hospital to be outside its extended
-       range (see also: " [:a {:href "#/faq/1/3"} "looking at ALL hospitals"] ")"]]}
+       range (see also: " [:a {:href "/faq/1/3"} "looking at ALL hospitals"] ")"]]}
 
               {:title        "Where did the formula used to calculate the predicted range come from?"
                :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS
@@ -761,7 +761,7 @@
                               [:p "Therefore, if it is available, “30 day survival” after surgery is considered a more objective and preferable
        statistic than “survival to hospital discharge”, since it does not depend on the hospital’s discharge procedures."]
 
-                              [:p "While " [:a {:href "#/faq/2/3"} "longer term survival"] " is extremely important, 30-day survival post
+                              [:p "While " [:a {:href "/faq/2/3"} "longer term survival"] " is extremely important, 30-day survival post
        surgery was initially chosen as it is more straightforward to link this outcome to a child’s surgery and
        post-operative care than a longer range survival  period which might, for instance, incorporate further treatment
        at different hospitals. The other important aspect of monitoring 30-day survival, particularly within hospitals,
@@ -776,7 +776,7 @@
                :glossary     []
                :body
                              [:div
-                              [:p "You can use the " [:a {:href "#/data"} "national audit data"] " to see how the different hospitals are doing compared to their predicted
+                              [:p "You can use the " [:a {:href "/data"} "national audit data"] " to see how the different hospitals are doing compared to their predicted
        range calculated for the last 3 years.
        You can also use the "
                                [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500" :target "_blank"} "national audit website"]
@@ -795,7 +795,7 @@
                               [:p "You can also access the support available from national charities such as the "
                                [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "Children’s Heart Federation"]
                                " or " [:a {:href "http://www.lhm.org.uk/" :target "_blank"} "Little Hearts Matter"]
-                               " or " [:a {:href "#/faq/3/2"} "local charities for your specialist children’s hospital"] ".
+                               " or " [:a {:href "/faq/3/2"} "local charities for your specialist children’s hospital"] ".
                                These guides on "
                                [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"} "speaking to your child’s surgeon"]
                                " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "seeking a second opinion"]

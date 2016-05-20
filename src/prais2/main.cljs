@@ -49,7 +49,7 @@
 
 (rum/defc render-404 []
   [:h1 "Page not found. "
-   [:a {:href "/"} "Try the home page."]])
+   [:a {:href "/home"} "Try the home page."]])
 
 ;;
 ;; Code snippet to remove columns from table
