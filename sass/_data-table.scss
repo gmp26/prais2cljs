@@ -16,15 +16,16 @@
 }
 
 .legend {
-    margin-bottom: 40px;
+    // margin-bottom: 40px;
     .box {
-        h4 {
+        p {
             color: orange;
         }
         background-color: #ffffff;
         border-radius: 2px;
         box-shadow: 0px 0px 3px #CCCCCC;
         padding: 10px;
+        // margin-top: 20px;
     }
 }
 
@@ -222,9 +223,7 @@ td:first-child {
     z-index: 200;
     display: inline-block;
     right: 5px;
-    color: #337AB7;
     font-size: 12px;
-    font-style: italic;
     white-space: normal;
     width: 100%;
 }

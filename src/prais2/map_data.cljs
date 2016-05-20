@@ -25,10 +25,9 @@
           [:div
            [:section.col-sm-offset-1.col-sm-10
             [:h2 "Mapped data for April 2011 - March 2014"]
-            [:p
-             "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children (0 - 16 years old)."]
-            [:p
-             "This data is updated annually and covers the most recent three year report period."]]
+            [:p (str "These are the hospitals in the UK and Ireland that performed heart surgery in children over this period "
+                     "(0-16 years old). "
+                     "This data is updated annually and covers a 3 year period.")]]
 
 
 

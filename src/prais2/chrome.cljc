@@ -81,7 +81,8 @@
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row
-    [:img.img-responsive.col-sm-offset-2.col-sm-2.collab-logo
+    [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
+    [:img.img-responsive.col-sm-2.collab-logo
      {:src "assets/ucl-logo.png"}]
     [:img.img-responsive.col-sm-2.collab-logo
      {:src "assets/camlogo.png"}]

@@ -531,14 +531,15 @@
   [:div
    [:.col-sm-offset-1.col-sm-10
     [:h2 "List data for April 2011 – March 2014"]
-    [:p (str "There are fourteen hospitals in the UK and Ireland that perform heart surgery in children "
+    [:p (str "These are the hospitals in the UK and Ireland that performed heart surgery in children over this period "
              "(0-16 years old). "
-             "This data is updated annually and covers the most recent 3 year report period.")]
-    [:p "Previous reporting periods can be selected at the bottom of the table."
-     "Clicking on a hospital code will bring up specific information for that hospital along with "
+             "This data is updated annually and covers a 3 year period.")]
+
+    [:p "Clicking on a hospital code will bring up specific information for that hospital along with "
      "an interpretation of its survival rate. It is only valid to compare a hospital's survival rate "
-     "to its predicted range and not to other hospitals "
-     [:a {:href "#/faqs"} "Everything Else"]]
+     "to its predicted range and not to other hospitals. "
+     "Read more about this in " [:a {:href "#/faqs"} "Everything Else"] ". "]
+    [:p "The " [:a {:href "#/faqs"} "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
     [:p "You can use your mouse to hover over the chart to bring up more explanation."]]
 
    (table1 app data event-bus)])
@@ -660,6 +661,7 @@
         selected-row (h-code ((rows-by-code datasource)))]
     (sab/html
      [:.data-summary
+      [:p {:style {:color "orange"}} " Hover over or tap on the chart areas for more detail on this hospital. "]
       [:p {:key 1} "The hospital performed "
        [:b (:n-ops selected-row) "  operations. "]]
       [:p {:key 2} "Measured 30 days after surgery, "
@@ -678,7 +680,8 @@
 (rum/defc legend  < rum/reactive []
   [:.legend
    [:.box
-    [:h4 "What does this mean?"]
+    [:p {:style {:color "orange
+    "}} "Legend (See also: two minute guide)"]
     (let [ap (rum/react core/app)
           selected-row content/sample-hospital]
       (map-indexed key-with
@@ -689,14 +692,8 @@
                                           "We expect the hospital's survival rate to be inside this bar
                                           998 times out of a 1000")
                     (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
-                                          "The dot indicates the survival rate")]))]])
-
-
-(rum/defc nav-aid []
-  [:p.nav-aid
-   [:i.fa.fa-arrow-up] " Hover over or tap on the chart areas for more detail on " [:strong "this"] " hospital. " [:br]
-   [:i.fa.fa-arrow-down] " See below for further explanation of the bars and the dot."])
-
+                       "The dot indicates the hospital's survival rate")]))
+    ]])
 
 (rum/defc hospital-detail < rum/reactive
   [h-code]
@@ -710,9 +707,9 @@
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (hospital-data h-code)
                        (interpretation selected-row)
-                       (nav-aid)
+                       (legend)
                        (hospital-charities h-code)
-                       (legend)]))]
+                       ]))]
       [:#detail
        (let [selected-row content/sample-hospital]
          (map-indexed key-with
@@ -720,8 +717,7 @@
                        (hospital-header selected-row)
                        (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
-                       (interpretation selected-row)
-                       (nav-aid)]))])))
+                       (interpretation selected-row)]))])))
 
 
 (defn open-hospital-modal
