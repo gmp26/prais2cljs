@@ -70,9 +70,8 @@
 
    [:.col-sm-offset-1.col-sm-10
     [:h1 "Explore the data"]
-    [:h4 "View the data presented in a map or a list."]
-    [:p "The two minute guide explains how we present the results, while the second animation reveals how we arrive at a predicted
-    range for each hospital's survival rate."]
+
+    [:p "The " [:b "two minute guide"] " explains how we present the results. Parents who helped us develop the web site found the guide useful in interpreting the data."]
 
     [:ul.nav.nav-pills {:role "tablist"}
 
@@ -82,7 +81,7 @@
                    :aria-controls "mapped-data"
                    :role "tab"
                    :on-click #(core/click->event-bus % :data :map)}
-       [:i.fa.fa-map-marker] " Map"]]
+       [:i.fa.fa-map-marker] " Choose a hospital"]]
 
      [:li {:class (active? :table)
            :role "presentation"}
@@ -90,7 +89,7 @@
                      :aria-controls "data-table"
                      :role "tab"
                      :on-click #(core/click->event-bus % :data :table)}
-       [:i.fa.fa-table] " List"]]
+       [:i.fa.fa-table] " List all data"]]
 
      [:li {:class (active? :animation)
            :role "presentation"}
@@ -100,7 +99,7 @@
                    :on-click #(core/click->event-bus % :data :animation)}
        [:i.fa.fa-video-camera] " Two minute guide"]]
 
-     [:li {:class (active? :animation2)
+     #_[:li {:class (active? :animation2)
            :role "presentation"}
       [:a#map-tab {:href "#"
                    :aria-controls "mapped-data"
@@ -131,6 +130,9 @@
       [:section.col-sm-offset-1.col-sm-10
        [:h2 "A two minute guide to how we present the results"]
        [:video {:src      "assets/how-animatic4.mp4" :controls "true"}]
+       [:p " Add thumbnail"]
+       [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
+       the " [:a {:href "/#/faqs"} "Everything Else section"] "."]
        ])]
 
    [:.tab-pane.col-sm-12 {:class (active? :animation2)

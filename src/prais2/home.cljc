@@ -27,9 +27,11 @@
      [:i.fa.fa-table.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Data"]]
-    [:p "Explore published survival statistics"]
-    [:p "Browse hospitals on a UK & Ireland map"]
-    [:p "View hospitals in a list"]]])
+    [:p [:b "Explore published survival statistics by:"]]
+    [:p "browsing hospitals individually;"]
+    [:p "viewing a one page summary of all hospitals;"]
+    [:p "watching our 2 minute video on how to interpret the results."]
+    ]])
 
 (rum/defc everything-else []
   [:.col-sm-4
@@ -42,10 +44,12 @@
      [:.title "Everything else"]]
     
     [:p "What happens if the data raises concerns?"]
-    [:p "More detail about how survival statistics are monitored"]
-    [:p "Limitations of this data"]
-    [:p "Information for families"]
-    [:p "About us and this website"]]])
+    [:p "More detail about how survival statistics are monitored, including an explanatory video."]
+    [:p "Limitations of this data."]
+    [:p "Information for families."]
+    [:p "About us and this website."]
+    
+    ]])
 
 (rum/defc render-home < rum/reactive []
   [:.container

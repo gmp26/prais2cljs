@@ -398,13 +398,13 @@
 (def dot-comments
   {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
 
-   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [add link]"
+   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
 
-   :outer-low  "There is some evidence that chances of survival in the hospital were lower than predicted." ; " [add link]"
+   :outer-low  "There is some evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
 
-   :low        "There is strong evidence that chances of survival in the hospital were lower than predicted." ; " [add link]"
+   :low        "There is strong evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
 
-   :high       "There is strong evidence that chances of survival in the hospital were higher than predicted." ; " [add link]"
+   :high       "There is strong evidence that chances of survival in the hospital were higher than predicted." ; " [todo: to 1/2]"
    })
 
 
@@ -421,6 +421,7 @@
    :survival-rate
    {:title "Survival rate"
     :body  "The percentage of operations where the child survived at least 30 days after their operation."}
+
    :unforeseen-factors
    {:title "Unforeseeable factors"
     :body  [:div
@@ -430,7 +431,8 @@
 
             [:p "There are also factors that we suspect may influence the outcome but cannot be included in the statistical
   formula because no routine audit data on them is collected, for instance the size of a hole in the heart."]
-            [:p "Together, we call these all “unforeseeable factors”."]]}})
+            [:p "Together, we call these all “unforeseeable factors”."]]
+    }})
 
 (def title "Everything else")
 
@@ -494,13 +496,14 @@
                                " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
                                years for each hospital since 2013 (see " [:a {:href "?#/intro"} "What, Why and How?"] ").  The predicted range
-        is the range in which we expect to see each hospital’s survival rate the majority of the time (19 times out of
-        20 for the dark blue bar, 998 times out of 1000 for the light blue bar). "
+        is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a {:href "#/faqs"} "How is the predicted range calculated?"] "). "
                                ]
                               [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and
        this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
                               [:p "Operations that occur within 30 days of each other are treated as a single operation when reporting overall
-       survival."]]}
+       survival."]
+                              [:p "NICOR publishes all its reports " [:a {:target "_blank"
+                                                                          :href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument"} "here"] ". "]]}
 
               {:title        "Where is this data from?"
                :short-answer "The data on each child’s operation and what was wrong with their heart comes from the hospital’s
@@ -542,7 +545,7 @@
 
               {:title        "Why does the width of the predicted range differ between hospitals?"
                :glossary     [:unforeseen-factors :survival-rate]
-               :short-answer "If a hospital does fewer operations, unforeseen factors have a bigger influence on its overall
+               :short-answer "If a hospital does fewer operations, unforeseeable factors have a bigger influence on its overall
       survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
 
                :body
@@ -563,13 +566,13 @@
 
                               [:h4 "1. Inaccurate data"]
                               [:p "Each hospital and the Office of National Statistics supply data on each child to the national audit body.
-       Although the " [:a {:href "/faq/2/1"} "data submitted is of very high quality"] ", there will always be some
+       Although the " [:a {:href "/#/faq/2/1"} "data submitted is of very high quality"] ", there will always be some
        inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong (for
        instance wrong weights are recorded) or missing, then this will result in a wrong predicted range."]
 
                               [:h4 "2. The formula doesn’t work well for that hospital"]
                               [:p "The statistical formula is applied to all operations at that hospital to calculate its overall predicted
-       range of survival. Although " [:a {:href "/faq/2/0"} "the formula as is as good as we can currently get it"] ", it is not perfect.
+       range of survival. Although " [:a {:href "/#/faq/2/0"} "the formula as is as good as we can currently get it"] ", it is not perfect.
        There will always be unique features about a child that affect their
        chance of survival that are not captured by national data collection and so cannot be part of a formula (e.g. the
        size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single
@@ -587,7 +590,7 @@
                               [:p "The chances of survival for children at the hospital could genuinely be much higher or lower than what is
        predicted, which would make it more likely that the hospital’s survival rate would lie outside its predicted
        range. The national audit process is intended to check that no hospital in the UK and Ireland has chances of
-       survival much lower than predicted. See " [:a {:href "/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
+       survival much lower than predicted. See " [:a {:href "/#/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
        find out what happens in such situations."]]}
 
               {:title        "When looking at ALL hospitals simultaneously, what does it mean if any of the hospitals have a survival
@@ -628,7 +631,10 @@
                              [:div
                               [:p " If a hospital’s survival rate is below its predicted range (either the main or extended), everyone wants to
        be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or
-       start to improve care if it’s decided that this is the reason."]
+       start to improve care if it’s decided that this is the reason. (See also "
+                               [:a {:href "#/faq/1/2"} "What does it mean if a hospital is outside its predicted range?"] ")."]
+
+
 
                               [:p "If a hospital's survival rate is below the predicted range, the "
                                [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/governance" :target "_blank"} "National Congenital
@@ -647,9 +653,9 @@
                               [:h4 "Step 2"]
                               [:p "With the corrected data:"]
                               [:p "If the hospital’s survival rate is still below its predicted range but within the extended predicted range
-       (i.e. in the light blue area), then an internal hospital review is conducted to understand whether there is cause
+       (like this " [:img {:src "/assets/below-predicted.png" :style {:height "18px"}}] "), then an internal hospital review is conducted to understand whether there is cause
        for concern. "]
-                              [:p "If the hospital’s survival rate is below the extended predicted range (to the left of the light blue bar),
+                              [:p "If the hospital’s survival rate is below the extended predicted range (like this " [:img {:src "/assets/below-extended.png" :style {:height "18px"}}]" ),
        then an external review of the hospital’s processes and results would be instigated."]
 
                               [:p "In all such cases, the reviews (whether internal or external) would be published online by NICOR at the same
@@ -657,7 +663,7 @@
 
                               [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
        any single hospital to be outside its predicted range but it is rare for any hospital to be outside its extended
-       range (see also: " [:a {:href "/faq/1/3"} "looking at ALL hospitals"] ")"]]}
+       range (see also: " [:a {:href "/#/faq/1/3"} "looking at ALL hospitals"] ")"]]}
 
               {:title        "Where did the formula used to calculate the predicted range come from?"
                :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS
@@ -716,7 +722,7 @@
                               [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about
        surgery outcomes. There are factors that affect a child’s chances of survival that are not routinely collected
        for national bodies and so cannot be captured by a formula that was developed using national data. These data are
-       also snapshots in time of what happened at each hospital. A run of unforeseen factors could cause a very good
+       also snapshots in time of what happened at each hospital. A run of unforeseeable factors could cause a very good
        hospital to have worse outcomes than predicted, so we need to be careful about reading too much into results from
        any single time period."]]}
 
@@ -761,7 +767,7 @@
                               [:p "Therefore, if it is available, “30 day survival” after surgery is considered a more objective and preferable
        statistic than “survival to hospital discharge”, since it does not depend on the hospital’s discharge procedures."]
 
-                              [:p "While " [:a {:href "/faq/2/3"} "longer term survival"] " is extremely important, 30-day survival post
+                              [:p "While " [:a {:href "/#/faq/2/3"} "longer term survival"] " is extremely important, 30-day survival post
        surgery was initially chosen as it is more straightforward to link this outcome to a child’s surgery and
        post-operative care than a longer range survival  period which might, for instance, incorporate further treatment
        at different hospitals. The other important aspect of monitoring 30-day survival, particularly within hospitals,
@@ -770,13 +776,13 @@
 
    {:section "My family or child"
     :faqs
-             [{:title        "Which hospital should I go to?"
-               :short-answer "This website cannot tell you which hospital to go to. Please discuss this with your child’s
+             [{:title        "Can this data inform my choice of hospital?"
+               :short-answer "You can see how a hospital's survival rate compares to its predicted range, but this website cannot tell you which hospital to go to. Please discuss this with your child’s
       clinical team or access the support offered by specialist charities such as the Children’s Heart Federation. "
                :glossary     []
                :body
                              [:div
-                              [:p "You can use the " [:a {:href "/data"} "national audit data"] " to see how the different hospitals are doing compared to their predicted
+                              [:p "You can " [:a {:href "/#/data"} "explore the data"] " to see how the different hospitals are doing compared to their predicted
        range calculated for the last 3 years.
        You can also use the "
                                [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500" :target "_blank"} "national audit website"]
@@ -795,7 +801,7 @@
                               [:p "You can also access the support available from national charities such as the "
                                [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "Children’s Heart Federation"]
                                " or " [:a {:href "http://www.lhm.org.uk/" :target "_blank"} "Little Hearts Matter"]
-                               " or " [:a {:href "/faq/3/2"} "local charities for your specialist children’s hospital"] ".
+                               " or " [:a {:href "/#/faq/3/2"} "local charities for your specialist children’s hospital"] ".
                                These guides on "
                                [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"} "speaking to your child’s surgeon"]
                                " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "seeking a second opinion"]
@@ -886,6 +892,17 @@
 
                           [:p "If you have any comments about the website please email: (MIKE: Generic email)"]]}
 
+              {:title    "Contact us"
+               :glossary []
+               :body
+                         [:div
+                          [:p "For general questions and comments about this website please email sas@childrensheartsurgery.info."]
+                          [:p "For questions about the mathematical formula used, or the predicted range, please email mailto:ch@childrensheartsurgery.info."]
+                          ; Add David's institute
+                          [:p "For reporting technical problems, please email mike@childrensheartsurgery.info."]
+                          [:p "For questions about the audit process or any individual hospital's results, please contact the national audit body "
+                           [:a {:href "https://www.ucl.ac.uk/nicor"} "NICOR"]]]}
+
               {:title    "How we developed this site"
                :glossary []
                :body
@@ -930,13 +947,13 @@
                    :title          "Survival rate"
                    :body           "The percentage of operations where the child survived at least 30 days after their operation."}
                   {:glossary-entry :unforeseen-factors
-                   :title          "Unforeseen factors"
+                   :title          "Unforeseeable factors"
                    :body           "It is impossible to predict precisely what is going to happen in an individual operation. This is partly
       due to the inevitable inability to predict the future with certainty – all people are physically unique and will
       react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. 
       Our inability to predict precisely is also partly because there are factors that we suspect may influence the
       outcome but cannot be included in the statistical method either because these factors are difficult to define or
-      no routine data on them is collected. Together, we call these all “unforeseen factors”."}]}])
+      no routine data on them is collected. Together, we call these all “unforeseeable factors”."}]}])
 
 ;;;
 ;; These theme colours are selectable in the footer (at least till we decide on one)
