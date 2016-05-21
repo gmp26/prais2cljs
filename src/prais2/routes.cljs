@@ -17,16 +17,6 @@
 ;;;
 ;(secretary/set-config! :prefix "#")
 
-;;
-;; When the user presses the back or forwards button, onpopstate is fired.
-;; We use this to dispatch the new URL in javascript.
-;;
-(set! (.-onpopstate js/window) #(do
-                                 (prn "popstate")
-                                 (js/console.log %)
-                                 (when-not (.-isNavigation %)
-                                   (js/console.log "Token set programmatically"))
-                                 (secretary/dispatch! (.. js/window -location -pathname))))
 
 
 ;;;
@@ -101,11 +91,26 @@
 ;;
 (defonce history (let [h (History. false false "dummy")]
                    (goog.events/listen h EventType/NAVIGATE #(do (prn "NAVIGATE")
-                                                                 (.log js/console %)
-                                                                 ;(secretary/dispatch! (.-token %))
+                                                                 (if-not (.-isNavigation %)
+                                                                   (do
+                                                                     ;; in this case, we're setting it
+                                                                     (js/console.log "Toke set programmatically")
+                                                                     (secretary/dispatch! (.-token %))
+                                                                     ;; let's scroll to the top to simulate a navigation
+                                                                     (js/window.scrollTo 0 0))
+                                                                   (prn "User navigation"))
                                                                  ))
                    (doto h (.setEnabled true))
                    h))
+
+;;
+;; When the user presses the back or forwards button, onpopstate is fired.
+;; We use this to dispatch the new URL in javascript.
+;;
+(set! (.-onpopstate js/window) #(do
+                                 (prn "popstate")
+                                 (js/console.log %)
+                                 (secretary/dispatch! (.. js/window -location -pathname))))
 
 ; old code
 #_(let [h (History. false false "dummy")]

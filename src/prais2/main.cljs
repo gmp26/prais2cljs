@@ -227,6 +227,7 @@
      (= page :home)
      (do
        (.pushState js/history [] "" (routes/homes))
+       ;(.replaceState js/history [] "" (routes/homes))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
@@ -236,6 +237,7 @@
      (= page :intro)
      (do
        (.pushState js/history [] "" (routes/intros))
+       ;(.replaceState js/history [] "" (routes/intros))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -245,6 +247,7 @@
      (= page :data)
      (do
        (.pushState js/history [] "" (routes/datas))
+       ;(.replaceState js/history [] "" (routes/datas))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -256,7 +259,9 @@
        (prn "section = " section)
        (deselect-all)
        (when (or (= section :top) (= section nil))
-         (.pushState js/history [] "" (routes/faqs {:section :top})))
+         (.pushState js/history [] "" (routes/faqs {:section :top}))
+         ;(.replaceState js/history [] "" (routes/faqs {:section :top}))
+         )
        (map-indexed key-with
                     [(chrome/header)
                      #_(render-everything-else section)
@@ -404,8 +409,8 @@
               (prn faq-ref)
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
-                    ;(.pushState js/history [] "" (routes/faq {:section sec :id id}))
-                    (.replaceState js/history [] "" (routes/faq {:section sec :id id}))
+                    (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                    ;(.replaceState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
   ;;;
