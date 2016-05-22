@@ -16,6 +16,7 @@
                  [cljsjs/jquery "1.9.1-0"]
                  [cljsjs/bootstrap "3.3.6-0"]
 
+                 [bidi "2.0.9"]
                  [secretary "1.2.3"]
                  [devcards "0.2.1"]
                  [rum "0.8.3"]

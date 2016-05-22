@@ -251,8 +251,8 @@
         dotless (disj bars :dot)]
     [:div
      [:.annotation {:key 1} text]
-     [:.chart-cell.annotated {:key 2}
-      [:div.bar-chart.annotated
+     [:.chart-cell {:key 2}
+      [:div.bar-chart
        (map-indexed key-with
 
                     (cond
@@ -677,13 +677,11 @@
   [:h3 (:h-name selected-row)])
 
 
-(rum/defc legend  < rum/reactive []
+(rum/defc legend  < rum/reactive [selected-row]
   [:.legend
    [:.box
-    [:p {:style {:color "orange
-    "}} "Legend (See also: two minute guide)"]
-    (let [ap (rum/react core/app)
-          selected-row content/sample-hospital]
+    [:p {:style {:color "orange"}} "Legend (See also: two minute guide)"]
+    (let [ap (rum/react core/app)]
       (map-indexed key-with
                    [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner}
                                           "We expect the hospital's survival rate to be inside this bar
@@ -707,7 +705,7 @@
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (hospital-data h-code)
                        (interpretation selected-row)
-                       (legend)
+                       (legend selected-row)
                        (hospital-charities h-code)
                        ]))]
       [:#detail

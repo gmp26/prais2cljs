@@ -228,6 +228,7 @@
    (cond
      (= page :home)
      (do
+       (prn "routes/homes = " (routes/homes))
        (.pushState js/history [] "" (routes/homes))
        ;(.replaceState js/history [] "" (routes/homes))
        (deselect-all)
@@ -238,6 +239,7 @@
 
      (= page :intro)
      (do
+       (prn "routes/intros = " (routes/intros))
        (.pushState js/history [] "" (routes/intros))
        ;(.replaceState js/history [] "" (routes/intros))
        (deselect-all)
@@ -248,6 +250,7 @@
 
      (= page :data)
      (do
+       (prn "routes/datas = " (routes/datas))
        (.pushState js/history [] "" (routes/datas))
        ;(.replaceState js/history [] "" (routes/datas))
        (deselect-all)
@@ -261,6 +264,7 @@
        (prn "section = " section)
        (deselect-all)
        (when (or (= section :top) (= section nil))
+         (prn "routes/faqs = " (routes/faqs))
          (.pushState js/history [] "" (routes/faqs {:section :top}))
          ;(.replaceState js/history [] "" (routes/faqs {:section :top}))
          )
@@ -411,6 +415,7 @@
               (prn faq-ref)
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
+                    (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
                     (.pushState js/history [] "" (routes/faq {:section sec :id id}))
                     ;(.replaceState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))

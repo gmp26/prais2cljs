@@ -9,18 +9,31 @@
     #?(:cljs [goog.events :as events])
             ))
 
-;;;
-;; define app state once so it doesn't re-initialise on reload.
-;; figwheel counter is a placeholder for any state affected by figwheel live reload events
-;;;
+#?(:cljs
+   (defn irl "internal resource locator"
+     [fragment]
+     (irl fragment false)
+
+     [fragment static]
+     (if static
+       (str "/" fragment ".html")
+       (str "/#/" fragment))))
+#?(:clj
+   (defn irl "internal resource locator"
+     [fragment]
+     (irl fragment true)
+
+     [fragment static]
+     (str "/" fragment ".html")))
 
 #?(:cljs
    (defn ready [handler]
      (.ready (js/$ js/document) handler)))
 
-;;
-;; todo: configure this?
-;;
+;;;
+;; define app state once so it doesn't re-initialise on reload.
+;; figwheel counter is a placeholder for any state affected by figwheel live reload events
+;;;
 (defonce app (atom {:datasource :2014
                     :page :home
                     :section :map

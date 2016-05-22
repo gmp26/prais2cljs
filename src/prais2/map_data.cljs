@@ -29,11 +29,6 @@
                      "(0-16 years old). "
                      "This data is updated annually and covers a 3 year period.")]]
 
-
-
-           [:.hospital-map.col-sm-6.col-md-4.col-xs-12
-            (map/hospitals)]
-
            (if (nil? (:map-h-code (rum/react core/app)))
              [:.col-sm-6.col-xs-12.col-md-8 (hospital-list)]
              [:.col-sm-6.col-xs-12.col-md-8
@@ -42,7 +37,10 @@
                                                    :on-click  #(core/click->event-bus % :reset-map-to-home nil)
                                                    :tab-index 0}
                 [:i.fa.fa-chevron-left] " Back"]]
-              (data/hospital-detail (:map-h-code (rum/react core/app)))])])
+              (data/hospital-detail (:map-h-code (rum/react core/app)))])
+
+           [:.hospital-map.col-sm-6.col-md-4.col-xs-12
+            (map/hospitals)]])
 
 
 (defn px [pixels] (str pixels "px"))
