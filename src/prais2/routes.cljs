@@ -15,7 +15,7 @@
 ;;;
 ;; basic hashbang routing to configure some options
 ;;;
-;(secretary/set-config! :prefix "#")
+(secretary/set-config! :prefix "#")
 
 
 
@@ -108,7 +108,8 @@
 (set! (.-onpopstate js/window) #(do
                                  (prn "popstate")
                                  (js/console.log %)
-                                 (secretary/dispatch! (.. js/window -location -pathname))))
+                                 ;(secretary/dispatch! (.. js/window -location -pathname))
+                                 ))
 
 ; old code
 #_(let [h (History. false false "dummy")]

@@ -236,13 +236,13 @@
    (map-indexed key-with [(menu-button) (hospital-list)])
    ])
 
-(rum/defc hospitals < map-view rum/reactive []
-  [:div.row
+(rum.core/defc hospitals < map-view rum/reactive []
+  [:#open-map.hospital-map {:tab-index 0 :key 1}
+   (london-button)
+   (home-button)
    [:.col-xs-12 {:key 2}
-    [:#open-map.hospital-map {:tab-index 0 :key 1}
-     (london-button)
-     (home-button)
-     ;     (hospital-dropdown)
-     ]
     [:#popup {:key 2}]
-    ]])
+    ]
+   ]
+  #_[:div.row
+])

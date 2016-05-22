@@ -538,8 +538,8 @@
     [:p "Clicking on a hospital code will bring up specific information for that hospital along with "
      "an interpretation of its survival rate. It is only valid to compare a hospital's survival rate "
      "to its predicted range and not to other hospitals. "
-     "Read more about this in " [:a {:href "#/faqs"} "Everything Else"] ". "]
-    [:p "The " [:a {:href "#/faqs"} "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
+     "Read more about this in " [:a (core/href "faqs") "Everything Else"] ". "]
+    [:p "The " [:a (core/href "faqs") "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
     [:p "You can use your mouse to hover over the chart to bring up more explanation."]]
 
    (table1 app data event-bus)])

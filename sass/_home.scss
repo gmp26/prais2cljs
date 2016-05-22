@@ -31,6 +31,7 @@
             position: absolute;
             top:      10px;
             right:    10px;
+            font-size: 30px;
         }
         .title {
              display: inline-block;
@@ -48,6 +49,10 @@
   color: #ffffff;
   margin: 20px 0px 10px 0px;
   border: none;
+  border-radius: 20px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  max-width: 340px;
   .vis-sm-block {
      height:500px;;
   }
@@ -59,6 +64,24 @@
     box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
     .active {
       background-color: $intro;
+      color: white;
+    }
+}
+.home-nav.well.data {
+    color: #888888; //$intro;
+    margin: 20px 0 10px;
+    box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
+    .active {
+      background-color: $data;
+      color: white;
+    }
+}
+.home-nav.well.faqs {
+    color: #888888; //$intro;
+    margin: 20px 0 10px;
+    box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
+    .active {
+      background-color: $faqs;
       color: white;
     }
 }
@@ -87,11 +110,11 @@
 }
 
 .well.data {
-    background-color:  $data;
+    background-color:  white; //$data;
 }
 
 .well.faqs {
-    background-color: $faqs;
+    background-color: white; //$faqs;
 }
 
 .well h2 {

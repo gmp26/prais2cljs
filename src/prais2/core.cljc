@@ -9,22 +9,76 @@
     #?(:cljs [goog.events :as events])
             ))
 
+;;
+;; url handling
+;;
+
 #?(:cljs
    (defn irl "internal resource locator"
-     [fragment]
-     (irl fragment false)
+     ([fragment]
+      (irl fragment false))
 
-     [fragment static]
-     (if static
-       (str "/" fragment ".html")
-       (str "/#/" fragment))))
+     ([fragment static]
+      (if static
+        (str "/" fragment ".html")
+        (str "/#/" fragment)))))    ;; :todo remove #/ when hashbangs go
+
 #?(:clj
    (defn irl "internal resource locator"
-     [fragment]
-     (irl fragment true)
+     ([fragment]
+      (irl fragment true))
 
-     [fragment static]
-     (str "/" fragment ".html")))
+     ([fragment static]
+      (str "/" fragment ".html"))))
+
+(defn absolute-path? [path]
+  (cond
+    (= (subs path 0 4) "http") true
+    (= (first path) "/") true
+    :else false))
+
+(defn isrc
+  ([path] {:src (if (absolute-path? path) path (str "/" path))})
+  ;;(core/isrc "assets/foo.png")
+  ;;=> {:src "/assets/foo.png"}
+
+  ([path attrs] (merge (isrc path) attrs))
+  ;;(core/isrc "/assets/foo.png" {:style {:color "red"}})
+  ;;=> {:src "/assets/foo.png", :style {:color "red"}}
+
+  ([path key value & key-values]
+   (merge (isrc path) (hash-map key value) (apply hash-map key-values)))
+  ;;(core/isrc "/assets/foo.png" :style {:color "red"})
+  ;;=> {:src "/assets/foo.png", :style {:color "red"}}
+  ;;
+  ;;(core/isrc "/assets/foo.png" :style {:color "red"} :width 3)
+  ;;=> {:src "/assets/foo.png", :style {:color "red"}, :width 3}
+  )
+
+
+
+(defn href
+  ([path] {:href (if (absolute-path? path) path (irl path))})
+  ;;(href "faq/1/2")
+  ;;=> {:href "/#/faq/1/2"}
+
+  ([path attrs] (merge (href path) attrs))
+  ;;(href "faq/1/2" {:style {:color "red"}})
+  ;;=> {:href "/assets/foo.png", :style {:color "red"}}
+
+  ([path key value & key-values]
+   (merge (href path) (hash-map key value) (apply hash-map key-values)))
+  ;;(core/isrc "/assets/foo.png" :style {:color "red"})
+  ;;=> {:src "/assets/foo.png", :style {:color "red"}}
+  ;;
+  ;;(core/isrc "/assets/foo.png" :style {:color "red"} :width 3)
+  ;;=> {:src "/assets/foo.png", :style {:color "red"}, :width 3}
+  )
+
+
+
+
+
 
 #?(:cljs
    (defn ready [handler]

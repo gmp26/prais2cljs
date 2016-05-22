@@ -1,5 +1,6 @@
 (ns ^:figwheel-always prais2.content
-  (:require [rum.core :as rum]))
+  (:require [rum.core :as rum]
+            [prais2.core :as core]))
 
 ;;;
 ;; About us mugshot list
@@ -226,136 +227,133 @@
 
 
 (def hospital-metadata
-  {:RVB [[:a {:href "http://belfasttrust-cardiacsurgery.hscni.net/about-cardiac-surgery/location/" :target "_blank"}
+  {:RVB [[:a (core/href "http://belfasttrust-cardiacsurgery.hscni.net/about-cardiac-surgery/location/" :target "_blank")
           "Belfast, Royal Victoria Hospital"]
-         [:a {:href "http://www.childrensheartbeattrust.org/" :target "_blank"} "Children’s Heartbeat Trust"]]
+         [:a (core/href "http://www.childrensheartbeattrust.org/" :target "_blank") "Children’s Heartbeat Trust"]]
 
-   :HSC [[:a {:href "http://theharleystreetclinic.co.uk/cardiac/congenital-heart-care" :target "_blank"}
+   :HSC [[:a (core/href "http://theharleystreetclinic.co.uk/cardiac/congenital-heart-care" :target "_blank")
           "London, Harley Street Clinic"]]
 
-   :GRL [[:a {:href "http://www.leicestershospitals.nhs.uk/aboutus/leicester-hospitals-charity/childrens-heart-unit/" :target "_blank"}
+   :GRL [[:a (core/href "http://www.leicestershospitals.nhs.uk/aboutus/leicester-hospitals-charity/childrens-heart-unit/" :target "_blank")
           "Leicester, Glenfield Hospital"]
-         [:a {:href "http://www.heartlink-glenfield.org.uk/" :target "_blank"} "Heart Link"]]
+         [:a (core/href "http://www.heartlink-glenfield.org.uk/" :target "_blank") "Heart Link"]]
 
-   :FRE [[:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx" :target "_blank"}
+   :FRE [[:a (core/href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx" :target "_blank")
           "Newcastle, Freeman Hospital"]
-         [:a {:href   "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit_childrens-heart-unit-fund-chuf.aspx"
-              :target "_blank"} "Newcastle Children’s Heart Unit Fund"]]
+         [:a (core/href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit_childrens-heart-unit-fund-chuf.aspx"
+                        :target "_blank") "Newcastle Children’s Heart Unit Fund"]]
 
-   :RHS [[:a {:href   "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"
-              :target "_blank"}
+   :RHS [[:a (core/href "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"
+                        :target "_blank")
           "Glasgow, Royal Hospital for Children"]
-         [:a {:href "http://www.youngheart.info/" :target "_blank"}
+         [:a (core/href "http://www.youngheart.info/" :target "_blank")
           "The Scottish Association for Children with Heart Disorders (SACHD)"]]
 
-   :BRC [[:a {:href "http://www.uhbristol.nhs.uk/patients-and-visitors/your-hospitals/bristol-royal-hospital-for-children/the-paediatric-cardiac-service/" :target "_blank"}
-          "Bristol Royal Hospital for Children"]
-         [:a {:href "http://www.heartfamilies.org.uk/" :target "_blank"} "Heart Families South West"]
-         [:a {:href "http://www.heartcircle.org/" :target "_blank"} "South West Children’s Heart Circle"]]
+   :BRC [[:a (core/href "http://www.uhbristol.nhs.uk/patients-and-visitors/your-hospitals/bristol-royal-hospital-for-children/the-paediatric-cardiac-service/"
+                        :target "_blank") "Bristol Royal Hospital for Children"]
+         [:a (core/href "http://www.heartfamilies.org.uk/" :target "_blank") "Heart Families South West"]
+         [:a (core/href "http://www.heartcircle.org/" :target "_blank") "South West Children’s Heart Circle"]]
 
-   :SGH [[:a {:href   "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"
-              :target "_blank"} "Southampton, Wessex Cardiothoracic Centre (Southampton Children’s Hospital)"]
-         [:a {:href "http://www.oceanward.co.uk/" :target "_blank"} "Families of Ocean Ward"]]
+   :SGH [[:a (core/href "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"
+                        :target "_blank") "Southampton, Wessex Cardiothoracic Centre (Southampton Children’s Hospital)"]
+         [:a (core/href "http://www.oceanward.co.uk/" :target "_blank") "Families of Ocean Ward"]]
 
-   :LGI [[:a {:href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/" :target "_blank"}
-          "Leeds General Infirmary"]
-         [:a {:href "http://chsf.org.uk/" :target "_blank"} "The Childrens Heart Surgery Fund"]]
+   :LGI [[:a (core/href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/" :target "_blank") "Leeds General Infirmary"]
+         [:a (core/href "http://chsf.org.uk/" :target "_blank") "The Childrens Heart Surgery Fund"]]
 
-   :OLS [[:a
-          {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank"}
+   :OLS [[:a (core/href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank")
           "Dublin, Our Lady's Children's Hospital"]
-         [:a {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank"}
+         [:a (core/href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank")
           "Heart Children Ireland"]]
 
-   :NHB [[:a {:href "http://www.thebromptonfountain.org.uk/" :target "_blank"} "The Brompton Fountain"]]
+   :NHB [[:a (core/href "http://www.thebromptonfountain.org.uk/" :target "_blank") "The Brompton Fountain"]]
 
-   :ACH [[:a {:href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank"} "Liverpool, Alder Hey Hospital"]
-         [:a {:href "http://www.alderheycharity.org/" :target "_blank"} "Alder Hey Charity"]]
+   :ACH [[:a (core/href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank") "Liverpool, Alder Hey Hospital"]
+         [:a (core/href "http://www.alderheycharity.org/" :target "_blank") "Alder Hey Charity"]]
 
-   :GUY [[:a {:href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx" :target "_blank"}
+   :GUY [[:a (core/href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx" :target "_blank")
           "London, Evelina London Children's Hospital"]
-         [:a {:href "http://www.echo-evelina.org.uk/" :target "_blank"} "ECHO – Evelina Children’s Heart Organisation"]]
+         [:a (core/href "http://www.echo-evelina.org.uk/" :target "_blank") "ECHO – Evelina Children’s Heart Organisation"]]
 
-   :BCH [[:a {:href "http://www.bch.nhs.uk/content/heart-unit" :target "_blank"} "Birmingham Children’s Hospital"]
-         [:a {:href "http://www.youngatheart.org.uk/" :target "_blank"} "Young at Heart"]
-         [:a {:href "http://www.bch.org.uk" :target "_blank"} "Birmingham Children’s Hospital Charity"]]
+   :BCH [[:a (core/href "http://www.bch.nhs.uk/content/heart-unit" :target "_blank") "Birmingham Children’s Hospital"]
+         [:a (core/href "http://www.youngatheart.org.uk/" :target "_blank") "Young at Heart"]
+         [:a (core/href "http://www.bch.org.uk" :target "_blank") "Birmingham Children’s Hospital Charity"]]
 
-   :GOS [[:a {:href   "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"
-              :target "_blank"}
-          "London, Great Ormond Street Hospital for Children"]
-         [:a {:href "http://www.gosh.org/" :target "_blank"} "Great Ormond Street Hospital Charity GOSHCC"]]})
+   :GOS [[:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"
+                        :target "_blank") "London, Great Ormond Street Hospital for Children"]
+         [:a (core/href "http://www.gosh.org/" :target "_blank") "Great Ormond Street Hospital Charity GOSHCC"]]})
 
 
 (def unassoc-charity-list
   [
-   [:a {:href "//www.amelia-matters.org.uk" :target "_blank"} "Amelia Matters: supporting children born with congenital
+   [:a (core/href "//www.amelia-matters.org.uk" :target "_blank") "Amelia Matters: supporting children born with congenital
     heart disease."]
 
-   [:a {:href "//www.arc-uk.org" :target "_blank"} "Antenatal Results and Choices (ARC): helping parents and healthcare
+   [:a (core/href "//www.arc-uk.org" :target "_blank") "Antenatal Results and Choices (ARC): helping parents and healthcare
     professionals through antenatal screening and its consequences"]
 
-   [:a {:href "//www.heartrhythmcharity.org.uk" :target "_blank"} "Arrhythmia Alliance: improving the diagnosis, treatment
+   [:a (core/href "//www.heartrhythmcharity.org.uk" :target "_blank") "Arrhythmia Alliance: improving the diagnosis, treatment
     and quality of life for all those affected by arrhythmias."]
 
-   [:a {:href "//www.benwilliamstrust.org.uk" :target "_blank"} "Ben Williams Trust: supports children with abnormal heart
+   [:a (core/href "//www.benwilliamstrust.org.uk" :target "_blank") "Ben Williams Trust: supports children with abnormal heart
     rhythms (arrhythmias) and their families "]
 
-   [:a {:href "//www.bhf.org.uk" :target "_blank"} "British Heart Foundation: working to fight against cardiovascular
+   [:a (core/href "//www.bhf.org.uk" :target "_blank") "British Heart Foundation: working to fight against cardiovascular
     disease."]
 
-   [:a {:href "//www.c-r-y.org.uk" :target "_blank"} "Cardiac Risk in the Young (CRY): preventing young sudden cardiac
+   [:a (core/href "//www.c-r-y.org.uk" :target "_blank") "Cardiac Risk in the Young (CRY): preventing young sudden cardiac
     deaths through awareness, screening and research, and supporting affected families."]
 
-   [:a {:href "//www.cardiomyopathy.org" :target "_blank"} "Cardiomyopathy UK: providing support to patients and families
+   [:a (core/href "//www.cardiomyopathy.org" :target "_blank") "Cardiomyopathy UK: providing support to patients and families
     and promoting research for the disease cardiomyopathy"]
 
-   [:a {:href "//www.heartchild.info" :target "_blank"} "Children’s Heart Association: supporting families of children
+   [:a (core/href "//www.heartchild.info" :target "_blank") "Children’s Heart Association: supporting families of children
     with a heart condition."]
 
-   [:a {:href "//www.chfed.org.uk" :target "_blank"} "Children’s Heart Federation: the main umbrella body for British
+   [:a (core/href "//www.chfed.org.uk" :target "_blank") "Children’s Heart Federation: the main umbrella body for British
     congenital heart disease charities and voluntary organisations."]
 
-   [:a {:href "//www.chd-uk.co.uk" :target "_blank"} "Congenital Heart Defects UK: educating and raising awareness of
+   [:a (core/href "//www.chd-uk.co.uk" :target "_blank") "Congenital Heart Defects UK: educating and raising awareness of
     congenital heart defects and supporting patients and families."]
 
-   [:a {:href "//www.cafamily.org.uk" :target "_blank"} "Contact a family: a national charity for families with disabled
+   [:a (core/href "//www.cafamily.org.uk" :target "_blank") "Contact a family: a national charity for families with disabled
     children, providing information, advice and support."]
 
-   [:a {:href "//www.dhg.org.uk" :target "_blank"} "Down’s Heart Group: a charity offering support and information
+   [:a (core/href "//www.dhg.org.uk" :target "_blank") "Down’s Heart Group: a charity offering support and information
     relating to heart conditions associated with Down's Syndrome."]
 
-   [:a {:href "//www.heartline.org.uk" :target "_blank"} "Heartline: supports children with heart disorders and their
+   [:a (core/href "//www.heartline.org.uk" :target "_blank") "Heartline: supports children with heart disorders and their
     families, whatever the condition wherever it is treated"]
 
-   [:a {:href "//www.lagans.org.uk" :target "_blank"} "Lagan’s Foundation: offers home respite and support services for
+   [:a (core/href "//www.lagans.org.uk" :target "_blank") "Lagan’s Foundation: offers home respite and support services for
      young children with heart defects or feeding issues."]
 
-   [:a {:href "//www.lhm.org.uk" :target "_blank"} "Little Hearts Matter: offers support and information, and raises
+   [:a (core/href "//www.lhm.org.uk" :target "_blank") "Little Hearts Matter: offers support and information, and raises
     awareness of those affected when a child has only half a heart."]
 
-   [:a {:href "//www.maxappeal.org.uk" :target "_blank"} "Max Appeal: Supports families affected by DiGeorge syndrome,
+   [:a (core/href "//www.maxappeal.org.uk" :target "_blank") "Max Appeal: Supports families affected by DiGeorge syndrome,
      VCFS and 22q11.2 deletion."]
 
-   [:a {:href "//www.younghearts.org.uk" :target "_blank"} "Oxford Young Hearts:  support children with heart conditions
+   [:a (core/href "//www.younghearts.org.uk" :target "_blank") "Oxford Young Hearts:  support children with heart conditions
      and their families in the counties served by the Oxford University Hospitals NHS Trust. "]
 
-   [:a {:href "//www.patchesheartgroup.org" :target "_blank"} "Patches Heart Group: a support group for children with
+   [:a (core/href "//www.patchesheartgroup.org" :target "_blank") "Patches Heart Group: a support group for children with
     congenital heart defects / aquired heart conditions and their families in the community."]
 
-   [:a {:href "//www.youngheart.info" :target "_blank"} "The Scottish Association for Children with Heart Disorders
+   [:a (core/href "//www.youngheart.info" :target "_blank") "The Scottish Association for Children with Heart Disorders
      (SACHD): supports children and young adults with congenital heart disorders, and the families in Scotland."]
 
-   [:a {:href "//www.thesf.org.uk" :target "_blank"} "Somerville Foundation: supports young people and adults born with a
+   [:a (core/href "//www.thesf.org.uk" :target "_blank") "Somerville Foundation: supports young people and adults born with a
     heart condition."]
 
-   [:a {:href "//www.22crew.org" :target "_blank"} "The 22 Crew:  A charity providing resources for patients with 22q
+   [:a (core/href "//www.22crew.org" :target "_blank") "The 22 Crew:  A charity providing resources for patients with 22q
      deletion and their families."]
 
-   [:a {:href "//www.tinytickers.org" :target "_blank"} "Tiny tickers: improving the detection, care and treatment of
+   [:a (core/href "//www.tinytickers.org" :target "_blank") "Tiny tickers: improving the detection, care and treatment of
     babies with serious heart conditions"]
    ])
 
-(rum/defc render-charity-list []
+(defn render-charity-list []
   [:div
    [:h3 "Charities"]
    [:ul
@@ -449,9 +447,9 @@
        all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also
        develop problems with their heart as they grow up which require hospital care (called acquired heart disease). "]
                           [:p "Read more about "
-                           [:a {:href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank"}
+                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank")
                             "different heart conditions"] " and caring for children with heart conditions on the "
-                           [:a {:href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank"}
+                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank")
                             "Children’s Heart Federation’s website."]]]}
 
 
@@ -462,20 +460,20 @@
       any hospital are much lower than predicted."
                :body
                              [:div
-                              [:p [:a {:href   "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
-                                       :target "_blank"}]
-                               [:img.thumbnail.pull-left.w100 {:src "assets/bristol.png"}]
+                              [:p [:a (core/href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
+                                                 :target "_blank")]
+                               [:img.thumbnail.pull-left.w100 (core/isrc "assets/bristol.png")]
                                "In the 1990s, problems were found with the standard of care for children having heart surgery at the Bristol
                                Royal Infirmary. The proportion of children who died after surgery at Bristol was much higher than other UK
                                hospitals. There was a formal inquiry into what happened ("
-                               [:a {:href   "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
-                                    :target "_blank"} "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new
+                               [:a (core/href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
+                                              :target "_blank") "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new
              compulsory national reporting system so that the proportion of children surviving to 30 days after surgery
              for all hospitals have been published every year since 2001. When there is some evidence that survival
              rates were lower than expected, the results are checked further by the hospital and the national audit body (NICOR)."]
 
                               [:p "The UK and Ireland now have one of the strongest monitoring programmes in the world. Since reporting started, "
-                               [:a {:href "http://www.bbc.co.uk/news/health-32162803" :target "_blank"} "survival rates have been improving"] "
+                               [:a (core/href "http://www.bbc.co.uk/news/health-32162803" :target "_blank") "survival rates have been improving"] "
         and now " [:strong "over 97% of children survive to at least one month after surgery."]]]}
 
               {:title        "How are survival rates monitored?"
@@ -485,25 +483,25 @@
                :glossary     [:survival-rate]
                :body
                              [:div
-                              [:p [:a {:href "http://www.ucl.ac.uk/nicor/patients" :target "_blank"}
-                                   [:img.thumbnail.pull-left.w100 {:src "assets/nicor.png"}]]
-                               "Until 2013, the national audit body " [:a {:href "http://www.ucl.ac.uk/nicor/patients" :target "_blank"} "NICOR"]
+                              [:p [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank")
+                                   [:img.thumbnail.pull-left.w100 (core/isrc "assets/nicor.png")]]
+                               "Until 2013, the national audit body " [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank") "NICOR"]
                                " only published survival rates for certain "
-                               [:a {:href   "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
-                                    :target "_blank"} "types of procedure"] " because there was no clear way to put overall survival rates for
-             each hospital into context (see " [:a {:href "?#/intro"} "What, Why and How?"] "). But "
-                               [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank"} "researchers"]
+                               [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
+                                              :target "_blank") "types of procedure"] " because there was no clear way to put overall survival rates for
+             each hospital into context (see " [:a (core/href "intro") "What, Why and How?"] "). But "
+                               [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "researchers"]
                                " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
-                               years for each hospital since 2013 (see " [:a {:href "?#/intro"} "What, Why and How?"] ").  The predicted range
-        is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a {:href "#/faqs"} "How is the predicted range calculated?"] "). "
+                               years for each hospital since 2013 (see " [:a (core/href "intro") "What, Why and How?"] ").  The predicted range
+        is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a (core/href "faqs") "How is the predicted range calculated?"] "). "
                                ]
                               [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and
        this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
                               [:p "Operations that occur within 30 days of each other are treated as a single operation when reporting overall
        survival."]
-                              [:p "NICOR publishes all its reports " [:a {:target "_blank"
-                                                                          :href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument"} "here"] ". "]]}
+                              [:p "NICOR publishes all its reports "
+                               [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument" :target "_blank") "here"] ". "]]}
 
               {:title        "Where is this data from?"
                :short-answer "The data on each child’s operation and what was wrong with their heart comes from the hospital’s
@@ -514,7 +512,7 @@
                              [:div
                               [:p "Each hospital in the UK and Ireland must collect data on every surgery or intervention carried out on a
        child for heart problems. Every three months, hospitals must submit this data to the national audit body, "
-                               [:a {:href "http://www.ucl.ac.uk/nicorum/patients" :target "_blank"} "NICOR "] "(The National Institute for
+                               [:a (core/href "http://www.ucl.ac.uk/nicorum/patients" :target "_blank") "NICOR "] "(The National Institute for
         Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes
         independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health,
         the Care Quality Commission (CQC) and other NHS regulatory bodies."]
@@ -566,13 +564,13 @@
 
                               [:h4 "1. Inaccurate data"]
                               [:p "Each hospital and the Office of National Statistics supply data on each child to the national audit body.
-       Although the " [:a {:href "/#/faq/2/1"} "data submitted is of very high quality"] ", there will always be some
+       Although the " [:a (core/href "faq/2/1") "data submitted is of very high quality"] ", there will always be some
        inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong (for
        instance wrong weights are recorded) or missing, then this will result in a wrong predicted range."]
 
                               [:h4 "2. The formula doesn’t work well for that hospital"]
                               [:p "The statistical formula is applied to all operations at that hospital to calculate its overall predicted
-       range of survival. Although " [:a {:href "/#/faq/2/0"} "the formula as is as good as we can currently get it"] ", it is not perfect.
+       range of survival. Although " [:a (core/href "faq/2/0") "the formula as is as good as we can currently get it"] ", it is not perfect.
        There will always be unique features about a child that affect their
        chance of survival that are not captured by national data collection and so cannot be part of a formula (e.g. the
        size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single
@@ -590,7 +588,7 @@
                               [:p "The chances of survival for children at the hospital could genuinely be much higher or lower than what is
        predicted, which would make it more likely that the hospital’s survival rate would lie outside its predicted
        range. The national audit process is intended to check that no hospital in the UK and Ireland has chances of
-       survival much lower than predicted. See " [:a {:href "/#/faq/1/4"} "What happens if a hospital’s survival is below its predicted range"] " to
+       survival much lower than predicted. See " [:a (core/href "faq/1/4") "What happens if a hospital’s survival is below its predicted range"] " to
        find out what happens in such situations."]]}
 
               {:title        "When looking at ALL hospitals simultaneously, what does it mean if any of the hospitals have a survival
@@ -632,12 +630,12 @@
                               [:p " If a hospital’s survival rate is below its predicted range (either the main or extended), everyone wants to
        be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or
        start to improve care if it’s decided that this is the reason. (See also "
-                               [:a {:href "#/faq/1/2"} "What does it mean if a hospital is outside its predicted range?"] ")."]
+                               [:a (core/href "faq/1/2") "What does it mean if a hospital is outside its predicted range?"] ")."]
 
 
 
                               [:p "If a hospital's survival rate is below the predicted range, the "
-                               [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/governance" :target "_blank"} "National Congenital
+                               [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/governance" :target "_blank") "National Congenital
         Heart Disease Audit Steering Committee "]
                                " is notified. The Committee in turn notifies the relevant national health service’s Medical Director and the
                                lead doctor for congenital heart disease at that hospital and a detailed examination of the hospital’s results
@@ -653,9 +651,9 @@
                               [:h4 "Step 2"]
                               [:p "With the corrected data:"]
                               [:p "If the hospital’s survival rate is still below its predicted range but within the extended predicted range
-       (like this " [:img {:src "/assets/below-predicted.png" :style {:height "18px"}}] "), then an internal hospital review is conducted to understand whether there is cause
+       (like this " [:img (core/isrc "assets/below-predicted.png" :style {:height "18px"})] "), then an internal hospital review is conducted to understand whether there is cause
        for concern. "]
-                              [:p "If the hospital’s survival rate is below the extended predicted range (like this " [:img {:src "/assets/below-extended.png" :style {:height "18px"}}]" ),
+                              [:p "If the hospital’s survival rate is below the extended predicted range (like this " [:img (core/isrc "/assets/below-extended.png" :style {:height "18px"})] " ),
        then an external review of the hospital’s processes and results would be instigated."]
 
                               [:p "In all such cases, the reviews (whether internal or external) would be published online by NICOR at the same
@@ -663,7 +661,7 @@
 
                               [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
        any single hospital to be outside its predicted range but it is rare for any hospital to be outside its extended
-       range (see also: " [:a {:href "/#/faq/1/3"} "looking at ALL hospitals"] ")"]]}
+       range (see also: " [:a (core/href "faq/1/3") "looking at ALL hospitals"] ")"]]}
 
               {:title        "Where did the formula used to calculate the predicted range come from?"
                :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS
@@ -673,8 +671,8 @@
                              [:div
                               [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
        University College London called PRAiS (Partial Risk Adjustment in Surgery - see also the "
-                               [:a {:href "?#/intro"} "What, why, how?"] " section). The underlying methodology of this method is published in
-        the " [:a {:href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank"} "academic
+                               [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
+        the " [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "academic
         literature"] " if you are interested in learning more details."]
 
                               (comment "*** picture of formula churning away at PRAIS risk factors?***")
@@ -736,8 +734,8 @@
                               [:p "Currently (as of 2016), National audit only monitors what happens shortly after surgery. These data cannot
        tell us about longer term (e.g. 5 year) survival, or other outcomes such as post-surgery complication rates or
        the impact of surgery on the child or their family. There is a lot of "
-                               [:a {:href   "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
-                                    :target "_blank"} "active research"] " going right now (due to finish around 2018) investigating how to
+                               [:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
+                                              :target "_blank") "active research"] " going right now (due to finish around 2018) investigating how to
              capture, interpret and publish longer term survival and complication rates so hopefully this information
              will be available in the next 5 years."]
 
@@ -767,7 +765,7 @@
                               [:p "Therefore, if it is available, “30 day survival” after surgery is considered a more objective and preferable
        statistic than “survival to hospital discharge”, since it does not depend on the hospital’s discharge procedures."]
 
-                              [:p "While " [:a {:href "/#/faq/2/3"} "longer term survival"] " is extremely important, 30-day survival post
+                              [:p "While " [:a (core/href "faq/2/3") "longer term survival"] " is extremely important, 30-day survival post
        surgery was initially chosen as it is more straightforward to link this outcome to a child’s surgery and
        post-operative care than a longer range survival  period which might, for instance, incorporate further treatment
        at different hospitals. The other important aspect of monitoring 30-day survival, particularly within hospitals,
@@ -782,10 +780,11 @@
                :glossary     []
                :body
                              [:div
-                              [:p "You can " [:a {:href "/#/data"} "explore the data"] " to see how the different hospitals are doing compared to their predicted
+                              [:p "You can " [:a (core/href "data") "explore the data"] " to see how the different hospitals are doing compared to their predicted
        range calculated for the last 3 years.
        You can also use the "
-                               [:a {:href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500" :target "_blank"} "national audit website"]
+                               [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
+                                              :target "_blank") "national audit website"]
                                " to explore how many operations of each type a hospital does and survival outcomes for each of these. However,
                                this cannot, in itself, tell you which hospital you should go to and does not provide proof that one hospital is
                                “better” than any other. The safety or otherwise of a hospital " [:strong "cannot"] " be determined from
@@ -799,12 +798,12 @@
                               [:p "You should discuss your child’s care with their specialist cardiologist to determine the best treatment
        option for your child."]
                               [:p "You can also access the support available from national charities such as the "
-                               [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "Children’s Heart Federation"]
-                               " or " [:a {:href "http://www.lhm.org.uk/" :target "_blank"} "Little Hearts Matter"]
-                               " or " [:a {:href "/#/faq/3/2"} "local charities for your specialist children’s hospital"] ".
+                               [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank") "Children’s Heart Federation"]
+                               " or " [:a (core/href "http://www.lhm.org.uk/" :target "_blank") "Little Hearts Matter"]
+                               " or " [:a (core/href "faq/3/2") "local charities for your specialist children’s hospital"] ".
                                These guides on "
-                               [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"} "speaking to your child’s surgeon"]
-                               " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "seeking a second opinion"]
+                               [:a (core/href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank") "speaking to your child’s surgeon"]
+                               " or " [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank") "seeking a second opinion"]
                                ", written by the Children’s Heart Federation, might also be helpful."]]}
 
               {:title        "Can the published data tell me about the risks for my child?"
@@ -815,8 +814,8 @@
                               [:p "No, the published data cannot tell you about the risk for your child specifically – this will depend on
        other factors that are not necessarily captured in the national data. Your child’s specialist cardiologist and/or
        cardiac surgeon will be able to discuss this with you. These guides on "
-                               [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"} "speaking to your child’s surgeon"]
-                               " or " [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"} "seeking a second opinion"]
+                               [:a (core/href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank") "speaking to your child’s surgeon"]
+                               " or " [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank") "seeking a second opinion"]
                                ", written by the Children’s Heart Federation, might also be helpful."]]}
 
               {:title    "Charities and support groups for families of children with heart problems"
@@ -838,7 +837,7 @@
                :glossary []
                :body     [:div
                           [:.image-para
-                           [:p [:img.pull-left.w150 {:src "assets/ucl-logo.png"}]
+                           [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo.png")]
                             [:strong "University College London: Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great
@@ -854,7 +853,7 @@
                             [:strong "Dr Andrew Wilshere"] " for designing our logo! "]]
 
                           [:.image-para
-                           [:p [:img.pull-left.w150 {:src "assets/camlogo-old.png"}]
+                           [:p [:img.pull-left.w150 (core/isrc "assets/camlogo-old.png")]
                             [:strong "Professor David Spiegelhalter"]
                             " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond
                             Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical
@@ -864,10 +863,10 @@
                             predicted range.  "
                             [:strong "Mike Pearson"] " developed the website and data visualisations,
                             working closely with the animation team, "
-                            [:a {:href "https://qudos.com" :target "_blank"} "Qudos"] "."]]
+                            [:a (core/href "https://qudos.com" :target "_blank") "Qudos"] "."]]
 
                           [:.image-para
-                           [:p [:img.pull-left.w100 {:src "assets/KCLlogo.gif"}]
+                           [:p [:img.pull-left.w100 (core/isrc "assets/KCLlogo.gif")]
                             [:strong "Dr Tim Rakow"] " is a Reader in Psychology
                             who studies how people make choices and how best to provide information to help people make decisions.
                             He has previously worked with the cardiologists and heart surgeons at Great Ormond Street looking at
@@ -877,7 +876,7 @@
                             would be the best ones for us to include in this website."]]
 
                           [:.image-para
-                           [:p [:img.pull-left.w100 {:src "assets/sas-logo.png"}]
+                           [:p [:img.pull-left.w100 (core/isrc "assets/sas-logo.png")]
                             [:strong "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
          the public. They are a source of information, challenge misinformation, and champion sound science and evidence
          with the help of scientists, academics, and experts in various fields. For this project, they facilitated the
@@ -885,7 +884,7 @@
          over four sets of two workshops and stopped the academics going into too much mathematical detail! "]]
 
                           [:.image-para
-                           [:p [:img.pull-left.w100 {:src "assets/chf-logo.png"}]
+                           [:p [:img.pull-left.w100 (core/isrc "assets/chf-logo.png")]
                             [:strong "The Children’s Heart Federation"] " is the main umbrella body for British CHD charities and
          voluntary organisations. They publicised this project among their members and coordinated the involvement of
          parents of children who had heart surgery in our workshops."]]
@@ -901,7 +900,7 @@
                           ; Add David's institute
                           [:p "For reporting technical problems, please email mike@childrensheartsurgery.info."]
                           [:p "For questions about the audit process or any individual hospital's results, please contact the national audit body "
-                           [:a {:href "https://www.ucl.ac.uk/nicor"} "NICOR"]]]}
+                           [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"]]]}
 
               {:title    "How we developed this site"
                :glossary []

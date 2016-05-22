@@ -30,8 +30,8 @@
                      "This data is updated annually and covers a 3 year period.")]]
 
            (if (nil? (:map-h-code (rum/react core/app)))
-             [:.col-sm-6.col-xs-12.col-md-8 (hospital-list)]
-             [:.col-sm-6.col-xs-12.col-md-8
+             [:.col-sm-6.col-md-offset-1.col-md-7 (hospital-list)]
+             [:.col-sm-6..col-md-offset-1.col-md-7
               [:div.clearfix
                [:button.btn.btn-primary.pull-left {:type      "button"
                                                    :on-click  #(core/click->event-bus % :reset-map-to-home nil)

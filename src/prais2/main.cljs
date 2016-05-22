@@ -49,7 +49,7 @@
 
 (rum/defc render-404 []
   [:h1 "Page not found. "
-   [:a {:href "/home"} "Try the home page."]])
+   [:a (core/href "home") "Try the home page."]])
 
 ;;
 ;; Code snippet to remove columns from table
@@ -99,13 +99,6 @@
                    :on-click #(core/click->event-bus % :data :animation)}
        [:i.fa.fa-video-camera] " Two minute guide"]]
 
-     #_[:li {:class (active? :animation2)
-           :role "presentation"}
-      [:a#map-tab {:href "#"
-                   :aria-controls "mapped-data"
-                   :role "tab"
-                   :on-click #(core/click->event-bus % :data :animation2)}
-       [:i.fa.fa-video-camera] " Calculating the predicted range"]]
      ]]])
 
 
@@ -132,7 +125,7 @@
        [:video {:src      "assets/how-animatic4.mp4" :controls "true"}]
        [:p " Add thumbnail"]
        [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
-       the " [:a {:href "/#/faqs"} "Everything Else section"] "."]
+       the " [:a (core/href "faqs") "Everything Else section"] "."]
        ])]
 
    [:.tab-pane.col-sm-12 {:class (active? :animation2)
@@ -222,7 +215,10 @@
 (defn deselect-all []
   (swap! app assoc :map-h-code nil :selected-h-code nil))
 
-(rum/defc page-choice < rum/static [page section]
+(def scroll-to-top
+  {:did-update #((js/window.scrollTo 0 0) %)})
+
+(rum/defc page-choice < rum/static scroll-to-top [page section]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
    (cond
@@ -253,6 +249,7 @@
        (prn "routes/datas = " (routes/datas))
        (.pushState js/history [] "" (routes/datas))
        ;(.replaceState js/history [] "" (routes/datas))
+
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)

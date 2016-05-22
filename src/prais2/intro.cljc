@@ -31,15 +31,11 @@
    [:.row
     [:.col-sm-8
      [:h1 "What, why, how?"]
-     #_[:p "This site is to help people make sense of the "
-      [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
-       "published survival statistics"] " about children’s heart surgery. "]
      [:p "This site is to help people make sense of the survival statistics about children's heart surgery published by the national audit body, "
-      [:a {:href "https://www.ucl.ac.uk/nicor" :target "_blank"} "NICOR"] "."]
+      [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] "."]
      ;     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]
      ]
     [:#intro.col-sm-12
-
      (key-points)
      (section 1 "WHAT do we mean by survival statistics?" section-1-content)
      (section 2 "WHY can data about survival be difficult to interpret?" section-2-content)
@@ -91,15 +87,15 @@
 
     [:p "Knowing these factors for each child allows us to predict the percentage of children within a group that will survive, even though we cannot predict exactly whether individual children will survive."]
 
-    [:p "The national audit body ("[:a {:href "https://www.ucl.ac.uk/nicor" :target "_blank"} "NICOR"] ") uses a
+    [:p "The national audit body ("[:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] ") uses a
     statistical formula to combine data on these risk factors for all the children a hospital has treated over the
     previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific
     hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
-    [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in the " [:a {:href "/#/faqs"} "Everything Else"] " section."]
+    [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in the " [:a (core/href "faqs") "Everything Else"] " section."]
 
     [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect.
-     For more information about how the NHS monitors survival rates see the "[:a {:href "/#/faqs"} "Everything Else"]  " section."]
+     For more information about how the NHS monitors survival rates see the "[:a (core/href "faqs") "Everything Else"]  " section."]
     [:.bg-danger
      [:p
       "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year."]
@@ -114,20 +110,20 @@
      " If you are concerned about your child’s treatment plan "
      [:b "please speak with your child’s cardiologist or surgeon"]
      ". You can also access the support available from national charities such as the "
-     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"}
+     [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank")
       "Children’s Heart Federation"]
      " or "
-     [:a {:href "http://www.lhm.org.uk/" :target "_blank"}
+     [:a (core/href "http://www.lhm.org.uk/" :target "_blank")
       "Little Hearts Matter"]
-     " or local charities for your specialist children’s hospital (see " [:a {:href "/#/faq/3/2"} "further charity resources"] "). These guides on "
-     [:a {:href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank"}
+     " or local charities for your specialist children’s hospital (see " [:a (core/href "faq/3/2") "further charity resources"] "). These guides on "
+     [:a (core/href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank")
       "speaking to your child’s surgeon"]
      " or "
-     [:a {:href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank"}
+     [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank")
       "seeking a second opinion"]    ", written by the Children’s Heart Federation, might also be helpful."]
 
     [:p
-     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a {:href "/faq/2/3"} "What about longer term survival and quality of life?"]  ".) "]]]
+     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a () core/href "/faq/2/3" "What about longer term survival and quality of life?"]  ".) "]]]
   )
 
 (rum/defc section-5-content []

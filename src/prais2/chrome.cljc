@@ -77,21 +77,20 @@
     [:div {:key 1}]                                         ;;styled logo
     [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
-
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row
     [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
     [:img.img-responsive.col-sm-2.collab-logo
-     {:src "assets/ucl-logo.png"}]
+     (core/isrc "assets/ucl-logo.png")]
     [:img.img-responsive.col-sm-2.collab-logo
-     {:src "assets/camlogo.png"}]
+     (core/isrc "assets/camlogo.png")]
     [:img.img-responsive.col-sm-1.collab-logo
-     {:src "assets/KCLlogo.gif"}]
+     (core/isrc "assets/KCLlogo.gif")]
     [:img.img-responsive.col-sm-1.collab-logo
-     {:src "assets/sas-logo.png"}]
+     (core/isrc "assets/sas-logo.png")]
     [:img.img-responsive.col-sm-1.collab-logo
-     {:src "assets/chf-logo.png"}]]
+     (core/isrc "assets/chf-logo.png")]]
    #_[:.row
     [:.col-md-8
      (data/option-menu event-bus)]]

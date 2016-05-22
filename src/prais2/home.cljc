@@ -12,7 +12,7 @@
       :on-touch-start #(core/click->event-bus % :intro :top)}
      [:i.fa.fa-question.big]
      [:.chevron [:i.fa.fa-chevron-right]]
-     [:.title "What, why, how?"]]
+     [:.title {:dangerouslySetInnerHTML {:__html "What, why, how?&nbsp;&nbsp;&nbsp;&nbsp;"}}]]
     [:p [:strong "What"] " do we mean by survival rates?"]
     [:p [:strong "Why"] " are survival rates after children’s heart surgery hard to interpret?"]
     [:p [:strong "How"] " does the NHS monitor them?"]
@@ -26,7 +26,7 @@
       :on-touch-start #(core/click->event-bus % :data :map)}
      [:i.fa.fa-table.big]
      [:.chevron [:i.fa.fa-chevron-right]]
-     [:.title "Data"]]
+     [:.title "Explore the data"]]
     [:p [:b "Explore published survival statistics by:"]]
     [:p "browsing hospitals individually;"]
     [:p "viewing a one page summary of all hospitals;"]
@@ -41,7 +41,7 @@
       :on-touch-start #(core/click->event-bus % :faqs :top)}
      [:i.fa.fa-info.big]
      [:.chevron [:i.fa.fa-chevron-right]]
-     [:.title "Everything else"]]
+     [:.title {:dangerouslySetInnerHTML {:__html "Everything else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"}}]]
     
     [:p "What happens if the data raises concerns?"]
     [:p "More detail about how survival statistics are monitored, including an explanatory video."]
@@ -57,7 +57,7 @@
     [:section.about.col-xs-offset-1.col-sm-10
      [:p "This site is to help people make sense of the "
       (if (:show-nicor (rum/react core/app))
-        [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"} "published survival data"]
+        [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank") "published survival data"]
         "published survival data")
       " about children’s heart surgery in the UK and Ireland. "]
      [:p "Our website will help you:"]
@@ -66,7 +66,7 @@
       [:li "understand how the NHS monitors children’s heart surgery"]
       [:li "explore published data for hospitals in the UK and Ireland"]]]
     (when (:show-nicor (rum/react core/app))
-      [:a {:href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank"}
+      [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank")
        [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
    [:.row
     (what-why)

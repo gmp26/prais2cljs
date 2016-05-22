@@ -36,17 +36,17 @@
 
 
 (rum/defc render-faq-block [sec-ix block-class]
-  (let [section (content/faq-sections sec-ix)]
+  (let [section (faq-sections sec-ix)]
     (when-not (:is-glossary section)
       [:div.faq-block {:class block-class}
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
-         [:video {:controls true
-                  :preload  true
-                  :src      "assets/pr-animatic3.mp4"}])
+         [:video (merge {:controls true
+                         :preload  true}
+                        (core/isrc "assets/pr-animatic3.mp4"))])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
-          [:li {:key ix} [:a {:href (str "#/faq/" sec-ix "/" ix)} (:title faq)]])]])))
+          [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
 
 
 (rum/defc render-faq-top [faq-ref]
