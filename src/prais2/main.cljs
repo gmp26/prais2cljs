@@ -19,6 +19,7 @@
               [prais2.faqs :refer [render-faqs]]
               [prais2.logger :as logger :refer [log-bus-pub]]
               [cljsjs.jquery]
+
               ;;[jayq.core :refer [$]]
 
               [cljsjs.moment :as moment]))
@@ -216,17 +217,20 @@
   (swap! app assoc :map-h-code nil :selected-h-code nil))
 
 (def scroll-to-top
-  {:did-update #((js/window.scrollTo 0 0) %)})
+  {:did-update (fn [state]
+                 (js/window.scrollTo 0 0)
+                 state)})
 
-(rum/defc page-choice < rum/static scroll-to-top [page section]
+(rum/defc page-choice < rum/static scroll-to-top [page section push]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
    (cond
      (= page :home)
      (do
        (prn "routes/homes = " (routes/homes))
-       (.pushState js/history [] "" (routes/homes))
-       ;(.replaceState js/history [] "" (routes/homes))
+       (if push
+         (.pushState js/history [] "" (routes/homes))
+         (.replaceState js/history [] "" (routes/homes)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
@@ -236,8 +240,9 @@
      (= page :intro)
      (do
        (prn "routes/intros = " (routes/intros))
-       (.pushState js/history [] "" (routes/intros))
-       ;(.replaceState js/history [] "" (routes/intros))
+       (if push
+         (.pushState js/history [] "" (routes/intros))
+         (.replaceState js/history [] "" (routes/intros)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -247,8 +252,9 @@
      (= page :data)
      (do
        (prn "routes/datas = " (routes/datas))
-       (.pushState js/history [] "" (routes/datas))
-       ;(.replaceState js/history [] "" (routes/datas))
+       (if push
+         (.pushState js/history [] "" (routes/datas))
+         (.replaceState js/history [] "" (routes/datas)))
 
        (deselect-all)
        (map-indexed key-with
@@ -262,9 +268,9 @@
        (deselect-all)
        (when (or (= section :top) (= section nil))
          (prn "routes/faqs = " (routes/faqs))
-         (.pushState js/history [] "" (routes/faqs {:section :top}))
-         ;(.replaceState js/history [] "" (routes/faqs {:section :top}))
-         )
+         (if push
+           (.pushState js/history [] "" (routes/faqs {:section :top}))
+           (.replaceState js/history [] "" (routes/faqs {:section :top}))))
        (map-indexed key-with
                     [(chrome/header)
                      #_(render-everything-else section)
@@ -278,13 +284,9 @@
 
 ; add < bs-open-popover when start-modal is enabled
 (rum/defc render-page < rum/reactive []
-  (let [{:keys [page section]} (rum/react core/app)]
-    [:div
-     (map-indexed key-with
-                  [(page-choice page section)
-                   ;(debug)
-                   ])
-     ]))
+  (let [{:keys [page section need-a-push]} (rum/react core/app)]
+    (swap! core/app assoc :need-a-push true)
+    (page-choice page section need-a-push)))
 
 
 ;;

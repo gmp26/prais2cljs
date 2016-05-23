@@ -64,8 +64,8 @@
 (def system
   (atom
    (component/system-map
-    :figwheel (map->Figwheel figwheel-config)
-    :sass (map->SassWatcher sass-config))))
+     :figwheel (map->Figwheel figwheel-config)
+     :sass (map->SassWatcher sass-config))))
 
 (defn start []
   (swap! system component/start))

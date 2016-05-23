@@ -14,20 +14,20 @@
 
      (def home-page
        (str "<!doctype html>"
-            (rum/render-static-markup (head "Understanding Children's Heart Surgery Outcomes"))
+            (rum/render-static-markup (head "Child heart surgery info"))
             (rum/render-static-markup (body static-home))
             ))
 
      (def intro-page
        (str "<!doctype html>"
-            (rum/render-static-markup (head "What, Why, How?"))
+            (rum/render-static-markup (head "Child heart surgery info"))
             (rum/render-static-markup (body static-intro))
             ))
 
      (defn faq-page [faq-ref]
        (let [[section ix] faq-ref]
          (str "<!doctype html>"
-              (rum/render-static-markup (head "faq "))
+              (rum/render-static-markup (head "Child heart surgery info"))
               (rum/render-static-markup (body #(static-faqs faq-ref)))
               )))
 

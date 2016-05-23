@@ -5,6 +5,7 @@
             [cljs.reader :refer [read-string]]
             [cljs.core.async :refer [put!]]
             [prais2.core :as core]
+    ;[accountant.core :as accountant]
             )
   (:import goog.History)
   )
@@ -14,9 +15,9 @@
 
 ;;;
 ;; basic hashbang routing to configure some options
+;; :todo. If you change this, you must also change prais2.core/irl
 ;;;
 (secretary/set-config! :prefix "#")
-
 
 
 ;;;
@@ -24,37 +25,37 @@
 ;;;
 (defroute faqs "/faqs" []
   (put! core/event-bus [:faqs :top])
-)
+  )
 
 (defroute faq "/faq/:section/:id" [section id]
   (let [s (.parseInt js/Number section)
         f (.parseInt js/Number id)
         ap @core/app]
     (if (not (and
-              (= (:page ap) :faqs)
-              (= (:section ap) [s f])))
+               (= (:page ap) :faqs)
+               (= (:section ap) [s f])))
       (do
         (put! core/event-bus [:show-faq [s f]])
         (prn "faq match" s f))))
-)
+  )
 
 (defroute homes "/home" []
   (put! core/event-bus [:home :top])
-)
+  )
 
 (defroute home "/home/:id" [id]
   (put! core/event-bus [:home id])
   (prn "home :id match")
-)
+  )
 
 (defroute intros "/intro" []
   (put! core/event-bus [:intro :top])
-)
+  )
 
 (defroute intro "/intro/:id" [id]
   (put! core/event-bus [:intro id])
   (prn "intro :id match")
-)
+  )
 
 (defroute datas "/data" []
   (put! core/event-bus [:data :animation]))
@@ -63,16 +64,16 @@
   (prn (str "data " id " match"))
   (put! core/event-bus [:data (keyword id)])
   ;(put! core/event-bus [:data id])
-)
+  )
 
 (defroute index "/" []
   (prn "index match")
   (put! core/event-bus [:home :top])
   )
 
-(defroute other "*" []
-  (prn "* match")
-)
+#_(defroute other "*" []
+    (prn "* match")
+    )
 
 
 
@@ -87,31 +88,36 @@
 ;; Note that this history handling must happen after route definitions for it
 ;; to kick in on initial page load.
 ;;
-(defonce history (let [h (History. false false "dummy")]
-                   (goog.events/listen h EventType/NAVIGATE #(do (prn "NAVIGATE")
-                                                                 (if-not (.-isNavigation %)
-                                                                   (do
-                                                                     ;; in this case, we're setting it
-                                                                     (js/console.log "Toke set programmatically")
-                                                                     (secretary/dispatch! (.-token %))
-                                                                     ;; let's scroll to the top to simulate a navigation
-                                                                     (js/window.scrollTo 0 0))
-                                                                   (prn "User navigation"))
-                                                                 ))
-                   (doto h (.setEnabled true))
-                   h))
+(def history (let [h (History. false false "dummy")]
+                 (goog.events/listen h EventType/NAVIGATE #(do
+                                                            (secretary/dispatch! (.-token %))
+                                                            (js/window.scrollTo 0 0)))
+                 (doto h (.setEnabled true))
+                 h))
+
+;;
+;; pushy config
+;;
+#_(def history (pushy/pushy secretary/dispatch!
+                          (fn [x] (when (secretary/locate-route x) x))))
+
+#_(pushy/start! history)
+
+;;
+;; accountant
+;;
+#_(accountant/configure-navigation!
+  {:nav-handler  (fn [path] (secretary/dispatch! path))
+   :path-exists? (fn [path] (secretary/locate-route path))})
 
 ;;
 ;; When the user presses the back or forwards button, onpopstate is fired.
-;; We use this to dispatch the new URL in javascript.
+;; We should use this to dispatch the new URL in javascript.
 ;;
 (set! (.-onpopstate js/window) #(do
-                                 (prn "popstate")
+                                 (prn "popstate " (.. js/window -location -pathname))
                                  (js/console.log %)
-                                 ;(secretary/dispatch! (.. js/window -location -pathname))
+                                 (swap! core/app assoc :need-a-push false)
+                                 (secretary/dispatch! (.. js/window -location -pathname))
                                  ))
 
-; old code
-#_(let [h (History. false false "dummy")]
-  (goog.events/listen h EventType/NAVIGATE #(secretary/dispatch! (.-token %)))
-  (doto h (.setEnabled true)))

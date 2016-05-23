@@ -16,12 +16,15 @@
                  [cljsjs/jquery "1.9.1-0"]
                  [cljsjs/bootstrap "3.3.6-0"]
 
-                 [bidi "2.0.9"]
+
                  [secretary "1.2.3"]
+                 [venantius/accountant "0.1.7"]
+
+
                  [devcards "0.2.1"]
                  [rum "0.8.3"]
-                 [figwheel-sidecar "0.5.1"]
 
+                 [figwheel-sidecar "0.5.1"]
                  [com.stuartsierra/component "0.3.1"]
                  ]
 

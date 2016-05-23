@@ -60,7 +60,7 @@
 
 .home-nav.well.intro {
     color: #888888; //$intro;
-    margin: 20px 0 10px;
+    margin: 20px auto 10px auto;
     box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
     .active {
       background-color: $intro;
@@ -69,7 +69,7 @@
 }
 .home-nav.well.data {
     color: #888888; //$intro;
-    margin: 20px 0 10px;
+    margin: 20px auto 10px auto;
     box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
     .active {
       background-color: $data;
@@ -78,7 +78,7 @@
 }
 .home-nav.well.faqs {
     color: #888888; //$intro;
-    margin: 20px 0 10px;
+    margin: 20px auto 10px auto;
     box-shadow: 0px -12px 11px 2px rgba(200,200,200,0.5);
     .active {
       background-color: $faqs;

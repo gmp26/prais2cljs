@@ -99,7 +99,8 @@
                     :theme 12
                     :selected-h-code nil
                     :map-h-code nil
-                    :show-nicor false}))
+                    :show-nicor false
+                    :need-a-push true}))
 
 ;;;
 ;; wraps raw content in a div and returns a rum react element
