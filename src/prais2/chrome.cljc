@@ -78,22 +78,27 @@
     [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
 (rum/defc footer []
-  [:.container-fluid.partners
-   [:.row
-    [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
-    [:img.img-responsive.col-sm-2.collab-logo
-     (core/isrc "assets/ucl-logo.png")]
-    [:img.img-responsive.col-sm-2.collab-logo
-     (core/isrc "assets/camlogo.png")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/KCLlogo.gif")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/sas-logo.png")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/chf-logo.png")]]
+  [:div
+   [:.container-fluid
+    [:.row.home-thumbail
+     [:.col-xs-12
+      [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
+   [:.container-fluid.partners
+    [:.row
+     [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
+     [:img.img-responsive.col-sm-2.collab-logo
+      (core/isrc "assets/ucl-logo.png")]
+     [:img.img-responsive.col-sm-2.collab-logo
+      (core/isrc "assets/camlogo.png")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/KCLlogo.gif")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/sas-logo.png")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/chf-logo.png")]]]
    #_[:.row
-    [:.col-md-8
-     (data/option-menu event-bus)]]
+      [:.col-md-8
+       (data/option-menu event-bus)]]
    [:.row.footer
     ;[:.pull-right (logger/playback-controls)]             ;;WARNING - likely to break clj compilation
     [:h3
@@ -103,4 +108,5 @@
     [:h3
      "Department of Health disclaimer"]
     [:p
-     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
+     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the
+     Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
