@@ -78,20 +78,19 @@
     [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
 
 (rum/defc footer []
-  [:div
-   [:.container-fluid.partners
-    [:.row.partners
-     [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
-     [:img.img-responsive.col-sm-2.collab-logo
-      (core/isrc "assets/ucl-logo.png")]
-     [:img.img-responsive.col-sm-2.collab-logo
-      (core/isrc "assets/camlogo.png")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/KCLlogo.gif")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/sas-logo.png")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/chf-logo.png")]]]
+  [:.container-fluid.partners
+   [:.row
+    [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
+    [:img.img-responsive.col-sm-2.collab-logo
+     (core/isrc "assets/ucl-logo.png")]
+    [:img.img-responsive.col-sm-2.collab-logo
+     (core/isrc "assets/camlogo.png")]
+    [:img.img-responsive.col-sm-1.collab-logo
+     (core/isrc "assets/KCLlogo.gif")]
+    [:img.img-responsive.col-sm-1.collab-logo
+     (core/isrc "assets/sas-logo.png")]
+    [:img.img-responsive.col-sm-1.collab-logo
+     (core/isrc "assets/chf-logo.png")]]
    #_[:.row
       [:.col-md-8
        (data/option-menu event-bus)]]
@@ -104,5 +103,7 @@
     [:h3
      "Department of Health disclaimer"]
     [:p
-     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the
-     Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
+     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
+
+
+
