@@ -123,7 +123,7 @@
     (when (active? :animation)
       [:section.col-sm-offset-1.col-sm-10
        [:h2 "A two minute guide to how we present the results"]
-       [:video {:src      "assets/how-animatic4.mp4" :controls "true"}]
+       [:video {:src      "assets/how-animatic5.mp4" :controls "true"}]
        [:p " Add thumbnail"]
        [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
        the " [:a (core/href "faqs") "Everything Else section"] "."]
@@ -134,7 +134,7 @@
     (when (active? :animation2)
       [:section.col-sm-offset-1.col-sm-10
        ;[:h2 "How is the predicted range calculated?"]
-       [:video {:src      "assets/pr-animatic3.mp4" :controls "true"}]
+       [:video {:src      "assets/pr-animatic5.mp4" :controls "true"}]
        ;[:video {:src      "assets/pr-animatic1.mp4" :controls "true"}]
        ;[:video {:src      "assets/pr-animatic2.mp4" :controls "true"}]
        ])]

@@ -79,12 +79,8 @@
 
 (rum/defc footer []
   [:div
-   [:.container-fluid
-    [:.row.home-thumbail
-     [:.col-xs-12
-      [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
    [:.container-fluid.partners
-    [:.row
+    [:.row.partners
      [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
      [:img.img-responsive.col-sm-2.collab-logo
       (core/isrc "assets/ucl-logo.png")]

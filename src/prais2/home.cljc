@@ -71,4 +71,11 @@
    [:.row
     (what-why)
     (data)
-    (everything-else)]])
+    (everything-else)]
+
+   #_[:.container-fluid
+    [:.row.home-thumbail
+     [:.col-xs-12
+      [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
+
+   ])
