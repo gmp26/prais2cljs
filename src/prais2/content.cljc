@@ -58,6 +58,18 @@
 (def sample-hospital
   (Row. "Sample Hospital" "H" 52 -2 976 24 952 97.5 96.5 97.1 98.9 99.2 nil))
 
+(def datasource-tab
+  {:2015 {:title "Reporting period"
+          :label "2012-2015"
+          :long-label "April 2012 - March 2015"}
+   :2014 {:title "Reporting period"
+          :label "2011-2014"
+          :long-label "April 2011 - March 2014"}
+   :2013 {:title "Reporting period"
+          :label "2010-2013"
+          :long-label "April 2010 - March 2013"}
+   })
+
 ;;;
 ;; The 2015 results
 ;; todo: derive all numbers that are derivative

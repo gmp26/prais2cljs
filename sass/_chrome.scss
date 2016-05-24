@@ -98,6 +98,10 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     height: 55px;
 }
 
+
+/*
+ * :todo - Check the following section
+ */
 .main-title { float: left;
               clear: none;
               color: $title-colour;
@@ -207,4 +211,24 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 
 .acks {
     max-width: 1000px;
+}
+
+/*
+ * data-selector
+ */
+.data-selector {
+  position: fixed;
+  top: 300px;
+  right: 0px;
+  width: 130px;
+  padding: 0 10px 10px 10px;
+  z-index: 1000;
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  opacity: 0.8;
+  box-shadow: 3px 3px 6px 2px rgba(0,0,0,0.3);
+  h1 {
+      font-size: 18px;
+  }
 }

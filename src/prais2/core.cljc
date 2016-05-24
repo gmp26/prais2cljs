@@ -89,6 +89,7 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 (defonce app (atom {:datasource :2014
+                    :pull-out false
                     :page :home
                     :section :map
                     :sort-by nil

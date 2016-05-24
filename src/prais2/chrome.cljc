@@ -7,6 +7,8 @@
       [prais2.utils :refer [key-with]]
       #?(:cljs [prais2.core :as core :refer [event-bus]])
       #?(:clj [prais2.core :as core])
+
+      [prais2.components.data-selector :refer [data-selector]]
       ;[prais2.logger :as logger]
       ;[prais2.data :as data]
       ))
@@ -75,7 +77,10 @@
 
    [:.chrome-head-rel
     [:div {:key 1}]                                         ;;styled logo
-    [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]])
+    [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]
+
+   (data-selector)
+   ])
 
 (rum/defc footer []
   [:.container-fluid.partners
