@@ -51,31 +51,38 @@
     
     ]])
 
+
+(rum/defc video-thumbnails []
+  [:.row.video-thumbails
+   [:a (core/href "data") [:img.center-block (core/isrc "assets/video-1-thumbnail.png")]]])
+
 (rum/defc render-home < rum/reactive []
-  [:.container
-   [:.jumbotron.home.row
-    [:section.about.col-xs-offset-1.col-sm-10
-     [:p "This site is to help people make sense of the "
-      (if (:show-nicor (rum/react core/app))
-        [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank") "published survival data"]
-        "published survival data")
-      " about children’s heart surgery in the UK and Ireland. "]
-     [:p "Our website will help you:"]
-     [:ul
-      [:li "explore what survival rates can and can’t tell you"]
-      [:li "understand how the NHS monitors children’s heart surgery"]
-      [:li "explore published data for hospitals in the UK and Ireland"]]]
-    (when (:show-nicor (rum/react core/app))
-      [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank")
-       [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
-   [:.row
-    (what-why)
-    (data)
-    (everything-else)]
+  [:div
+   [:.container
+    [:.jumbotron.home.row
+     [:section.about.col-xs-offset-1.col-sm-10
+      [:p "This site is to help people make sense of the "
+       (if (:show-nicor (rum/react core/app))
+         [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank") "published survival data"]
+         "published survival data")
+       " about children’s heart surgery in the UK and Ireland. "]
+      [:p "Our website will help you:"]
+      [:ul
+       [:li "explore what survival rates can and can’t tell you"]
+       [:li "understand how the NHS monitors children’s heart surgery"]
+       [:li "explore published data for hospitals in the UK and Ireland"]]]
+     (when (:show-nicor (rum/react core/app))
+       [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank")
+        [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
+    [:.row
+     (what-why)
+     (data)
+     (everything-else)]]
+   (video-thumbnails)]
 
-   #_[:.container-fluid
-    [:.row.home-thumbail
-     [:.col-xs-12
-      [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
+  #_[:.container-fluid
+     [:.row.home-thumbail
+      [:.col-xs-12
+       [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
 
-   ])
+  )

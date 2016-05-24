@@ -80,7 +80,9 @@
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row
-    [:p.col-sm-offset-1.col-sm-2 {:style {:color "white"}} "About us"]
+    [:.col-sm-offset-1.col-sm-2
+     {:style {:vertical-align "middle"}}
+     [:a (core/href "faq/4/0") "About us"]]
     [:img.img-responsive.col-sm-2.collab-logo
      (core/isrc "assets/ucl-logo.png")]
     [:img.img-responsive.col-sm-2.collab-logo

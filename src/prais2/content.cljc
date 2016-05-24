@@ -35,7 +35,11 @@
         (Header. "Number of Survivors" false true 85 50
                  "The number of operations where the child survived at least 30 days after their operation")
         (Header. "Survival Rate %" false true 86 50
-                 "The percentage of operations where the child survived at least 30 days after their operation. Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on children with a lower chance of survival. It would be unfair to then expect all hospitals to have the same survival rates each year")
+                 "The percentage of operations where the child survived at least 30 days after their operation.
+                 Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on
+                 children with a lower chance of survival. It would be unfair to expect all hospitals to have
+                 the same survival rates each year, and unfair to sort hospitals in this list on the basis of their
+                 survival rates.")
         (Header. "Outer Low" false false 130 50
                  "A dot within the left hand light blue band means that there is some evidence that chances of survival in the hospital were lower than predicted")
         (Header. "Inner Low" false false 130 50
@@ -838,7 +842,7 @@
                :body     [:div
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo.png")]
-                            [:strong "University College London: Dr Christina Pagel"]
+                            [:a (core/href "http://ucl.ac.uk/coru") "University College London: Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great
                             Ormond Street Hospital, to help them use routinely collected data to improve NHS services. Her work currently
@@ -850,34 +854,35 @@
         about Science, the University of Cambridge, King’s College London and the Children’s Heart Federation to develop
         these online resources to help people interpret the audit body’s published results. In particular, she wrote a
         lot of the content, helped enormously by feedback from the team and the user workshops. Thanks to "
-                            [:strong "Dr Andrew Wilshere"] " for designing our logo! "]]
+                            [:a (core/href "https://www.ucl.ac.uk/dahr/people/andrew-wilshere") " Dr Andrew Wilshere"] " for designing our logo! "]]
 
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/camlogo-old.png")]
-                            [:strong "Professor David Spiegelhalter"]
+                            [:a (core/href "http://understandinguncertainty.org") "Professor David Spiegelhalter"]
                             " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond
                             Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical
                             team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and
                             was part of the team that drew up the new national patient information leaflets for breast cancer screening.
                             For this project, David helped write the content, especially the language around the statistical formula and
                             predicted range.  "
-                            [:strong "Mike Pearson"] " developed the website and data visualisations,
+                            [:a (core/href "http://understandinguncertainty.org") "Mike Pearson"] " developed the website and data visualisations,
                             working closely with the animation team, "
                             [:a (core/href "https://qudos.com" :target "_blank") "Qudos"] "."]]
 
                           [:.image-para
                            [:p [:img.pull-left.w100 (core/isrc "assets/KCLlogo.gif")]
-                            [:strong "Dr Tim Rakow"] " is a Reader in Psychology
+                            [:a (core/href "https://kclpure.kcl.ac.uk/portal/tim.rakow.html") "Dr Tim Rakow"] " is a Reader in Psychology
                             who studies how people make choices and how best to provide information to help people make decisions.
                             He has previously worked with the cardiologists and heart surgeons at Great Ormond Street looking at
                             their decisions about surgery, and with Professor Spiegelhalter on the public’s understanding of
-                            complex statistical information. For this project, he worked with Emily Blackshaw, another psychologist
+                            complex statistical information. For this project, he worked with "
+                            [:a (core/href "https://kclpure.kcl.ac.uk/portal/emily.1.blackshaw.html") "Emily Blackshaw"] ", another psychologist
                             at King’s College London, to run experiments that examined which types of explanation and graphics
                             would be the best ones for us to include in this website."]]
 
                           [:.image-para
                            [:p [:img.pull-left.w100 (core/isrc "assets/sas-logo.png")]
-                            [:strong "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
+                            [:a (core/href "http://www.senseaboutscience.org/") "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
          the public. They are a source of information, challenge misinformation, and champion sound science and evidence
          with the help of scientists, academics, and experts in various fields. For this project, they facilitated the
          workshops with parents, other interested users and members of the public who helped to co-develop the website
@@ -885,7 +890,7 @@
 
                           [:.image-para
                            [:p [:img.pull-left.w100 (core/isrc "assets/chf-logo.png")]
-                            [:strong "The Children’s Heart Federation"] " is the main umbrella body for British CHD charities and
+                            [:a (core/href "http://www.chfed.org.uk/") "The Children’s Heart Federation"] " is the main umbrella body for British CHD charities and
          voluntary organisations. They publicised this project among their members and coordinated the involvement of
          parents of children who had heart surgery in our workshops."]]
 

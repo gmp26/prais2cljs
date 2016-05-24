@@ -176,6 +176,14 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 
 .partners .row {
     padding-top: 30px;
+    a {
+      color: white;
+      text-decoration: underline;
+    }
+    a:hover {
+            color: orange;
+            font-weight: 800;
+          }
 }
 
 .partners .row img {
