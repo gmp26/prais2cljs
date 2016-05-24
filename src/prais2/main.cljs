@@ -124,7 +124,7 @@
       [:section.col-sm-offset-1.col-sm-10
        [:h2 "A two minute guide to how we present the results"]
        [:video
-        (core/isrc "assets/how-animatic5.mp4" :controls "true" :preload "true" :style {:max-width "600px"})]
+        (core/isrc "assets/how-animatic6.mp4" :controls "true" :preload "true" :style {:max-width "600px"})]
        ;todo " Add thumbnail"
        [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
        the " [:a (core/href "faqs") "Everything Else section"] "."]
@@ -288,7 +288,7 @@
 ; add < bs-open-popover when start-modal is enabled
 (rum/defc render-page < rum/reactive []
   (let [{:keys [page section need-a-push]} (rum/react core/app)]
-    (swap! core/app assoc :need-a-push true)
+    (swap! core/app assoc :need-a-push false)
     (page-choice page section need-a-push)))
 
 

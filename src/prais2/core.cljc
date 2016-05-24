@@ -100,7 +100,7 @@
                     :selected-h-code nil
                     :map-h-code nil
                     :show-nicor false
-                    :need-a-push true}))
+                    :need-a-push false}))
 
 ;;;
 ;; wraps raw content in a div and returns a rum react element

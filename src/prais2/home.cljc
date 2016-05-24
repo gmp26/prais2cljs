@@ -53,8 +53,8 @@
 
 
 (rum/defc video-thumbnails []
-  [:.row.video-thumbails
-   [:a (core/href "data") [:img.center-block (core/isrc "assets/video-1-thumbnail.png")]]])
+  [:.row.video-thumbails.hidden-xs.hidden-sm
+   [:a (core/href "data") [:img.center-block (core/isrc "assets/video-1-thumbnail.png" :width "300px")]]])
 
 (rum/defc render-home < rum/reactive []
   [:div

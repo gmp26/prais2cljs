@@ -90,6 +90,8 @@
 ;;
 (def history (let [h (History. false false "dummy")]
                  (goog.events/listen h EventType/NAVIGATE #(do
+                                                            (js/console.log %)
+                                                            (prn "Navigate event " (.-isNavigation %))
                                                             (secretary/dispatch! (.-token %))
                                                             (js/window.scrollTo 0 0)))
                  (doto h (.setEnabled true))
@@ -116,8 +118,8 @@
 ;;
 (set! (.-onpopstate js/window) #(do
                                  (prn "popstate " (.. js/window -location -pathname))
-                                 (js/console.log %)
-                                 (swap! core/app assoc :need-a-push false)
-                                 (secretary/dispatch! (.. js/window -location -pathname))
+                                 ;(js/console.log %)
+                                 ;(swap! core/app assoc :need-a-push false)
+                                 ;(secretary/dispatch! (.. js/window -location -pathname))
                                  ))
 

@@ -79,33 +79,46 @@
 
 (rum/defc footer []
   [:.container-fluid.partners
-   [:.row
-    [:div
-     [:.col-sm-offset-1.col-sm-2
-      [:a (core/href "faq/4/0") "About us"]]
-     [:img.img-responsive.col-sm-2.collab-logo
-      (core/isrc "assets/ucl-logo.png")]
-     [:img.img-responsive.col-sm-2.collab-logo
-      (core/isrc "assets/camlogo.png")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/KCLlogo.gif")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/sas-logo.png")]
-     [:img.img-responsive.col-sm-1.collab-logo
-      (core/isrc "assets/chf-logo.png")]]]
+   [:.row.visible-xs-block.center-block
+    {:style {:width "300px" :color "white"}}
+    ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
+
+    [:h4 [:a (core/href "faq/4/0") "Project partners:"]]
+    [:p "University College, London"]
+    [:p "University of Cambridge"]
+    [:p "King's College, London"]
+    [:p "Sense about Science"]
+    [:p "Children's Heart Federation"]
+    ]
+   [:.row.hidden-xs
+    ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
+    [:.col-sm-offset-1.col-sm-11.collab-logo
+     [:a (core/href "faq/4/0") "About us"]]
+    [:.col-sm-offset-1.col-sm-11.collab-logo
+     [:img
+      (core/isrc "assets/ucl-logo.png" :style {:width "170px"})]
+     [:img
+      (core/isrc "assets/camlogo.png" :style {:width "200px"})]
+     [:img
+      (core/isrc "assets/KCLlogo.gif" :style {:width "110px"})]
+     [:img
+      (core/isrc "assets/sas-logo.png" :style {:width "80px"})]
+     [:img
+      (core/isrc "assets/chf-logo.png" :style {:width "10px"})]]]
    #_[:.row
       [:.col-md-8
        (data/option-menu event-bus)]]
    [:.row.footer
-    ;[:.pull-right (logger/playback-controls)]             ;;WARNING - likely to break clj compilation
-    [:h3
-     "Funding acknowledgement"]
-    [:p
-     "This project was funded by the National Institute for Health Research Health Services and Delivery Research Programme\n(project number 14/19/13)"]
-    [:h3
-     "Department of Health disclaimer"]
-    [:p
-     "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]])
+    [:.acks.col-md-offset-1
+     ;[:.pull-right (logger/playback-controls)]             ;;WARNING - likely to break clj compilation
+     [:h3
+      "Funding acknowledgement"]
+     [:p
+      "This project was funded by the National Institute for Health Research Health Services and Delivery Research Programme\n(project number 14/19/13)"]
+     [:h3
+      "Department of Health disclaimer"]
+     [:p
+      "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]]])
 
 
 
