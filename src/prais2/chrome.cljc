@@ -80,19 +80,19 @@
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row
-    [:.col-sm-offset-1.col-sm-2
-     {:style {:vertical-align "middle"}}
-     [:a (core/href "faq/4/0") "About us"]]
-    [:img.img-responsive.col-sm-2.collab-logo
-     (core/isrc "assets/ucl-logo.png")]
-    [:img.img-responsive.col-sm-2.collab-logo
-     (core/isrc "assets/camlogo.png")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/KCLlogo.gif")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/sas-logo.png")]
-    [:img.img-responsive.col-sm-1.collab-logo
-     (core/isrc "assets/chf-logo.png")]]
+    [:div
+     [:.col-sm-offset-1.col-sm-2
+      [:a (core/href "faq/4/0") "About us"]]
+     [:img.img-responsive.col-sm-2.collab-logo
+      (core/isrc "assets/ucl-logo.png")]
+     [:img.img-responsive.col-sm-2.collab-logo
+      (core/isrc "assets/camlogo.png")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/KCLlogo.gif")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/sas-logo.png")]
+     [:img.img-responsive.col-sm-1.collab-logo
+      (core/isrc "assets/chf-logo.png")]]]
    #_[:.row
       [:.col-md-8
        (data/option-menu event-bus)]]

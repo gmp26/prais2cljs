@@ -35,7 +35,7 @@
         (Header. "Number of Survivors" false true 85 50
                  "The number of operations where the child survived at least 30 days after their operation")
         (Header. "Survival Rate %" false true 86 50
-                 "The percentage of operations where the child survived at least 30 days after their operation.
+                 "<p>The percentage of operations where the child survived at least 30 days after their operation.</p>
                  Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on
                  children with a lower chance of survival. It would be unfair to expect all hospitals to have
                  the same survival rates each year, and unfair to sort hospitals in this list on the basis of their
