@@ -97,19 +97,19 @@
     ]
    [:.row.hidden-xs
     ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
-    [:.col-sm-offset-1.col-sm-11.collab-logo
+    [:.col-sm-11.collab-logo.col-md-offset-1
      [:a (core/href "faq/4/0") "About us"]]
-    [:.col-sm-offset-1.col-sm-11.collab-logo
+    [:.col-sm-12.collab-logo.col-md-offset-1
      [:img
-      (core/isrc "assets/ucl-logo.png" :style {:width "170px"})]
+      (core/isrc "assets/ucl-logo.png" :style {:width "190px"})]
      [:img
-      (core/isrc "assets/camlogo.png" :style {:width "200px"})]
+      (core/isrc "assets/camlogo.png" :style {:width "220px"})]
      [:img
-      (core/isrc "assets/KCLlogo.gif" :style {:width "110px"})]
+      (core/isrc "assets/KCLlogo.gif" :style {:width "130px"})]
      [:img
       (core/isrc "assets/sas-logo.png" :style {:width "80px"})]
      [:img
-      (core/isrc "assets/chf-logo.png" :style {:width "10px"})]]]
+      (core/isrc "assets/chf-logo.png" :style {:width "80px"})]]]
    #_[:.row
       [:.col-md-8
        (data/option-menu event-bus)]]
