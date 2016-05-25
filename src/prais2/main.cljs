@@ -72,32 +72,36 @@
    [:.col-sm-offset-1.col-sm-10
     [:h1 "Explore the data"]
 
-    [:p "The " [:b "two minute guide"] " explains how we present the results. Parents who helped us develop the web site found the guide useful in interpreting the data."]
+    [:p "The " [:a (core/href "data/animation"
+                         :on-click
+                         #(core/click->event-bus % :data :animation)) "two minute guide"]
+     " explains how we present the results. Parents who helped us develop the web site found the guide useful in
+     interpreting the data."]
 
     [:ul.nav.nav-pills {:role "tablist"}
 
      [:li {:class (active? :map)
            :role "presentation"}
-      [:a#map-tab {:href "#"
-                   :aria-controls "mapped-data"
-                   :role "tab"
-                   :on-click #(core/click->event-bus % :data :map)}
+      [:a#map-tab (core/href "data/map"
+                    :aria-controls "mapped-data"
+                    :role "tab"
+                    :on-click #(core/click->event-bus % :data :map))
        [:i.fa.fa-map-marker] " Choose a hospital"]]
 
      [:li {:class (active? :table)
            :role "presentation"}
-      [:a#table-tab {:href "#"
-                     :aria-controls "data-table"
-                     :role "tab"
-                     :on-click #(core/click->event-bus % :data :table)}
+      [:a#table-tab (core/href "data/table"
+                      :aria-controls "data-table"
+                      :role "tab"
+                      :on-click #(core/click->event-bus % :data :table))
        [:i.fa.fa-table] " List all data"]]
 
      [:li {:class (active? :animation)
            :role "presentation"}
-      [:a#map-tab {:href "#"
-                   :aria-controls "mapped-data"
-                   :role "tab"
-                   :on-click #(core/click->event-bus % :data :animation)}
+      [:a#map-tab (core/href "data/animation"
+                             :aria-controls "mapped-data"
+                             :role "tab"
+                             :on-click #(core/click->event-bus % :data :animation))
        [:i.fa.fa-video-camera] " Two minute guide"]]
 
      ]]])

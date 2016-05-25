@@ -36,7 +36,7 @@
   "get the ip address of this machine"
 
   []
-  (GET "http://ipinfo.io/json" {:handler (fn [response] (reset! ip-address (:ip response)))
+  #_(GET "http://ipinfo.io/json" {:handler (fn [response] (reset! ip-address (:ip response)))
                                 :error-handler (fn [status status-text] (prn "get-ip-error: " status status-text))
                                 :keywords? true
                                 :response-format :json})

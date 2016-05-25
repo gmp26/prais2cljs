@@ -4,6 +4,7 @@
     [rum.core :as rum]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
+    #?(:cljs [secretary.core :as secretary])
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
     [prais2.utils :as u :refer [key-with]]
     #?(:cljs [goog.events :as events])
@@ -12,6 +13,15 @@
 ;;
 ;; url handling
 ;;
+#?(:cljs
+   (defn internal-link-handler [fragment]
+     (fn [event]
+       (.preventDefault event)
+       ; :todo: route this dipatch through the event bus
+       ; :todo: note that it be wrapped to force a push
+       (secretary/dispatch! fragment)
+       (prn (str "dispatch " fragment)))
+     ))
 
 #?(:cljs
    (defn irl "internal resource locator"
@@ -57,8 +67,18 @@
 
 
 
+(defn internal-ref
+  "add in local handler for an internal token"
+  [path]
+  (merge {:href (irl path)}
+         #?(:cljs {:on-click (internal-link-handler path)})))
+
 (defn href
-  ([path] {:href (if (absolute-path? path) path (irl path))})
+
+  ([path]
+   (if (absolute-path? path)
+     {:href path}
+     (internal-ref path)))
   ;;(href "faq/1/2")
   ;;=> {:href "/#/faq/1/2"}
 
@@ -164,12 +184,12 @@
 ;;;
 #?(:cljs (defn click->event-bus
            [event dispatch-key dispatch-value]
+           (.preventDefault event)
+           (.stopPropagation event)
            (if (and (= dispatch-key :data) (= dispatch-value :top))
              (prn "gotcha")
              (prn (str "click->event-bus " dispatch-key dispatch-value)))
            (put! event-bus [dispatch-key dispatch-value])
-           (.preventDefault event)
-           (.stopPropagation event)
            ))
 #?(:clj (defn click->event-bus
           [event dispatch-key dispatch-value]

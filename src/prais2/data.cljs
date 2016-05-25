@@ -680,7 +680,9 @@
 (rum/defc legend  < rum/reactive [selected-row]
   [:.legend
    [:.box
-    [:p {:style {:color "orange"}} "Legend (See also: two minute guide)"]
+    [:p {:style {:color "orange"}} "Legend (See also: "
+     [:a (core/href "data/animation"
+                    :on-click #(core/click->event-bus % :data :animation)) "two minute guide"] ")"]
     (let [ap (rum/react core/app)]
       (map-indexed key-with
                    [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}

@@ -31,9 +31,13 @@
    [:.row
     [:.col-sm-8
      [:h1 "What, why, how?"]
-     [:p "This site is to help people make sense of the survival statistics about children's heart surgery published by the national audit body, "
-      [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] "."]
+     [:p "This site is to help people make sense of the survival statistics about children's heart surgery published by
+     the National Congenital Heart Disease Audit (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ").  The "
+      [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital " :target "_blank") "NCHDA"] " is part of the
+      National Institute of Cardiovascular Outcomes Research (" [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] ")."]
+
      ;     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]
+
      ]
     [:#intro.col-sm-12
      (key-points)
@@ -50,16 +54,21 @@
    [:ul
     [:li "The 30-day survival rate is very high for all hospitals in the UK and Ireland, and is among the best in the world."]
     [:li "A higher survival rate does not imply a better hospital."]
-    [:li "The predicted range of survival, calculated by a formula, depends on the particular children treated at that hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
-    [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
+    [:li "The predicted range of survival, calculated by a formula, depends on the particular children treated at that
+    hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
+    [:li "A hospital's survival rate should only be compared to its own predicted range. It is not valid to compare survival rates between hospitals."]
     ]])
 
 
 
 (rum/defc section-1-content []
   [:section.row
-   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival rate. Ireland also submits its data to the same audit body."]
-   [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom and Republic of Ireland."]]
+   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least
+   30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s
+   30-day survival rate. Ireland also submits its data to the same audit body, "
+    [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] "."]
+   [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom
+   and Republic of Ireland."]]
   )
 
 (rum/defc section-2-content []
@@ -74,7 +83,9 @@
 (rum/defc section-3-content []
   [:section.row
    [:.col-lg-12
-    [:p "The NHS monitors hospitals that perform children’s heart surgery by reviewing the 30-day survival rate for each hospital, taking into account how ill the children were that each hospital treated. This is a fairer way of looking at survival rate data."]
+    [:p "The NHS monitors hospitals that perform children’s heart surgery by reviewing the 30-day survival rate for
+    each hospital, taking into account how ill the children were that each hospital treated. This is a fairer way of
+    looking at survival rate data."]
     [:p "Risk factors that affect a child’s chance of survival include:"]
     [:ul
      [:li
@@ -88,12 +99,12 @@
 
     [:p "Knowing these factors for each child allows us to predict the percentage of children within a group that will survive, even though we cannot predict exactly whether individual children will survive."]
 
-    [:p "The national audit body ("[:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] ") uses a
+    [:p "The national audit body ("[:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ") uses a
     statistical formula to combine data on these risk factors for all the children a hospital has treated over the
     previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific
     hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
 
-    [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in the " [:a (core/href "faqs") "Everything Else"] " section."]
+    [:p "If you'd like to know how the predicted range is calculated, you can watch our 4 minute video in the " [:a (core/href "faqs") "Everything Else"] " section."]
 
     [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect.
      For more information about how the NHS monitors survival rates see the "[:a (core/href "faqs") "Everything Else"]  " section."]
@@ -111,12 +122,13 @@
      " If you are concerned about your child’s treatment plan "
      [:b "please speak with your child’s cardiologist or surgeon"]
      ". You can also access the support available from national charities such as the "
-     [:a (core/href "http://www.chfed.org.uk/documents/2012/11/second-opinion-factsheet.pdf" :target "_blank")
+     [:a (core/href " http://www.chfed.org.uk/" :target "_blank")
       "Children’s Heart Federation"]
      " or "
      [:a (core/href "http://www.lhm.org.uk/" :target "_blank")
       "Little Hearts Matter"]
-     " or local charities for your specialist children’s hospital (see " [:a (core/href "faq/3/2") "further charity resources"] "). These guides on "
+     " or local charities for your specialist children’s hospital (see "
+     [:a (core/href "faq/3/2") "further charity resources"] "). These guides on "
      [:a (core/href "http://www.chfed.org.uk/documents/2015/02/talking-to-doctors-pdf-factsheet.pdf" :target "_blank")
       "speaking to your child’s surgeon"]
      " or "
@@ -124,10 +136,14 @@
       "seeking a second opinion"]    ", written by the Children’s Heart Federation, might also be helpful."]
 
     [:p
-     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery, such as much longer term survival and quality of life after surgery. Although this information is not routinely available at the moment, we are actively researching how to collect, interpret and publish this data. (See " [:a () core/href "/faq/2/3" "What about longer term survival and quality of life?"]  ".) "]]]
+     "We know that there is much more to children’s heart surgery than survival to 30 days after surgery,
+     such as much longer term survival and quality of life after surgery. Although this information is not routinely
+     available at the moment, we are actively researching how to collect, interpret and publish this data.
+     (See " [:a (core/href "faq/2/3") "What about longer term survival and quality of life?"]  ".) "]]]
   )
 
 (rum/defc section-5-content []
   [:section.row
    [:.col-lg-12
-    [:p "This site can help you interpret currently published survival data on children’s heart surgery and explore recent results by hospital."]]])
+    [:p "This site can help you interpret currently published survival data on children’s heart surgery and explore
+    recent results by hospital."]]])
