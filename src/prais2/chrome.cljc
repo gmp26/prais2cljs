@@ -79,7 +79,7 @@
     [:div {:key 1}]                                         ;;styled logo
     [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]
 
-   (data-selector)
+   ;(data-selector)
    ])
 
 (rum/defc footer []
@@ -95,9 +95,10 @@
     [:p "Sense about Science"]
     [:p "Children's Heart Federation"]
     ]
+
    [:.row.hidden-xs
     ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
-    [:.col-sm-11.collab-logo.col-md-offset-1
+    [:.col-sm-12.collab-logo.col-md-offset-1
      [:a (core/href "faq/4/0") "About us"]]
     [:.col-sm-12.collab-logo.col-md-offset-1
      [:img
@@ -109,10 +110,9 @@
      [:img
       (core/isrc "assets/sas-logo.png" :style {:width "80px"})]
      [:img
-      (core/isrc "assets/chf-logo.png" :style {:width "80px"})]]]
-   #_[:.row
-      [:.col-md-8
-       (data/option-menu event-bus)]]
+      (core/isrc "assets/chf-logo.png" :style {:width "80px"})]]
+    ]
+
    [:.row.footer
     [:.acks.col-md-offset-1
      ;[:.pull-right (logger/playback-controls)]             ;;WARNING - likely to break clj compilation
@@ -123,7 +123,17 @@
      [:h3
       "Department of Health disclaimer"]
      [:p
-      "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]]])
+      "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
+
+     ]]
+   [:.row.footer.legal
+    [:.col-md-offset-1
+     [:p.copyright
+      "© PRAIS2 website project team 2016"]
+     [:p.cookies "This site uses cookies to help understand how users interact with the site.
+     See " [:a {:href "https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage"} "Google Analytics"]]
+     ]
+    ]])
 
 
 

@@ -683,14 +683,15 @@
     [:p {:style {:color "orange"}} "Legend (See also: two minute guide)"]
     (let [ap (rum/react core/app)]
       (map-indexed key-with
-                   [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner}
+                   [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
+                                          "The dot indicates the hospital's survival rate")
+                    (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner}
                                           "We expect the hospital's survival rate to be inside this bar
                                           19 times out of 20")
                     (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer}
                                           "We expect the hospital's survival rate to be inside this bar
                                           998 times out of a 1000")
-                    (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
-                       "The dot indicates the hospital's survival rate")]))
+                    ]))
     ]])
 
 (rum/defc hospital-detail < rum/reactive

@@ -188,6 +188,9 @@ nav.navbar.navbar-simple.navbar-fixed-top {
             color: orange;
             font-weight: 800;
           }
+    p.copyright, p.cookies {
+      color: white;
+      }
 }
 
 .partners .row img {
@@ -201,7 +204,11 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     background-color: $dark-base;
     padding: 20px 60px;
     font-size: 14px;
-    margin: 10px -15px 0px;
+    margin: 0px -15px 0px;
+}
+
+.footer.legal {
+    background-color: #444;
 }
 
 .partners .collab-logo {
