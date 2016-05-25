@@ -78,7 +78,8 @@
      (what-why)
      (data)
      (everything-else)]]
-   (video-thumbnails)]
+    ;(video-thumbnails)
+   ]
 
   #_[:.container-fluid
      [:.row.home-thumbail
