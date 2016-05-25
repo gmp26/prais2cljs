@@ -12,7 +12,7 @@
 (rum/defc section [section-id section-title section-content]
   [:section.col-sm-8.pull-left
    {:id section-id}
-   [:h2 section-title]
+   [:h2 {:dangerouslySetInnerHTML {:__html section-title}}]
    (section-content)])
 
 
@@ -37,9 +37,9 @@
      ]
     [:#intro.col-sm-12
      (key-points)
-     (section 1 "WHAT do we mean by survival statistics?" section-1-content)
-     (section 2 "WHY can data about survival be difficult to interpret?" section-2-content)
-     (section 3 "HOW does the NHS monitor hospitals that do children’s heart surgery?" section-3-content)
+     (section 1 "<strong>What</strong> do we mean by survival statistics?" section-1-content)
+     (section 2 "<strong>Why</strong> can data about survival be difficult to interpret?" section-2-content)
+     (section 3 "<strong>How</strong> does the NHS monitor hospitals that do children’s heart surgery?" section-3-content)
      (section 4 "What this site cannot do" section-4-content)
      (section 5 "What this site can do" section-5-content)
      ]]])
@@ -48,10 +48,11 @@
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
+    [:li "The 30-day survival rate is very high for all hospitals in the UK and Ireland, and is among the best in the world."]
     [:li "A higher survival rate does not imply a better hospital."]
     [:li "The predicted range of survival, calculated by a formula, depends on the particular children treated at that hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
     [:li "A hospital's survival rate should only be compared to its predicted range. It is not valid to compare survival rates between hospitals."]
-    [:li "The 30-day survival rate is very high for all hospitals in the UK and Ireland."]]])
+    ]])
 
 
 
