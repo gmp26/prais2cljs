@@ -6,7 +6,7 @@
 ;; About us mugshot list
 ;;;
 (defn get-mugshots []
-  ["christina" "david" "tim" "mike"])
+  ["christina" "david" "tim" "emily" "mike"])
 
 ;;;
 ;; table structure
@@ -853,7 +853,7 @@
                :glossary []
                :body     [:div
                           [:.image-para
-                           [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo.png")]
+                           [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo-black.png")]
                             [:a (core/href "http://ucl.ac.uk/coru") "University College London: Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great

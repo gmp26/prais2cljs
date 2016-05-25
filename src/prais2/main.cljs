@@ -140,7 +140,7 @@
       [:section.col-sm-offset-1.col-sm-10
        ;[:h2 "How is the predicted range calculated?"]
        [:video
-        (core/isrc "assets/pr-animatic5.mp4" :controls true :preload true
+        (core/isrc "assets/pr-animatic6.mp4" :controls true :preload true
                    :style {:max-width "480px"})]
        ;[:video {:src      "assets/pr-animatic1.mp4" :controls "true"}]
        ;[:video {:src      "assets/pr-animatic2.mp4" :controls "true"}]
