@@ -38,7 +38,9 @@
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
    [:a.navbar-btn {:on-click click-handler
-                   :class (str (if active? " active " " ") (:class nav-item))}
+                   :class (str (if active? " active " " ") (:class nav-item))
+                   :data-toggle "collapse"
+                   :data-target ".navbar-collapse"}
     [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
 
