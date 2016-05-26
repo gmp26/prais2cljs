@@ -503,7 +503,8 @@
                               [:p [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank")
                                    [:img.thumbnail.pull-left.w100 (core/isrc "assets/nicor.png")]]
                                "Since 2007, the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ") has published survival rates for certain
-                               types of procedure (now over 70 different procedures) at each hospital. The "
+                               " [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
+                                                :target "_blank") "types of procedure"] " (now over 70 different procedures) at each hospital. The "
                                [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] " did not
                                publish overall survival rates for each hospital, because there was no clear way to put
                                overall survival rates for each hospital into context
