@@ -531,14 +531,15 @@
                :body
                              [:div
                               [:p "Each hospital in the UK and Ireland must collect data on every surgery or intervention carried out on a
-       child for heart problems. Every three months, hospitals must submit this data to the national audit body, "
-                               [:a (core/href "http://www.ucl.ac.uk/nicorum/patients" :target "_blank") "NICOR "] "(The National Institute for
-        Cardiovascular Outcomes Research). NICOR sets out exactly what data is collected and each hospital undergoes
-        independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health,
+       child under 16 years old. Every three months, hospitals must submit this data to the national audit body, "
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] " (The National Institute for
+        Cardiovascular Outcomes Research). NCHDA sets out exactly what data is collected and each hospital undergoes
+        independent checks of the quality of their submitted data. NCHDA also reports to the UK Department of Health,
         the Care Quality Commission (CQC) and other NHS regulatory bodies."]
 
-                              [:p [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] " tracks the survival of these children by linking to the national register of deaths using patients’
-       NHS number (in England and Wales) and also from hospital records."]]}]}
+                              [:p [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"]
+                               " tracks the survival of these children by linking to the national register of deaths
+                               using patients’ NHS number (in England and Wales) and also from hospital records."]]}]}
 
    {:section "Understanding the predicted range"
     :faqs
@@ -721,9 +722,10 @@
                :glossary     []
                :body
                              [:div
-                              [:p "The data come from the National Institute for Cardiovascular Outcomes Research (NICOR) which collects
+                              [:p "The data come from the National Congenital Heart Disease Audit ("
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ") which collects
        national data for the UK National Heart Disease Audits. All hospitals in the UK and Ireland performing heart
-       surgery in children have to submit their data in a standard format to NICOR. All hospitals are independently
+       surgery in children have to submit their data in a standard format to NCHDA. All hospitals are independently
        audited each year as part of a data validation process (to check the quality of the data submitted) to ensure
        that the data are of high quality."]
 
