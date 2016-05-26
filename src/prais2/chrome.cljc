@@ -86,22 +86,21 @@
 
 (rum/defc footer []
   [:.container-fluid.partners
-   [:.row.visible-xs-block.center-block
-    {:style {:width "300px" :color "white"}}
-    ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
-
-    [:h4 [:a (core/href "faq/4/0") "Project partners:"]]
-    [:p "University College, London"]
-    [:p "University of Cambridge"]
-    [:p "King's College, London"]
-    [:p "Sense about Science"]
-    [:p "Children's Heart Federation"]
+   [:.row.visible-xs-block
+    [:.col-xs-offset-1
+     [:h4 [:a.link (core/href "faq/4/0") "Project partners " [:i.fa.fa-chevron-right]]]
+     [:ul {:style {:list-style-type "none"}}
+      [:li "University College, London"]
+      [:li "University of Cambridge"]
+      [:li "King's College, London"]
+      [:li "Sense about Science"]
+      [:li "Children's Heart Federation"]]]
     ]
 
    [:.row.hidden-xs
     ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
     [:.col-sm-12.collab-logo.col-md-offset-1
-     [:a (core/href "faq/4/0") "About us"] "|" [:a (core/href "faq/4/1") "Contact us"]]
+     [:a.link (core/href "faq/4/0") "About us"] "| " [:a (core/href "faq/4/1") "Contact us"]]
     [:.col-sm-12.collab-logo.col-md-offset-1
      [:img
       (core/isrc "assets/ucl-logo.png" :style {:width "190px"})]
