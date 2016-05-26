@@ -99,7 +99,7 @@
    [:.row.hidden-xs
     ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
     [:.col-sm-12.collab-logo.col-md-offset-1
-     [:a (core/href "faq/4/0") "About us"]]
+     [:a (core/href "faq/4/0") "About us"] "|" [:a (core/href "faq/4/1") "Contact us"]]
     [:.col-sm-12.collab-logo.col-md-offset-1
      [:img
       (core/isrc "assets/ucl-logo.png" :style {:width "190px"})]

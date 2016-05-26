@@ -884,8 +884,10 @@
                             was part of the team that drew up the new national patient information leaflets for breast cancer screening.
                             For this project, David helped write the content, especially the language around the statistical formula and
                             predicted range.  "
-                            [:a (core/href "http://understandinguncertainty.org") "Mike Pearson"] " developed the website and data visualisations,
-                            working closely with the animation team, "
+                            [:a (core/href "http://understandinguncertainty.org") "Mike Pearson"] " has created many mathematics teaching interactives
+                            for " [:a (core/href "http://nrich.maths.org") "NRICH"] ", " [:a (core/href "http://plus.maths.org") "PLUS"] ", and
+                            " [:a (core/href "https://understandinguncertainty.org") "Understanding Uncertainty"] ". He developed this website and its
+                            data visualisations, working closely with the animation team, "
                             [:a (core/href "https://qudos.com" :target "_blank") "Qudos"] "."]]
 
                           [:.image-para

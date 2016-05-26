@@ -182,11 +182,13 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     padding-top: 30px;
     a {
       color: white;
-      text-decoration: underline;
+      opacity: 0.6;
+      padding-right: 20px;
+      padding-left: 20px;
     }
     a:hover {
-            color: orange;
-            font-weight: 800;
+            opacity: 1.0;
+            text-decoration: none;
           }
     p.copyright, p.cookies {
       color: white;

@@ -51,3 +51,7 @@ resources/public/css/app.*
 ~*
 .idea/inspectionProfiles/
 tmp/
+resources/public/faq*
+resources/public/home*
+resources/public/index*
+resources/public/intro*
