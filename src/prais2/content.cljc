@@ -23,7 +23,7 @@
   (Row. (Header. "Hospital" true true 300 50
                  "The hospital name")
         (Header. "Hospital Code" false false 77 50
-                 "Hospital code as used by NICOR")
+                 "Hospital code as used by NCHDA")
         (Header. "Latitude" false false 0 0
                  "")
         (Header. "Longitude" false false 0 0
@@ -511,7 +511,7 @@
 
                                But "
                                [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "researchers"]
-                               " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
+                               " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NCHDA has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
                                years for each hospital since 2013 (see " [:a (core/href "intro") "What, Why and How?"] ").  The predicted range
         is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a (core/href "faqs") "How is the predicted range calculated?"] "). "
@@ -628,7 +628,7 @@
        more chances of winning, the more hospitals we look at, the more likely it becomes that at least one will fall
        outside its range, even if survival at all the hospitals matches the formula."]
 
-                              [:p "So, on average, we’d anticipate about half of NICOR’s annual reports to have at least one hospital outside
+                              [:p "So, on average, we’d anticipate about half of NCHDA’s annual reports to have at least one hospital outside
        its range, either above or below, by chance alone."]
 
                               [:p "Considering now the " [:i "extended predicted range"] ", if we look at all 13 hospitals at once, we’d only
@@ -676,7 +676,7 @@
                               [:p "If the hospital’s survival rate is below the extended predicted range (like this " [:img (core/isrc "/assets/below-extended.png" :style {:height "18px"})] " ),
        then an external review of the hospital’s processes and results would be instigated."]
 
-                              [:p "In all such cases, the reviews (whether internal or external) would be published online by NICOR at the same
+                              [:p "In all such cases, the reviews (whether internal or external) would be published online by NCHDA at the same
        time as the Annual Report."]
 
                               [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
@@ -752,13 +752,14 @@
                :glossary     []
                :body
                              [:div
-                              [:p "Currently (as of 2016), National audit only monitors what happens shortly after surgery. These data cannot
+                              [:p "Currently (as of 2016), national audit only monitors what happens shortly after surgery. These data cannot
        tell us about longer term (e.g. 5 year) survival, or other outcomes such as post-surgery complication rates or
        the impact of surgery on the child or their family. There is a lot of "
                                [:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
-                                              :target "_blank") "active research"] " going right now (due to finish around 2018) investigating how to
+                                              :target "_blank") "active research"]
+                               " going on right now (due to finish around 2018) investigating how to
              capture, interpret and publish longer term survival and complication rates so hopefully this information
-             will be available in the next 5 years."]
+             will become available in the next 5 years."]
 
                               [:p "The data also can’t tell us about how or why a hospital achieved the recorded results, so it cannot, by
        itself, tell us whether one hospital offers better or worse quality care than any other. These data cannot tell
@@ -915,12 +916,15 @@
                :glossary []
                :body
                          [:div
-                          [:p "For general questions and comments about this website please email sas@childrensheartsurgery.info."]
-                          [:p "For questions about the mathematical formula used, or the predicted range, please email mailto:ch@childrensheartsurgery.info."]
+                          [:p "For general questions and comments about this website please email "
+                           [:a {:href "mailto:enquiries@senseaboutscience.org"} "enquiries@senseaboutscience.org"] "."]
+                          [:p "For questions about the mathematical formula used, or the predicted range, please email "
+                           [:a {:href "mailto:maths@childrensheartsurgery.info"} "maths@childrensheartsurgery.info."]]
                           ; Add David's institute
-                          [:p "For reporting technical problems, please email mike@childrensheartsurgery.info."]
+                          [:p "For reporting technical problems, please email "
+                           [:a {:href "mailto:technical@childrensheartsurgery.info"} "technical@childrensheartsurgery.info."]]
                           [:p "For questions about the audit process or any individual hospital's results, please contact the national audit body "
-                           [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"]]]}
+                           [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital " :target "_blank") "NCHDA"]]]}
 
               {:title    "How we developed this site"
                :glossary []
