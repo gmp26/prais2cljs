@@ -486,7 +486,8 @@
                                               :target "_blank") "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new
              compulsory national reporting system so that the proportion of children surviving to 30 days after surgery
              for all hospitals have been published every year since 2001. When there is some evidence that survival
-             rates were lower than expected, the results are checked further by the hospital and the national audit body (NICOR)."]
+             rates were lower than expected, the results are checked further by the hospital and the national audit body ("
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ")."]
 
                               [:p "The UK and Ireland now have one of the strongest monitoring programmes in the world. Since reporting started, "
                                [:a (core/href "http://www.bbc.co.uk/news/health-32162803" :target "_blank") "survival rates have been improving"] "
@@ -501,11 +502,14 @@
                              [:div
                               [:p [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank")
                                    [:img.thumbnail.pull-left.w100 (core/isrc "assets/nicor.png")]]
-                               "Until 2013, the national audit body " [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank") "NICOR"]
-                               " only published survival rates for certain "
-                               [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
-                                              :target "_blank") "types of procedure"] " because there was no clear way to put overall survival rates for
-             each hospital into context (see " [:a (core/href "intro") "What, Why and How?"] "). But "
+                               "Since 2007, the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ") has published survival rates for certain
+                               types of procedure (now over 70 different procedures) at each hospital. The "
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] " did not
+                               publish overall survival rates for each hospital, because there was no clear way to put
+                               overall survival rates for each hospital into context
+                               (see " [:a (core/href "intro") "What, Why and How?"] ").
+
+                               But "
                                [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "researchers"]
                                " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NICOR has published overall
                                survival rates along with the predicted range and extended predicted range for survival over the previous 3
@@ -516,7 +520,7 @@
        this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
                               [:p "Operations that occur within 30 days of each other are treated as a single operation when reporting overall
        survival."]
-                              [:p "NICOR publishes all its reports "
+                              [:p [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] " publishes all its reports "
                                [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument" :target "_blank") "here"] ". "]]}
 
               {:title        "Where is this data from?"
