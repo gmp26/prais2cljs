@@ -59,14 +59,14 @@
   (Row. "Sample Hospital" "H" 52 -2 976 24 952 97.5 96.5 97.1 98.9 99.2 nil))
 
 (def datasource-tab
-  {:2015 {:title "Reporting period"
-          :label "2012-2015"
+  {:2015 {:title      "Reporting period"
+          :label      "2012-2015"
           :long-label "April 2012 - March 2015"}
-   :2014 {:title "Reporting period"
-          :label "2011-2014"
+   :2014 {:title      "Reporting period"
+          :label      "2011-2014"
           :long-label "April 2011 - March 2014"}
-   :2013 {:title "Reporting period"
-          :label "2010-2013"
+   :2013 {:title      "Reporting period"
+          :label      "2010-2013"
           :long-label "April 2010 - March 2013"}
    })
 
@@ -250,14 +250,13 @@
    :HSC [[:a (core/href "http://theharleystreetclinic.co.uk/cardiac/congenital-heart-care" :target "_blank")
           "London, Harley Street Clinic"]]
 
-   :GRL [[:a (core/href "http://www.leicestershospitals.nhs.uk/aboutus/leicester-hospitals-charity/childrens-heart-unit/" :target "_blank")
+   :GRL [[:a (core/href "http://www.leicestershospitals.nhs.uk/ " :target "_blank")
           "Leicester, Glenfield Hospital"]
          [:a (core/href "http://www.heartlink-glenfield.org.uk/" :target "_blank") "Heart Link"]]
 
    :FRE [[:a (core/href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx" :target "_blank")
           "Newcastle, Freeman Hospital"]
-         [:a (core/href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit_childrens-heart-unit-fund-chuf.aspx"
-                        :target "_blank") "Newcastle Children’s Heart Unit Fund"]]
+         [:a (core/href "http://chuf.org.uk/" :target "_blank") "Newcastle Children’s Heart Unit Fund"]]
 
    :RHS [[:a (core/href "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"
                         :target "_blank")
@@ -277,12 +276,13 @@
    :LGI [[:a (core/href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/" :target "_blank") "Leeds General Infirmary"]
          [:a (core/href "http://chsf.org.uk/" :target "_blank") "The Childrens Heart Surgery Fund"]]
 
-   :OLS [[:a (core/href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank")
+   :OLS [[:a (core/href "http://www.olchc.ie/" :target "_blank")
           "Dublin, Our Lady's Children's Hospital"]
          [:a (core/href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank")
           "Heart Children Ireland"]]
 
-   :NHB [[:a (core/href "http://www.thebromptonfountain.org.uk/" :target "_blank") "The Brompton Fountain"]]
+   :NHB [[:a (core/href "http://www.rbht.nhs.uk/" :target "_blank") "Brompton hospital"]
+         [:a (core/href "http://www.thebromptonfountain.org.uk/" :target "_blank") "The Brompton Fountain"]]
 
    :ACH [[:a (core/href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank") "Liverpool, Alder Hey Hospital"]
          [:a (core/href "http://www.alderheycharity.org/" :target "_blank") "Alder Hey Charity"]]
@@ -291,7 +291,7 @@
           "London, Evelina London Children's Hospital"]
          [:a (core/href "http://www.echo-evelina.org.uk/" :target "_blank") "ECHO – Evelina Children’s Heart Organisation"]]
 
-   :BCH [[:a (core/href "http://www.bch.nhs.uk/content/heart-unit" :target "_blank") "Birmingham Children’s Hospital"]
+   :BCH [[:a (core/href "http://www.bch.nhs.uk" :target "_blank") "Birmingham Children’s Hospital"]
          [:a (core/href "http://www.youngatheart.org.uk/" :target "_blank") "Young at Heart"]
          [:a (core/href "http://www.bch.org.uk" :target "_blank") "Birmingham Children’s Hospital Charity"]]
 
@@ -376,7 +376,7 @@
     (for [charity unassoc-charity-list]
       [:li charity])]
 
-   [:h3 "Hospital Charities"]
+   [:h3 "Hospitals and hospital-associated charities"]
    [:ul
     (for [h-code (keys hospital-metadata)]
       [:li [:b (first (h-code hospital-metadata))]
@@ -533,7 +533,7 @@
         independent checks of the quality of their submitted data. NICOR also reports to the UK Department of Health,
         the Care Quality Commission (CQC) and other NHS regulatory bodies."]
 
-                              [:p "NICOR tracks the survival of these children by linking to the national register of deaths using patients’
+                              [:p [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] " tracks the survival of these children by linking to the national register of deaths using patients’
        NHS number (in England and Wales) and also from hospital records."]]}]}
 
    {:section "Understanding the predicted range"
@@ -581,16 +581,15 @@
                               [:h4 "1. Inaccurate data"]
                               [:p "Each hospital and the Office of National Statistics supply data on each child to the national audit body.
        Although the " [:a (core/href "faq/2/1") "data submitted is of very high quality"] ", there will always be some
-       inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong (for
-       instance wrong weights are recorded) or missing, then this will result in a wrong predicted range."]
+       inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong or missing, then this will result in a wrong predicted range."]
 
                               [:h4 "2. The formula doesn’t work well for that hospital"]
                               [:p "The statistical formula is applied to all operations at that hospital to calculate its overall predicted
-       range of survival. Although " [:a (core/href "faq/2/0") "the formula as is as good as we can currently get it"] ", it is not perfect.
+       range of survival. Although " [:a (core/href "faq/2/0") "the formula is as good as we can currently get it"] ", it is not perfect.
        There will always be unique features about a child that affect their
        chance of survival that are not captured by national data collection and so cannot be part of a formula (e.g. the
        size of a hole in the heart). We will never be able to capture the whole medical picture of a child in a single
-       formula! That means that the predicted range is the best possible guess for what the predicted range should be.
+       formula. That means that the predicted range is the best possible guess for what the predicted range should be.
        If a hospital happens to have operated on a lot of children with unique features that affect their chances of
        survival but are not captured by the formula, the predicted range might be unfairly high for that hospital."]
 
@@ -615,9 +614,9 @@
                :body
                              [:div
                               [:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range
-       rarely if chances of survival at the hospitals match the formula: just 1 time in 20. BUT, if we are looking at
+       rarely if chances of survival at the hospitals match the formula: just 1 time in 20. But, if we are looking at
        all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by
-       chance about 8 times in 20!"]
+       chance about 8 times in 20."]
 
                               [:p "This is similar to the situation where you hear a friend won a good prize in a raffle. This may be
        surprising, but it becomes a lot less surprising when you hear they bought 100 tickets. Just as this gave them
@@ -656,8 +655,8 @@
                                " is notified. The Committee in turn notifies the relevant national health service’s Medical Director and the
                                lead doctor for congenital heart disease at that hospital and a detailed examination of the hospital’s results
                                takes place. There are established and published procedures which can be put into action if the detailed
-                               assessment raises concerns about care. In England, for instance, this would involve the Royal College of
-                               Surgeons and/or the Care Quality Commission."]
+                               assessment raises concerns about care. In England, for instance, this would involve the
+                               British Congenital Cardiac Association and/or the Care Quality Commission."]
 
                               [:p " There are two main steps:"]
 
@@ -866,7 +865,7 @@
         about Science, the University of Cambridge, King’s College London and the Children’s Heart Federation to develop
         these online resources to help people interpret the audit body’s published results. In particular, she wrote a
         lot of the content, helped enormously by feedback from the team and the user workshops. Thanks to "
-                            [:a (core/href "https://www.ucl.ac.uk/dahr/people/andrew-wilshere") " Dr Andrew Wilshere"] " for designing our logo! "]]
+                            [:a (core/href "https://www.ucl.ac.uk/dahr/people/andrew-wilshere") " Dr Andrew Wilshere"] " for designing our logo. "]]
 
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/camlogo-old.png")]
@@ -904,9 +903,7 @@
                            [:p [:img.pull-left.w100 (core/isrc "assets/chf-logo.png")]
                             [:a (core/href "http://www.chfed.org.uk/") "The Children’s Heart Federation"] " is the main umbrella body for British CHD charities and
          voluntary organisations. They publicised this project among their members and coordinated the involvement of
-         parents of children who had heart surgery in our workshops."]]
-
-                          [:p "If you have any comments about the website please email: (MIKE: Generic email)"]]}
+         parents of children who had heart surgery in our workshops."]]]}
 
               {:title    "Contact us"
                :glossary []
@@ -935,18 +932,25 @@
                           [:p "As the website took shape in the autumn of 2015, the academic psychologists at King’s College London did
        formal tests of specific sentences and concepts discussed in the website to see if one way of explaining the
        concepts worked better than another and to pinpoint where there was possibility for confusion. We also shared
-       the evolving website with the clinical community including surgeons, intensive care doctors, data experts and
-       cardiologists, to incorporate their feedback too. "]
+       the evolving website with the clinical community including surgeons, intensive care doctors, the national audit
+       body, data experts and cardiologists, to incorporate their feedback too. "]
 
                           [:p "Over time, the website took shape, changing massively over the year in response to the workshops, the
        psychology experiments and other feedback. We asked about everything from layout to colours to language to page
-       navigation and very little remains from the original draft content! "]
+       navigation and very little remains from the original draft content. "]
 
                           [:p "Looking back, we cannot thank all those who gave feedback enough – this website is immeasurably better with
        their input than it would otherwise have been. Any niggles that remain are our responsibility alone.  "]
 
                           [:p "We would also like to thank our funder, the UK National Institute of Health Research, for encouraging us to
-       think ambitiously about how to develop this site and giving us the time and money to do it! "]]}]}
+       think ambitiously about how to develop this site and giving us the time and money to do it. "]
+
+                          [:h4 "Explanatory videos"]
+                          [:p "Very many thanks to " [:a (core/href "http://www.therichardstonepartnership.co.uk/artist-details/leighton_pugh"
+                                                                    :target "_blank") "Leighton Pugh"] " for donating his time and expertise to narrating both
+                          videos. The artwork and production for both videos was with developed in collaboration with
+                          " [:a (core/href "http://www.qudos-animations.co.uk/" :target "_blank") "Qudos Animations"] ". We thank them
+                          for their great work and responsiveness in working to tight deadlines!"]]}]}
 
    #_{:section "Further resources about understanding clinical data"
       :faqs

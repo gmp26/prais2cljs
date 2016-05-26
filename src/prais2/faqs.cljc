@@ -42,7 +42,7 @@
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
          [:video
-          (core/isrc "assets/pr-animatic6.mp4" :controls true :preload true)])
+          (core/isrc "assets/pr-animatic7.mp4" :controls true :preload true)])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
