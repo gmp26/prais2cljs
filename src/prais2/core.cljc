@@ -10,6 +10,27 @@
     #?(:cljs [goog.events :as events])
             ))
 
+
+;;;
+;; define app state once so it doesn't re-initialise on reload.
+;; figwheel counter is a placeholder for any state affected by figwheel live reload events
+;;;
+(defonce app (atom {:datasource :2014
+                    :pull-out false
+                    :page :home
+                    :section :map
+                    :sort-by nil
+                    :sort-ascending true
+                    :slider-axis-value 1.0
+                    :detail-slider-axis-value 1.0
+                    :chart-state 3
+                    :theme 12
+                    :selected-h-code nil
+                    :map-h-code nil
+                    :show-nicor false
+                    :need-a-push false}))
+
+
 ;;
 ;; url handling
 ;;
@@ -19,6 +40,7 @@
        (.preventDefault event)
        ; :todo: route this dipatch through the event bus
        ; :todo: note that it be wrapped to force a push
+       (swap! app assoc :need-a-push true)
        (secretary/dispatch! fragment)
        (prn (str "dispatch " fragment)))
      ))
@@ -104,24 +126,6 @@
    (defn ready [handler]
      (.ready (js/$ js/document) handler)))
 
-;;;
-;; define app state once so it doesn't re-initialise on reload.
-;; figwheel counter is a placeholder for any state affected by figwheel live reload events
-;;;
-(defonce app (atom {:datasource :2014
-                    :pull-out false
-                    :page :home
-                    :section :map
-                    :sort-by nil
-                    :sort-ascending true
-                    :slider-axis-value 1.0
-                    :detail-slider-axis-value 1.0
-                    :chart-state 3
-                    :theme 12
-                    :selected-h-code nil
-                    :map-h-code nil
-                    :show-nicor false
-                    :need-a-push false}))
 
 ;;;
 ;; wraps raw content in a div and returns a rum react element
