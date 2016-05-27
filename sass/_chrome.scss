@@ -172,27 +172,35 @@ nav.navbar.navbar-simple.navbar-fixed-top {
 /*------- FOOTER --------- */
 
 .partners {
-    margin-top: 40px;
+    margin-top: 20px;
     z-index: 1000;
     position: relative;
     background-color: $dark-lighter;
 }
 
 .partners .row {
-    padding-top: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     a {
       color: white;
       opacity: 0.6;
       padding-right: 20px;
-      padding-left: 20px;
+      padding-left: 15px;
     }
-    a:hover {
+    a:link, a:visited {
+        text-decoration: none;
+    }
+    a:hover, a:active {
             opacity: 1.0;
-            text-decoration: none;
+            //text-decoration: none;
           }
     p.copyright, p.cookies {
       color: white;
       }
+    ul li {
+      color: white;
+      opacity: 0.6;
+    }
 }
 
 .partners .row img {

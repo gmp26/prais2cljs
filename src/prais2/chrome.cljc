@@ -88,7 +88,9 @@
   [:.container-fluid.partners
    [:.row.visible-xs-block
     [:.col-xs-offset-1
-     [:h4 [:a.link (core/href "faq/4/0") "Project partners " [:i.fa.fa-chevron-right]]]
+     [:h4 [:a.link (core/href "faq/4/0")
+           [:span "Project partners "
+            [:i.fa.fa-chevron-right]]]]
      [:ul {:style {:list-style-type "none"}}
       [:li "University College, London"]
       [:li "University of Cambridge"]
