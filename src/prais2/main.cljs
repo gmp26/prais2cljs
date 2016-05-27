@@ -234,10 +234,6 @@
    (cond
      (= page :home)
      (do
-       (prn "routes/homes = " (routes/homes))
-       (if push
-         (.pushState js/history [] "" (routes/homes))
-         (.replaceState js/history [] "" (routes/homes)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
@@ -246,10 +242,6 @@
 
      (= page :intro)
      (do
-       (prn "routes/intros = " (routes/intros))
-       (if push
-         (.pushState js/history [] "" (routes/intros))
-         (.replaceState js/history [] "" (routes/intros)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -258,11 +250,6 @@
 
      (= page :data)
      (do
-       (prn "routes/datas = " (routes/datas))
-       (if push
-         (.pushState js/history [] "" (routes/datas))
-         (.replaceState js/history [] "" (routes/datas)))
-
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -271,18 +258,12 @@
 
      (= page :faqs)
      (do
-       (prn "section = " section)
        (deselect-all)
        (when (or (= section :top) (= section nil))
-         (prn "routes/faqs = " (routes/faqs))
-         (if push
-           (.pushState js/history [] "" (routes/faqs {:section :top}))
-           (.replaceState js/history [] "" (routes/faqs {:section :top}))))
-       (map-indexed key-with
-                    [(chrome/header)
-                     #_(render-everything-else section)
-                     (render-faqs section)
-                     (chrome/footer)]))
+         (map-indexed key-with
+                      [(chrome/header)
+                       (render-faqs section)
+                       (chrome/footer)])))
 
      :else
      (do
@@ -421,8 +402,8 @@
               (prn faq-ref)
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
-                    (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
-                    (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                    ;(prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
+                    ;(.pushState js/history [] "" (routes/faq {:section sec :id id}))
                     ;(.replaceState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 

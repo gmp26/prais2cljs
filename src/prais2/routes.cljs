@@ -1,11 +1,11 @@
 (ns ^:figwheel-always prais2.routes
-  (:require [secretary.core :as secretary :refer-macros [defroute]]
+  (:require                                                 ;[secretary.core :as secretary :refer-macros [defroute]]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
             [cljs.reader :refer [read-string]]
             [cljs.core.async :refer [put!]]
+            [bidi.bidi :as bidi]
             [prais2.core :as core]
-    ;[accountant.core :as accountant]
             )
   (:import goog.History)
   )
@@ -17,63 +17,63 @@
 ;; basic hashbang routing to configure some options
 ;; :todo. If you change this, you must also change prais2.core/irl
 ;;;
-(secretary/set-config! :prefix "#")
+;(secretary/set-config! :prefix "#")
 
+(comment                                                    ; secretary routing
+  ;;;
+  ;; client-side routes
+  ;;;
+  (defroute faqs "/faqs" []
+            (put! core/event-bus [:faqs :top])
+            )
 
-;;;
-;; client-side routes
-;;;
-(defroute faqs "/faqs" []
-  (put! core/event-bus [:faqs :top])
-  )
+  (defroute faq "/faq/:section/:id" [section id]
+            (let [s (.parseInt js/Number section)
+                  f (.parseInt js/Number id)
+                  ap @core/app]
+              (if (not (and
+                         (= (:page ap) :faqs)
+                         (= (:section ap) [s f])))
+                (do
+                  (put! core/event-bus [:show-faq [s f]])
+                  (prn "faq match" s f))))
+            )
 
-(defroute faq "/faq/:section/:id" [section id]
-  (let [s (.parseInt js/Number section)
-        f (.parseInt js/Number id)
-        ap @core/app]
-    (if (not (and
-               (= (:page ap) :faqs)
-               (= (:section ap) [s f])))
-      (do
-        (put! core/event-bus [:show-faq [s f]])
-        (prn "faq match" s f))))
-  )
+  (defroute homes "/home" []
+            (put! core/event-bus [:home :top])
+            )
 
-(defroute homes "/home" []
-  (put! core/event-bus [:home :top])
-  )
+  (defroute home "/home/:id" [id]
+            (put! core/event-bus [:home id])
+            (prn "home :id match")
+            )
 
-(defroute home "/home/:id" [id]
-  (put! core/event-bus [:home id])
-  (prn "home :id match")
-  )
+  (defroute intros "/intro" []
+            (put! core/event-bus [:intro :top])
+            )
 
-(defroute intros "/intro" []
-  (put! core/event-bus [:intro :top])
-  )
+  (defroute intro "/intro/:id" [id]
+            (put! core/event-bus [:intro id])
+            (prn "intro :id match")
+            )
 
-(defroute intro "/intro/:id" [id]
-  (put! core/event-bus [:intro id])
-  (prn "intro :id match")
-  )
+  (defroute datas "/data" []
+            (put! core/event-bus [:data :animation]))
 
-(defroute datas "/data" []
-  (put! core/event-bus [:data :animation]))
+  (defroute data "/data/:id" [id]
+            (prn (str "data " id " match"))
+            (put! core/event-bus [:data (keyword id)])
+            ;(put! core/event-bus [:data id])
+            )
 
-(defroute data "/data/:id" [id]
-  (prn (str "data " id " match"))
-  (put! core/event-bus [:data (keyword id)])
-  ;(put! core/event-bus [:data id])
-  )
-
-(defroute index "/" []
-  (prn "index match")
-  (put! core/event-bus [:home :top])
-  )
+  (defroute index "/" []
+            (prn "index match")
+            (put! core/event-bus [:home :top])
+            ))
 
 #_(defroute other "*" []
-    (prn "* match")
-    )
+            (prn "* match")
+            )
 
 
 
@@ -89,21 +89,18 @@
 ;; to kick in on initial page load.
 ;;
 (def history (let [h (History. false false "dummy")]
-                 (goog.events/listen h EventType/NAVIGATE #(do
-                                                            (js/console.log %)
-                                                            (prn "Navigate event " (.-isNavigation %))
-                                                            (secretary/dispatch! (.-token %))
-                                                            (js/window.scrollTo 0 0)))
-                 (doto h (.setEnabled true))
-                 h))
+               (goog.events/listen h EventType/NAVIGATE #(do
+                                                          (js/console.log %)
+                                                          (prn "Navigate event " (.-isNavigation %))
+                                                          ;(secretary/dispatch! (.-token %))
+                                                          (js/window.scrollTo 0 0)))
+               (doto h (.setEnabled true))
+               h))
 
 ;;
 ;; pushy config
 ;;
-#_(def history (pushy/pushy secretary/dispatch!
-                          (fn [x] (when (secretary/locate-route x) x))))
 
-#_(pushy/start! history)
 
 ;;
 ;; accountant
@@ -117,7 +114,7 @@
 ;; We should use this to dispatch the new URL in javascript.
 ;;
 (set! (.-onpopstate js/window) #(do
-                                 (prn "popstate " (.. js/window -location -pathname))
+                                 (prn "popstate " (.. js/window -location -hash))
                                  ;(js/console.log %)
                                  ;(swap! core/app assoc :need-a-push false)
                                  ;(secretary/dispatch! (.. js/window -location -pathname))

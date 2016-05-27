@@ -4,7 +4,7 @@
     [rum.core :as rum]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
-    #?(:cljs [secretary.core :as secretary])
+    ;    #?(:cljs [secretary.core :as secretary])
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
     [prais2.utils :as u :refer [key-with]]
     #?(:cljs [goog.events :as events])
@@ -38,10 +38,7 @@
    (defn internal-link-handler [fragment]
      (fn [event]
        (.preventDefault event)
-       ; :todo: route this dipatch through the event bus
-       ; :todo: note that it be wrapped to force a push
-       (swap! app assoc :need-a-push true)
-       (secretary/dispatch! fragment)
+       ;(secretary/dispatch! fragment)
        (prn (str "dispatch " fragment)))
      ))
 
