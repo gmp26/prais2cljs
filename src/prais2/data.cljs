@@ -102,8 +102,6 @@
 ;; graphic renders
 ;;;
 
-
-
 (rum/defc bar < rum/static
           ([slider hi-val lo-val bar-type fill]
 
