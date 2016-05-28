@@ -408,8 +408,8 @@
 
 
 (rum/defc table-header < rum/static bs-popover [background ap header column-key event-bus]
-          [:th {:on-click       #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key))
-                :on-touch-start #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key))
+          [:th {:on-click       #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key nil))
+                :on-touch-start #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key nil))
                 :style          {:max-width        (px (:width header))
                                  :white-space      "normal !important"
                                  :vertical-align   "top"
@@ -427,7 +427,7 @@
                    :style {:background-color "none !important"
                            :color            "white !important"}}
             (when (not= column-key :h-name)
-              (let [info-handler #(core/click->event-bus % :info-clicked column-key)]
+              (let [info-handler #(core/click->event-bus % :info-clicked column-key nil)]
                 [:a.btn.btn-primary.btn-xs.info.pull-right
                  {:on-click       info-handler
                   :on-touch-start info-handler
@@ -491,7 +491,7 @@
                     :class (if (= (keyword h-code) (:selected-h-code ap)) "info" "")}
                (for [column-key (keys headers)
                      :let [column-header (column-key headers)
-                           info-handler #(core/click->event-bus % :open-hospital-modal h-code)]
+                           info-handler #(core/click->event-bus % :open-hospital-modal h-code nil)]
                      :when (:shown column-header)]
                  [:td {:key   [h-code column-key]
                        :style (merge {:maxWidth   (px (:width column-header))
@@ -710,7 +710,7 @@
            [:.box
             [:p {:style {:color "orange"}} "Legend (See also: "
              [:a (core/href "data/animation"
-                            :on-click #(core/click->event-bus % :data :animation)) "two minute guide"] ")"]
+                            :on-click #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"] ")"]
             (let [ap (rum/react core/app)]
               (map-indexed key-with
                            [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
@@ -765,7 +765,7 @@
           (let [ap (rum/react core/app)
                 datasource (:datasource ap)
                 selected-h-code (:selected-h-code ap)
-                close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code)]
+                close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code nil)]
             [:#rowModal.modal.fade {:tab-index       -1
                                     :role            "dialog"
                                     :aria-labelledby "myModalLabel"

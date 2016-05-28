@@ -209,13 +209,15 @@
 
 (rum/defc london-button []
   [:button.btn-info.london-button
-   {:on-click #(core/click->event-bus % :just-london nil)
+   {:on-click #(core/click->event-bus % :just-london nil nil)
+    :on-touch-start #(core/click->event-bus % :just-london nil nil)
     :tab-index 0}
    "Just London"])
 
 (rum/defc home-button []
   [:button.btn-info.h-button
-   {:on-click #(core/click->event-bus % :reset-map-to-home nil)
+   {:on-click #(core/click->event-bus % :reset-map-to-home nil nil)
+    :on-touch-start #(core/click->event-bus % :reset-map-to-home nil nil)
     :tab-index 0}
    "All UK"])
 

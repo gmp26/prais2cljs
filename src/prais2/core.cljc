@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.core
-    #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
+  #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
   (:require
     [rum.core :as rum]
     #?(:cljs [cljsjs.jquery])
@@ -8,27 +8,68 @@
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
     [prais2.utils :as u :refer [key-with]]
     #?(:cljs [goog.events :as events])
-            ))
+    ))
 
 
 ;;;
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:datasource :2014
-                    :pull-out false
-                    :page :home
-                    :section :map
-                    :sort-by nil
-                    :sort-ascending true
-                    :slider-axis-value 1.0
+(defonce app (atom {:datasource               :2014
+                    :pull-out                 false
+                    :page                     :home
+                    :section                  :map
+                    :sort-by                  nil
+                    :sort-ascending           true
+                    :slider-axis-value        1.0
                     :detail-slider-axis-value 1.0
-                    :chart-state 3
-                    :theme 12
-                    :selected-h-code nil
-                    :map-h-code nil
-                    :show-nicor false
-                    :need-a-push false}))
+                    :chart-state              3
+                    :theme                    12
+                    :selected-h-code          nil
+                    :map-h-code               nil
+                    :show-nicor               false
+                    :need-a-push              false}))
+
+;;;
+;; Define an event bus carrying [topic message]
+;; publication channels are based on topic - the first part of the data
+;;;
+#?(:cljs (def event-bus (chan)))
+#?(:cljs (def event-bus-pub (pub event-bus first)))
+
+(defn ensure-str [maybe-key]
+  (if (keyword? maybe-key)
+    (name maybe-key)
+    (str maybe-key)))
+
+
+#_(defn make-token [dispatch-key dispatch-value]
+  (str "/#/" (ensure-str dispatch-key)
+       (if (not= :top dispatch-value)
+         (str "/" (ensure-str dispatch-value))
+         "")))
+
+;;;
+;; generic click handler
+;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
+;;;
+#?(:cljs (defn click->event-bus
+           [event dispatch-key dispatch-value token]
+           ;let [token (make-token dispatch-key dispatch-value)]
+           (when token
+             (do
+               (prn (str "pushing " token))
+               (.pushState js/history [] token (str "/#/" token))))
+           (.preventDefault event)
+           (.stopPropagation event)
+           (if (and (= dispatch-key :data) (= dispatch-value :top))
+             (prn "gotcha")
+             (prn (str "click->event-bus " dispatch-key dispatch-value)))
+           (put! event-bus [dispatch-key dispatch-value])
+           ))
+#?(:clj (defn click->event-bus
+          [event dispatch-key dispatch-value token]
+          nil))
 
 
 ;;
@@ -40,7 +81,6 @@
        (.preventDefault event)
        ; :todo: route this dipatch through the event bus
        ; :todo: note that it be wrapped to force a push
-       (swap! app assoc :need-a-push true)
        (secretary/dispatch! fragment)
        (prn (str "dispatch " fragment)))
      ))
@@ -53,7 +93,7 @@
      ([fragment static]
       (if static
         (str "/" fragment ".html")
-        (str "/#/" fragment)))))    ;; :todo remove #/ when hashbangs go
+        (str "/#/" fragment)))))                            ;; :todo remove #/ when hashbangs go
 
 #?(:clj
    (defn irl "internal resource locator"
@@ -164,40 +204,15 @@
 (defn monitor-react
   ([label]
    {
-    :did-mount #(do (prn (str label " did-mount " %1)) %1)
+    :did-mount    #(do (prn (str label " did-mount " %1)) %1)
     :will-unmount #(do (prn (str label " will-unmount " %1)) %1)
     })
   ([label enabled]
    {
-    :did-mount #(do (if enabled (prn (str label " did-mount " %1))) %1)
+    :did-mount    #(do (if enabled (prn (str label " did-mount " %1))) %1)
     :will-unmount #(do (if enabled (prn (str label " will-unmount " %1))) %1)
     }))
 
-;;;
-;; Define an event bus carrying [topic message]
-;; publication channels are based on topic - the first part of the data
-;;;
-#?(:cljs (def event-bus (chan)))
-#?(:cljs (def event-bus-pub (pub event-bus first)))
-
-
-
-;;;
-;; generic click handler
-;; we may need to add some touch handling here too. Probably enough to stopPropagation from touch-start to click
-;;;
-#?(:cljs (defn click->event-bus
-           [event dispatch-key dispatch-value]
-           (.preventDefault event)
-           (.stopPropagation event)
-           (if (and (= dispatch-key :data) (= dispatch-value :top))
-             (prn "gotcha")
-             (prn (str "click->event-bus " dispatch-key dispatch-value)))
-           (put! event-bus [dispatch-key dispatch-value])
-           ))
-#?(:clj (defn click->event-bus
-          [event dispatch-key dispatch-value]
-          nil))
 
 ;; get element by id
 #?(:cljs (defn el [id] (.getElementById js/document id)))

@@ -74,7 +74,7 @@
 
     [:p "The " [:a (core/href "data/animation"
                          :on-click
-                         #(core/click->event-bus % :data :animation)) "two minute guide"]
+                         #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"]
      " explains how we present the results. Parents who helped us develop the web site found the guide useful in
      interpreting the data."]
 
@@ -85,7 +85,7 @@
       [:a#map-tab (core/href "data/map"
                     :aria-controls "mapped-data"
                     :role "tab"
-                    :on-click #(core/click->event-bus % :data :map))
+                    :on-click #(core/click->event-bus % :data :map "data/map"))
        [:i.fa.fa-map-marker] " Choose a hospital"]]
 
      [:li {:class (active? :table)
@@ -93,7 +93,7 @@
       [:a#table-tab (core/href "data/table"
                       :aria-controls "data-table"
                       :role "tab"
-                      :on-click #(core/click->event-bus % :data :table))
+                      :on-click #(core/click->event-bus % :data :table "data/table"))
        [:i.fa.fa-table] " List all data"]]
 
      [:li {:class (active? :animation)
@@ -101,7 +101,7 @@
       [:a#map-tab (core/href "data/animation"
                              :aria-controls "mapped-data"
                              :role "tab"
-                             :on-click #(core/click->event-bus % :data :animation))
+                             :on-click #(core/click->event-bus % :data :animation "data/animation"))
        [:i.fa.fa-video-camera] " Two minute guide"]]
 
      ]]])
@@ -233,9 +233,6 @@
      (= page :home)
      (do
        (prn "routes/homes = " (routes/homes))
-       (if push
-         (.pushState js/history [] "" (routes/homes))
-         (.replaceState js/history [] "" (routes/homes)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
@@ -244,10 +241,6 @@
 
      (= page :intro)
      (do
-       (prn "routes/intros = " (routes/intros))
-       (if push
-         (.pushState js/history [] "" (routes/intros))
-         (.replaceState js/history [] "" (routes/intros)))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -256,11 +249,6 @@
 
      (= page :data)
      (do
-       (prn "routes/datas = " (routes/datas))
-       (if push
-         (.pushState js/history [] "" (routes/datas))
-         (.replaceState js/history [] "" (routes/datas)))
-
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -271,14 +259,8 @@
      (do
        (prn "section = " section)
        (deselect-all)
-       (when (or (= section :top) (= section nil))
-         (prn "routes/faqs = " (routes/faqs))
-         (if push
-           (.pushState js/history [] "" (routes/faqs {:section :top}))
-           (.replaceState js/history [] "" (routes/faqs {:section :top}))))
        (map-indexed key-with
                     [(chrome/header)
-                     #_(render-everything-else section)
                      (render-faqs section)
                      (chrome/footer)]))
 
@@ -420,7 +402,7 @@
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
                     (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
-                    (.pushState js/history [] "" (routes/faq {:section sec :id id}))
+                    ;(.pushState js/history [] "" (routes/faq {:section sec :id id}))
                     ;(.replaceState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 

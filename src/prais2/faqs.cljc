@@ -48,7 +48,7 @@
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
 
 
-(rum/defc render-faq-top [faq-ref]
+(rum/defc render-faq-top []
   [:div
    [:h1.col-md-12 content/title]
    ;; new block menu
@@ -102,8 +102,8 @@
             (render-glossary glossary)))
         [:button.btn.btn-primary.back
          {:key 3
-          :on-click #(core/click->event-bus % :faqs :top)
-          :on-touch-start #(core/click->event-bus % :faqs :top)
+          :on-click #(core/click->event-bus % :faqs nil "faqs")
+          :on-touch-start #(core/click->event-bus % :faqs nil "faqs")
           }
          "Back"
          ]])])
@@ -114,8 +114,8 @@
   [:.container-fluid
    [:.row
 
-    (if (= :top faq-ref)
-      (render-faq-top faq-ref)
+    (if (= nil faq-ref)
+      (render-faq-top)
       (render-faq-section faq-ref)
       )
     ]])

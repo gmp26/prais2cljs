@@ -41,7 +41,8 @@
              [:.col-sm-6..col-md-offset-1.col-md-7
               [:div.clearfix
                [:button.btn.btn-primary.pull-left {:type      "button"
-                                                   :on-click  #(core/click->event-bus % :reset-map-to-home nil)
+                                                   :on-click  #(core/click->event-bus % :reset-map-to-home nil nil)
+                                                   :on-touch-start  #(core/click->event-bus % :reset-map-to-home nil nil)
                                                    :tab-index 0}
                 [:i.fa.fa-chevron-left] " Back"]]
               (data/hospital-detail (:map-h-code (rum/react core/app)))])

@@ -68,7 +68,9 @@
             (map-indexed #(key-with %1 (bs-nav-link
                                          (= active-key %2)
                                          (%2 nav-items)
-                                         (fn [e] (core/click->event-bus e %2 (if (= %2 :data) :map :top)))))
+                                         (fn [e] (core/click->event-bus e %2
+                                                                        (if (= %2 :data) :map nil)
+                                                                        (if (= %2 :data) "data/map" (str (name %2)))))))
                          (keys nav-items)))
          ]]]]]))
 

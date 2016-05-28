@@ -24,7 +24,7 @@
 ;; client-side routes
 ;;;
 (defroute faqs "/faqs" []
-  (put! core/event-bus [:faqs :top])
+  (put! core/event-bus [:faqs nil])
   )
 
 (defroute faq "/faq/:section/:id" [section id]
@@ -40,7 +40,7 @@
   )
 
 (defroute homes "/home" []
-  (put! core/event-bus [:home :top])
+  (put! core/event-bus [:home nil])
   )
 
 (defroute home "/home/:id" [id]
@@ -49,7 +49,7 @@
   )
 
 (defroute intros "/intro" []
-  (put! core/event-bus [:intro :top])
+  (put! core/event-bus [:intro nil])
   )
 
 (defroute intro "/intro/:id" [id]
@@ -68,7 +68,7 @@
 
 (defroute index "/" []
   (prn "index match")
-  (put! core/event-bus [:home :top])
+  (put! core/event-bus [:home nil])
   )
 
 #_(defroute other "*" []
@@ -92,8 +92,9 @@
                  (goog.events/listen h EventType/NAVIGATE #(do
                                                             (js/console.log %)
                                                             (prn "Navigate event " (.-isNavigation %))
-                                                            (secretary/dispatch! (.-token %))
-                                                            (js/window.scrollTo 0 0)))
+                                                            (when (.-isNavigation %)
+                                                              (secretary/dispatch! (.-token %)))
+                                                            ))
                  (doto h (.setEnabled true))
                  h))
 
@@ -117,9 +118,10 @@
 ;; We should use this to dispatch the new URL in javascript.
 ;;
 (set! (.-onpopstate js/window) #(do
-                                 (prn "popstate " (.. js/window -location -pathname))
-                                 ;(js/console.log %)
-                                 ;(swap! core/app assoc :need-a-push false)
-                                 ;(secretary/dispatch! (.. js/window -location -pathname))
+                                 (let [token (str           ;(.. js/window -location -pathname)
+                                                  (.. js/window -location -hash))]
+                                   (prn "popstate " token)
+                                   ;(secretary/dispatch! token)
+                                   )
                                  ))
 
