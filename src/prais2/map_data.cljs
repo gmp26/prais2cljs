@@ -27,8 +27,8 @@
 
             [:.row
              [:.col-sm-9
-              (data/datasource-title "Mapped data for " (content/end-year))]
-             [:.col-sm-3 (content/datasource-dropdown event-bus)]]
+              (data/datasource-title "Mapped data for " (data/end-year))]
+             [:.col-sm-3 (data/datasource-dropdown event-bus)]]
 
 
             [:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this

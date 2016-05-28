@@ -84,6 +84,7 @@
    ;(data-selector)
    ])
 
+
 (rum/defc footer []
   [:.container-fluid.partners
    [:.row.visible-xs-block
@@ -96,14 +97,13 @@
       [:li "University of Cambridge"]
       [:li "King's College, London"]
       [:li "Sense about Science"]
-      [:li "Children's Heart Federation"]]]
-    ]
+      [:li "Children's Heart Federation"]]]]
 
    [:.row.hidden-xs
     ;.col-xs-1.col-md-offset-1.col-md-11 {:style {:vertical-align "middle" }}
-    [:.col-sm-12.collab-logo.col-md-offset-1
+    [:.col-sm-10.collab-logo                                ;.col-md-offset-1.col-md-11
      [:a.link (core/href "faq/4/0") "About us"] "| " [:a (core/href "faq/4/1") "Contact us"]]
-    [:.col-sm-12.collab-logo.col-md-offset-1
+    [:.col-sm-10.collab-logo.col-md-offset-1.col-md-11
      [:img
       (core/isrc "assets/ucl-logo.png" :style {:width "190px"})]
      [:img
@@ -113,8 +113,7 @@
      [:img
       (core/isrc "assets/sas-logo.png" :style {:width "80px"})]
      [:img
-      (core/isrc "assets/chf-logo.png" :style {:width "80px"})]]
-    ]
+      (core/isrc "assets/chf-logo.png" :style {:width "80px"})]]]
 
    [:.row.footer
     [:.acks.col-md-offset-1
@@ -122,21 +121,21 @@
      [:h3
       "Funding acknowledgement"]
      [:p
-      "This project was funded by the National Institute for Health Research Health Services and Delivery Research Programme\n(project number 14/19/13)"]
+      "This project was funded by the National Institute for Health Research Health Services and Delivery Research
+      Programme\n(project number 14/19/13)"]
      [:h3
       "Department of Health disclaimer"]
      [:p
-      "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]
+      "The views and opinions expressed therein are those of the authors and do not necessarily reflect those of the
+      Health Services and Delivery Research Programme, NIHR, NHS or the Department of Health."]]]
 
-     ]]
    [:.row.footer.legal
     [:.col-md-offset-1
      [:p.copyright
       "© PRAIS2 website project team 2016"]
      [:p.cookies "This site uses cookies to help understand how users interact with the site.
-     See " [:a {:href "https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage"} "Google Analytics"]]
-     ]
-    ]])
+     See " [:a {:href "https://developers.google.com/analytics/devguides/collection/analyticsjs/cookie-usage"}
+                             "Google Analytics"]]]]])
 
 
 
