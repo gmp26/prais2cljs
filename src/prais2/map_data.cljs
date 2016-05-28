@@ -24,10 +24,17 @@
 (rum/defc render-map-data < rum/reactive []
           [:div
            [:section.col-sm-offset-1.col-sm-10
-            [:h2 "Mapped data for April 2011 - March 2014"]
-            [:p (str "These are the hospitals in the UK and Ireland that performed heart surgery in children over this period "
-                     "(0-16 years old). "
-                     "This data is updated annually and covers a 3 year period.")]]
+
+            [:.row
+             [:.col-sm-9
+              (data/datasource-title "Mapped data for " (data/end-year))]
+             [:.col-sm-3 (data/datasource-dropdown event-bus)]]
+
+
+            [:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
+             period (0-16 years old). This data is updated annually and covers a 3 year reporting period."]
+
+            ]
 
            (if (nil? (:map-h-code (rum/react core/app)))
              [:.col-sm-6.col-md-offset-1.col-md-7 (hospital-list)]
