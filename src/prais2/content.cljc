@@ -299,6 +299,8 @@
                         :target "_blank") "London, Great Ormond Street Hospital for Children"]
          [:a (core/href "http://www.gosh.org/" :target "_blank") "Great Ormond Street Hospital Charity GOSHCC"]]})
 
+(defn active-h-codes []
+  (map (comp keyword :h-code) ((:datasource @core/app) datasources)))
 
 (def unassoc-charity-list
   [
@@ -378,7 +380,7 @@
 
    [:h3 "Hospitals and hospital-associated charities"]
    [:ul
-    (for [h-code (keys hospital-metadata)]
+    (for [h-code (active-h-codes)]
       [:li [:b (first (h-code hospital-metadata))]
        [:ul
         (for [charity (rest (h-code hospital-metadata))]
