@@ -35,30 +35,30 @@
                (= (:page ap) :faqs)
                (= (:section ap) [s f])))
       (do
-        (put! core/event-bus [:show-faq [s f]])
+        (put! core/event-bus [:faq [s f]])
         (prn "faq match" s f))))
   )
 
-(defroute homes "/home" []
+#_(defroute homes "/home" []
   (put! core/event-bus [:home nil])
   )
 
-(defroute home "/home/:id" [id]
-  (put! core/event-bus [:home id])
+(defroute home "/home" []
+  (put! core/event-bus [:home nil])
   (prn "home :id match")
   )
 
-(defroute intros "/intro" []
+#_(defroute intros "/intro" []
   (put! core/event-bus [:intro nil])
   )
 
-(defroute intro "/intro/:id" [id]
-  (put! core/event-bus [:intro id])
-  (prn "intro :id match")
+(defroute intro "/intro" [id]
+  (put! core/event-bus [:intro nil])
+  (prn "intro match")
   )
 
-(defroute datas "/data" []
-  (put! core/event-bus [:data :animation]))
+#_(defroute datas "/data" []
+  (put! core/event-bus [:data :animation]))                 ;:todo: why animation?
 
 (defroute data "/data/:id" [id]
   (prn (str "data " id " match"))

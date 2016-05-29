@@ -76,10 +76,10 @@
                        (vec (zipmap (range) faq-sections))))])
 
 
-(rum/defc render-faq-section [faq-ref]
+(rum/defc render-faq-section [[section-ix ix :as faq-ref]]
+  (prn "render-faq-section " faq-ref)
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
-     (let [[section-ix ix] faq-ref
-           section (faq-sections section-ix)
+     (let [section (faq-sections section-ix)
            faq ((:faqs section) ix)
            short-answer (:short-answer faq)
            glossary (:glossary faq)]

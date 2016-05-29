@@ -226,13 +226,13 @@
                  (js/window.scrollTo 0 0)
                  state)})
 
-(rum/defc page-choice < rum/static scroll-to-top [page section push]
+(rum/defc page-choice < rum/static scroll-to-top [page section]
   [:div {:on-click close-start-modal
          :on-touch-start close-start-modal}
    (cond
      (= page :home)
      (do
-       (prn "routes/homes = " (routes/homes))
+       (prn "routes/homes = " (routes/home))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header true)
@@ -264,6 +264,15 @@
                      (render-faqs section)
                      (chrome/footer)]))
 
+     (= page :faq)
+     (do
+       (prn "section = " section)
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs [3 0])                    ;:todo replace with real params
+                     (chrome/footer)]))
+
      :else
      (do
        (prn "Route mismatch" page)
@@ -271,9 +280,9 @@
 
 ; add < bs-open-popover when start-modal is enabled
 (rum/defc render-page < rum/reactive []
-  (let [{:keys [page section need-a-push]} (rum/react core/app)]
-    (swap! core/app assoc :need-a-push false)
-    (page-choice page section need-a-push)))
+  (let [{:keys [page section]} (rum/react core/app)]
+    (prn "render page " page section)
+    (page-choice page section)))
 
 
 ;;
@@ -396,14 +405,12 @@
               (prn "nav to faqs " section)
               (swap! core/app #(assoc % :page :faqs :section section))))
 
-  (dispatch event-bus-pub :show-faq
+  (dispatch event-bus-pub :faq
             (fn [[_ faq-ref]]
               (prn faq-ref)
               (let [[sec id] faq-ref]
                 (do (prn "nav to faq " faq-ref " = " sec "," id)
                     (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
-                    ;(.pushState js/history [] "" (routes/faq {:section sec :id id}))
-                    ;(.replaceState js/history [] "" (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
   ;;;
