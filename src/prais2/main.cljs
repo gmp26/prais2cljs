@@ -151,7 +151,7 @@
           (let [app (rum/react core/app)
                 data ((data/table-data (:datasource app)))
                 section (:section app)]
-            [:div.container-fluid
+            [:div.container-fluid.main-content
              (map-indexed key-with
                           [
                            (render-data-tabs section)

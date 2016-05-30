@@ -60,7 +60,7 @@
            [:a (core/href "data") [:img.center-block (core/isrc "assets/video-1-thumbnail.png" :width "300px")]]])
 
 (rum/defc render-home < rum/reactive []
-          [:div
+          [:div.main-content
            [:.container
             [:.jumbotron.home.row
              [:section.about.col-xs-offset-1.col-sm-10

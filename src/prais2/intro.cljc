@@ -27,7 +27,7 @@
 
 ;; look at http://materializecss.com/
 (rum/defc render-intro < (core/monitor-react "INTRO>" false)  []
-  [:.container
+  [:.container.main-content
    [:.row
     [:.col-sm-8
      [:h1 "What, why, how?"]

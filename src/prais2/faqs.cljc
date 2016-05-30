@@ -82,9 +82,9 @@
                   (map render-section
                        (vec (zipmap (range) faq-sections))))])
 
-
-(defn go-back [event]
-  (.go js/history -1))
+#?(:cljs
+   (defn go-back [event]
+     (.go js/history -1)))
 
 (rum/defc render-faq-section [[section-ix ix :as faq-ref]]
   (prn "render-faq-section " faq-ref)
@@ -112,17 +112,17 @@
             (render-glossary glossary)))
         [:button.btn.btn-primary.back
          ; :todo: replace with a call on history
-         {:key 3
-          :on-click go-back                                 ;#(core/click->event-bus % :faqs nil "faqs")
-          :on-touch-start go-back                           ;#(core/click->event-bus % :faqs nil "faqs")
-          }
+         #?(:cljs {:key            3
+                   :on-click       go-back                  ;#(core/click->event-bus % :faqs nil "faqs")
+                   :on-touch-start go-back                  ;#(core/click->event-bus % :faqs nil "faqs")
+                   })
          "Back"
          ]])])
 
 
 (rum/defc render-faqs [faq-ref]
 
-  [:.container-fluid
+  [:.container-fluid.main-content
    [:.row
     (if (= nil faq-ref)
       (render-faq-top)

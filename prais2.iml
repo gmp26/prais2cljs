@@ -94,7 +94,7 @@
     <orderEntry type="library" name="Leiningen: ring-cors:0.1.7" level="project" />
     <orderEntry type="library" name="Leiningen: ring/ring-codec:1.0.0" level="project" />
     <orderEntry type="library" name="Leiningen: ring/ring-core:1.4.0" level="project" />
-    <orderEntry type="library" name="Leiningen: rum:0.8.3" level="project" />
+    <orderEntry type="library" name="Leiningen: rum:0.8.4" level="project" />
     <orderEntry type="library" name="Leiningen: sablono:0.4.0" level="project" />
     <orderEntry type="library" name="Leiningen: secretary:1.2.3" level="project" />
     <orderEntry type="library" name="Leiningen: tigris:0.1.1" level="project" />
