@@ -289,7 +289,7 @@
 ;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip []
-          (render-page app)
+          (render-page)
           )
 
 ;;
