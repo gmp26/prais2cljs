@@ -23,7 +23,7 @@
 ;; window location to token: :todo. Change this if changing prefix
 ;;;
 (defn get-token! []
-  (if (= (core/prefix) "#")
+  (if (= core/prefix "#")
     (.. js/window -location -hash)
     (.. js/window -location -pathname)))
 
