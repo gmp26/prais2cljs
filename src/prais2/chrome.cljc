@@ -1,17 +1,18 @@
 (ns ^:figwheel-always prais2.chrome
-    (:require
-      #?(:cljs [goog.string :refer [unescapeEntities]])
-      [rum.core :as rum]
-      #?(:cljs [cljsjs.jquery])
-      #?(:cljs [cljsjs.bootstrap])
-      [prais2.utils :refer [key-with]]
-      #?(:cljs [prais2.core :as core :refer [event-bus]])
-      #?(:clj [prais2.core :as core])
+  (:require
+    #?(:cljs [goog.string :refer [unescapeEntities]])
+    [rum.core :as rum]
+    #?(:cljs [cljsjs.jquery])
+    #?(:cljs [cljsjs.bootstrap])
+    [prais2.utils :refer [key-with]]
+    #?(:cljs [prais2.core :as core :refer [event-bus]])
+    #?(:clj
+    [prais2.core :as core])
 
-      [prais2.components.data-selector :refer [data-selector]]
-      ;[prais2.logger :as logger]
-      ;[prais2.data :as data]
-      ))
+    [prais2.components.data-selector :refer [data-selector]]
+    ;[prais2.logger :as logger]
+    ;[prais2.data :as data]
+    ))
 
 (defn rgba-string
   "return CSS rgba string"
@@ -20,41 +21,42 @@
   )
 
 
-(defrecord  Nav-item [long-title short-title class icon])
+(defrecord Nav-item [long-title short-title class icon token])
 
 #?(:cljs (def nbsp (unescapeEntities "&nbsp;")))
-#?(:clj (def nbsp " "))                  ;; not yet sure how to handle entities in java rum hiccup
+#?(:clj (def nbsp " "))                                     ;; not yet sure how to handle entities in java rum hiccup
 
 (def what-why (str "What," nbsp "why," nbsp "how?"))
 (def everything-else (str "Everything" nbsp "else"))
 
 (def nav-items {
-                :home (Nav-item. "Home" "Home" "nav-item home" "home")
-                :intro (Nav-item. what-why what-why "nav-item intro" "question")
-                :data  (Nav-item. "Data" "Explore the data" "nav-item data" "table")
-                :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info")})
+                :home  (Nav-item. "Home" "Home" "nav-item home" "home" "home")
+                :intro (Nav-item. what-why what-why "nav-item intro" "question" "intro")
+                :data  (Nav-item. "Data" "Explore the data" "nav-item data" "table" "data/map")
+                :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info" "faqs")})
 
 
 (rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
-   [:a.navbar-btn {:on-click click-handler
-                   :class (str (if active? " active " " ") (:class nav-item))
+   [:a.navbar-btn {:on-click    click-handler
+                   :class       (str (if active? " active " " ") (:class nav-item))
                    :data-toggle "collapse"
-                   :data-target ".navbar-collapse"}
+                   :data-target ".navbar-collapse"
+                   :href        (core/token->url (:token nav-item))}
     [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
 
 
-(rum/defc bs-fixed-navbar  [active-key]
+(rum/defc bs-fixed-navbar [active-key]
   (let [nav-item (active-key nav-items)]
     [:nav.navbar.navbar-simple.navbar-fixed-top
      [:.navbar-inner
       [:.container
        [:.navbar-header {:key 1}
-        [:button.navbar-toggle.collapsed {:key 1
-                                          :type "button"
-                                          :data-toggle "collapse"
-                                          :data-target "#navbar"
+        [:button.navbar-toggle.collapsed {:key           1
+                                          :type          "button"
+                                          :data-toggle   "collapse"
+                                          :data-target   "#navbar"
                                           :aria-expanded "false"
                                           :aria-controls "navbar"}
          [:span.sr-only {:key 1} "Toggle navigation"]

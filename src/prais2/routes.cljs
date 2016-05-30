@@ -17,7 +17,15 @@
 ;; basic hashbang routing to configure some options
 ;; :todo. If you change this, you must also change prais2.core/irl
 ;;;
-(secretary/set-config! :prefix "#")
+(secretary/set-config! :prefix core/prefix)
+
+;;;
+;; window location to token: :todo. Change this if changing prefix
+;;;
+(defn get-token! []
+  (if (= (core/prefix) "#")
+    (.. js/window -location -hash)
+    (.. js/window -location -pathname)))
 
 
 ;;;
@@ -40,8 +48,8 @@
   )
 
 #_(defroute homes "/home" []
-  (put! core/event-bus [:home nil])
-  )
+    (put! core/event-bus [:home nil])
+    )
 
 (defroute home "/home" []
   (put! core/event-bus [:home nil])
@@ -49,8 +57,8 @@
   )
 
 #_(defroute intros "/intro" []
-  (put! core/event-bus [:intro nil])
-  )
+    (put! core/event-bus [:intro nil])
+    )
 
 (defroute intro "/intro" [id]
   (put! core/event-bus [:intro nil])
@@ -58,7 +66,7 @@
   )
 
 #_(defroute datas "/data" []
-  (put! core/event-bus [:data :animation]))                 ;:todo: why animation?
+    (put! core/event-bus [:data :animation]))
 
 (defroute data "/data/:id" [id]
   (prn (str "data " id " match"))
@@ -89,20 +97,20 @@
 ;; to kick in on initial page load.
 ;;
 (def history (let [h (History. false false "dummy")]
-                 (goog.events/listen h EventType/NAVIGATE #(do
-                                                            (js/console.log %)
-                                                            (prn "Navigate event " (.-isNavigation %))
-                                                            (when (.-isNavigation %)
+               (goog.events/listen h EventType/NAVIGATE #(do
+                                                          (js/console.log %)
+                                                          (prn "Navigate event " (.-isNavigation %))
+                                                          #_(when (.-isNavigation %)
                                                               (secretary/dispatch! (.-token %)))
-                                                            ))
-                 (doto h (.setEnabled true))
-                 h))
+                                                          ))
+               (doto h (.setEnabled true))
+               h))
 
 ;;
 ;; pushy config
 ;;
 #_(def history (pushy/pushy secretary/dispatch!
-                          (fn [x] (when (secretary/locate-route x) x))))
+                            (fn [x] (when (secretary/locate-route x) x))))
 
 #_(pushy/start! history)
 
@@ -110,18 +118,16 @@
 ;; accountant
 ;;
 #_(accountant/configure-navigation!
-  {:nav-handler  (fn [path] (secretary/dispatch! path))
-   :path-exists? (fn [path] (secretary/locate-route path))})
+    {:nav-handler  (fn [path] (secretary/dispatch! path))
+     :path-exists? (fn [path] (secretary/locate-route path))})
 
 ;;
 ;; When the user presses the back or forwards button, onpopstate is fired.
 ;; We should use this to dispatch the new URL in javascript.
 ;;
-(set! (.-onpopstate js/window) #(do
-                                 (let [token (str           ;(.. js/window -location -pathname)
-                                                  (.. js/window -location -hash))]
-                                   (prn "popstate " token)
-                                   ;(secretary/dispatch! token)
-                                   )
-                                 ))
+;;
+(set! (.-onpopstate js/window)
+      #(do (let [token (get-token!)]
+             (prn "popstate " token)
+             (secretary/dispatch! token))))
 

@@ -31,6 +31,15 @@
                     :show-nicor               false
                     :need-a-push              false}))
 
+;;
+;; routing prefix
+;;
+(def prefix "#")
+
+(defn token->url [token]
+  (if (= prefix "#")
+    (str "/" prefix "/" token)))
+
 ;;;
 ;; Define an event bus carrying [topic message]
 ;; publication channels are based on topic - the first part of the data
@@ -56,12 +65,18 @@
 ;;;
 #?(:cljs (defn click->event-bus
            [event dispatch-key dispatch-value token]
-           ;let [token (make-token dispatch-key dispatch-value)]
            (when token
              (do
                (prn (str "pushing " token))
-               ; :todo: filter this for URL-only events?
-               (.pushState js/history [] token (str "/#/" token))))
+               ; Filter this for URL-only events?
+               ;; No.
+               ;; If we are here, then we are routing on an internal click
+               ;; rather than a back/forward navigation.
+               ;; So it is safe to push.
+               ;;
+               (.pushState js/history [] token (token->url token))))
+           (when-not token
+             (prn "NIL TOKEN SENT TO core/click-event-bus"))
            (.preventDefault event)
            (.stopPropagation event)
            (if (and (= dispatch-key :data) (= dispatch-value :top))

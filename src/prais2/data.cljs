@@ -1,5 +1,4 @@
 (ns ^:figwheel-always prais2.data
-  (:require-macros [cljs.core.async.macros :refer [go]])
   (:require [rum.core :as rum]
             [cljsjs.jquery]
             [cljsjs.bootstrap]
@@ -10,7 +9,9 @@
             [prais2.logger :as logger]
             [clojure.string :as str]
             [sablono.core :as sab]
-            ))
+            )
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  )
 
 ;;;
 ;; datasource utilities
@@ -101,8 +102,6 @@
 ;;;
 ;; graphic renders
 ;;;
-
-
 (rum/defc bar < rum/static
           ([slider hi-val lo-val bar-type fill]
 
@@ -535,28 +534,28 @@
           [:option {:value n} n])
 
 #_(rum/defc chart-state-dropdown < rum/reactive [event-bus]
-          [:.form-group.col-md-2
-           [:label-for {:for "chart-selector"} "Chart State "]
-           [:select#chart-selector.form-control.input-sm
-            {
-             :value     (:chart-state (rum/react core/app))
-             :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
-            (map-indexed key-with
-                         (for [n (range (count chart-states))]
-                           (integer-option n)))
-            ]]
-          )
+            [:.form-group.col-md-2
+             [:label-for {:for "chart-selector"} "Chart State "]
+             [:select#chart-selector.form-control.input-sm
+              {
+               :value     (:chart-state (rum/react core/app))
+               :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
+              (map-indexed key-with
+                           (for [n (range (count chart-states))]
+                             (integer-option n)))
+              ]]
+            )
 
 #_(rum/defc theme-dropdown < rum/reactive [event-bus]
-          [:.form-group.col-md-1
-           [:label-for {:for "colour-map-selector"} "Theme "]
-           [:select#colour-map-selector.form-control.input-sm
-            {
-             :value     (:theme (rum/react core/app))
-             :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
-            (map-indexed key-with
-                         (for [n (range (count content/colour-map-options))]
-                           (integer-option n)))]])
+            [:.form-group.col-md-1
+             [:label-for {:for "colour-map-selector"} "Theme "]
+             [:select#colour-map-selector.form-control.input-sm
+              {
+               :value     (:theme (rum/react core/app))
+               :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
+              (map-indexed key-with
+                           (for [n (range (count content/colour-map-options))]
+                             (integer-option n)))]])
 
 (defn year-range [year m1 m2]
   (let [y1 (- year 3)]
@@ -584,23 +583,23 @@
            ])
 
 #_(rum/defc nicor-checkbox < rum/reactive []
-          [:.form-group.col-sm-6
-           [:label-for {:for "nicor-check"} "Show Nicor links "]
-           [:input {:type      "checkbox"
-                    :checked   (:show-nicor (rum/react core/app))
-                    :on-change #(swap! core/app update :show-nicor not)
-                    }]])
+            [:.form-group.col-sm-6
+             [:label-for {:for "nicor-check"} "Show Nicor links "]
+             [:input {:type      "checkbox"
+                      :checked   (:show-nicor (rum/react core/app))
+                      :on-change #(swap! core/app update :show-nicor not)
+                      }]])
 
 #_(rum/defc option-menu < rum/reactive [event-bus]
-          [:nav.navbar.navbar-inverse.table-container
-           [:.container-fluid
-            [:navbar-form.form-inline.row
-             [:.col-sm-12
-              (map-indexed key-with
-                           [(datasource-dropdown event-bus)
-                            (nicor-checkbox)
-                            (theme-dropdown event-bus)
-                            (chart-state-dropdown event-bus)])]]]])
+            [:nav.navbar.navbar-inverse.table-container
+             [:.container-fluid
+              [:navbar-form.form-inline.row
+               [:.col-sm-12
+                (map-indexed key-with
+                             [(datasource-dropdown event-bus)
+                              (nicor-checkbox)
+                              (theme-dropdown event-bus)
+                              (chart-state-dropdown event-bus)])]]]])
 
 
 ;;;;;;
