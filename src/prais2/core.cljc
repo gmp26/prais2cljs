@@ -41,23 +41,22 @@
     (str "/" prefix "/" token)))
 
 ;;;
+;; window location to token: :todo. Change this if changing prefix
+;;;
+#?(:cljs
+   (defn get-token! []
+     (if (= prefix "#")
+       (do
+         (str/replace-first (.. js/window -location -hash) "#/" ""))
+       (.. js/window -location -pathname))))
+
+
+;;;
 ;; Define an event bus carrying [topic message]
 ;; publication channels are based on topic - the first part of the data
 ;;;
 #?(:cljs (def event-bus (chan)))
 #?(:cljs (def event-bus-pub (pub event-bus first)))
-
-(defn ensure-str [maybe-key]
-  (if (keyword? maybe-key)
-    (name maybe-key)
-    (str maybe-key)))
-
-
-#_(defn make-token [dispatch-key dispatch-value]
-  (str "/#/" (ensure-str dispatch-key)
-       (if (not= :top dispatch-value)
-         (str "/" (ensure-str dispatch-value))
-         "")))
 
 ;;;
 ;; generic click handler
@@ -79,10 +78,10 @@
              (prn "NIL TOKEN SENT TO core/click-event-bus"))
            (.preventDefault event)
            (.stopPropagation event)
-           (if (and (= dispatch-key :data) (= dispatch-value :top))
-             (prn "gotcha")
-             (prn (str "click->event-bus " dispatch-key " " dispatch-value)))
+           (prn (str "click->event-bus " dispatch-key " " dispatch-value))
            (put! event-bus [dispatch-key dispatch-value])
+
+
            ))
 #?(:clj (defn click->event-bus
           [event dispatch-key dispatch-value token]
@@ -178,9 +177,9 @@
 
 (defn internal-ref
   "add in local handler for an internal token"
-  [path]
-  (merge {:href (irl path)}
-         #?(:cljs {:on-click (internal-link-handler path)})))
+  [token]
+  (merge {:href (irl token)}
+         #?(:cljs {:on-click (internal-link-handler token)})))
 
 (defn href
 
@@ -218,7 +217,7 @@
 ;; wraps raw content in a div and returns a rum react element
 ;;;
 (rum/defc rum-wrap [& content]
-  (apply conj [:div] content))
+          (apply conj [:div] content))
 
 ;; mixin to initialise bootstrap collapse code
 #?(:cljs (def bs-collapse

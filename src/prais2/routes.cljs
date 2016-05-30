@@ -19,14 +19,6 @@
 ;;;
 (secretary/set-config! :prefix core/prefix)
 
-;;;
-;; window location to token: :todo. Change this if changing prefix
-;;;
-(defn get-token! []
-  (if (= core/prefix "#")
-    (.. js/window -location -hash)
-    (.. js/window -location -pathname)))
-
 
 ;;;
 ;; client-side routes
@@ -127,7 +119,7 @@
 ;;
 ;;
 (set! (.-onpopstate js/window)
-      #(do (let [token (get-token!)]
+      #(do (let [token (core/get-token!)]
              (prn "popstate " token)
              (secretary/dispatch! token))))
 

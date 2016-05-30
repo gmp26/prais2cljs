@@ -85,8 +85,8 @@
            glossary (:glossary faq)]
        [:div
         [:h2 {:key 1}
-         [:div.query [:i.fa.fa-question]]
-         [:div.title (:title faq)]]
+         [:.query {:key 1} [:i.fa.fa-question]]
+         [:.title {:key 2} (:title faq)]]
 
         (when short-answer
           (do
@@ -101,6 +101,7 @@
             (prn "rendering glossary " glossary)
             (render-glossary glossary)))
         [:button.btn.btn-primary.back
+         ; :todo: replace with a call on history
          {:key 3
           :on-click #(core/click->event-bus % :faqs nil "faqs")
           :on-touch-start #(core/click->event-bus % :faqs nil "faqs")
@@ -113,7 +114,6 @@
 
   [:.container-fluid
    [:.row
-
     (if (= nil faq-ref)
       (render-faq-top)
       (render-faq-section faq-ref)
