@@ -83,6 +83,9 @@
                        (vec (zipmap (range) faq-sections))))])
 
 
+(defn go-back [event]
+  (.go js/history -1))
+
 (rum/defc render-faq-section [[section-ix ix :as faq-ref]]
   (prn "render-faq-section " faq-ref)
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
@@ -110,8 +113,8 @@
         [:button.btn.btn-primary.back
          ; :todo: replace with a call on history
          {:key 3
-          :on-click #(core/click->event-bus % :faqs nil "faqs")
-          :on-touch-start #(core/click->event-bus % :faqs nil "faqs")
+          :on-click go-back                                 ;#(core/click->event-bus % :faqs nil "faqs")
+          :on-touch-start go-back                           ;#(core/click->event-bus % :faqs nil "faqs")
           }
          "Back"
          ]])])
