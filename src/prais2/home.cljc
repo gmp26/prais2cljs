@@ -8,7 +8,7 @@
           [:.col-sm-4
            [:.home-nav.well.intro
             [:a.active
-             {:href           (core/token/url "intro")
+             {:href           (core/token->url "intro")
               :on-click       #(core/click->event-bus % :intro nil "intro")
               :on-touch-start #(core/click->event-bus % :intro nil "intro")}
              [:i.fa.fa-question.big]

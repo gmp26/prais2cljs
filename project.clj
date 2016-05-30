@@ -22,7 +22,7 @@
 
 
                  [devcards "0.2.1"]
-                 [rum "0.8.3"]
+                 [rum "0.8.4"]
 
                  [figwheel-sidecar "0.5.1"]
                  [com.stuartsierra/component "0.3.1"]

@@ -41,7 +41,7 @@
     (str "/" prefix "/" token)))
 
 ;;;
-;; window location to token: :todo. Change this if changing prefix
+;; window location to token: :todo. Test this if changing prefix
 ;;;
 #?(:cljs
    (defn get-token! []
@@ -81,54 +81,56 @@
            (prn (str "click->event-bus " dispatch-key " " dispatch-value))
            (put! event-bus [dispatch-key dispatch-value])
 
-
            ))
 #?(:clj (defn click->event-bus
           [event dispatch-key dispatch-value token]
           nil))
 
-;;
-;; :todo convert this to a safe edn based reader
-;;
 
-;(def dispatch-keys #{"homes" "home" "intros" "intro" "data" "faqs" "faq"})
-(def dispatch-0-keys #{"home" "intro" "data" "faqs"})
-(def dispatch-1-keys #{"data"})
-(def dispatch-2-keys #{"faq"})
-
-(defn validate
-  ([k]
-   (if (dispatch-0-keys k) [k nil] nil))
-
-  ([k v1]
-   (if (dispatch-1-keys k)
-     (if (or (= v1 "map") (= v1 "table") (= v1 "animation") [k v1])
-       [k v1]
-       [k nil])
-     nil))
-
-  ([k v1 v2]
-    ))
-
-#?(:cljs
-   (defn fragment->key-values
-     "fragments look like frag1 or frag1/frag2 or frag1/frag2/frag3"
-     [fragment]
-     (let [[k v1 v2] (filter #(not= % "/") (str/split fragment #"/"))]
-       [(validate k) (validate k v1) (validate k v2)]
-       )))
+;:todo: inject this somehow
+(def token-dispatch-table
+  {"home"           [:home nil]
+   "intro"          [:intro nil]
+   "data"           [:data nil]
+   "data/map"       [:data :map]
+   "data/table"     [:data :table]
+   "data/animation" [:data :animation]
+   "faqs"           [:faq nil]
+   "faq/0/0"        [:faq [0 0]]
+   "faq/0/1"        [:faq [0 1]]
+   "faq/0/2"        [:faq [0 2]]
+   "faq/0/3"        [:faq [0 3]]
+   "faq/1/0"        [:faq [1 0]]
+   "faq/1/1"        [:faq [1 1]]
+   "faq/1/2"        [:faq [1 2]]
+   "faq/1/3"        [:faq [1 3]]
+   "faq/1/4"        [:faq [1 4]]
+   "faq/1/5"        [:faq [1 5]]
+   "faq/2/0"        [:faq [2 0]]
+   "faq/2/1"        [:faq [2 1]]
+   "faq/2/2"        [:faq [2 2]]
+   "faq/2/3"        [:faq [2 3]]
+   "faq/2/4"        [:faq [2 4]]
+   "faq/3/0"        [:faq [3 0]]
+   "faq/3/1"        [:faq [3 1]]
+   "faq/3/2"        [:faq [3 2]]
+   "faq/4/0"        [:faq [4 0]]
+   "faq/4/1"        [:faq [4 1]]
+   "faq/4/2"        [:faq [4 2]]
+   "faq/5/0"        [:faq [5 0]]
+   "faq/5/1"        [:faq [5 1]]})
 
 ;;
 ;; url handling
 ;;
 #?(:cljs
-   (defn internal-link-handler [fragment]
+   (defn internal-link-handler [token]
      (fn [event]
        ; (.preventDefault event)
        ; :todo: route this dispatch through the event bus
-       (prn (str "internal-link-handler " fragment))
-       (let [[dispatch-key dispatch-value] (fragment->key-values fragment)]
-         (click->event-bus event dispatch-key dispatch-value fragment)))
+       (prn (str "internal-link-handler " token))
+       (let [[dispatch-key dispatch-value] (token-dispatch-table token)]
+         (click->event-bus event dispatch-key dispatch-value token)))
      ))
 
 #?(:cljs

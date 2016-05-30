@@ -14,6 +14,13 @@
     "rgba(127, 187, 205, 1)"
     ] (mod index 3)))
 
+(defn faq-refs
+  "List all faq refs"
+  []
+  (into {} (for [section-ix (range (count faq-sections))
+                 faq-ix (range (count (:faqs (faq-sections section-ix))))]
+             [(str "faq/" section-ix "/" faq-ix) [:faq [section-ix faq-ix]]]))
+  )
 
 (rum/defc render-short-answer [answer]
   [:section.short-answer
