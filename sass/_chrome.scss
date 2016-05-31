@@ -8,6 +8,7 @@
     width: 100%;
     z-index: 2000;
     margin-top: -100px;
+    pointer-events: none;  // to avoid masking nav-items when dropped
 }
 
 .main-content {

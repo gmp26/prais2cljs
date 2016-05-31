@@ -79,7 +79,7 @@
 (rum.core/defc header < rum.core/reactive []
   [:div
    (bs-fixed-navbar (:page (rum.core/react core/app)))
-   [:.container.main-title-box
+   [:.main-title-box
     [:a (core/href "home")
      [:img.img-responsive.pull-left {:src   "/assets/logo3.png"
                                      :style {:margin-top     "-50px"
