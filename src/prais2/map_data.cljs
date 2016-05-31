@@ -27,7 +27,7 @@
 
             [:.row
              [:.col-sm-9
-              (data/datasource-title "Mapped data for " (data/end-year))]
+              (data/datasource-title "Data for " (data/end-year))]
              [:.col-sm-3 (data/datasource-dropdown event-bus)]]
 
 

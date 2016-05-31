@@ -411,7 +411,7 @@
 ;; Comment on the meaning of the dot when it appears in the given range.
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
-(def dot-comments
+#_(def dot-comments
   {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
 
    :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
@@ -422,6 +422,31 @@
 
    :high       "There is strong evidence that chances of survival in the hospital were higher than predicted." ; " [todo: to 1/2]"
    })
+
+;;;
+;; Comment on the meaning of the dot when it appears in the given range.
+;; These texts appear in a concluding remark in each hospital's popup.
+;;;
+(rum/defc inner-comment []
+  [:span "There is no evidence that chances of survival in the hospital are different from predicted."])
+
+(rum/defc high-comment []
+  [:span "There is some evidence that chances of survival in the hospital were "
+   [:a (core/href "faq/1/2") "higher than predicted."]])
+
+(rum/defc low-comment []
+  [:span "There is some evidence that chances of survival in the hospital were "
+   [:a (core/href "faq/1/4") "lower than predicted."]])
+
+(rum/defc outer-low-comment []
+  [:span "There is strong evidence that chances of survival in the hospital were "
+   [:a (core/href "faq/1/4") "lower than predicted."]])
+
+(rum/defc outer-high-comment []
+  [:span "There is strong evidence that chances of survival in the hospital were "
+   [:a (core/href "faq/1/2") "higher than predicted."]])
+
+
 
 
 (def glossary
@@ -684,7 +709,11 @@
 
                               [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
        any single hospital to be outside its predicted range but it is rare for any hospital to be outside its extended
-       range (see also: " [:a (core/href "faq/1/3") "looking at ALL hospitals"] ")"]]}
+       range (see also: " [:a (core/href "faq/1/3") "looking at ALL hospitals"] ")"]
+
+                              [:p "Additional reports on their data from any hospital that is below its predicted range
+                              are also published by the NCHDA. All NCHDA reports are "
+                               [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument") "available here"] "."]]}
 
               {:title        "Where did the formula used to calculate the predicted range come from?"
                :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS

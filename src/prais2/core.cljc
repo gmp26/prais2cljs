@@ -16,7 +16,7 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:datasource               :2014
+(defonce app (atom {:datasource               :2015
                     :pull-out                 false
                     :page                     :home
                     :section                  :map
