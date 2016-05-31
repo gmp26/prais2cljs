@@ -1,15 +1,15 @@
 (ns ^:figwheel-always prais2.main
   (:require-macros                                          ;[jayq.macros :refer [ready]]
     [cljs.core.async.macros :refer [go-loop]])
-  (:require [rum.core :as rum]
-            [cljs.reader :as reader]
+  (:require [rum.core]
+    ;            [cljs.reader :as reader]
             [clojure.set :refer (intersection)]
             [cljsjs.react]
             [cljs.core.async :refer [chan <! pub sub put! close!]]
             [prais2.utils :refer [key-with]]
             [prais2.core :as core :refer [app event-bus event-bus-pub bs-popover bs-tooltip]]
             [prais2.routes :as routes]
-            [prais2.content :as content]
+    ;[prais2.content :as content]
             [prais2.data :as data]
             [prais2.open-layers-map :as map]
             [prais2.chrome :as chrome]
@@ -22,7 +22,8 @@
 
     ;;[jayq.core :refer [$]]
 
-            [cljsjs.moment :as moment]))
+    ; [cljsjs.moment :as moment]
+            ))
 
 (enable-console-print!)
 
@@ -31,26 +32,20 @@
   [selector]
   (.querySelector js/document selector))
 
-(defn selectAll
-  "Returns a NodeList object containing all matching DOM elements."
-  [selector]
-  (.querySelectorAll js/document selector))
-
-
 ;;;
 ;;  "debug app-state"
 ;;;
-(rum/defc debug < rum/reactive []
-          [:div
-           [:p (str (rum/react core/app))]]
-          )
+(rum.core/defc debug < rum.core/reactive []
+  [:div
+   [:p (str (rum.core/react core/app))]]
+  )
 
-(rum/defc para < rum/static [text]
-          [:p text])
+(rum.core/defc para < rum.core/static [text]
+  [:p text])
 
-(rum/defc render-404 []
-          [:h1 "Page not found. "
-           [:a (core/href "home") "Try the home page."]])
+(rum.core/defc render-404 []
+  [:h1 "Page not found. "
+   [:a (core/href "home") "Try the home page."]])
 
 ;;
 ;; Code snippet to remove columns from table
@@ -65,98 +60,97 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum/defc render-data-tabs [section]
+(rum.core/defc render-data-tabs []
 
-          [:.row
+  [:.row
 
-           [:.col-sm-offset-1.col-sm-10
-            [:h1 "Explore the data"]
+   [:.col-sm-offset-1.col-sm-10
+    [:h1 "Explore the data"]
 
-            [:p "The " [:a (core/href "data/animation"
-                                      :on-click
-                                      #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"]
-             " explains how we present the results. Parents who helped us develop the web site found the guide useful in
-             interpreting the data."]
+    [:p "The " [:a (core/href "data/animation"
+                              :on-click
+                              #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"]
+     " explains how we present the results. Parents who helped us develop the web site found the guide useful in
+     interpreting the data."]
 
-            [:ul.nav.nav-pills {:role "tablist"}
+    [:ul.nav.nav-pills {:role "tablist"}
 
-             [:li {:class (active? :map)
-                   :role  "presentation"}
-              [:a#map-tab (core/href "data/map"
-                                     :aria-controls "mapped-data"
-                                     :role "tab"
-                                     :on-click #(core/click->event-bus % :data :map "data/map"))
-               [:i.fa.fa-map-marker] " Choose a hospital"]]
+     [:li {:class (active? :map)
+           :role  "presentation"}
+      [:a#map-tab (core/href "data/map"
+                             :aria-controls "mapped-data"
+                             :role "tab"
+                             :on-click #(core/click->event-bus % :data :map "data/map"))
+       [:i.fa.fa-map-marker] " Choose a hospital"]]
 
-             [:li {:class (active? :table)
-                   :role  "presentation"}
-              [:a#table-tab (core/href "data/table"
-                                       :aria-controls "data-table"
-                                       :role "tab"
-                                       :on-click #(core/click->event-bus % :data :table "data/table"))
-               [:i.fa.fa-table] " List all data"]]
+     [:li {:class (active? :table)
+           :role  "presentation"}
+      [:a#table-tab (core/href "data/table"
+                               :aria-controls "data-table"
+                               :role "tab"
+                               :on-click #(core/click->event-bus % :data :table "data/table"))
+       [:i.fa.fa-table] " List all data"]]
 
-             [:li {:class (active? :animation)
-                   :role  "presentation"}
-              [:a#map-tab (core/href "data/animation"
-                                     :aria-controls "mapped-data"
-                                     :role "tab"
-                                     :on-click #(core/click->event-bus % :data :animation "data/animation"))
-               [:i.fa.fa-video-camera] " Two minute guide"]]
+     [:li {:class (active? :animation)
+           :role  "presentation"}
+      [:a#map-tab (core/href "data/animation"
+                             :aria-controls "mapped-data"
+                             :role "tab"
+                             :on-click #(core/click->event-bus % :data :animation "data/animation"))
+       [:i.fa.fa-video-camera] " Two minute guide"]]
 
-             ]]])
+     ]]])
 
 
 
-(rum/defc render-data-tab-panes < rum/reactive [data section]
-          [:row.tab-content
+(rum.core/defc render-data-tab-panes < rum.core/reactive [data]
+  [:row.tab-content
 
-           [:.tab-pane.col-sm-12 {:class (active? :map)
-                                  :id    "mapped-data"}
-            (when (active? :map)
-              (render-map-data))]
+   [:.tab-pane.col-sm-12 {:class (active? :map)
+                          :id    "mapped-data"}
+    (when (active? :map)
+      (render-map-data))]
 
-           [:.tab-pane.col-sm-12 {:class (active? :table)
-                                  :id    "data-table"}
-            (data/modal)
-            (when (active? :table)
-              (data/list-tab core/app data event-bus))]
+   [:.tab-pane.col-sm-12 {:class (active? :table)
+                          :id    "data-table"}
+    (data/modal)
+    (when (active? :table)
+      (data/list-tab core/app data event-bus))]
 
-           [:.tab-pane.col-sm-12 {:class (active? :animation)
-                                  :id    "mapped-data"}
-            (when (active? :animation)
-              [:section.col-sm-offset-1.col-sm-10
-               [:h2 "A two minute guide to how we present the results"]
-               [:video
-                (core/isrc "assets/video01.mp4" :controls true :preload true :style {:max-width "600px"})]
-               ;todo " Add thumbnail"
-               [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
+   [:.tab-pane.col-sm-12 {:class (active? :animation)
+                          :id    "mapped-data"}
+    (when (active? :animation)
+      [:section.col-sm-offset-1.col-sm-10
+       [:h2 "A two minute guide to how we present the results"]
+       [:video
+        (core/isrc "assets/video01.mp4" :controls true :preload true :style {:max-width "600px"})]
+       ;todo " Add thumbnail"
+       [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
        the " [:a (core/href "faqs") "Everything Else section"] "."]
-               ])]
+       ])]
 
-           [:.tab-pane.col-sm-12 {:class (active? :animation2)
-                                  :id    "mapped-data"}
-            (when (active? :animation2)
-              [:section.col-sm-offset-1.col-sm-10
-               ;[:h2 "How is the predicted range calculated?"]
-               [:video
-                (core/isrc "assets/video02.mp4" :controls true :preload true
-                           :style {:max-width "480px"})]
-               ])]
-           ]
-          )
+   [:.tab-pane.col-sm-12 {:class (active? :animation2)
+                          :id    "mapped-data"}
+    (when (active? :animation2)
+      [:section.col-sm-offset-1.col-sm-10
+       ;[:h2 "How is the predicted range calculated?"]
+       [:video
+        (core/isrc "assets/video02.mp4" :controls true :preload true
+                   :style {:max-width "480px"})]
+       ])]
+   ]
+  )
 
-(rum/defc render-data < rum/reactive (core/monitor-react "DATA>" false)
-          [section]
-          (let [app (rum/react core/app)
-                data ((data/table-data (:datasource app)))
-                section (:section app)]
-            [:div.container-fluid.main-content
-             (map-indexed key-with
-                          [
-                           (render-data-tabs section)
-                           (render-data-tab-panes data section)
-                           ])]))
+(rum.core/defc render-data < rum.core/reactive (core/monitor-react "DATA>" false)
+  []
+  (let [app (rum.core/react core/app)
+        data ((data/table-data (:datasource app)))]
+    [:div.container-fluid.main-content
+     (map-indexed key-with
+                  [
+                   (render-data-tabs)
+                   (render-data-tab-panes data)
+                   ])]))
 
 (defn valid-session-id
   ([session-id]
@@ -164,51 +158,51 @@
   ([]
    (valid-session-id @logger/session-id)))
 
-(defn close-start-modal [event]
+#_(defn close-start-modal [_]
   (if (.hasClass (js/$ "#start-modal") "in")
     (let [new-session-id (.val (js/$ "#session-id"))]
       (when (valid-session-id new-session-id)
         (do
           (logger/write-log [:start-session nil] new-session-id)
-          (.modal (js/$ "#start-modal") "hide"))))))
+          (. modal (js/$ "#start-modal") "hide"))))))
 
-(rum/defc start-modal < rum/reactive []
-          [:#start-modal.modal.fade {:tab-index       -1
-                                     :role            "dialog"
-                                     :aria-labelledby "myModalLabel"
-                                     :on-click        close-start-modal
-                                     :on-touch-start  close-start-modal
-                                     }
-           [:.modal-dialog {:role "document"}
-            [:.modal-content
-             [:.modal-header {:key 1}
-              [:h4.modal-title "Starting a new session"]]
-             [:.modal-body {:key 2}
-              [:form.form-horizontal
-               [:.form-group
-                {:class (if (valid-session-id) "" "has-error")}
-                [:label.col-md-3.control-label {:for "session-id" :key 1}
-                 "Session id"]
-                [:.col-sm-3 {:key 2}
-                 [:input#session-id.form-control
-                  {:type         "text"
-                   :placeholder  "my tag"
-                   :value        (rum/react logger/session-id)
-                   :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
-                                   (close-start-modal %))
-                   :on-change    #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
-                ]]]
-             [:.modal-footer {:key 3}
-              [:button.btn.btn-primary
-               {:type           "button"
-                :disabled       (not (valid-session-id))
-                :on-click       close-start-modal
-                :on-touch-start close-start-modal}
-               "OK"]
-              ]]]
-           ])
+#_(rum.core/defc start-modal < rum.core/reactive []
+  [:#start-modal.modal.fade {:tab-index       -1
+                             :role            "dialog"
+                             :aria-labelledby "myModalLabel"
+                             :on-click        close-start-modal
+                             :on-touch-start  close-start-modal
+                             }
+   [:.modal-dialog {:role "document"}
+    [:.modal-content
+     [:.modal-header {:key 1}
+      [:h4.modal-title "Starting a new session"]]
+     [:.modal-body {:key 2}
+      [:form.form-horizontal
+       [:.form-group
+        {:class (if (valid-session-id) "" "has-error")}
+        [:label.col-md-3.control-label {:for "session-id" :key 1}
+         "Session id"]
+        [:.col-sm-3 {:key 2}
+         [:input#session-id.form-control
+          {:type         "text"
+           :placeholder  "my tag"
+           :value        (rum.core/react logger/session-id)
+           :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
+                           (close-start-modal %))
+           :on-change    #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
+        ]]]
+     [:.modal-footer {:key 3}
+      [:button.btn.btn-primary
+       {:type           "button"
+        :disabled       (not (valid-session-id))
+        :on-click       close-start-modal
+        :on-touch-start close-start-modal}
+       "OK"]
+      ]]]
+   ])
 
-(def bs-open-popover
+#_(def bs-open-popover
   {:did-mount (fn [state]
                 (if (nil? @logger/session-id)
                   (core/ready #(.modal (js/$ "#start-modal") (clj->js {:show true :backdrop :static}))))
@@ -223,80 +217,80 @@
 
 (def scroll-to-top
   {:did-update (fn [state]
-                 (js/window.scrollTo 0 0)
+                 (js/scrollTo 0 0)
                  state)})
 
-(rum/defc page-choice < rum/static scroll-to-top [page section]
-          [:div {:on-click       close-start-modal
-                 :on-touch-start close-start-modal}
-           (cond
-             (= page :home)
-             (do
-               (prn "routes/homes = " (routes/home))
-               (deselect-all)
-               (map-indexed key-with
-                            [(chrome/header true)
-                             (render-home)
-                             (chrome/footer)]))
+(rum.core/defc page-choice < rum.core/static scroll-to-top [page section]
+  [:div #_{:on-click       close-start-modal
+         :on-touch-start close-start-modal}
+   (cond
+     (= page :home)
+     (do
+       ;(prn "routes/homes = " (routes/home))
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header true)
+                     (render-home)
+                     (chrome/footer)]))
 
-             (= page :intro)
-             (do
-               (deselect-all)
-               (map-indexed key-with
-                            [(chrome/header)
-                             (render-intro)
-                             (chrome/footer)]))
+     (= page :intro)
+     (do
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-intro)
+                     (chrome/footer)]))
 
-             (= page :data)
-             (do
-               (deselect-all)
-               (map-indexed key-with
-                            [(chrome/header)
-                             (render-data section)
-                             (chrome/footer)]))
+     (= page :data)
+     (do
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-data)
+                     (chrome/footer)]))
 
-             (= page :faqs)
-             (do
-               (prn "section = " section)
-               (deselect-all)
-               (map-indexed key-with
-                            [(chrome/header)
-                             (render-faqs section)
-                             (chrome/footer)]))
+     (= page :faqs)
+     (do
+       (prn "section = " section)
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs section)
+                     (chrome/footer)]))
 
-             (= page :faq)
-             (do
-               (prn "section = " section)
-               (deselect-all)
-               (map-indexed key-with
-                            [(chrome/header)
-                             (render-faqs [3 0])            ;:todo replace with real params
-                             (chrome/footer)]))
+     (= page :faq)
+     (do
+       (prn "section = " section)
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs [3 0])                    ;:todo replace with real params
+                     (chrome/footer)]))
 
-             :else
-             (do
-               (prn "Route mismatch" page)
-               (render-404)))])
+     :else
+     (do
+       (prn "Route mismatch" page)
+       (render-404)))])
 
-; add < bs-open-popover when start-modal is enabled
-(rum/defc render-page < rum/reactive []
-          (let [{:keys [page section]} (rum/react core/app)]
-            (prn "render page " page section)
-            (page-choice page section)))
+
+(rum.core/defc render-page < rum.core/reactive []
+  (let [{:keys [page section]} (rum.core/react core/app)]
+    (prn "render page " page section)
+    (page-choice page section)))
 
 
 ;;
 ;; Contains the app user interface
 ;;
-(rum/defc app-container < bs-popover bs-tooltip []
-          (render-page)
-          )
+(rum.core/defc app-container < bs-popover bs-tooltip []
+  (render-page)
+  )
 
 ;;
 ;; mount main component on html app element
 ;;
 (if-let [mount-point (core/el "app")]
-  (rum/mount (app-container) mount-point))
+  (rum.core/mount (app-container) mount-point))
 
 ;;;
 ;; Read events off the event bus and handle them
@@ -307,7 +301,7 @@
   (let [in-chan (chan)]
     (sub event-feed event-key in-chan)
     (go-loop []
-             (let [[ev-key ev-data :as event] (<! in-chan)]
+             (let [[ev-key _ :as event] (<! in-chan)]
                (if (= ev-key :reloading)
                  (do
                    (close! in-chan))
@@ -356,7 +350,7 @@
               (data/open-hospital-modal h-code)))
 
   (dispatch event-bus-pub :close-hospital-modal
-            (fn [[_ h-code]]
+            (fn [_]
               (data/close-hospital-modal)))
 
   (dispatch event-bus-pub :morph-full-range
@@ -384,14 +378,12 @@
   (dispatch event-bus-pub :home
             (fn [[_ section]]
               (prn "nav to home " section)
-              (let [ap @app]
-                (swap! core/app #(assoc % :page :home :section section)))))
+              (swap! core/app #(assoc % :page :home :section section))))
 
   (dispatch event-bus-pub :intro
             (fn [[_ section]]
               (prn "nav to intro " section)
-              (let [ap @app]
-                (swap! core/app #(assoc % :page :intro :section section)))))
+              (swap! core/app #(assoc % :page :intro :section section))))
 
   (dispatch event-bus-pub :data
             (fn [[_ section]]

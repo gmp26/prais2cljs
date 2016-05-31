@@ -92,7 +92,7 @@
     (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560 1132 20 1112 98.2 95.5 96.1 98.1 98.6 nil)
     (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835 1220 35 1185 97.1 95.3 96.0 97.9 98.4 nil)
     (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1457 36 1421 97.5 94.9 95.5 97.4 97.9 nil)
-    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1892 19 1873 99.0 96.5 96.9 98.4 98.3 nil)]
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1892 19 1873 99.0 96.5 96.9 98.4 98.7 nil)]
 
    :2014
    [(Row. "Belfast, Royal Victoria Hospital" "RVB" 54.594167 -5.953666 204 2 202 99.0 95.1 96.6 100 100.0 nil)
@@ -707,13 +707,16 @@
                               [:p "In all such cases, the reviews (whether internal or external) would be published online by NCHDA at the same
        time as the Annual Report."]
 
-                              [:p "NOTE: Because the national audit body always reports on all 13 hospitals at once, it is not that rare for
-       any single hospital to be outside its predicted range but it is rare for any hospital to be outside its extended
-       range (see also: " [:a (core/href "faq/1/3") "looking at ALL hospitals"] ")"]
+                              [:p "NOTE: It is quite common for one of the 13 hospitals to be outside its predicted
+                              range, but it is rare for any of them to be outside the extended predicted range.
+                              (See also: " [:a (core/href "faq/1/3") "Looking at ALL hospitals"] ")"]
 
-                              [:p "Additional reports on their data from any hospital that is below its predicted range
-                              are also published by the NCHDA. All NCHDA reports are "
-                               [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument") "available here"] "."]]}
+                              [:p "The NCHDA also publishes additional reports from any hospital which has a survival
+                              rate below its predicted range. These are "
+                               [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis%20Documents?Opendocument") "available here"]
+                               ", along with the NCHDA annual reports."]
+
+                              ]}
 
               {:title        "Where did the formula used to calculate the predicted range come from?"
                :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS

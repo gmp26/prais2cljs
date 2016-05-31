@@ -649,7 +649,7 @@
       (content/high-comment)
 
       (> survival-rate (:outer-high row))
-      (content/high-comment)
+      (content/outer-high-comment)
 
       :else
       "Oops - no text for this"

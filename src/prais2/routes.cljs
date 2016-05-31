@@ -89,7 +89,7 @@
 ;; to kick in on initial page load.
 ;;
 (def history (let [h (History. false false "dummy")]
-               (goog.events/listen h EventType/NAVIGATE #(do
+               (events/listen h EventType/NAVIGATE #(do
                                                           (js/console.log %)
                                                           (prn "Navigate event " (.-isNavigation %))
                                                           #_(when (.-isNavigation %)
