@@ -6,7 +6,7 @@
 ;; About us mugshot list
 ;;;
 (defn get-mugshots []
-  ["christina" "david" "tim" "emily" "mike"])
+  ["christina" "david" "tim" "emily B" "mike" "emily J" "joanne"])
 
 ;;;
 ;; table structure
@@ -937,11 +937,19 @@
 
                           [:.image-para
                            [:p [:img.pull-left.w100 (core/isrc "assets/sas-logo.png")]
-                            [:a (core/href "http://www.senseaboutscience.org/") "Sense About Science"] " is a UK-based charity that works to put science and evidence in the hands of
-         the public. They are a source of information, challenge misinformation, and champion sound science and evidence
-         with the help of scientists, academics, and experts in various fields. For this project, they facilitated the
-         workshops with parents, other interested users and members of the public who helped to co-develop the website
-         over four sets of two workshops and stopped the academics going into too much mathematical detail! "]]
+                            [:a (core/href "http://www.senseaboutscience.org/") "Sense About Science"] " is an
+                            independent campaigning charity that challenges the misrepresentation of science and scientific
+                            evidence in public life. They advocate openness and honesty about research findings and work
+                            to ensure the public interest in sound science and evidence is represented and recognised in
+                            public discussion and policy making."]
+                           [:p "Sense about Science has collaborated on a number of highly successful Public Engagement
+                           Partnerships, to help scientists to communicate their research findings simply and accurately
+                           by co-developing resources with the intended audience. Two of their team, Emily Jesper, Head
+                           of Partnerships and Governance and Joanne Thomas, Projects and Events Coordinator were
+                           involved in this project. They provided expertise in communicating complex scientific
+                           information and facilitated 8 user-testing workshops with parents, other interested users
+                           and members of the public to test that the information and animations on the website are
+                           clear, accessible and coherent."]]
 
                           [:.image-para
                            [:p [:img.pull-left.w100 (core/isrc "assets/chf-logo.png")]

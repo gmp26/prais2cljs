@@ -6,7 +6,7 @@
 
 (rum.core/defc
   mug < rum.core/static [name]
-  [:.col-xs-4.col-sm-4.col-md-2
+  [:.col-xs-3
    [:img.img-responsive (core/isrc (str "assets/mugshots/" name "-med.jpg") :key 1)]
    [:p.text-center {:key 2} (str/capitalize name)]
    ])
