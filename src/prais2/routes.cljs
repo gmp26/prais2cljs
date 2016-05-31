@@ -90,11 +90,13 @@
 ;;
 (def history (let [h (History. false false "dummy")]
                (events/listen h EventType/NAVIGATE #(do
-                                                          (js/console.log %)
-                                                          (prn "Navigate event " (.-isNavigation %))
-                                                          #_(when (.-isNavigation %)
-                                                              (secretary/dispatch! (.-token %)))
-                                                          ))
+                                                     (js/console.log %)
+                                                     (prn "Navigate event " (.-isNavigation %))
+                                                     (when-not (.-isNavigation %)
+                                                       ; get here on site entry (not a back or next button click)
+                                                       (secretary/dispatch! (.-token %))
+                                                       )
+                                                     ))
                (doto h (.setEnabled true))
                h))
 
@@ -121,5 +123,6 @@
 (set! (.-onpopstate js/window)
       #(do (let [token (core/get-token!)]
              (prn "popstate " token)
-             (secretary/dispatch! token))))
+             (secretary/dispatch! token)
+             )))
 
