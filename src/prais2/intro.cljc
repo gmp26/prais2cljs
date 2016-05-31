@@ -1,15 +1,10 @@
 (ns ^:figwheel-always prais2.intro
-    (:require [rum.core :as rum]
+    (:require [rum.core]
               [prais2.core :as core]
-              [prais2.content :as content]
-      ;[prais2.data :as data]
-              [prais2.chrome :as chrome]
-              [prais2.utils :as u :refer [key-with]]
-              #_[prais2.open-layers-map :as map]
-              #_[cljsjs.jquery]))
+              [prais2.utils :refer [key-with]]))
 
 
-(rum/defc section [section-id section-title section-content]
+(rum.core/defc section [section-id section-title section-content]
   [:section.col-sm-8.pull-left
    {:id section-id}
    [:h2 {:dangerouslySetInnerHTML {:__html section-title}}]
@@ -26,7 +21,7 @@
 
 
 ;; look at http://materializecss.com/
-(rum/defc render-intro < (core/monitor-react "INTRO>" false)  []
+(rum.core/defc render-intro < (core/monitor-react "INTRO>" false)  []
   [:.container.main-content
    [:.row
     [:.col-sm-8
@@ -48,7 +43,7 @@
      (section 5 "What this site can do" section-5-content)
      ]]])
 
-(rum/defc key-points []
+(rum.core/defc key-points []
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
@@ -61,7 +56,7 @@
 
 
 
-(rum/defc section-1-content []
+(rum.core/defc section-1-content []
   [:section.row
    [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least
    30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s
@@ -71,7 +66,7 @@
    and Republic of Ireland."]]
   )
 
-(rum/defc section-2-content []
+(rum.core/defc section-2-content []
   [:section.row
    ;(animation-2)
    [:p.col-lg-12
@@ -80,7 +75,7 @@
    [:p.col-lg-12
     "It would therefore be unfair to expect all hospitals to have the same survival rate: we should take into account how ill the children were that the hospitals treated. In other words, if one hospital has a higher survival rate than another hospital this is not necessarily evidence that one hospital is better than the other – it could indicate that the second hospital treated children with more severe problems. "]])
 
-(rum/defc section-3-content []
+(rum.core/defc section-3-content []
   [:section.row
    [:.col-lg-12
     [:p "The NHS monitors hospitals that perform children’s heart surgery by reviewing the 30-day survival rate for
@@ -114,7 +109,7 @@
      [:p
       "That is why we only compare a hospital’s survival rate to its predicted range (from the statistical formula) and not to survival rates at other hospitals."]]]])
 
-(rum/defc section-4-content []
+(rum.core/defc section-4-content []
   [:section.row
    [:.col-lg-12
     [:p
@@ -142,7 +137,7 @@
      (See " [:a (core/href "faq/2/3") "What about longer term survival and quality of life?"]  ".) "]]]
   )
 
-(rum/defc section-5-content []
+(rum.core/defc section-5-content []
   [:section.row
    [:.col-lg-12
     [:p "This site can help you interpret currently published survival data on children’s heart surgery and explore

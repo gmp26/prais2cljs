@@ -193,9 +193,6 @@
 
 (def last-pad-right (important (px extra-right)))
 
-(def axis-margin 20)
-
-
 (defn dot-size [slider]
   (Math/round (- 12 (* 7 (- 1 slider)))))
 
@@ -398,7 +395,6 @@
 
   ([slider-axis-value tick-height]
    [:.axis-container
-    ;{:style {:margin-left (px axis-margin) :width (str "calc(100% - " (px (+ extra-right axis-margin)) ")")}}
     (rum.core/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
 
@@ -614,7 +610,7 @@
 
     [:.row
      [:.col-sm-9
-      (datasource-title "List data for ")]
+      (datasource-title "List all data for ")]
      [:.col-sm-3 (datasource-dropdown event-bus)]]
 
 

@@ -1,48 +1,45 @@
 (ns ^:figwheel-always prais2.faqs
-    (:require [rum.core :as rum]
-              [clojure.string :as str]
+    (:require [rum.core]
               [prais2.core :as core]
               [prais2.utils :refer [key-with]]
-              [prais2.chrome :as chrome]
               [prais2.content :as content :refer [faq-sections]]
               #?(:cljs [prais2.data :as data])
               [prais2.mugshots :as mugs]))
 
-(defn ix-col [index]
-  (["rgba(127, 205, 187, 1)"
-    "rgba(205, 127, 187, 1)"
-    "rgba(127, 187, 205, 1)"
-    ] (mod index 3)))
+(comment
+  ;;
+  ;; Use this to regenerate the injected faq list in prais2/core
+  ;; Currently, this is done by hand :(
+  ;;
+  (defn faq-refs
+    "List all faq refs"
+    []
+    (into {} (for [section-ix (range (count faq-sections))
+                   faq-ix (range (count (:faqs (faq-sections section-ix))))]
+               [(str "faq/" section-ix "/" faq-ix) [:faq [section-ix faq-ix]]]))
+    ))
 
-(defn faq-refs
-  "List all faq refs"
-  []
-  (into {} (for [section-ix (range (count faq-sections))
-                 faq-ix (range (count (:faqs (faq-sections section-ix))))]
-             [(str "faq/" section-ix "/" faq-ix) [:faq [section-ix faq-ix]]]))
-  )
-
-(rum/defc render-short-answer [answer]
+(rum.core/defc render-short-answer [answer]
   [:section.short-answer
    [:.icon [:i.fa.fa-comment]]
    [:.reply answer]])
 
 
-(rum/defc render-glossary-term [term]
+(rum.core/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
     [:dl
      [:dt [:i (:title entry)]]
      [:dd (:body entry)]]))
 
 
-(rum/defc render-glossary [glossary]
+(rum.core/defc render-glossary [glossary]
   [:div
    [:hr]
    (map-indexed key-with
                 (map #(render-glossary-term %) glossary))])
 
 
-(rum/defc render-faq-block [sec-ix block-class]
+(rum.core/defc render-faq-block [sec-ix block-class]
   (let [section (faq-sections sec-ix)]
     (when-not (:is-glossary section)
       [:div.faq-block {:class block-class}
@@ -55,7 +52,7 @@
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
 
 
-(rum/defc render-faq-top []
+(rum.core/defc render-faq-top []
   [:div
    [:h1.col-md-12 content/title]
    ;; new block menu
@@ -83,10 +80,10 @@
                        (vec (zipmap (range) faq-sections))))])
 
 #?(:cljs
-   (defn go-back [event]
+   (defn go-back [_]
      (.go js/history -1)))
 
-(rum/defc render-faq-section [[section-ix ix :as faq-ref]]
+(rum.core/defc render-faq-section [[section-ix ix :as faq-ref]]
   (prn "render-faq-section " faq-ref)
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
      (let [section (faq-sections section-ix)
@@ -104,7 +101,7 @@
             (render-short-answer short-answer)))
         [:div.body {:key 2}
          (when (= [4 0] faq-ref)
-           (rum/with-key (mugs/mugshots) 4))
+           (rum.core/with-key (mugs/mugshots) 4))
          (:body faq)]
         (when (> (count glossary) 0)
           (do
@@ -120,7 +117,7 @@
          ]])])
 
 
-(rum/defc render-faqs [faq-ref]
+(rum.core/defc render-faqs [faq-ref]
 
   [:.container-fluid.main-content
    [:.row

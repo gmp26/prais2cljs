@@ -28,8 +28,8 @@
   )
 
 (defroute faq "/faq/:section/:id" [section id]
-  (let [s (.parseInt js/Number section)
-        f (.parseInt js/Number id)
+  (let [s (js/parseInt section)
+        f (js/parseInt id)
         ap @core/app]
     (if (not (and
                (= (:page ap) :faqs)

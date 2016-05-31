@@ -1,6 +1,6 @@
 (ns prais2.utils
   (:require [clojure.string :as str]
-            [rum.core :as rum]))
+            [rum.core]))
 
 (defn px
   "value to pixel string"
@@ -20,4 +20,4 @@
 
 (defn key-with
   "useful for mapping react keys to a content vector"
-  [a b] (rum/with-key b a))
+  [a b] (rum.core/with-key b a))

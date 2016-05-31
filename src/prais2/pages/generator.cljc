@@ -1,6 +1,6 @@
 (ns prais2.pages.generator
   #?(:clj
-     (:require [rum.core :as rum]
+     (:require [rum.core]
                [prais2.content :refer [faq-sections]]
                [prais2.components.head :refer [head]]
                [prais2.components.body :refer [body]]
@@ -14,22 +14,21 @@
 
      (def home-page
        (str "<!doctype html>"
-            (rum/render-static-markup (head "Child heart surgery info"))
-            (rum/render-static-markup (body static-home))
+            (rum.core/render-static-markup (head "Child heart surgery info"))
+            (rum.core/render-static-markup (body static-home))
             ))
 
      (def intro-page
        (str "<!doctype html>"
-            (rum/render-static-markup (head "Child heart surgery info"))
-            (rum/render-static-markup (body static-intro))
+            (rum.core/render-static-markup (head "Child heart surgery info"))
+            (rum.core/render-static-markup (body static-intro))
             ))
 
      (defn faq-page [faq-ref]
-       (let [[section ix] faq-ref]
-         (str "<!doctype html>"
-              (rum/render-static-markup (head "Child heart surgery info"))
-              (rum/render-static-markup (body #(static-faqs faq-ref)))
-              )))
+       (str "<!doctype html>"
+            (rum.core/render-static-markup (head "Child heart surgery info"))
+            (rum.core/render-static-markup (body #(static-faqs faq-ref)))
+            ))
 
      (defn write-html [path html]
        (println " Writing " path)
@@ -43,7 +42,7 @@
                (do                                          ;(println "ix = " ix)
                    (write-html (str "resources/public/faq-" section "-" ix ".html") (faq-page [section ix])))))))
 
-     (defn -main [& args]
+     (defn -main []
        (write-html "resources/public/index.html" home-page)
        (write-html "resources/public/intro.html" intro-page)
        (all-faq-refs))))

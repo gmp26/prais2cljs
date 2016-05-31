@@ -1,5 +1,5 @@
 (ns prais2.components.static-intro
-  (:require [rum.core :as rum]
+  (:require [rum.core]
             [prais2.intro :refer [render-intro]]
             [prais2.chrome :as chrome]))
 

@@ -1,10 +1,8 @@
 (ns ^:figwheel-always prais2.logger
-    (:require [rum.core :as rum]
-              [clojure.string :as str]
+    (:require [rum.core]
               [cljsjs.papaparse]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
-              [cognitect.transit :as sit]
               [cljsjs.jquery]
               [ajax.core :refer [POST GET ajax-request url-request-format json-request-format json-response-format]]
               [cljs.reader :as r]
@@ -62,31 +60,27 @@
   [status status-text]
   (.log js/console (str "spreadsheet write error " status " " status-text)))
 
-(defn sheets-read-error
-  [status status-text]
-  (.log js/console (str "spreadsheet read error " status " " status-text)))
-
 (defn write-sheet-log
   "Write a log-event to the google sheet url."
   [log-entry]
   (let [app-state (log-entry 4)
         params (str "ip=" @ip-address
-                       "&session-id=" (log-entry 0)
-                       "&timestamp=" (log-entry 1)
-                       "&eventkey=" (log-entry 2)
-                       "&eventdata=" (log-entry 3)
-                       "&datasource=" (:datasource app-state)
-                       "&page=" (:page app-state)
-                       "&sort-by=" (:sort-by app-state)
-                       "&sort-asc=" (:sort-ascending app-state)
-                       "&table-slider=" (:slider-axis-value app-state)
-                       "&popup-slider=" (:detail-slider-axis-value app-state)
-                       "&chart-state=" (:chart-state app-state)
-                       "&theme=" (:theme app-state)
-                       "&table-selection=" (:selected-h-code app-state)
-                       "&map-selection=" (:map-h-code app-state)
-                       )]
-    #_(prn "params = " params)
+                    "&session-id=" (log-entry 0)
+                    "&timestamp=" (log-entry 1)
+                    "&eventkey=" (log-entry 2)
+                    "&eventdata=" (log-entry 3)
+                    "&datasource=" (:datasource app-state)
+                    "&page=" (:page app-state)
+                    "&sort-by=" (:sort-by app-state)
+                    "&sort-asc=" (:sort-ascending app-state)
+                    "&table-slider=" (:slider-axis-value app-state)
+                    "&popup-slider=" (:detail-slider-axis-value app-state)
+                    "&chart-state=" (:chart-state app-state)
+                    "&theme=" (:theme app-state)
+                    "&table-selection=" (:selected-h-code app-state)
+                    "&map-selection=" (:map-h-code app-state)
+                    )]
+    (prn "params = " params)
     #_(POST sheets-logger-app
           :params params
           :handler sheets-success-handler
@@ -149,7 +143,7 @@
 (defn prn-log [log]
   #_(.log js/console (log->csv log)))
 
-(rum/defc icon-control [icon event-key tooltip]
+(rum.core/defc icon-control [icon event-key tooltip]
   [:button.btn.btn-default
    {:title tooltip
     :tab-index 0
@@ -157,16 +151,16 @@
    [:i.fa {:class (str "fa-" icon)}]])
 
 
-(rum/defc reset-control []
+(rum.core/defc reset-control []
   (icon-control "step-backward" :rewind "rewind"))
 
-(rum/defc undo-control []
+(rum.core/defc undo-control []
   (icon-control "chevron-left" :undo "undo"))
 
-(rum/defc redo-control []
+(rum.core/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum/defc load-control []
+(rum.core/defc load-control []
   [:button#load-ctl.btn.btn-default
    {:title "load session from spreadsheet"
     :data-toggle "collapse"

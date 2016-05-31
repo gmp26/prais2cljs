@@ -1,5 +1,5 @@
 (ns prais2.components.static-faqs
-  (:require [rum.core :as rum]
+  (:require [rum.core]
             [prais2.faqs :refer [render-faqs]]
             [prais2.chrome :as chrome]))
 

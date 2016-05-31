@@ -1,13 +1,13 @@
 (ns ^:figwheel-always prais2.core
   #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
   (:require
-    [rum.core :as rum]
+    [rum.core]
     [clojure.string :as str]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
     #?(:cljs [secretary.core :as secretary])
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
-    [prais2.utils :as u :refer [key-with]]
+    [prais2.utils :refer [key-with]]
     #?(:cljs [goog.events :as events])
     ))
 
@@ -36,9 +36,11 @@
 ;;
 (def prefix "#")
 
+
 (defn token->url [token]
   (if (= prefix "#")
     (str "/" prefix "/" token)))
+
 
 ;;;
 ;; window location to token: :todo. Test this if changing prefix
@@ -47,8 +49,9 @@
    (defn get-token! []
      (if (= prefix "#")
        (do
-         (str/replace-first (.. js/window -location -hash) "#/" ""))
-       (.. js/window -location -pathname))))
+         (str/replace-first (.-hash (.-location js/window)) "#/" ""))
+       (.-pathname (.-location js/window))                  ;(.. js/window -location -pathname)
+       )))
 
 
 ;;;
@@ -82,8 +85,7 @@
            (put! event-bus [dispatch-key dispatch-value])
 
            ))
-#?(:clj (defn click->event-bus
-          [event dispatch-key dispatch-value token]
+#?(:clj (defn click->event-bus [_ _ _ _]
           nil))
 
 
@@ -126,8 +128,6 @@
 #?(:cljs
    (defn internal-link-handler [token]
      (fn [event]
-       ; (.preventDefault event)
-       ; :todo: route this dispatch through the event bus
        (prn (str "internal-link-handler " token))
        (let [[dispatch-key dispatch-value] (token-dispatch-table token)]
          (click->event-bus event dispatch-key dispatch-value token)))
@@ -145,11 +145,12 @@
 
 #?(:clj
    (defn irl "internal resource locator"
+     ([fragment _]                                          ; static option
+      (str "/" fragment ".html"))
+
      ([fragment]
       (irl fragment true))
-
-     ([fragment static]
-      (str "/" fragment ".html"))))
+     ))
 
 (defn absolute-path? [path]
   (cond
@@ -218,8 +219,8 @@
 ;;;
 ;; wraps raw content in a div and returns a rum react element
 ;;;
-(rum/defc rum-wrap [& content]
-          (apply conj [:div] content))
+(rum.core/defc rum-wrap [& content]
+  (apply conj [:div] content))
 
 ;; mixin to initialise bootstrap collapse code
 #?(:cljs (def bs-collapse

@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.open-layers-map
-    (:require [rum.core :as rum]
+    (:require [rum.core]
 ;              [jayq.core :refer [$]]
               [cljsjs.jquery]
               [cljs.core.async :refer [<! put! timeout]]
@@ -104,6 +104,8 @@
 
 (declare map-click-handler)
 
+; :todo: code smell below! dynamic defs inside a component :(
+
 (def map-view
   {:did-mount (fn [state]
 ;; once?
@@ -136,7 +138,7 @@
   (let [the-map hospital-map ;(:map @core/app)
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
-                                         (fn [a b] a))]
+                                         (fn [a _] a))]
     (when feature
       (put! event-bus [:click-on-map-marker (keyword (.get feature "code")) event])
       )))
@@ -207,38 +209,38 @@
     (.popover element "hide")))
 
 
-(rum/defc london-button []
+(rum.core/defc london-button []
   [:button.btn-info.london-button
    {:on-click #(core/click->event-bus % :just-london nil nil)
     :on-touch-start #(core/click->event-bus % :just-london nil nil)
     :tab-index 0}
    "Just London"])
 
-(rum/defc home-button []
+(rum.core/defc home-button []
   [:button.btn-info.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home nil nil)
     :on-touch-start #(core/click->event-bus % :reset-map-to-home nil nil)
     :tab-index 0}
    "All UK"])
 
-(rum/defc hospital-item [row]
+(rum.core/defc hospital-item [row]
   [:li [:a
         {:tab-index 0
          :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
         (:h-name row)]])
 
-(rum/defc hospital-list < rum/reactive []
-  (let [rows ((:datasource (rum/react core/app)) content/datasources)]
+(rum.core/defc hospital-list < rum.core/reactive []
+  (let [rows ((:datasource (rum.core/react core/app)) content/datasources)]
     [:ul.dropdown-menu
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))
 
-#_(rum/defc hospital-dropdown []
+#_(rum.core/defc hospital-dropdown []
   [:.dropdown
    (map-indexed key-with [(menu-button) (hospital-list)])
    ])
 
-(rum.core/defc hospitals < map-view rum/reactive []
+(rum.core/defc hospitals < map-view rum.core/reactive []
   [:#open-map.hospital-map {:tab-index 0 :key 1}
    (london-button)
    (home-button)

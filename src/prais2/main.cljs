@@ -17,7 +17,7 @@
             [prais2.home :refer [render-home]]
             [prais2.map-data :refer [render-map-data]]
             [prais2.faqs :refer [render-faqs]]
-            [prais2.logger :as logger :refer [log-bus-pub]]
+    ;[prais2.logger :as logger :refer [log-bus-pub]]
             [cljsjs.jquery]
 
     ;;[jayq.core :refer [$]]
@@ -152,7 +152,7 @@
                    (render-data-tab-panes data)
                    ])]))
 
-(defn valid-session-id
+#_(defn valid-session-id
   ([session-id]
    (#(not (or (nil? %) (= "" %))) session-id))
   ([]
@@ -229,7 +229,7 @@
        ;(prn "routes/homes = " (routes/home))
        (deselect-all)
        (map-indexed key-with
-                    [(chrome/header true)
+                    [(chrome/header)
                      (render-home)
                      (chrome/footer)]))
 
@@ -308,7 +308,8 @@
                  (do (handle event)
                      (when (= event-bus-pub event-feed)
 
-                       (logger/write-log event))
+                       ;(logger/write-log event)
+                       )
                      (recur)))))))
 
 (defn zoom-to-hospital
@@ -405,29 +406,30 @@
                     (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
-  ;;;
-  ;; log-bus handling from here
-  ;;;
-  (dispatch log-bus-pub :rewind
-            (fn [_]
-              (prn "rewind session: not yet")
-              #_(reset! logger/log-state-index nil)))
+  (comment
+    ;;;
+    ;; log-bus handling from here
+    ;;;
+    (dispatch log-bus-pub :rewind
+              (fn [_]
+                (prn "rewind session: not yet")
+                #_(reset! logger/log-state-index nil)))
 
-  (dispatch log-bus-pub :undo
-            (fn [_] #_(prn "undoing: not yet")
-              #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
+    (dispatch log-bus-pub :undo
+              (fn [_] #_(prn "undoing: not yet")
+                #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
-  (dispatch log-bus-pub :redo
-            (fn [_] (prn "redoing: not yet")
-              #_(swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
+    (dispatch log-bus-pub :redo
+              (fn [_] (prn "redoing: not yet")
+                #_(swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
 
 
 
-  (dispatch log-bus-pub :parse-session
-            (fn [_]
-              (prn "parse-session: not yet")
-              #_(logger/parse-session)
-              )))
+    (dispatch log-bus-pub :parse-session
+              (fn [_]
+                (prn "parse-session: not yet")
+                #_(logger/parse-session)
+                ))))
 
 ;; start the event dispatcher
 (dispatch-central)

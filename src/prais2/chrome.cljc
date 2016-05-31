@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.chrome
   (:require
     #?(:cljs [goog.string :refer [unescapeEntities]])
-    [rum.core :as rum]
+    [rum.core]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
     [prais2.utils :refer [key-with]]
@@ -36,7 +36,7 @@
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info" "faqs")})
 
 
-(rum/defc bs-nav-link [active? nav-item click-handler]
+(rum.core/defc bs-nav-link [active? nav-item click-handler]
   [:li
    [:a.navbar-btn {:on-click    click-handler
                    :class       (str (if active? " active " " ") (:class nav-item))
@@ -47,59 +47,58 @@
     (str " " (:short-title nav-item))]])
 
 
-(rum/defc bs-fixed-navbar [active-key]
-          (let [nav-item (active-key nav-items)]
-            [:nav.navbar.navbar-simple.navbar-fixed-top
-             [:.navbar-inner
-              [:.container
-               [:.navbar-header {:key 1}
-                [:button.navbar-toggle.collapsed {:key           1
-                                                  :type          "button"
-                                                  :data-toggle   "collapse"
-                                                  :data-target   "#navbar"
-                                                  :aria-expanded "false"
-                                                  :aria-controls "navbar"}
-                 [:span.sr-only {:key 1} "Toggle navigation"]
-                 [:span.icon-bar {:key 2}]
-                 [:span.icon-bar {:key 3}]
-                 [:span.icon-bar {:key 4}]]]
-               [:#navbar.navbar-collapse.collapse {:key 2}
-                [:ul.nav.navbar-nav.navbar-right {:key 1}
+(rum.core/defc bs-fixed-navbar [active-key]
+  [:nav.navbar.navbar-simple.navbar-fixed-top
+   [:.navbar-inner
+    [:.container
+     [:.navbar-header {:key 1}
+      [:button.navbar-toggle.collapsed {:key           1
+                                        :type          "button"
+                                        :data-toggle   "collapse"
+                                        :data-target   "#navbar"
+                                        :aria-expanded "false"
+                                        :aria-controls "navbar"}
+       [:span.sr-only {:key 1} "Toggle navigation"]
+       [:span.icon-bar {:key 2}]
+       [:span.icon-bar {:key 3}]
+       [:span.icon-bar {:key 4}]]]
+     [:#navbar.navbar-collapse.collapse {:key 2}
+      [:ul.nav.navbar-nav.navbar-right {:key 1}
 
-                 #?(:cljs                                   ;only supply real button click handlers once we're loaded
-                    (map-indexed #(key-with %1 (bs-nav-link
-                                                 (= active-key %2)
-                                                 (%2 nav-items)
-                                                 (fn [e] (core/click->event-bus e %2
-                                                                                (if (= %2 :data) :map nil)
-                                                                                (if (= %2 :data) "data/map" (str (name %2)))))))
-                                 (keys nav-items)))
-                 ]]]]]))
-
-
-(rum/defc header < rum/reactive [& deep]
-          [:div
-           (bs-fixed-navbar (:page (rum/react core/app)))
-           [:.container.main-title-box
-            [:a (core/href "home")
-             [:img.img-responsive.pull-left {:src   "/assets/logo3.png"
-                                             :style {:margin-top     "-50px"
-                                                     :padding-bottom "10px"
-                                                     :transform      "rotate(180deg)"
-                                                     }}]]
-            [:.pull-left.main-title
-             "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]
+       #?(:cljs                                             ;only supply real button click handlers once we're loaded
+          (map-indexed #(key-with %1 (bs-nav-link
+                                       (= active-key %2)
+                                       (%2 nav-items)
+                                       (fn [e] (core/click->event-bus e %2
+                                                                      (if (= %2 :data) :map nil)
+                                                                      (if (= %2 :data) "data/map" (str (name %2)))))))
+                       (keys nav-items)))
+       ]]]]])
 
 
-            #_[:.chrome-head-rel
-               [:div {:key 1}]                              ;;styled logo
-               [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]
+(rum.core/defc header < rum.core/reactive []
+  [:div
+   (bs-fixed-navbar (:page (rum.core/react core/app)))
+   [:.container.main-title-box
+    [:a (core/href "home")
+     [:img.img-responsive.pull-left {:src   "/assets/logo3.png"
+                                     :style {:margin-top     "-50px"
+                                             :padding-bottom "10px"
+                                             :transform      "rotate(180deg)"
+                                             }}]]
+    [:.pull-left.main-title
+     "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]
 
-            ;(data-selector)
-            ]])
+
+    #_[:.chrome-head-rel
+       [:div {:key 1}]                                      ;;styled logo
+       [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]
+
+    ;(data-selector)
+    ]])
 
 
-(rum/defc footer []
+(rum.core/defc footer []
   [:.container-fluid.partners
    [:.row.visible-xs-block
     [:.col-xs-offset-1

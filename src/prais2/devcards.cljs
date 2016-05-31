@@ -1,6 +1,6 @@
 (ns prais2.devcards
   (:require
-   [rum.core :as rum]
+   [rum.core]
    [clojure.string :as str]
    [prais2.open-layers-map :as map]
    [prais2.core :as core :refer [event-bus event-bus-pub rum-wrap]]
@@ -103,7 +103,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
   core/app)
 
 (defcard render-table
-  (render-data "data"))
+  (render-data))
 
 #_(defcard sample-faq-7
   (rum-wrap (faq-content :faq7))
@@ -129,28 +129,7 @@ This is based on Bruce Hauman's devcards package so we can interleave REPL tests
 (defcard map
   (map/hospitals))
 
-#_(defcard sample-hospital-header
-  (data/hospital-header content/sample-hospital))
-
-#_(defcard sample-hospital-intro-text
-  (data/sample-hospital-intro-text))
-
-#_(rum/defc test-sample-hospital-array < rum/reactive []
-  (let [selected-row content/sample-hospital
-        ap (rum/react core/app)]
-    [:div
-     (map-indexed key-with
-                  [(data/sample-hospital-intro-text)
-                   (data/hospital-header selected-row)
-                   (data/slider-widget content/header-row data/detail-slider-control (:detail-slider-axis-value ap))
-                   (data/chart-cell selected-row (:detail-slider-axis-value ap))
-                   (data/interpretation selected-row)]
-                  )])  )
-#_(defcard sample-hospital-array
-  (test-sample-hospital-array)
-  )
-
-(defcard hospital-detail
+#_(defcard hospital-detail
   (fn [app-state]
     (data/hospital-detail (:map-h-code @app-state)))
   core/app)

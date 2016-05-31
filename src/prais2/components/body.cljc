@@ -1,9 +1,9 @@
 (ns prais2.components.body
-  (:require [rum.core :as rum]
+  (:require [rum.core]
             [prais2.components.static-home :refer [static-home]]
             [prais2.components.analytics :refer [analytics]]))
 
-(rum/defc body [content]
+(rum.core/defc body [content]
   [:body
 
    #?(:clj [:#app (content)])

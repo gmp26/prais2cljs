@@ -1,20 +1,20 @@
 (ns ^:figwheel-always prais2.mugshots
-  (:require [rum.core :as rum]
+  (:require [rum.core]
             [prais2.core :as core]
             [prais2.content :as content]
             [clojure.string :as str]))
 
-(rum/defc
-  mug < rum/static [name]
+(rum.core/defc
+  mug < rum.core/static [name]
   [:.col-xs-4.col-sm-4.col-md-2
    [:img.img-responsive (core/isrc (str "assets/mugshots/" name "-med.jpg") :key 1)]
    [:p.text-center {:key 2} (str/capitalize name)]
    ])
 
-(rum/defc
+(rum.core/defc
   mugshots []
   [:.row
-   (map-indexed #(rum/with-key (mug %2) %1) (content/get-mugshots))
+   (map-indexed #(rum.core/with-key (mug %2) %1) (content/get-mugshots))
    ])
 
 
