@@ -34,8 +34,8 @@
 ;;
 ;; routing prefix
 ;;
-;(def prefix "#") for hash fragment routing
-(def prefix "/")
+;;(def prefix "#")                                            ;for hash fragment routing
+(def prefix "/")                                           ; for hash-free routing
 
 
 (defn token->url [token]
@@ -91,7 +91,7 @@
           nil))
 
 
-;:todo: inject this somehow
+;:todo: inject this or generate programmatically
 (def token-dispatch-table
   {"home"           [:home nil]
    "intro"          [:intro nil]
@@ -145,7 +145,7 @@
         (str "/" fragment ".html")
         (if (= prefix "#")
           (str "/#/" fragment)
-          (str "/" fragment))))))                            ;; :todo test
+          (str "/" fragment))))))                           ;; :todo test
 
 #?(:clj
    (defn irl "internal resource locator"

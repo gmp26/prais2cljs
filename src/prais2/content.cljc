@@ -1005,7 +1005,7 @@
                                                                     :target "_blank") "Leighton Pugh"] " for donating his time and expertise to narrating both
                           videos. The artwork and production for both videos was with developed in collaboration with
                           " [:a (core/href "http://www.qudos-animations.co.uk/" :target "_blank") "Qudos Animations"] ". We thank them
-                          for their great work and responsiveness in working to tight deadlines!"]]}]}
+                          for their great work and responsiveness in working to tight deadlines."]]}]}
 
    #_{:section "Further resources about understanding clinical data"
       :faqs

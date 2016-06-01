@@ -91,10 +91,16 @@
 (def history (let [h (History. false false "dummy")]
                (events/listen h EventType/NAVIGATE #(do
                                                      (js/console.log %)
-                                                     (prn "Navigate event " (.-isNavigation %))
+                                                     (prn "Navigate event " (.-isNavigation %)
+                                                          " token " (.-token %))
                                                      (when-not (.-isNavigation %)
                                                        ; get here on site entry (not a back or next button click)
-                                                       (secretary/dispatch! (.-token %))
+                                                       (prn (str "prefix = " core/prefix " pathname = " (.-pathname (.-location js/window))))
+                                                       (secretary/dispatch!
+                                                         (if (= core/prefix "#")
+                                                           (.-token %)
+                                                           (.-pathname (.-location js/window))))
+
                                                        )
                                                      ))
                (doto h (.setEnabled true))
