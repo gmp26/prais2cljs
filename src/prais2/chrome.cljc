@@ -36,19 +36,12 @@
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info" "faqs")})
 
 
-#?(:cljs
-   (defn window-data-target []
-     (if (> (.-innerWidth js/window) 767) "" "#navbar")))
-
-#?(:clj
-   (defn window-data-target [] "#navbar"))
-
 (rum.core/defc bs-nav-link [active? nav-item click-handler]
   [:li
    [:a.navbar-btn {:on-click    click-handler
                    :class       (str (if active? " active " " ") (:class nav-item))
                    :data-toggle "collapse"
-                   :data-target (window-data-target)
+                   :data-target ".navbar-collapse.in"                            ;(window-data-target)
                    :href        (core/token->url (:token nav-item))}
     [:i.fa {:class (str "fa-" (:icon nav-item))}]
     (str " " (:short-title nav-item))]])
