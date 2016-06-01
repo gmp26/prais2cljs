@@ -46,7 +46,7 @@
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
          [:video
-          (core/isrc "assets/video02.mp4" :controls true :preload true)])
+          (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true)])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
@@ -58,16 +58,16 @@
    ;; new block menu
 
    ;; column 1
-   [:div.col-sm-3
+   [:div.col-sm-4.col-md-3
     (render-faq-block 0 "faq-nav-1")
     (render-faq-block 2 "faq-nav-2")]
 
    ;; column 2
-   [:div.col-sm-6
+   [:div.col-sm-4.col-md-6
     (render-faq-block 1 "faq-nav-3")]
 
    ;; column 3
-   [:div.col-sm-3
+   [:div.col-sm-4.col-md-3
     (render-faq-block 3 "faq-nav-4")
     (render-faq-block 4 "faq-nav-4")
     (render-faq-block 5 "faq-nav-4")
