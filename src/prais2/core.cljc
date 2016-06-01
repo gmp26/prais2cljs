@@ -34,12 +34,14 @@
 ;;
 ;; routing prefix
 ;;
-(def prefix "#")
+;(def prefix "#") for hash fragment routing
+(def prefix "/")
 
 
 (defn token->url [token]
   (if (= prefix "#")
-    (str "/" prefix "/" token)))
+    (str "/" prefix "/" token)
+    (str "/" token)))
 
 
 ;;;
@@ -141,7 +143,9 @@
      ([fragment static]
       (if static
         (str "/" fragment ".html")
-        (str "/#/" fragment)))))                            ;; :todo remove #/ when hashbangs go
+        (if (= prefix "#")
+          (str "/#/" fragment)
+          (str "/" fragment))))))                            ;; :todo test
 
 #?(:clj
    (defn irl "internal resource locator"
