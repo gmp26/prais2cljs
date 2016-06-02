@@ -142,7 +142,7 @@
 
      ([fragment static]
       (if static
-        (str "/" fragment ".html")
+        (str "/" fragment)
         (if (= prefix "#")
           (str "/#/" fragment)
           (str "/" fragment))))))                           ;; :todo test
@@ -150,7 +150,7 @@
 #?(:clj
    (defn irl "internal resource locator"
      ([fragment _]                                          ; static option
-      (str "/" fragment ".html"))
+      (str "/" fragment))
 
      ([fragment]
       (irl fragment true))
@@ -209,10 +209,6 @@
   ;;(core/isrc "/assets/foo.png" :style {:color "red"} :width 3)
   ;;=> {:src "/assets/foo.png", :style {:color "red"}, :width 3}
   )
-
-
-
-
 
 
 #?(:cljs
