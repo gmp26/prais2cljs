@@ -17,5 +17,17 @@
    [:link {:rel "stylesheet" :href "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"}]
    [:link {:rel "stylesheet" :href "/css/app.css"}]
    [:script {:src "/js/bootstrap-slider.min.js"}]
-   [:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]])
+   [:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]
+
+   [:link {:type "text/css" :rel  "stylesheet" :media "all"
+           :href "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.min.css"}]
+   [:link {:type "text/css" :rel  "stylesheet" :media "all"
+           :href "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-skin/highlights-purple.css"}]
+   [:link {:type "text/css" :rel  "stylesheet" :media "all"
+           :href "https://ozplayer.global.ssl.fastly.net/2.0/transcript.css"}]
+   [:script {:type "javascript"
+             :src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/mediaelement.min.js"}]
+
+
+   ])
 

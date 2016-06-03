@@ -412,6 +412,7 @@
                          :cursor           (if (:sortable header) "pointer" "auto")
                          :background-color background
                          :color            "#ffffff !important"}}
+
    (when (:sortable header) [:i {:key   :icon
                                  :class (str "right fa fa-sort"
                                              (if (= column-key (:sort-by ap))

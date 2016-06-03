@@ -19,7 +19,7 @@
 (defonce app (atom {:datasource               :2015
                     :pull-out                 false
                     :page                     :home
-                    :section                  :map
+                    :section                  nil
                     :sort-by                  nil
                     :sort-ascending           true
                     :slider-axis-value        1.0

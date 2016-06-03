@@ -907,7 +907,7 @@
         about Science, the University of Cambridge, King’s College London and the Children’s Heart Federation to develop
         these online resources to help people interpret the audit body’s published results. In particular, she wrote a
         lot of the content, helped enormously by feedback from the team and the user workshops. Thanks to "
-                            [:a (core/href "https://www.ucl.ac.uk/dahr/people/andrew-wilshere") " Dr Andrew Wilshere"] " for designing our logo. "]]
+                            [:a (core/href " http://www.ucl.ac.uk/operational-research/the_team/#andrew") " Dr Andrew Wilshere"] " for designing our logo. "]]
 
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/camlogo-old.png")]

@@ -45,7 +45,7 @@
       [:div.faq-block {:class block-class}
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
-         [:video
+         [:video#video2
           (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true)])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]

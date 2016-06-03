@@ -36,7 +36,7 @@
                                :anchorXUnits "fraction"
                                :anchorYUnits "pixels"
                                :opacity 0.6
-                               :src "assets/icon.png"
+                               :src "/assets/icon.png"
                                }))
          })))
 
