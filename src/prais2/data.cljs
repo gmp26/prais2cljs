@@ -615,16 +615,27 @@
      [:.col-sm-3 (datasource-dropdown event-bus)]]
 
 
-    [:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
+    [:p.col-sm-9
+     "This list summarises the data for each hospital. Clicking on a hospital code will bring up specific information for
+     that hospital along with an interpretation of its survival rate. It is only valid to compare a hospital's survival
+     rate to its predicted range of survival and not to other hospitals. Read more about this in "
+     [:a (core/href "faqs") "Everything Else."]]
+
+    [:p.col-sm-9
+     [:a (core/href "faqs") "The Everything Else"] " section also tells you more about the predicted range and what
+     happens if a hospital’s survival rate is outside its range."]
+
+    [:p.col-sm-9 "You can hover over or tap on the charts to bring up more explanation."]
+
+    #_[:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
             period (0-16 years old). This data is updated annually and covers a 3 year period "]
 
-
-    [:p "Clicking on a hospital code will bring up specific information for that hospital along with "
+    #_[:p "Clicking on a hospital code will bring up specific information for that hospital along with "
      "an interpretation of its survival rate. It is only valid to compare a hospital's survival rate "
      "to its predicted range and not to other hospitals. "
      "Read more about this in " [:a (core/href "faqs") "Everything Else"] ". "]
-    [:p "The " [:a (core/href "faqs") "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
-    [:p "You can use your mouse to hover over the chart to bring up more explanation."]]
+    #_[:p "The " [:a (core/href "faqs") "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
+    #_[:p "You can use your mouse to hover over the chart to bring up more explanation."]]
 
    (table1 app data)])
 

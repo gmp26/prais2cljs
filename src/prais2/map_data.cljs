@@ -31,8 +31,9 @@
       (data/datasource-title "Data for ")]
      [:.col-sm-3 (data/datasource-dropdown event-bus)]]
 
-
-    [:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
+    [:.row
+     [:p.col-sm-9 "Choose a hospital from the list or the map to see its data. "]]
+    #_[:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
              period (0-16 years old). This data is updated annually and covers a 3 year reporting period."]
 
     ]

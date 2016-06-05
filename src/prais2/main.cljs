@@ -61,18 +61,29 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum.core/defc render-data-tabs []
+(rum.core/defc render-data-tabs  < rum.core/reactive []
 
                [:.row
 
                 [:.col-sm-offset-1.col-sm-10
                  [:h1 "Explore the data"]
 
-                 [:p "The " [:a (core/href "data/animation"
-                                           :on-click
-                                           #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"]
-                  " explains how we present the results. Parents who helped us develop the web site found the guide useful in
-                  interpreting the data."]
+                 [:p "In this section you can explore the overall hospital survival statistics published by the National
+                 Congenital Heart Disease Audit (" [:a (core/href "www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ").
+                 The data covers all hospitals in the UK and Ireland that performed heart surgery in children
+                 (0-16 years old). NCHDA update the data annually and each report covers a 3 year period."]
+
+                 [:p "All data on this site comes from the NCHDA annual reports, all of which can be "
+                  [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument")
+                   "downloaded from the NCHDA website."]]
+
+                 (when (not= :animation (:section (rum.core/react core/app)))
+                   [:p "Use the drop down box to change reporting periods. You can watch our "
+                    [:a (core/href "data/animation"
+                                   :on-click
+                                   #(core/click->event-bus % :data :animation "data/animation")) "two minute video"]
+                    " which explains how we present the statistics and how to interpret them. Parents who helped us
+                    develop the website found this guide useful for interpreting the data. "])
 
                  [:ul.nav.nav-pills {:role "tablist"}
 
@@ -90,7 +101,7 @@
                                             :aria-controls "data-table"
                                             :role "tab"
                                             :on-click #(core/click->event-bus % :data :table "data/table"))
-                    [:i.fa.fa-table] " List all data"]]
+                    [:i.fa.fa-table] " All hospitals"]]
 
                   [:li {:class (active? :animation)
                         :role  "presentation"}
@@ -98,7 +109,7 @@
                                           :aria-controls "mapped-data"
                                           :role "tab"
                                           :on-click #(core/click->event-bus % :data :animation "data/animation"))
-                    [:i.fa.fa-video-camera] " Two minute guide"]]
+                    [:i.fa.fa-video-camera] " Two minute video"]]
 
                   ]]])
 
@@ -107,22 +118,30 @@
 (rum.core/defc render-data-tab-panes < rum.core/reactive [data]
                [:row.tab-content
 
-                [:.tab-pane.col-sm-12 {:class (active? :map)
+                [:.tab-pane.col-sm-12 {:key 1
+                                       :class (active? :map)
                                        :id    "mapped-data"}
                  (when (active? :map)
                    (render-map-data))]
 
-                [:.tab-pane.col-sm-12 {:class (active? :table)
+                [:.tab-pane.col-sm-12 {:key 2
+                                       :class (active? :table)
                                        :id    "data-table"}
                  (data/modal)
                  (when (active? :table)
                    (data/list-tab core/app data event-bus))]
 
-                [:.tab-pane.col-sm-12 {:class (active? :animation)
+                [:.tab-pane.col-sm-12 {:key 3
+                                       :class (active? :animation)
                                        :id    "mapped-data"}
                  (when (active? :animation)
                    [:section.col-sm-offset-1.col-sm-10
-                    [:h2 "A two minute guide to how we present the results"]
+                    [:p {:key 1}]
+                    [:p {:key 2} "Parents who helped us develop the website found this guide useful for interpreting the data.
+                    If you want to know more about how the predicted range of survival is actually calculated, please
+                    watch our " [:a (core/href "faqs") [:i.fa.fa-video-camera] " second video"] " in the "
+                     [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]
+                    #_[:h2 "A two minute video on how we present the results"]
 
                     (video-js {:video-id  "video1"
                                  :src       "/assets/video01.mp4"
