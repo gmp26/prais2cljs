@@ -1,97 +1,98 @@
-1
-00:00:04,200 --> 00:00:06,400
-How do we report 
+WEBVTT
+
+00:00:04.200 --> 00:00:06.400
+How do we report
 what happened at a hospital?
 
-2
-00:00:08,000 --> 00:00:12,100
-Over a 3 year period, we calculate 
+
+00:00:08.000 --> 00:00:12.100
+Over a 3 year period, we calculate
 the proportion of children treated at the hospital 
 
-3
-00:00:12,200 --> 00:00:17,100
-who survived to at least 30 days after 
+
+00:00:12.200 --> 00:00:17.100
+who survived to at least 30 days after
 their surgery: the survival rate. 
 
-4
-00:00:17,200 --> 00:00:23,250
-As some hospitals will treat children with 
+
+00:00:17.200 --> 00:00:23.250
+As some hospitals will treat children with
 more complex medical problems than other hospitals
 
-5
-00:00:24,000 --> 00:00:27,400
-we would not expect all hospitals 
+
+00:00:24.000 --> 00:00:27.400
+we would not expect all hospitals
 to have the same survival rate.
 
-6
-00:00:29,000 --> 00:00:34,200
-So it doesn’t make sense to simply compare 
-one hospital’s survival rate to another’s.
 
-7
-00:00:35,300 --> 00:00:40,250
+00:00:29.000 --> 00:00:34.200
+So it doesn't make sense to simply compare
+one hospital's survival rate to another's.
+
+
+00:00:35.300 --> 00:00:40.250
 Instead, we use the statistical formula 
 to calculate the predicted range of survival  
 
-8
-00:00:40,300 --> 00:00:46,000
+
+00:00:40.300 --> 00:00:46.000
 for the children that hospital has treated, 
 which depends only on the complexity 
 
-9
-00:00:46,050 --> 00:00:48,050
+
+00:00:46.050 --> 00:00:48.050
 of the medical problems of those children.
 
-10
-00:00:49,000 --> 00:00:53,250
-We then compare a hospital’s survival rate 
+
+00:00:49.000 --> 00:00:53.250
+We then compare a hospital's survival rate
 to its predicted range.
 
-11
-00:00:54,250 --> 00:00:56,150
+
+00:00:54.250 --> 00:00:56.150
 How do we interpret this?
 
-12
-00:00:58,000 --> 00:01:03,300
+
+00:00:58.000 --> 00:01:03.300
 If the survival rate lies in the dark blue area 
 (the predicted range), then there is no evidence 
 
-13
-00:01:03,350 --> 00:01:08,400
+
+00:01:03.350 --> 00:01:08.400
 that the chances of survival of children at that 
 hospital were different from what was predicted.
 
-14
-00:01:10,100 --> 00:01:15,300
+
+00:01:10.100 --> 00:01:15.300
 If the survival rate turns out to lie in the 
 light blue area, this means there is some evidence 
 
-15
-00:01:15,350 --> 00:01:20,350
+
+00:01:15.350 --> 00:01:20.350
 that the chances of survival at that hospital 
 were different from that predicted by the formula.
 
-16
-00:01:23,000 --> 00:01:28,200
+
+00:01:23.000 --> 00:01:28.200
 If the survival rate lies outside either blue area, 
 this means that there is strong evidence  
 
-17
-00:01:28,250 --> 00:01:33,200
+
+00:01:28.250 --> 00:01:33.200
 that the chances of survival at that hospital 
 were different from that predicted by the formula.
 
-18
-00:01:36,100 --> 00:01:41,250
+
+00:01:36.100 --> 00:01:41.250
 If there is some, or strong, evidence 
 that chances of survival at a hospital 
 
-19
-00:01:41,300 --> 00:01:46,250
+
+00:01:41.300 --> 00:01:46.250
 were lower than predicted, then the audit body, 
 the relevant national health service 
 
-20
-00:01:346,300 --> 00:01:51,300
+
+00:01:46.300 --> 00:01:51.300
 and the hospital all work together to check 
 the data and take any appropriate actions.

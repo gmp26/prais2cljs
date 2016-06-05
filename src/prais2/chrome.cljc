@@ -83,11 +83,14 @@
      [:img.img-responsive.pull-left {:src   "/assets/logo3.png"
                                      :style {:margin-top     "-50px"
                                              :padding-bottom "10px"
-                                             :padding-right "20px"
-                                             :transform      "rotate(180deg)"
+                                             :padding-right  "20px"
+                                             :margin-right   "0px"
+                                             :transform "rotate(180deg)"
                                              }}]]
     [:.pull-left.main-title
-     {:style {:padding-right "40px"}}
+     {:style {:margin-left "0px"
+              :padding-left "0px"
+              :padding-right "40px"}}
      "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]
 
 

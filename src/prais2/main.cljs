@@ -17,7 +17,7 @@
             [prais2.home :refer [render-home]]
             [prais2.map-data :refer [render-map-data]]
             [prais2.faqs :refer [render-faqs]]
-    ;[prais2.components.video-player :refer [oz-video oz-player-script]]
+            [prais2.components.video-player :refer [video-js]]
     ;[prais2.logger :as logger :refer [log-bus-pub]]
             [cljsjs.jquery]
 
@@ -124,7 +124,7 @@
                    [:section.col-sm-offset-1.col-sm-10
                     [:h2 "A two minute guide to how we present the results"]
 
-                    #_(oz-video {:video-id  "video1"
+                    (video-js {:video-id  "video1"
                                  :src       "/assets/video01.mp4"
                                  :controls  true
                                  :preload   ""
@@ -132,7 +132,7 @@
                                  :track-src "/assets/video01.vtt"})
 
 
-                    [:video#video1
+                    #_[:video#video1
                      (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
 
                     ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]

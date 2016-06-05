@@ -895,7 +895,8 @@
                :body     [:div
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo-black.png")]
-                            [:a (core/href "http://ucl.ac.uk/coru") "University College London: Dr Christina Pagel"]
+                            [:a (core/href "http://ucl.ac.uk/coru") "University College London"] ": "
+                            [:a (core/href "http://www.ucl.ac.uk/operational-research/the_team/#christina") "Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great
                             Ormond Street Hospital, to help them use routinely collected data to improve NHS services. Her work currently

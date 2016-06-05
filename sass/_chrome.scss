@@ -5,10 +5,13 @@
 .main-title-box {
     //height: 90px !important;
     position: fixed;
-    width: 100%;
-    z-index: 2000;
+    width: calc(100% - 100px);
+    z-index: 1050;
     margin-top: -100px;
     pointer-events: none;  // to avoid masking nav-items when dropped
+    .main-title {
+      pointer-events: none;
+    }
 }
 
 .main-content {
@@ -129,7 +132,7 @@ nav.navbar.navbar-simple.navbar-fixed-top {
               font-size: 16px;
             }
 
-@media screen and (min-width: 945px) {
+@media screen and (min-width: 1055px) {
     .main-title {
         top: 10px;
         font-size: 26px;
@@ -137,12 +140,21 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     }
 }
 
-@media screen and (max-width: 944px) {
+@media screen and (max-width: 1054px) {
+    .main-title {
+        top: 8px;
+        font-size: 22px;
+        //max-width: 400px;
+    }
+}
+
+/*@media screen and (max-width: 944px) {
     .main-title {
         top: 10px;
         font-size: 20px;
     }
 }
+*/
 
 @media screen and (max-width: 767px) {
     .main-title {
@@ -161,9 +173,17 @@ nav.navbar.navbar-simple.navbar-fixed-top {
     }
 }
 
+@media screen and (max-width: 520px) {
+    .main-title {
+        top: -33px;
+        font-size: 16px;
+        max-width: 400px;
+    }
+}
+
 @media screen and (max-width: 450px) {
     .main-title {
-        top: -15px;
+        top: -45px;
         font-size: 16px;
         max-width: 400px;
     }
