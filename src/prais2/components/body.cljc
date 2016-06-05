@@ -30,10 +30,4 @@
 
                 [:script {:src "/js/compiled/prais2.js"}]
 
-                [:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
-
-                [:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
-
-                ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
-
                 ])

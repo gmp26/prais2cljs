@@ -19,18 +19,8 @@
                 [:script {:src "/js/bootstrap-slider.min.js"}]
                 [:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]
 
-
-                #_[:link {:type "text/css" :rel "stylesheet" :media "all"
-                        :href "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.min.css"}]
-                #_[:link {:type "text/css" :rel "stylesheet" :media "all"
-                        :href "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-skin/highlights-purple.css"}]
-                #_[:link {:type "text/css" :rel "stylesheet" :media "all"
-                        :href "https://ozplayer.global.ssl.fastly.net/2.0/transcript.css"}]
-                #_[:script {:type "javascript"
-                            :src  "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/mediaelement.min.js"}]
-
                 [:link {:rel "stylesheet" :href "//vjs.zencdn.net/5.10.2/video-js.css"}]
                 [:script {:src "http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"}]
-
+                [:script {:src "//vjs.zencdn.net/5.10.2/video.min.js"}]
                 ])
 

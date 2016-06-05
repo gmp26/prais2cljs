@@ -3,6 +3,7 @@
               [prais2.core :as core]
               [prais2.utils :refer [key-with]]
               [prais2.content :as content :refer [faq-sections]]
+              [prais2.components.video-player :refer [video-js]]
               #?(:cljs [prais2.data :as data])
               [prais2.mugshots :as mugs]))
 
@@ -45,7 +46,13 @@
       [:div.faq-block {:class block-class}
        [:h4 {:key 1} (:section section)]
        (when (= sec-ix 1)
-         [:video#video2
+         (video-js {:video-id  "video2"
+                    :src       "/assets/video02.mp4"
+                    :controls  true
+                    :preload   ""
+                    :poster    "/assets/video-2-thumbnail.png"
+                    :track-src "/assets/video02.vtt"})
+         #_[:video#video2
           (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true)])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]

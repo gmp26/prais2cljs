@@ -140,30 +140,28 @@
                     [:p {:key 2} "Parents who helped us develop the website found this guide useful for interpreting the data.
                     If you want to know more about how the predicted range of survival is actually calculated, please
                     watch our " [:a (core/href "faqs") [:i.fa.fa-video-camera] " second video"] " in the "
-                     [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]
-                    #_[:h2 "A two minute video on how we present the results"]
+                     [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]])
 
+                 (when (active? :animation)
+                   [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
                     (video-js {:video-id  "video1"
-                                 :src       "/assets/video01.mp4"
-                                 :controls  true
-                                 :preload   ""
-                                 :poster    "/assets/video-1-thumbnail.png"
-                                 :track-src "/assets/video01.vtt"})
+                               :src       "/assets/video01.mp4"
+                               :controls  true
+                               :preload   ""
+                               :poster    "/assets/video-1-thumbnail.png"
+                               :track-src "/assets/video01.vtt"})])
 
 
-                    #_[:video#video1
-                     (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
+                 #_[:video#video1
+                    (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
 
-                    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
+                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
 
-                    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
+                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
 
-                    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
+                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
 
-
-                    [:p "If you'd like to know how the predicted range is calculated, you can watch our 3 minute video in
-       the " [:a (core/href "faqs") "Everything Else section"] "."]
-                    ])]
+                 ]
 
                 #_[:.tab-pane.col-sm-12 {:class (active? :animation2)
                                          :id    "mapped-data"}
