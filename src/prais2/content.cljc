@@ -480,11 +480,11 @@
             [:p "Together, we call these all “unforeseeable factors”."]]}
 
    :predicted-range
-   {:title           "Predicted and Extended Predicted Range:"
-    :body            [:div
-                      [:p "We expect a hospital's overall survival rate to lie within its predicted range 19 times out of 20. "]
-                      [:p "We expect a hospital's overall survival rate to lie within its " [:strong "extended"] " predicted range 998 times out of 1000. "]
-                      [:p "An illustration of how we present a hospital's survival rate (black dot) in
+   {:title "Predicted and Extended Predicted range:"
+    :body  [:div
+            [:p "We expect a hospital's overall survival rate to lie within its " [:em "predicted range"] " 19 times out of 20. "]
+            [:p "We expect a hospital's overall survival rate to lie within its " [:em "extended predicted range"] " 998 times out of 1000. "]
+            [:p "An illustration of how we present a hospital's survival rate (black dot) in
                                      the context of its predicted range (dark blue bar) and extended prediction range
                                      (light blue bar) is given below:"]]}
    })
@@ -600,7 +600,7 @@
              [{:title        "Why is a different survival range predicted for each hospital?"
                :short-answer "The predicted range depends on the complexity of the medical problems of the children who had
       operations. Each hospital treats different children and so each hospital will have a different predicted range."
-               :glossary     [:survival-rate]
+               :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
                               [:p "Heart disease in children covers a wide range of disorders, from relatively minor to more serious
@@ -617,7 +617,7 @@
        coming out with a predicted range? ")]}
 
               {:title        "Why does the width of the predicted range differ between hospitals?"
-               :glossary     [:unforeseen-factors :survival-rate]
+               :glossary     [:unforeseen-factors :survival-rate :predicted-range]
                :short-answer "If a hospital does fewer operations, unforeseeable factors have a bigger influence on its overall
       survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
 
@@ -631,7 +631,7 @@
                :short-answer "There are four possible reasons for being outside the predicted range: inaccurate data, a formula
       that for some reason doesn’t work well for that hospital, just by chance (1 time in 20), or the chances of
       survival at that hospital are different to what is predicted. "
-               :glossary     [:survival-rate]
+               :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
 
@@ -669,7 +669,7 @@
      rate outside their predicted range?"
                :short-answer "When looking at all 13 hospitals at once, we expect at least one hospital’s survival rate to be
       outside its predicted range about half the time."
-               :glossary     [:survival-rate]
+               :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
                               [:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range
@@ -698,7 +698,7 @@
       the hospital and the relevant national health service explore the processes of care at that hospital. If these
       bring to light any concerns, the health service and the hospital work together to improve care, which might
       include temporarily suspending heart surgery at that centre. "
-               :glossary     [:survival-rate]
+               :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
                               [:p " If a hospital’s survival rate is below its predicted range (either the main or extended), everyone wants to
@@ -767,15 +767,17 @@
                :glossary     []
                :body
                              [:div
-                              [:p "Yes there are. While taking into account the complexity of each child’s medical problems in a formula allows
-       for fairer assessment of a hospital’s survival rate, it still cannot make it completely fair. There will always
-       be information about important factors that affect a child’s chances of survival that are not routinely collected
-       for national bodies and so cannot be captured by a formula that was developed using national data. "]
+                              [:p "Yes there are. While using a formula to take into account the complexity of each
+                              child’s medical problems allows for fairer assessment of a hospital’s survival rate,
+                              it still cannot make it completely fair. There will always be information about
+                              important factors that affect a child’s chances of survival that are not routinely
+                              collected for national bodies and so cannot be captured by a formula that was developed
+                              using national data."]
 
                               [:p "Any statistical formula has to be developed on existing data and so the data will be typically at least a
        year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected
        (for instance more complete data) or new methods of surgical or medical management. Often, these statistical
-       formulas are updated every few years with more up to date (in 2016, we updated PRAiS for the third time). "]]}
+       formulas are updated every few years with more up to date information (in 2016, we updated PRAiS for the third time). "]]}
 
 
               {:title        "How reliable are the data?"
@@ -784,8 +786,9 @@
                :body
                              [:div
                               [:p "The data come from the National Congenital Heart Disease Audit ("
-                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ") which collects
-       national data for the UK National Heart Disease Audits. All hospitals in the UK and Ireland performing heart
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ")."
+                               ;" which collects national data for the " [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "UK National Heart Disease Audits"] "."
+                               "All hospitals in the UK and Ireland performing heart
        surgery in children have to submit their data in a standard format to NCHDA. All hospitals are independently
        audited each year as part of a data validation process (to check the quality of the data submitted) to ensure
        that the data are of high quality."]
@@ -801,10 +804,16 @@
                              [:div
                               [:p "Apart from occasional inaccuracies in the data, there are other limits to what the data can tell us about
        surgery outcomes. There are factors that affect a child’s chances of survival that are not routinely collected
-       for national bodies and so cannot be captured by a formula that was developed using national data. These data are
+       for by national bodies and so cannot be captured by a formula that was developed using national data. These data are
        also snapshots in time of what happened at each hospital. A run of unforeseeable factors could cause a very good
        hospital to have worse outcomes than predicted, so we need to be careful about reading too much into results from
-       any single time period."]]}
+       any single time period."]
+                              [:p "The data also can’t tell us about how or why a hospital achieved the recorded
+                              results, so it cannot, by itself, tell us whether one hospital offers better or worse
+                              quality care than any other. These data cannot tell you what the results are likely to be
+                              next year. It also cannot tell us anything about what happens to children who never get
+                              operated on for whatever reason, since data on these children is not currently submitted
+                              to national audit."]]}
 
               {:title        "What about longer term survival and quality of life?"
                :short-answer "At the moment these are not reported. There is active research underway to work out how to report
@@ -813,7 +822,7 @@
                :glossary     []
                :body
                              [:div
-                              [:p "Currently (as of 2016), national audit only monitors what happens shortly after surgery. These data cannot
+                              [:p "Currently (as of 2016), national audit only monitors what happens shortly after surgery (30 days). These data cannot
        tell us about longer term (e.g. 5 year) survival, or other outcomes such as post-surgery complication rates or
        the impact of surgery on the child or their family. There is a lot of "
                                [:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
@@ -822,7 +831,7 @@
              capture, interpret and publish longer term survival and complication rates so hopefully this information
              will become available in the next 5 years."]
 
-                              [:p "The data also can’t tell us about how or why a hospital achieved the recorded results, so it cannot, by
+                              #_[:p "The data also can’t tell us about how or why a hospital achieved the recorded results, so it cannot, by
        itself, tell us whether one hospital offers better or worse quality care than any other. These data cannot tell
        you what the results are likely to be next year. It also cannot tell us anything about what happens to children
        who never get operated on for whatever reason, since data on these children is not currently submitted to
