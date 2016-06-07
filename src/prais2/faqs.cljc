@@ -26,12 +26,18 @@
    [:.reply answer]])
 
 
+(rum.core/defc render-predicted-range-glossary []
+  [:div
+   (data/chart-cell content/sample-hospital 1)
+   (data/legend content/sample-hospital)])
+
 (rum.core/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
     [:dl
      [:dt [:i (:title entry)]]
-     [:dd (:body entry)]]))
-
+     [:dd (if (= term :predicted-range)
+            (render-predicted-range-glossary)
+            (:body entry))]]))
 
 (rum.core/defc render-glossary [glossary]
   [:div

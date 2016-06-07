@@ -400,7 +400,7 @@
 
 (rum.core/defc slider-title [headers]
   [:p {:key :p}
-   (:title (:observed headers))])
+   (if (string? headers) headers (:title (:observed headers)))])
 
 
 (rum.core/defc table-header < rum.core/static bs-popover [background ap header column-key]
@@ -555,8 +555,8 @@
 (defn year-range [year m1 m2]
   (let [y1 (- year 3)]
     {:y1     y1
-     :mrange (str m1 " " y1 " - " m2 " " year)
-     :option (str y1 " - " year)
+     :mrange (str m1 " " y1 " — " m2 " " year)
+     :option (str y1 " — " year)
      }))
 
 (defn end-year []
@@ -611,13 +611,17 @@
 
     [:.row
      [:.col-sm-9
-      (datasource-title "List all data for ")]
+      (datasource-title "Data for ")]
      [:.col-sm-3 (datasource-dropdown event-bus)]]
 
 
     [:p.col-sm-9
-     "This list summarises the data for each hospital. Clicking on a hospital code will bring up specific information for
-     that hospital along with an interpretation of its survival rate. It is only valid to compare a hospital's survival
+     "These are the hospitals in the UK and Ireland that performed heart surgery in children over this period
+     (0-16 years old). This data is updated annually and covers a 3 year period."]
+
+    [:p.col-sm-9
+     "Clicking on a hospital code will bring up specific information for
+     that hospital along with an interpretation of its survival rate. It is " [:strong "only"] " valid to compare a hospital's survival
      rate to its predicted range of survival and not to other hospitals. Read more about this in "
      [:a (core/href "faqs") "Everything Else."]]
 
@@ -625,17 +629,7 @@
      [:a (core/href "faqs") "The Everything Else"] " section also tells you more about the predicted range and what
      happens if a hospital’s survival rate is outside its range."]
 
-    [:p.col-sm-9 "You can hover over or tap on the charts to bring up more explanation."]
-
-    #_[:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
-            period (0-16 years old). This data is updated annually and covers a 3 year period "]
-
-    #_[:p "Clicking on a hospital code will bring up specific information for that hospital along with "
-     "an interpretation of its survival rate. It is only valid to compare a hospital's survival rate "
-     "to its predicted range and not to other hospitals. "
-     "Read more about this in " [:a (core/href "faqs") "Everything Else"] ". "]
-    #_[:p "The " [:a (core/href "faqs") "Everything Else"] " section also tells you more about what it means and what happens if a hospital's survival rate is outside its predicted range."]
-    #_[:p "You can use your mouse to hover over the chart to bring up more explanation."]]
+    [:p.col-sm-9 "You can hover over or tap on the charts to bring up more information."]]
 
    (table1 app data)])
 
@@ -735,16 +729,16 @@
    [:.box
     [:p {:style {:color "orange"}} "Legend (See also: "
      [:a (core/href "data/animation"
-                    :on-click #(core/click->event-bus % :data :animation "data/animation")) "two minute guide"] ")"]
+                    :on-click #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"] ")"]
     (let [ap (rum.core/react core/app)]
       (map-indexed key-with
                    [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
-                                          "The dot indicates the hospital's survival rate")
+                                          "Survival rate: The dot indicates the hospital's survival rate")
                     (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:inner}
-                                          "We expect the hospital's survival rate to be inside this bar
+                                          "Predicted Range: We expect the hospital's survival rate to be inside this bar
                                           19 times out of 20")
                     (annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:outer}
-                                          "We expect the hospital's survival rate to be inside this bar
+                                          "Extended predicted range: We expect the hospital's survival rate to be inside this bar
                                           998 times out of a 1000")
                     ]))
     ]])
@@ -757,7 +751,7 @@
        (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
          (map-indexed key-with
                       [(hospital-header selected-row)
-                       (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (hospital-data h-code)
                        (interpretation selected-row)
@@ -769,7 +763,7 @@
          (map-indexed key-with
                       [(sample-hospital-intro-text)
                        (hospital-header selected-row)
-                       (slider-widget content/header-row detail-slider-control (:detail-slider-axis-value ap))
+                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
                        (chart-cell selected-row (:detail-slider-axis-value ap))
                        (interpretation selected-row)]))])))
 

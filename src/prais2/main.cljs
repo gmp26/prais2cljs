@@ -73,7 +73,7 @@
                  The data covers all hospitals in the UK and Ireland that performed heart surgery in children
                  (0-16 years old). NCHDA update the data annually and each report covers a 3 year period."]
 
-                 [:p "All data on this site comes from the NCHDA annual reports, all of which can be "
+                 [:p "Data on this site comes from the NCHDA annual reports, all of which can be "
                   [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument")
                    "downloaded from the NCHDA website."]]
 
@@ -81,9 +81,9 @@
                    [:p "Use the drop down box to change reporting periods. You can watch our "
                     [:a (core/href "data/animation"
                                    :on-click
-                                   #(core/click->event-bus % :data :animation "data/animation")) "two minute video"]
+                                   #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
                     " which explains how we present the statistics and how to interpret them. Parents who helped us
-                    develop the website found this guide useful for interpreting the data. "])
+                    develop the website found it a useful guide to interpreting the data. "])
 
                  [:ul.nav.nav-pills {:role "tablist"}
 
@@ -137,7 +137,7 @@
                  (when (active? :animation)
                    [:section.col-sm-offset-1.col-sm-10
                     [:p {:key 1}]
-                    [:p {:key 2} "Parents who helped us develop the website found this guide useful for interpreting the data.
+                    [:p {:key 2} "Parents who helped us develop the website found this video useful for interpreting the data.
                     If you want to know more about how the predicted range of survival is actually calculated, please
                     watch our " [:a (core/href "faqs") [:i.fa.fa-video-camera] " second video"] " in the "
                      [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]])

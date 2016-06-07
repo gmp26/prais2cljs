@@ -18,6 +18,18 @@
 ;;;
 ;; Table headers with info texts
 ;;;
+(def datasource-tab
+  {:2015 {:title      "Reporting period"
+          :label      "2012-2015"
+          :long-label "April 2012 - March 2015"}
+   :2014 {:title      "Reporting period"
+          :label      "2011-2014"
+          :long-label "April 2011 - March 2014"}
+   :2013 {:title      "Reporting period"
+          :label      "2010-2013"
+          :long-label "April 2010 - March 2013"}
+   })
+
 
 (def header-row
   (Row. (Header. "Hospital" true true 300 50
@@ -29,17 +41,19 @@
         (Header. "Longitude" false false 0 0
                  "")
         (Header. "Number of Operations" true true 95 50
-                 "The number of heart operations carried out on under-16s at each hospital during the 3 years April 2011 to March 2014. Operations that occur within 30 days of each other are treated as a single operation.")
+                 (str "The number of heart operations carried out on under-16s at each hospital during " (:long-label ((:datasource @core/app) datasource-tab))
+                      ". Operations that occur within 30 days of each other are treated as a single operation."))
         (Header. "Number of Deaths" false true 75 50
-                 "The number of operations where the child  died within 30 days of their operation, from any cause")
+                 "The number of operations where the child died within 30 days of their operation, from any cause")
         (Header. "Number of Survivors" false true 85 50
                  "The number of operations where the child survived at least 30 days after their operation")
         (Header. "Survival Rate %" false true 86 50
-                 "<p>The percentage of operations where the child survived at least 30 days after their operation.</p>
-                 Some hospitals specialise in certain conditions, meaning that some hospitals tend to operate on
-                 children with a lower chance of survival. It would be unfair to expect all hospitals to have
-                 the same survival rates each year, and unfair to sort hospitals in this list on the basis of their
-                 survival rates.")
+                 "<p>The percentage of operations where the child survived at least 30 days after their
+                 operation.</p>
+                 Some hospitals specialise in certain conditions, meaning that some hospitals tend to
+                 operate on children with a lower chance of survival. Therefore we would not expect all
+                 hospitals to have the same survival rates each year, and so it is not possible to sort
+                 hospitals in this list on the basis of their survival rates.")
         (Header. "Outer Low" false false 130 50
                  "A dot within the left hand light blue band means that there is some evidence that chances of survival in the hospital were lower than predicted")
         (Header. "Inner Low" false false 130 50
@@ -52,23 +66,14 @@
                  nil)
         ))
 
+(def detail-slider-label "The survival rate with predicted range of survival")
+
 ;;;
 ;; Sample hospital
 ;;;
 (def sample-hospital
   (Row. "Sample Hospital" "H" 52 -2 976 24 952 97.5 96.5 97.1 98.9 99.2 nil))
 
-(def datasource-tab
-  {:2015 {:title      "Reporting period"
-          :label      "2012-2015"
-          :long-label "April 2012 - March 2015"}
-   :2014 {:title      "Reporting period"
-          :label      "2011-2014"
-          :long-label "April 2011 - March 2014"}
-   :2013 {:title      "Reporting period"
-          :label      "2010-2013"
-          :long-label "April 2010 - March 2013"}
-   })
 
 ;;;
 ;; The 2015 results
@@ -391,7 +396,7 @@
 ;;;
 
 (def bar-comments
-  {:inner      "If the black dot is in this area then there is no evidence that the hospital’s survival rate is
+  {:inner      "If the black dot is in this area then there is no evidence that chances of survival in the hospital were
    different from what is predicted"
 
    :outer-high "If the black dot is in this area then there is some evidence that chances of survival in the hospital
@@ -484,7 +489,7 @@
                :glossary []
                :body
                          [:div
-                          [:p "About 6500 to 7500 babies are born with a heart defect (called congenital heart disease) in the UK and
+                          [:p "About 6500—7500 babies are born with a heart defect (called congenital heart disease) in the UK and
        Ireland every year. Congenital heart disease covers a wide range of problems from the relatively minor (such as a
        small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of
        all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also
@@ -510,10 +515,13 @@
                                Royal Infirmary. The proportion of children who died after surgery at Bristol was much higher than other UK
                                hospitals. There was a formal inquiry into what happened ("
                                [:a (core/href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
-                                              :target "_blank") "The Bristol Inquiry 2001"] "), which led to a number of changes, including a new
-             compulsory national reporting system so that the proportion of children surviving to 30 days after surgery
-             for all hospitals have been published every year since 2001. When there is some evidence that survival
-             rates were lower than expected, the results are checked further by the hospital and the national audit body ("
+                                              :target "_blank") "The Bristol Inquiry 2001"]
+                               "), which led to a number of changes, including a new compulsory national reporting
+                               system. So every year since 2001, the proportion of children surviving to 30 days after
+                               heart surgery for all hospitals has been published. "
+                               [:a (core/href "faq/1/4") "When there is some, or strong, evidence"] " that chances of
+                               survival at a hospital were lower than expected, the results are
+                               checked further by the hospital and the national audit body ("
                                [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ")."]
 
                               [:p "The UK and Ireland now have one of the strongest monitoring programmes in the world. Since reporting started, "
@@ -521,31 +529,40 @@
         and now " [:strong "over 97% of children survive to at least one month after surgery."]]]}
 
               {:title        "How are survival rates monitored?"
-               :short-answer "Every year the national audit body publishes overall survival rates for each hospital for the
-      previous 3 years. Each hospital’s survival rates are compared to what is predicted for that hospital by a
-      statistical formula."
-               :glossary     [:survival-rate]
+               :short-answer "Every year the national audit body (NCHDA) publishes overall survival rates for each
+               hospital for the previous 3 years. Each hospital’s survival rates are compared to what is predicted
+               for that hospital by a statistical formula."
+               :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
                               [:p [:a (core/href "http://www.ucl.ac.uk/nicor/patients" :target "_blank")
                                    [:img.thumbnail.pull-left.w100 (core/isrc "assets/nicor.png")]]
-                               "Since 2007, the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ") has published survival rates for certain
+                               "Since 2007, the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ") has published survival rates for certain
                                " [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
-                                                :target "_blank") "types of procedure"] " (now over 70 different procedures) at each hospital. The "
+                                                :target "_blank") "types of procedure"] " (now over 70 different procedures) at each hospital. But the "
                                [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] " did not
-                               publish overall survival rates for each hospital, because there was no clear way to put
+                               publish overall survival rates for each hospital until 2013, because there was no clear way to put
                                overall survival rates for each hospital into context
                                (see " [:a (core/href "intro") "What, Why and How?"] ").
 
-                               But "
+                               However "
                                [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "researchers"]
-                               " have now made this possible by creating a statistical formula that gives a predicted chance of a child’s 30-day survival, taking the complexity of their medical problems into account. Using this formula, NCHDA has published overall
-                               survival rates along with the predicted range and extended predicted range for survival over the previous 3
-                               years for each hospital since 2013 (see " [:a (core/href "intro") "What, Why and How?"] ").  The predicted range
-        is the range in which we expect to see each hospital’s survival rate the majority of the time (see our video " [:a (core/href "faqs") "How is the predicted range calculated?"] "). "
+                               " have now made this possible by creating a statistical formula that gives a predicted
+                               chance of a child’s 30-day survival, taking the complexity of their medical problems
+                               into account. So since 2013, NCHDA has used this formula to calculate the predicted
+                               and extended predicted ranges of survival for each hospital, so that the hospital’s
+                               survival rate can be interpreted in the context of the children it treated
+                               (see " [:a (core/href "intro") "What, Why and How?"] ").  "
+
                                ]
-                              [:p "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and
-       this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was."]
+                              [:p "The predicted range
+                              is the range in which we expect to see each hospital’s survival rate the majority of
+                              the time (see our video " [:a (core/href "faqs") "How is the predicted range calculated?"] "). "
+                               "The predicted range is calculated using the " [:strong "same"] " statistical formula for all hospitals and
+       this prediction is " [:strong "not"] " influenced by what the survival rate at a hospital actually was (see our short video "
+                               [:a (core/href "faqs") [:i.fa.fa-video-camera] " How is the predicted range calculated?"] "). " [:a (core/href "faq/1/4") "See what happens if
+                               the survival rate falls"] " below its predicted range."]
+
                               [:p "Operations that occur within 30 days of each other are treated as a single operation when reporting overall
        survival."]
                               [:p [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] " publishes all its reports "
@@ -1029,7 +1046,9 @@
       react slightly differently to medicines, anaesthetic, surgery and no heart problem is exactly the same as another. 
       Our inability to predict precisely is also partly because there are factors that we suspect may influence the
       outcome but cannot be included in the statistical method either because these factors are difficult to define or
-      no routine data on them is collected. Together, we call these all “unforeseeable factors”."}]}])
+      no routine data on them is collected. Together, we call these all “unforeseeable factors”."}
+                  {:predicted-range :predicted-range
+                   :title           "Predicted range"}]}])
 
 ;;;
 ;; These theme colours are selectable in the footer (at least till we decide on one)
