@@ -47,10 +47,10 @@
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
-    [:li "The 30-day survival rate is very high for all hospitals in the UK and Ireland, and is among the best in the world."]
+    [:li "The 30-day survival rate after children's heart surgery is very high for all hospitals in the UK and Ireland, and is among the best in the world."]
     [:li "A higher survival rate does not imply a better hospital."]
-    [:li "The predicted range of survival, calculated by a formula, depends on the particular children treated at that
-    hospital. So a hospital treating children with more complex medical problems would have a lower predicted range."]
+    [:li "A hospital's predicted range of survival, calculated by a formula, depends on the particular children treated at that
+    hospital. So a hospital treating children with more complex medical problems will have a lower predicted range."]
     [:li "A hospital's survival rate should only be compared to its own predicted range. It is not valid to compare survival rates between hospitals."]
     ]])
 
@@ -58,9 +58,9 @@
 
 (rum.core/defc section-1-content []
   [:section.row
-   [:p.col-sm-12 "The 30-day survival rate is the percentage of operations where the child survived to at least
-   30 days after their heart surgery. The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s
-   30-day survival rate. Ireland also submits its data to the same audit body, "
+   [:p.col-sm-12 "The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival
+   rate. The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after
+   their heart surgery. Ireland also submits its data to the same audit body, "
     [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] "."]
    [:p.col-sm-12 "Approximately 3500 children under the age of 16 have heart surgery each year in the United Kingdom
    and Republic of Ireland."]]
@@ -70,21 +70,26 @@
   [:section.row
    ;(animation-2)
    [:p.col-lg-12
-    "Heart disease covers a wide range of disorders, from relatively minor to more severe conditions. Some hospitals take on more complicated conditions and tend to operate on children with a lower chance of survival. Also, every child is unique and may respond differently to treatment (surgery, drugs, postoperative care)."]
+    "Heart disease covers a wide range of disorders, from relatively minor to more severe conditions. Some hospitals
+    take on more complicated conditions and tend to operate on children with a lower chance of survival. Also, every
+    child is unique and may respond differently to treatment (surgery, drugs, postoperative care)."]
 
    [:p.col-lg-12
-    "It would therefore be unfair to expect all hospitals to have the same survival rate: we should take into account how ill the children were that the hospitals treated. In other words, if one hospital has a higher survival rate than another hospital this is not necessarily evidence that one hospital is better than the other – it could indicate that the second hospital treated children with more severe problems. "]])
+    "We therefore would not expect all hospitals to have the same survival rate: we should take into account how ill
+    the children were that the hospitals treated. In other words, if one hospital has a higher survival rate than
+    another hospital this is not necessarily evidence that one hospital is better than the other – it could
+    indicate that the second hospital treated children with more severe problems. "]])
 
 (rum.core/defc section-3-content []
   [:section.row
    [:.col-lg-12
-    [:p "The NHS monitors hospitals that perform children’s heart surgery by reviewing the 30-day survival rate for
-    each hospital, taking into account how ill the children were that each hospital treated. This is a fairer way of
-    looking at survival rate data."]
+    [:p "When reviewing the 30-day survival rate for each hospital, the NHS takes into account how ill the children were
+    that each hospital treated. This is a fairer way of looking at survival rate data."]
     [:p "Risk factors that affect a child’s chance of survival include:"]
     [:ul
      [:li
-      "the age and weight of the child (other things being equal, the bigger and stronger a child is, the safer the surgery is); "]
+      "the age and weight of the child (other things being equal, the bigger and stronger a child is, the safer the
+      surgery is); "]
 
      [:li "what problem in the heart the surgery is trying to fix (some hearts have more complex problems than others); "]
 
@@ -92,22 +97,32 @@
      [:li "the complexity of the surgical procedure.  "]
      ]
 
-    [:p "Knowing these factors for each child allows us to predict the percentage of children within a group that will survive, even though we cannot predict exactly whether individual children will survive."]
+    [:p "Knowing these factors for each child allows us to predict the percentage of children within a group that will
+    survive, even though we cannot predict exactly whether individual children will survive."]
 
-    [:p "The national audit body ("[:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ") uses a
-    statistical formula to combine data on these risk factors for all the children a hospital has treated over the
-    previous three years giving a " [:b "predicted range"] " for the overall proportion of survivors for that specific
-    hospital and time period. The audit body then compares the survival rate achieved by a hospital with its predicted range."]
+    [:p "The national audit body ("[:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ")
+    uses a statistical formula to combine data on these risk factors for all the children a hospital has treated over
+    the previous three years to give a predicted range for the overall proportion of survivors for that specific
+    hospital and time period. The formula is also used to calculate an extended predicted range for survival for each
+    hospital. The audit body then compares the survival rate achieved by a hospital with its predicted and extended
+    predicted range. Our " [:a (core/href "data/animation") [:i.fa.fa-video-camera] " two minute video"] " explains how
+    we present these comparisons in this site."]
 
-    [:p "If you'd like to know how the predicted range is calculated, you can watch our 4 minute video in the " [:a (core/href "faqs") "Everything Else"] " section."]
+    [:p "If you'd like to know how the predicted range is actually calculated, you can watch our
+    " [:a (core/href "faqs") [:i.fa.fa-video-camera] " second short video"] " in the "
+     [:a (core/href "faqs") "Everything Else"] " section."]
 
-    [:p "If that hospital’s survival rate is within the ‘predicted range’, its results are in line with what we expect.
-     For more information about how the NHS monitors survival rates see the "[:a (core/href "faqs") "Everything Else"]  " section."]
+    [:p "If a hospital’s survival rate is within its predicted range, its results are in line with what we expect.
+    For more information about how the NHS monitors survival rates see the  "[:a (core/href "faqs") "Everything Else"]
+     " section."]
     [:.bg-danger
      [:p
-      "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time period – so each hospital will have a different predicted range and its predicted range will vary from year to year."]
+      "IMPORTANT! The predicted range depends on the types of patients treated at that hospital over that time
+      period – so each hospital will have a different predicted range and its predicted range will vary from year to
+      year."]
      [:p
-      "That is why we only compare a hospital’s survival rate to its predicted range (from the statistical formula) and not to survival rates at other hospitals."]]]])
+      "That is why we only compare a hospital’s survival rate to its predicted range (from the statistical formula)
+      and " [:strong "not"] " to survival rates at other hospitals."]]]])
 
 (rum.core/defc section-4-content []
   [:section.row
@@ -117,9 +132,9 @@
      " If you are concerned about your child’s treatment plan "
      [:b "please speak with your child’s cardiologist or surgeon"]
      ". You can also access the support available from national charities such as the "
-     [:a (core/href " http://www.chfed.org.uk/" :target "_blank")
+     [:a (core/href "http://www.chfed.org.uk/" :target "_blank")
       "Children’s Heart Federation"]
-     " or "
+     ", "
      [:a (core/href "http://www.lhm.org.uk/" :target "_blank")
       "Little Hearts Matter"]
      " or local charities for your specialist children’s hospital (see "
@@ -141,4 +156,4 @@
   [:section.row
    [:.col-lg-12
     [:p "This site can help you interpret currently published survival data on children’s heart surgery and explore
-    recent results by hospital."]]])
+    recent survival statistics for each hospital."]]])
