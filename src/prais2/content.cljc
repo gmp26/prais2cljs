@@ -477,8 +477,17 @@
 
             [:p "There are also factors that we suspect may influence the outcome but cannot be included in the statistical
   formula because no routine audit data on them is collected, for instance the size of a hole in the heart."]
-            [:p "Together, we call these all “unforeseeable factors”."]]
-    }})
+            [:p "Together, we call these all “unforeseeable factors”."]]}
+
+   :predicted-range
+   {:title           "Predicted and Extended Predicted Range:"
+    :body            [:div
+                      [:p "We expect a hospital's overall survival rate to lie within its predicted range 19 times out of 20. "]
+                      [:p "We expect a hospital's overall survival rate to lie within its " [:strong "extended"] " predicted range 998 times out of 1000. "]
+                      [:p "An illustration of how we present a hospital's survival rate (black dot) in
+                                     the context of its predicted range (dark blue bar) and extended prediction range
+                                     (light blue bar) is given below:"]]}
+   })
 
 (def title "Everything else")
 
@@ -1047,8 +1056,14 @@
       Our inability to predict precisely is also partly because there are factors that we suspect may influence the
       outcome but cannot be included in the statistical method either because these factors are difficult to define or
       no routine data on them is collected. Together, we call these all “unforeseeable factors”."}
-                  {:predicted-range :predicted-range
-                   :title           "Predicted range"}]}])
+                  {:glossary-entry :predicted-range
+                   :title           "Predicted and Extended Predicted Range:"
+                   :body            [:div
+                                     [:p "We expect a hospital's overall survival rate to lie within its predicted range 19 times out of 20. "]
+                                     [:p "We expect a hospital's overall survival rate to lie within its " [:strong "extended"] " predicted range 998 times out of 1000. "]
+                                     [:p "An illustration of how we present a hospital's survival rate (black dot) in
+                                     the context of its predicted range (dark blue bar) and extended prediction range
+                                     (light blue bar) is given below:"]]}]}])
 
 ;;;
 ;; These theme colours are selectable in the footer (at least till we decide on one)
