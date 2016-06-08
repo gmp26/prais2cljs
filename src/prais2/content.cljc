@@ -1089,7 +1089,7 @@
        the evolving website with the clinical community including surgeons, intensive care doctors, the national audit
        body, data experts and cardiologists, to incorporate their feedback too. "]
 
-                          [:p "Over time, the website took shape, evolvilng a great deal over the year in response to the workshops, the
+                          [:p "Over time, the website took shape, evolving a great deal over the year in response to the workshops, the
        psychology experiments and other feedback. We user tested everything from layout to colours to language to page
        navigation and very little remains from the original draft content. "]
 
