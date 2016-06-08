@@ -5,8 +5,8 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
 
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.228"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.9.36"]
                  [org.clojure/core.async "0.2.374"]
                  [cljs-ajax "0.5.1"]
                  [cljsjs/openlayers "3.5.0-1"]
@@ -22,7 +22,7 @@
 
 
                  [devcards "0.2.1"]
-                 [rum "0.8.4"]
+                 [rum "0.9.0"]
 
                  [figwheel-sidecar "0.5.1"]
                  [com.stuartsierra/component "0.3.1"]
