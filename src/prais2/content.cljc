@@ -638,15 +638,22 @@
                               influence on the overall survival rate of a larger hospital performing 1000 operations.
                               This is why hospitals doing more operations have a narrower predicted range than hospitals
                               doing fewer operations."]
-                              
+
                               #_[:p "The predicted range for each hospital shows the range where we expect to see the observed survival rate if
        the hospital is performing as predicted by the formula, regardless of how many operations it did or what children
-       it treated. The predicted range varies with the number of operations a hospital has done, and has to do with the unforeseeable factors that occur. We know that sometimes unforeseeable factors will affect a child’s survival – though, of course, we cannot predict exactly what they will be and when they will occur. In a smaller hospital performing 100 operations per year, even one more or fewer child surviving due to unforeseeable factors could make a big difference to its overall survival rate, whereas it would have less impact on the overall survival rate of a larger hospital performing 1000 operations. This is why hospitals doing more operations have a narrower predicted range than hospitals doing fewer operations."]]}
+       it treated. The predicted range varies with the number of operations a hospital has done, and has to do with
+       the unforeseeable factors that occur. We know that sometimes unforeseeable factors will affect a child’s
+       survival – though, of course, we cannot predict exactly what they will be and when they will occur. In a
+       smaller hospital performing 100 operations per year, even one more or fewer child surviving due to unforeseeable
+       factors could make a big difference to its overall survival rate, whereas it would have less impact on the
+       overall survival rate of a larger hospital performing 1000 operations. This is why hospitals doing more operations
+       have a narrower predicted range than hospitals doing fewer operations."]]}
 
-              {:title        "When looking at just one hospital, what does it mean if its survival is outside its predicted range?"
-               :short-answer "There are four possible reasons for being outside the predicted range: inaccurate data, a formula
-      that for some reason doesn’t work well for that hospital, just by chance (1 time in 20), or the chances of
-      survival at that hospital are different to what is predicted. "
+              {:title        "When looking at just one hospital, what does it mean if its survival is outside its
+              predicted range?"
+               :short-answer "There are four possible reasons why a hospital might be outside its predicted range:
+               inaccurate data, a formula that for some reason doesn’t work well for that hospital, just by chance
+               (1 time in 20), or because the chances of survival at that hospital are different to what is predicted. "
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
@@ -656,7 +663,7 @@
                               [:h4 "1. Inaccurate data"]
                               [:p "Each hospital and the Office of National Statistics supply data on each child to the national audit body.
        Although the " [:a (core/href "faq/2/1") "data submitted is of very high quality"] ", there will always be some
-       inaccuracies is such large datasets. If a hospital submits data where some of the data is very wrong or missing, then this will result in a wrong predicted range."]
+       inaccuracies in such large datasets. If a hospital submits data where some of the data is very wrong or missing, then this will result in a wrong predicted range."]
 
                               [:h4 "2. The formula doesn’t work well for that hospital"]
                               [:p "The statistical formula is applied to all operations at that hospital to calculate its overall predicted
@@ -669,7 +676,13 @@
        survival but are not captured by the formula, the predicted range might be unfairly high for that hospital."]
 
                               [:h4 "3. Chance"]
-                              [:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply
+                              [:p "If the hospital’s data contains no errors and there’s no reason to think that the
+                              formula shouldn’t apply well to that hospital, then in 19 times out of 20, we’d expect
+                              to see a hospital’s overall survival range within the predicted range. This means that
+                              the hospital’s survival rate could be outside its predicted range just by chance
+                              (1 time in 20). (You can also watch " [:a (core/href "faqs") [:i.fa.fa-video-camera] " our short video"]
+                               " on how the predicted range is calculated.)"]
+                              #_[:p "If the hospital’s data contains no errors and there’s no reason to think that the formula shouldn’t apply
        well to that hospital, then in 19 times out of 20, we’d expect to see a hospital’s overall survival range within
        the predicted range. The means that the hospital’s survival rate could be outside its predicted range just by
        chance (1 time in 20)."]
@@ -688,7 +701,12 @@
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
-                              [:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range
+                              [:p "If we were looking at only one hospital, we’d expect its survival rate to fall
+                              outside its predicted range rarely if chances of survival at the hospital match the
+                              formula: only 1 time in 20 just by chance. But, if we are looking at all 13 hospitals
+                              at once, we’d actually expect that at least one hospital will fall outside its range
+                              just by chance about 9 times in 20."]
+                              #_[:p "If we were looking at only one hospital, we’d expect its survival rate to fall outside its predicted range
        rarely if chances of survival at the hospitals match the formula: just 1 time in 20. But, if we are looking at
        all 14 hospitals at once, we’d actually expect that at least one hospital will fall outside its range just by
        chance about 8 times in 20."]
@@ -701,12 +719,14 @@
                               [:p "So, on average, we’d anticipate about half of NCHDA’s annual reports to have at least one hospital outside
        its range, either above or below, by chance alone."]
 
-                              [:p "Considering now the " [:i "extended predicted range"] ", if we look at all 13 hospitals at once, we’d only
+                              [:p "See " [:a (core/href "faq/1/4") "what happens if a hospital falls below its predicted or extended predicted range."]]
+
+                              [:p "Considering now the " [:strong [:i "extended predicted range"]] ", if we look at all 13 hospitals at once, we’d only
        expect " [:i "any"] " one of them to be outside their extended range very rarely, just 1 time in 40. This is why
        a hospital’s survival rate being outside the extended predicted range is considered strong evidence that the
        chances of a patient surviving at that hospital are different to what is expected."]
 
-                              [:p "NOTE: As of 2016, Royal Victoria Hospital in Belfast no longer operates on children with congenital heart
+                              #_[:p "NOTE: As of 2016, Royal Victoria Hospital in Belfast no longer operates on children with congenital heart
        disease, so there are now 13 hospitals in the UK and Ireland that perform these operations."]]}
 
               {:title        "What actually happens if a hospital’s survival rate is below its predicted range?"
@@ -717,7 +737,8 @@
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
-                              [:p " If a hospital’s survival rate is below its predicted range (either the main or extended), everyone wants to
+                              [:p " If a hospital’s survival rate is below its predicted range (either the main or
+                              extended predicted range), everyone wants to
        be sure that there is not a potential problem in the pathway of care. It is important to either rule this out or
        start to improve care if it’s decided that this is the reason. (See also "
                                [:a (core/href "faq/1/2") "What does it mean if a hospital is outside its predicted range?"] ")."]
@@ -731,7 +752,9 @@
                                lead doctor for congenital heart disease at that hospital and a detailed examination of the hospital’s results
                                takes place. There are established and published procedures which can be put into action if the detailed
                                assessment raises concerns about care. In England, for instance, this would involve the
-                               British Congenital Cardiac Association and/or the Care Quality Commission."]
+                               " [:a (core/href "http://www.bcs.com/pages/page_affiliate.asp?PageID=321" :target "_blank") "British
+                               Congenital Cardiac Association"] " and/or the "
+                               [:a (core/href "http://www.cqc.org.uk/" :target "_blank") "Care Quality Commission."]]
 
                               [:p " There are two main steps:"]
 
@@ -760,20 +783,27 @@
 
                               ]}
 
-              {:title        "Where did the formula used to calculate the predicted range come from?"
-               :short-answer "The statistical formula comes from a method called “Partial Risk Adjustment in Surgery” or PRAiS
-      for short, developed by researchers at Great Ormond Street Hospital and University College London. "
+              {:title        "What actually happens if a hospital’s survival rate is above its predicted range?"
+               :short-answer "Healthcare services are currently looking into the best way to capture learning from hospitals
+               where there is strong evidence that chances of survival were higher than predicted using the formula. "
                :glossary     []
-               :body
-                             [:div
-                              [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
+               :body         nil
+               }
+
+              {:title        "Where did the formula used to calculate the predicted range come from?"
+               :body nil
+
+                             :glossary []
+                             :short-answer
+               [:div
+                [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
        University College London called PRAiS (Partial Risk Adjustment in Surgery - see also the "
-                               [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
+                 [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
         the " [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "academic
         literature"] " if you are interested in learning more details."]
 
-                              (comment "*** picture of formula churning away at PRAIS risk factors?***")
-                              ]}]}
+                (comment "*** picture of formula churning away at PRAIS risk factors?***")
+                ]}]}
 
 
    {:section "Limitations of these results and the data"
@@ -885,18 +915,20 @@
    {:section "My family or child"
     :faqs
              [{:title        "Can this data inform my choice of hospital?"
-               :short-answer "You can see how a hospital's survival rate compares to its predicted range, but this website cannot tell you which hospital to go to. Please discuss this with your child’s
-      clinical team or access the support offered by specialist charities such as the Children’s Heart Federation. "
+               :short-answer [:div
+                              [:p "You can use this website to see how a hospital’s survival rate compares to its
+                              predicted range, but the data cannot tell you which hospital to go to. Please discuss
+                              this with your child’s clinical team or access the support offered by specialist
+                              charities such as the " [:a (core/href "http://www.chfed.org.uk/" :target "_blank") "Children’s Heart Federation."]]]
                :glossary     []
                :body
                              [:div
-                              [:p "You can " [:a (core/href "data") "explore the data"] " to see how the different hospitals are doing compared to their predicted
-       range calculated for the last 3 years.
-       You can also use the "
+                              [:p "On this site, you can " [:a (core/href "data") "explore the data"] " to see how the
+                              different hospitals’ survival rates compare to their own predicted ranges for 3 year report periods. You can also use the "
                                [:a (core/href "https://nicor4.nicor.org.uk/CHD/an_paeds.nsf/WBenchmarksYears?openview&RestrictToCategory=2014&start=1&count=500"
                                               :target "_blank") "national audit website"]
                                " to explore how many operations of each type a hospital does and survival outcomes for each of these. However,
-                               this cannot, in itself, tell you which hospital you should go to and does not provide proof that one hospital is
+                               this website cannot, in itself, tell you which hospital you should go to and does not provide proof that one hospital is
                                “better” than any other. The safety or otherwise of a hospital " [:strong "cannot"] " be determined from
         survival data alone."]
 
@@ -1029,14 +1061,15 @@
                :glossary []
                :body
                          [:div
-                          [:p "We developed this site in just over a year from April 2015 to launch in June 2016. "]
+                          [:p "We developed this site in just over a year from April 2015 until launch in June 2016. "]
 
                           [:p "The academic mathematicians and statisticians wrote first drafts of the content in May 2015, with feedback
        from communication experts at Sense about Science and the academic psychologists at King’s College London. Over
-       the next 10 months, Sense about Science held four sets of two workshops each, to test the web content. At each stage,
-       one workshop was with interested potential users (e.g. press officers; health journalists; policy people) and the
-       other workshop was with parents of children who had heart surgery. We asked new people to come to
-       the workshops at each stage so we could get fresh impressions. "]
+       the next 10 months, Sense about Science held four sets of two workshops, to test the web content. At each stage,
+       one workshop was with interested potential users (e.g. press officers; health journalists; policy professionals)
+       and the other workshop was with parents of children who had heart surgery. At each stage, we invited different
+       individuals to attend each workshop in order to test the updated content with people who had not seen the previous
+       versions. We also asked participants from past workshops to provide feedback on the animations and website as they developed. "]
 
                           [:p "As the website took shape in the autumn of 2015, the academic psychologists at King’s College London did
        formal tests of specific sentences and concepts discussed in the website to see if one way of explaining the
@@ -1044,8 +1077,8 @@
        the evolving website with the clinical community including surgeons, intensive care doctors, the national audit
        body, data experts and cardiologists, to incorporate their feedback too. "]
 
-                          [:p "Over time, the website took shape, changing massively over the year in response to the workshops, the
-       psychology experiments and other feedback. We asked about everything from layout to colours to language to page
+                          [:p "Over time, the website took shape, evolvilng a great deal over the year in response to the workshops, the
+       psychology experiments and other feedback. We user tested everything from layout to colours to language to page
        navigation and very little remains from the original draft content. "]
 
                           [:p "Looking back, we cannot thank all those who gave feedback enough – this website is immeasurably better with
