@@ -488,30 +488,33 @@
              :let [column-header (column-key headers)
                    info-handler #(core/click->event-bus % :open-hospital-modal h-code nil)]
              :when (:shown column-header)]
-         [:td {:key   [h-code column-key]
-               :style (merge {:maxWidth   (px (:width column-header))
-                              :whiteSpace "normal"
-                              :height     (px (:height column-header))}
-                             (if (= column-key :h-name) {:minWidth (px 256)} {}))}
+         [:td (merge {:key   [h-code column-key]
+                      :class (if (= column-key :h-name) "h-name" "")
+                      :style (merge {:max-width   (px (:width column-header))
+                                     :white-space "normal"
+                                     :height      (px (:height column-header))}
+                                    )}
+                     (when (= column-key :h-name)
+                       {:on-touch-start info-handler
+                        :on-click       info-handler}))
           [:div {:style {:display "inline-block"
                          :cursor  (if (= column-key :h-name) "pointer" "auto")
                          :width   (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
-           (if (= column-key :h-name)
+           (str (column-key row) (when (= column-key :survival-rate) " %" ""))
+           #_(if (= column-key :h-name)
              [:a {:on-touch-start info-handler
                   :on-click       info-handler} (column-key row)]
              (str (column-key row) (when (= column-key :survival-rate) " %" "")))]
 
           (when (= column-key :h-name)
-            [:button.btn.btn-link.btn-xs.h-info
-             {:on-click       info-handler
-              :on-touch-start info-handler}
-             h-code " " [:i.fa.fa-chevron-right]])])
+            [:span " " h-code " " [:i.fa.fa-chevron-right]]
+            )])
        [:td {:key   [h-code :bars]
              :style {:background-color "#f0f0f0"}} (chart-cell row slider-axis-value)]])]])
 
 (rum.core/defc table1 < rum.core/reactive [app data]
   [:.table-container
-   [:div.table-responsive.data-table
+   [:div.data-table
     (table1-core (rum.core/react app)
                  data
                  (:sort-by (rum.core/react app))
