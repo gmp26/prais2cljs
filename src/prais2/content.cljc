@@ -8,16 +8,15 @@
 (defn get-mugshots []
   ["christina" "david" "tim" "emily B" "mike" "emily J" "joanne"])
 
-(defn get-mugshots-meta []
-  [:rows
-   [:row {:id "christina" :name "Christina" :org "UCL"}]
-   [:row {:id "david" :name "David" :org "Camb"}
-    {:id "mike" :name "Mike" :org "Camb"}]
-   [:row {:id "tim" :name "Tim" :org "KCL"}
-    {:id "emily B" :name "Emily Blackshaw" :org "KCL"}]
-   [:row {:id "emily J" :name "Emily Jesper" :org "SAS"}
-    {:id "joanne" :name "Joanne Thomas" :org "SAS"}]]
-  )
+(def mugshot-data
+  {
+   :christina {:id "christina" :name "Christina" :org "UCL"}
+   :david     {:id "david" :name "David" :org "Camb"}
+   :mike      {:id "mike" :name "Mike" :org "Camb"}
+   :tim       {:id "tim" :name "Tim" :org "KCL"}
+   :emily-b   {:id "emily B" :name "Emily Blackshaw" :org "KCL"}
+   :emily-j   {:id "emily J" :name "Emily Jesper" :org "SAS"}
+   :joanne    {:id "joanne" :name "Joanne Thomas" :org "SAS"}})
 
 ;;;
 ;; table structure

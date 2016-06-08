@@ -110,7 +110,7 @@
             (render-short-answer short-answer)))
         [:div.body {:key 2}
          (when (= [4 0] faq-ref)
-           (rum.core/with-key (mugs/mugshots) 4))
+           (rum.core/with-key (mugs/reformatted-mugshots) 4))
          (:body faq)]
         (when (> (count glossary) 0)
           (do
