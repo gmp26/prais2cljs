@@ -417,16 +417,16 @@
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
 #_(def dot-comments
-  {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
+    {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
 
-   :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
+     :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
 
-   :outer-low  "There is some evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
+     :outer-low  "There is some evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
 
-   :low        "There is strong evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
+     :low        "There is strong evidence that chances of survival in the hospital were lower than predicted." ; " [:todo to 1/4]"
 
-   :high       "There is strong evidence that chances of survival in the hospital were higher than predicted." ; " [todo: to 1/2]"
-   })
+     :high       "There is strong evidence that chances of survival in the hospital were higher than predicted." ; " [todo: to 1/2]"
+     })
 
 ;;;
 ;; Comment on the meaning of the dot when it appears in the given range.
@@ -598,8 +598,10 @@
    {:section "Understanding the predicted range"
     :faqs
              [{:title        "Why is a different survival range predicted for each hospital?"
-               :short-answer "The predicted range depends on the complexity of the medical problems of the children who had
-      operations. Each hospital treats different children and so each hospital will have a different predicted range."
+               :short-answer "The predicted range of survival is the range in which we expect to see each hospital’s
+               survival rate the majority of the time. It depends only on the complexity of the medical problems of the
+               children who had heart operations. Each hospital treats different children and so each hospital will have
+               a different predicted range."
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
@@ -609,7 +611,7 @@
 
                               [:p "Some hospitals take on more cases that are particularly complicated, meaning they tend to operate on
        children with a lower chance of survival. Each hospital will also treat different children from year to year,
-       so we expect any hospital’s survival rate to vary from year to year. It would therefore be unfair to expect all
+       so we expect any hospital’s survival rate to vary from year to year. We therefore would not expect all
        hospitals to have the same survival rates and it is not valid to simply compare hospitals' survival rates.
        It is " [:i "only valid"] " to compare a hospital’s survival rate to its own predicted range."]
 
@@ -619,11 +621,25 @@
               {:title        "Why does the width of the predicted range differ between hospitals?"
                :glossary     [:unforeseen-factors :survival-rate :predicted-range]
                :short-answer "If a hospital does fewer operations, unforeseeable factors have a bigger influence on its overall
-      survival rate. This is why the predicted range is wider for hospitals that do fewer operations."
+      survival rate. Therefore the predicted range is wider for hospitals that do fewer operations."
 
                :body
                              [:div
-                              [:p "The predicted range for each hospital shows the range where we expect to see the observed survival rate if
+                              [:p "A predicted range of survival is calculated individually for each hospital, taking
+                              into account the children it treated.  If the chances of survival at that hospital are
+                              as predicted, then we expect the hospital’s survival rate to lie within the predicted
+                              range 19 times out of 20. The width of the predicted range varies with the number of
+                              operations a hospital has done, because of unforeseeable factors that occur. We know
+                              that sometimes unforeseeable factors will affect a child’s survival – though, of course,
+                              we cannot predict exactly what they will be and when they will occur. In a smaller
+                              hospital that performs 100 operations per year, even if one more or one fewer child
+                              survives due to unforeseeable factors, this could make a big difference to that
+                              hospital’s overall survival rate. However such unforeseeable factors would have less
+                              influence on the overall survival rate of a larger hospital performing 1000 operations.
+                              This is why hospitals doing more operations have a narrower predicted range than hospitals
+                              doing fewer operations."]
+                              
+                              #_[:p "The predicted range for each hospital shows the range where we expect to see the observed survival rate if
        the hospital is performing as predicted by the formula, regardless of how many operations it did or what children
        it treated. The predicted range varies with the number of operations a hospital has done, and has to do with the unforeseeable factors that occur. We know that sometimes unforeseeable factors will affect a child’s survival – though, of course, we cannot predict exactly what they will be and when they will occur. In a smaller hospital performing 100 operations per year, even one more or fewer child surviving due to unforeseeable factors could make a big difference to its overall survival rate, whereas it would have less impact on the overall survival rate of a larger hospital performing 1000 operations. This is why hospitals doing more operations have a narrower predicted range than hospitals doing fewer operations."]]}
 
@@ -786,7 +802,7 @@
                :body
                              [:div
                               [:p "The data come from the National Congenital Heart Disease Audit ("
-                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] "),
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ")
                                which is part of the National Institute of Cardiovascular Outcomes Research ("
                                [:a (core/href "https://www.ucl.ac.uk/nicor") "NICOR"] "). "
                                ;" which collects national data for the " [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "UK National Heart Disease Audits"] "."
@@ -1068,11 +1084,11 @@
       outcome but cannot be included in the statistical method either because these factors are difficult to define or
       no routine data on them is collected. Together, we call these all “unforeseeable factors”."}
                   {:glossary-entry :predicted-range
-                   :title           "Predicted and Extended Predicted Range:"
-                   :body            [:div
-                                     [:p "We expect a hospital's overall survival rate to lie within its predicted range 19 times out of 20. "]
-                                     [:p "We expect a hospital's overall survival rate to lie within its " [:strong "extended"] " predicted range 998 times out of 1000. "]
-                                     [:p "An illustration of how we present a hospital's survival rate (black dot) in
+                   :title          "Predicted and Extended Predicted Range:"
+                   :body           [:div
+                                    [:p "We expect a hospital's overall survival rate to lie within its predicted range 19 times out of 20. "]
+                                    [:p "We expect a hospital's overall survival rate to lie within its " [:strong "extended"] " predicted range 998 times out of 1000. "]
+                                    [:p "An illustration of how we present a hospital's survival rate (black dot) in
                                      the context of its predicted range (dark blue bar) and extended prediction range
                                      (light blue bar) is given below:"]]}]}])
 
