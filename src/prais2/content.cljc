@@ -786,7 +786,9 @@
                :body
                              [:div
                               [:p "The data come from the National Congenital Heart Disease Audit ("
-                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ")."
+                               [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] "),
+                               which is part of the National Institute of Cardiovascular Outcomes Research ("
+                               [:a (core/href "https://www.ucl.ac.uk/nicor") "NICOR"] "). "
                                ;" which collects national data for the " [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "UK National Heart Disease Audits"] "."
                                "All hospitals in the UK and Ireland performing heart
        surgery in children have to submit their data in a standard format to NCHDA. All hospitals are independently

@@ -18,7 +18,7 @@
 
 
                  [secretary "1.2.3"]
-                 [venantius/accountant "0.1.7"]
+                 ;[venantius/accountant "0.1.7"]
 
 
                  [devcards "0.2.1"]
