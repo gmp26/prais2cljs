@@ -69,12 +69,12 @@
                  [:h1 "Explore the data"]
 
                  [:p "In this section you can explore the overall hospital survival statistics published by the National
-                 Congenital Heart Disease Audit (" [:a (core/href "www.ucl.ac.uk/nicor/audits/congenital") "NCHDA"] ").
+                 Congenital Heart Disease Audit (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ").
                  The data covers all hospitals in the UK and Ireland that performed heart surgery in children
                  (0-16 years old). NCHDA update the data annually and each report covers a 3 year period."]
 
                  [:p "Data on this site comes from the NCHDA annual reports, all of which can be "
-                  [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument")
+                  [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument" :target "_blank")
                    "downloaded from the NCHDA website."]]
 
                  (when (not= :animation (:section (rum.core/react core/app)))
