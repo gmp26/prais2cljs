@@ -11,10 +11,10 @@
 
 
 (rum.core/defc hospital-item [row]
-  [:li [:a
-        {:tab-index 0
-         :on-click  #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
-        (:h-name row) [:i.fa.fa-chevron-right.pull-right]]])
+  [:li {:on-click  #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])
+        :on-touch-start  #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
+   (:h-name row) [:i.fa.fa-chevron-right.pull-right]
+   ])
 
 (rum.core/defc hospital-list < rum.core/reactive []
   (let [rows (sort-by :h-name ((:datasource (rum.core/react core/app)) content/datasources))]

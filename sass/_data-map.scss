@@ -3,17 +3,28 @@
  **/
 ul.h-nav {
     border: 1px solid #CCCCCC;
+    padding:0;
 }
 
 ul.h-nav li {
     list-style-type: none;
-    padding: 10px 10px 7px 0px;
+    padding: 10px 10px 7px 10px;
     border-bottom: 1px solid #CCCCCC;
     cursor: pointer;
+    color: #337AB7;
 }
 
 ul.h-nav li:last-of-type {
     border-bottom: none;
+}
+
+ul.h-nav :hover {
+    background-color: #337AB7;
+    color: white;
+    * {
+      color: white;
+    }
+    text-decoration: none;
 }
 
 .hospital-map {
