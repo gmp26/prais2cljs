@@ -8,6 +8,17 @@
 (defn get-mugshots []
   ["christina" "david" "tim" "emily B" "mike" "emily J" "joanne"])
 
+(defn get-mugshots-meta []
+  [:rows
+   [:row {:id "christina" :name "Christina" :org "UCL"}]
+   [:row {:id "david" :name "David" :org "Camb"}
+    {:id "mike" :name "Mike" :org "Camb"}]
+   [:row {:id "tim" :name "Tim" :org "KCL"}
+    {:id "emily B" :name "Emily Blackshaw" :org "KCL"}]
+   [:row {:id "emily J" :name "Emily Jesper" :org "SAS"}
+    {:id "joanne" :name "Joanne Thomas" :org "SAS"}]]
+  )
+
 ;;;
 ;; table structure
 ;;;
@@ -980,8 +991,8 @@
                :body     [:div
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/ucl-logo-black.png")]
-                            [:a (core/href "http://ucl.ac.uk/coru") "University College London"] ": "
-                            [:a (core/href "http://www.ucl.ac.uk/operational-research/the_team/#christina") "Dr Christina Pagel"]
+                            [:a (core/href "http://ucl.ac.uk/coru" :target "_blank") "University College London"] ": "
+                            [:a (core/href "http://www.ucl.ac.uk/operational-research/the_team/#christina" :target "_blank") "Dr Christina Pagel"]
                             " is a Reader in Operational Research (a branch of applied mathematics) at University College London, applying
                             maths to problems in the NHS. She works very closely with doctors and other clinical staff, mainly at Great
                             Ormond Street Hospital, to help them use routinely collected data to improve NHS services. Her work currently
@@ -993,21 +1004,23 @@
         about Science, the University of Cambridge, King’s College London and the Children’s Heart Federation to develop
         these online resources to help people interpret the audit body’s published results. In particular, she wrote a
         lot of the content, helped enormously by feedback from the team and the user workshops. Thanks to "
-                            [:a (core/href " http://www.ucl.ac.uk/operational-research/the_team/#andrew") " Dr Andrew Wilshere"] " for designing our logo. "]]
+                            [:a (core/href " http://www.ucl.ac.uk/operational-research/the_team/#andrew" :target "_blank") " Dr Andrew Wilshere"] " for designing our logo. "]]
 
                           [:.image-para
                            [:p [:img.pull-left.w150 (core/isrc "assets/camlogo-old.png")]
-                            [:a (core/href "http://understandinguncertainty.org") "Professor David Spiegelhalter"]
+                            [:a (core/href "http://understandinguncertainty.org" :target "_blank") "Professor David Spiegelhalter"]
                             " is a statistician from Cambridge University.   He has worked for many years with doctors from Great Ormond
                             Street Hospital on monitoring outcomes following surgery for congenital heart disease, and led the statistical
                             team at the Bristol Royal Infirmary Inquiry.  He is particularly interested in transparent communication, and
                             was part of the team that drew up the new national patient information leaflets for breast cancer screening.
                             For this project, David helped write the content, especially the language around the statistical formula and
-                            predicted range.  "
-                            [:a (core/href "http://understandinguncertainty.org") "Mike Pearson"] " has created many mathematics teaching interactives
-                            for " [:a (core/href "http://nrich.maths.org") "NRICH"] ", " [:a (core/href "http://plus.maths.org") "PLUS"] ", and
-                            " [:a (core/href "https://understandinguncertainty.org") "Understanding Uncertainty"] ". He developed this website and its
-                            data visualisations, working closely with the animation team, "
+                            predicted range.  "]
+                           [:p
+                            [:a (core/href "http://nrich.maths.org/2714" :target "_blank") "Mike Pearson"] " has created many visualisations and interactives
+                            for " [:a (core/href "http://understandinguncertainty.org/" :target "_blank") "Understanding Uncertainty"] ", "
+                            [:a (core/href "http://nrich.maths.org" :target "_blank") "NRICH"] ", " [:a (core/href "http://plus.maths.org" :target "_blank") "PLUS"] ", and
+                            " [:a (core/href "http://wild.maths.org") "Wild.maths.org"] ". He developed this website and its
+                            data visualisations, attending the focus groups and working closely with Sense about Science and the video animation team, "
                             [:a (core/href "https://qudos.com" :target "_blank") "Qudos"] "."]]
 
                           [:.image-para
