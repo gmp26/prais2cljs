@@ -4,10 +4,9 @@
 
 (def init-video-js
   {:did-mount     (fn [state]
-                    #?(:cljs (do (.videojs js/window "video1"
+                    #?(:cljs (do (.videojs js/window (:video-id (first (:rum/args state)))
                                            (clj->js {} #_{:playbackRates [1 1.5 2]})
-                                           #(do (prn "video-1 initialised")
-                                                (.log js/console (:video-id (first (:rum/args state))))))))
+                                           #(do (prn "video-1 initialised")))))
                     state)
    :should-update (fn [_ _] false)
    })
