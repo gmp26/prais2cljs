@@ -5,39 +5,34 @@
   {
    :did-mount (fn [state]
                 #?(:cljs (do (.videojs js/window "video1"
-                                       (clj->js {:playbackRates [1 1.5 2]})
-                                       #(prn "video-1 initialised"))
-                             (.videojs js/window "video2"
-                                       (clj->js {:playbackRates [1 1.5 2]})
-                                       #(prn "video-2 initialised"))))
+                                       (clj->js {} #_{:playbackRates [1 1.5 2]})
+                                       #(prn "video-1 initialised"))))
                 state)
+   :should-update  (fn [_ _] false)
    })
 
-(rum.core/defc video-js                                     ;< init-video-js
+(rum.core/defc video-js < init-video-js
                [{:keys [video-id src controls preload poster track-src]
-                          :or   {controls true preload ""}}]
+                          :or   {controls true preload "auto"}}]
                (letfn [(vid [s] (str video-id "-" s))]
                  [:figure.videojs-container {:id (vid "container")}
 
-                  [:video.video-js.vjs-default-skin
+                  [:video.video-js.vjs-default-skin.vjs-big-play-centered
                    {:key      1
                     :id       video-id
                     :poster   poster
                     :controls controls
                     :preload  preload
-                    :style    {;:padding-bottom   "30px"
-                               ;:padding-left "30px"
-                               ;:padding-right "30px"
-                               :background-color "rgba(255,255, 255, 0)"
+                    :style    {:background-color "rgba(255,255, 255, 0)"
                                :max-width "600px"
-                               :width "100%"
-                               :height "100%"}}
+                               :width "480px"
+                               :height "272px"}}
                    [:source {:key  1
                              :src  src
                              :type "video/mp4"}]
-                   [:track {:key     2
+                   #_[:track {:key     2
                             :src     track-src
-                            :label   "subtitles on"
+                            :label   "captions-on"
                             :kind    "captions"
                             :srclang "en"}]]]))
 
