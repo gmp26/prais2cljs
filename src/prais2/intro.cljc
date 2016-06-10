@@ -47,11 +47,13 @@
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
-    [:li "The 30-day survival rate after children's heart surgery is very high for all hospitals in the UK and Ireland, and is among the best in the world."]
+    [:li "The 30-day survival rate after children's heart surgery is very high for all hospitals in the UK and Ireland,
+    and is among the best in the world."]
     [:li "A higher survival rate does not imply a better hospital."]
-    [:li "A hospital's predicted range of survival, calculated by a formula, depends on the particular children treated at that
-    hospital. So a hospital treating children with more complex medical problems will have a lower predicted range."]
-    [:li "A hospital's survival rate should only be compared to its own predicted range. It is not valid to compare survival rates between hospitals."]
+    [:li "A hospital's predicted range of survival, calculated by a formula, depends on the particular children treated
+    at that hospital. So a hospital treating children with more complex medical problems will have a lower predicted range."]
+    [:li "A hospital's survival rate should only be compared to its own predicted range. It is not valid to directly
+    compare survival rates between hospitals."]
     ]])
 
 

@@ -6,7 +6,7 @@
 
 (rum.core/defc mugshot [key]
   (let [data (key content/mugshot-data)]
-    [:div {:style {:max-width "100px"}}
+    [:div {:style {:max-width "200px"}}
      [:img.img-responsive
       (core/isrc (str "assets/mugshots/" (:id data) "-med.jpg"))]
      [:p.text-center {:key 2} (:name data)]])
@@ -14,9 +14,9 @@
 
 (rum.core/defc reformatted-mugshots []
   [:div
-   [:.row [:.col-xs-2 (mugshot :christina)]]
-   [:.row [:.col-xs-2 (mugshot :david)] [:.col-xs-2 (mugshot :tim)] [:.col-xs-2 (mugshot :emily-j)]]
-   [:.row [:.col-xs-2 (mugshot :mike)] [:.col-xs-2 (mugshot :emily-b)] [:.col-xs-2 (mugshot :joanne)]]]
+   [:.row [:.col-xs-3 (mugshot :christina)] [:.col-xs-3 (mugshot :david)] [:.col-xs-3 (mugshot :mike)] ]
+   [:.row  [:.col-xs-3 (mugshot :tim)] [:.col-xs-3 (mugshot :emily-b)]]
+   [:.row  [:.col-xs-3 (mugshot :emily-j)] [:.col-xs-3 (mugshot :joanne)]]]
   )
 
 

@@ -47,7 +47,7 @@
                                            :on-touch-start #(core/click->event-bus % :reset-map-to-home nil nil)
                                            :tab-index      0}
         [:i.fa.fa-chevron-left] " Back"]]
-      (data/hospital-detail (:map-h-code (rum.core/react core/app)))])
+      (data/hospital-detail (:map-h-code (rum.core/react core/app)) nil)])
 
    [:.hospital-map.col-sm-6.col-md-4.col-xs-12
     (map/hospitals)]])

@@ -16,7 +16,7 @@
    :tim       {:id "tim" :name "Tim" :org "KCL"}
    :emily-b   {:id "emily B" :name "Emily Blackshaw" :org "KCL"}
    :emily-j   {:id "emily J" :name "Emily Jesper" :org "SAS"}
-   :joanne    {:id "joanne" :name "Joanne Thomas" :org "SAS"}})
+   :joanne    {:id "joanne" :name "Joanne" :org "SAS"}})
 
 ;;;
 ;; table structure
@@ -427,7 +427,7 @@
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
 #_(def dot-comments
-    {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
+    {:inner      "There is no evidence that chances of survival in the hospital were different from predicted."
 
      :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
 
@@ -442,24 +442,24 @@
 ;; Comment on the meaning of the dot when it appears in the given range.
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
-(rum/defc inner-comment []
-  [:span "There is no evidence that chances of survival in the hospital are different from predicted."])
+(rum/defc inner-comment [_]
+  [:span "There is no evidence that chances of survival in the hospital were different from predicted."])
 
-(rum/defc high-comment []
+(rum/defc high-comment [close-modal]
   [:span "There is some evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/2") "higher than predicted."]])
+   [:a (core/href "faq/1/2" close-modal) "higher than predicted."]])
 
-(rum/defc low-comment []
+(rum/defc low-comment [close-modal]
   [:span "There is some evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/4") "lower than predicted."]])
+   [:a (core/href "faq/1/4" close-modal) "lower than predicted."]])
 
-(rum/defc outer-low-comment []
+(rum/defc outer-low-comment [close-modal]
   [:span "There is strong evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/4") "lower than predicted."]])
+   [:a (core/href "faq/1/4" close-modal) "lower than predicted."]])
 
-(rum/defc outer-high-comment []
+(rum/defc outer-high-comment [close-modal]
   [:span "There is strong evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/2") "higher than predicted."]])
+   [:a (core/href "faq/1/2" close-modal) "higher than predicted."]])
 
 
 
@@ -548,9 +548,10 @@
         and now " [:strong "over 97% of children survive to at least one month after surgery."]]]}
 
               {:title        "How are survival rates monitored?"
-               :short-answer "Every year the national audit body (NCHDA) publishes overall survival rates for each
+               :short-answer [:p "Every year the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank")
+                                                                         "National Congenital Heart Disease Audit"] ") publishes overall survival rates for each
                hospital for the previous 3 years. Each hospital’s survival rates are compared to what is predicted
-               for that hospital by a statistical formula."
+               for that hospital by a statistical formula."]
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
@@ -843,7 +844,7 @@
                              [:div
                               [:p "The data come from the National Congenital Heart Disease Audit ("
                                [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ")
-                               which is part of the National Institute of Cardiovascular Outcomes Research ("
+                               which is managed by the National Institute of Cardiovascular Outcomes Research ("
                                [:a (core/href "https://www.ucl.ac.uk/nicor") "NICOR"] "). "
                                ;" which collects national data for the " [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "UK National Heart Disease Audits"] "."
                                "All hospitals in the UK and Ireland performing heart

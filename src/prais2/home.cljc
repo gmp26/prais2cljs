@@ -7,8 +7,9 @@
 (rum.core/defc what-why []
   [:.col-sm-4
    [:.home-nav.well.intro
-    [:a.active
-     {:href           (core/token->url "intro")
+    [:a.active #?(:cljs (core/href "intro")
+                  :clj {:href "#"})
+     #_{:href           (core/token->url "intro")
       :on-click       #(core/click->event-bus % :intro nil "intro")
       :on-touch-start #(core/click->event-bus % :intro nil "intro")}
      [:i.fa.fa-question.big]
@@ -22,8 +23,9 @@
 (rum.core/defc data []
   [:.col-sm-4
    [:.home-nav.well.data
-    [:a.active
-     {:href           (core/token->url "data/map")
+    [:a.active #?(:cljs (core/href "data/map")
+                  :clj {:href "#"})
+     #_{:href           (core/token->url "data/map")
       :on-click       #(core/click->event-bus % :data :map "data/map")
       :on-touch-start #(core/click->event-bus % :data :map "data/map")}
      [:i.fa.fa-table.big]
@@ -38,8 +40,9 @@
 (rum.core/defc everything-else []
   [:.col-sm-4
    [:.home-nav.well.faqs
-    [:a.active
-     {:href           (core/token->url "faqs")
+    [:a.active #?(:cljs (core/href "faqs")
+                  :clj  {:href "#"})
+     #_{:href           (core/token->url "faqs")
       :on-click       #(core/click->event-bus % :faqs nil "faqs")
       :on-touch-start #(core/click->event-bus % :faqs nil "faqs")}
      [:i.fa.fa-info.big]
@@ -65,14 +68,28 @@
      [:section.about.col-xs-offset-1.col-sm-10
       [:p "This site is to help people make sense of published survival data about children’s heart surgery in the
       UK and Ireland. "]
-      [:p "Our website will help you:"]
-      [:ul
-       [:li "understand how the NHS monitors children’s heart surgery"]
-       [:li "explore what survival rates can and can’t tell you"]
-       [:li "explore published data for hospitals in the UK and Ireland"]]]
-     (when (:show-nicor (rum.core/react core/app))
-       [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank")
-        [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
+
+      #?(:cljs [:div
+                [:p "Our website will help you:"]
+                [:ul
+                 [:li "understand how the NHS monitors children’s heart surgery"]
+                 [:li "explore what survival rates can and can’t tell you"]
+                 [:li "explore published data for hospitals in the UK and Ireland"]]
+                (when (:show-nicor (rum.core/react core/app))
+                  [:a (core/href "https://www.ucl.ac.uk/nicor/audits/congenital/documents/datasets/NCHDA2011-14Report" :target "_blank")
+                   [:img.img-responsive.col-sm-2 {:src "assets/nicor.png"}]])]
+         :clj  [:div
+                [:p [:i.fa.fa-spinner.fa-pulse] " Loading"]
+                [:p.ie8 " If the site fails to load in a few seconds, please note that it requires a modern browser which supports HTML5. "
+                 "In particular, we do not yet support Internet Explorer version 8 and below.
+                         If you are unable to upgrade your browser for any reason,
+                         please consider using
+                         " [:a (core/href "https://www.google.com/chrome/") "Google Chrome"] "
+                or " [:a (core/href "https://www.mozilla.org/en-GB/") "Mozilla Firefox"] " instead.
+                For further help, please contact "
+                 [:a {:mailto "technical@childrensheartsurgey.info"} "technical@childrensheartsurgey.info"]]]
+
+         )]]
     [:.row
      (what-why)
      (data)
