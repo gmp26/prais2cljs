@@ -548,9 +548,10 @@
         and now " [:strong "over 97% of children survive to at least one month after surgery."]]]}
 
               {:title        "How are survival rates monitored?"
-               :short-answer "Every year the national audit body (NCHDA) publishes overall survival rates for each
+               :short-answer [:p "Every year the national audit body (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank")
+                                                                         "National Congenital Heart Disease Audit"] ") publishes overall survival rates for each
                hospital for the previous 3 years. Each hospital’s survival rates are compared to what is predicted
-               for that hospital by a statistical formula."
+               for that hospital by a statistical formula."]
                :glossary     [:survival-rate :predicted-range]
                :body
                              [:div
