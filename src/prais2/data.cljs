@@ -623,7 +623,7 @@
      (0-16 years old)."]
 
     [:p.col-sm-9
-     "Clicking on a hospital code will bring up specific information for
+     "Clicking on a hospital will bring up specific information for
      that hospital along with an interpretation of its survival rate. It is " [:strong "only"] " valid to compare a hospital's survival
      rate to its predicted range of survival and not to other hospitals. Read more about this in "
      [:a (core/href "faqs") "Everything Else."]]
