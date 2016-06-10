@@ -8,7 +8,8 @@
   {:did-mount      (fn [state]
                      #?(:cljs (assoc state
                                 ::player (.videojs js/window (:video-id (first (:rum/args state)))
-                                                   (clj->js {})
+                                                   (clj->js {
+                                                             :aspect-ratio (/ 480 270) :fluid true})
                                                    #(video-js-debug (str (:video-id (first (:rum/args state)))
                                                                          " initialised"))))
                         :clj  state))
@@ -27,12 +28,11 @@
   [{:keys [video-id src controls preload poster track-src]
     :or   {controls true preload "auto" poster "" track-src nil}}]
   [:video.video-js.vjs-default-skin.vjs-big-play-centered
-   {:key                     1
-    :id                      video-id
+   {:id                      video-id
     :poster                  poster
     :controls                controls
     :preload                 preload
-    :width                   480                            ;; :todo
+    ;:width                                               ;; :todo
     :dangerouslySetInnerHTML {:__html
                               (str "<source src=\"" src "\" type=\"video/mp4\">"
                                    (when track-src (str "<track src=\"" track-src "\"
