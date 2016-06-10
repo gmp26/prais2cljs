@@ -620,7 +620,7 @@
 
     [:p.col-sm-9
      "These are the hospitals in the UK and Ireland that performed heart surgery in children over this period
-     (0-16 years old). This data is updated annually and covers a 3 year period."]
+     (0-16 years old)."]
 
     [:p.col-sm-9
      "Clicking on a hospital code will bring up specific information for
