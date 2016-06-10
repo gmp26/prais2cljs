@@ -4,12 +4,11 @@
 ;(defn video-js-debug [s] (prn s))
 (defn video-js-debug [s] nil)
 
-(def init-video-js
+(def use-video-js
   {:did-mount      (fn [state]
                      #?(:cljs (assoc state
                                 ::player (.videojs js/window (:video-id (first (:rum/args state)))
-                                                   (clj->js {
-                                                             :aspect-ratio (/ 480 270) :fluid true})
+                                                   (clj->js {:aspect-ratio (/ 480 270) :fluid true})
                                                    #(video-js-debug (str (:video-id (first (:rum/args state)))
                                                                          " initialised"))))
                         :clj  state))
@@ -24,7 +23,7 @@
                      (dissoc state ::player))
    })
 
-(rum.core/defc video-js < init-video-js
+(rum.core/defc video-js < use-video-js
   [{:keys [video-id src controls preload poster track-src]
     :or   {controls true preload "auto" poster "" track-src nil}}]
   [:video.video-js.vjs-default-skin.vjs-big-play-centered
