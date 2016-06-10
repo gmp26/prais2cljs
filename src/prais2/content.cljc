@@ -442,24 +442,24 @@
 ;; Comment on the meaning of the dot when it appears in the given range.
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
-(rum/defc inner-comment []
+(rum/defc inner-comment [_]
   [:span "There is no evidence that chances of survival in the hospital were different from predicted."])
 
-(rum/defc high-comment []
+(rum/defc high-comment [close-modal]
   [:span "There is some evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/2") "higher than predicted."]])
+   [:a (core/href "faq/1/2" close-modal) "higher than predicted."]])
 
-(rum/defc low-comment []
+(rum/defc low-comment [close-modal]
   [:span "There is some evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/4") "lower than predicted."]])
+   [:a (core/href "faq/1/4" close-modal) "lower than predicted."]])
 
-(rum/defc outer-low-comment []
+(rum/defc outer-low-comment [close-modal]
   [:span "There is strong evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/4") "lower than predicted."]])
+   [:a (core/href "faq/1/4" close-modal) "lower than predicted."]])
 
-(rum/defc outer-high-comment []
+(rum/defc outer-high-comment [close-modal]
   [:span "There is strong evidence that chances of survival in the hospital were "
-   [:a (core/href "faq/1/2") "higher than predicted."]])
+   [:a (core/href "faq/1/2" close-modal) "higher than predicted."]])
 
 
 

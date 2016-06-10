@@ -638,23 +638,23 @@
 
 
 (rum.core/defc interpretation
-  [row]
+  [row close-modal]
   (let [survival-rate (:survival-rate row)]
     (cond
       (< survival-rate (:outer-low row))
-      (content/outer-low-comment)
+      (content/outer-low-comment close-modal)
 
       (< survival-rate (:inner-low row))
-      (content/low-comment)
+      (content/low-comment close-modal)
 
       (<= survival-rate (:inner-high row))
-      (content/inner-comment)
+      (content/inner-comment close-modal)
 
       (<= survival-rate (:outer-high row))
-      (content/high-comment)
+      (content/high-comment close-modal)
 
       (> survival-rate (:outer-high row))
-      (content/outer-high-comment)
+      (content/outer-high-comment close-modal)
 
       :else
       "Oops - no text for this"
@@ -727,12 +727,14 @@
   [:h3 (:h-name selected-row)])
 
 
-(rum.core/defc legend < rum.core/reactive [selected-row]
+(rum.core/defc legend < rum.core/reactive [selected-row close-modal]
   [:.legend
    [:.box
     [:p {:style {:color "orange"}} "Legend (See also: "
      [:a (core/href "data/animation"
-                    :on-click #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"] ")"]
+                    :on-click #(do
+                                (when close-modal (close-modal))
+                                (core/click->event-bus % :data :animation "data/animation"))) [:i.fa.fa-video-camera] " two minute video"] ")"]
     (let [ap (rum.core/react core/app)]
       (map-indexed key-with
                    [(annotated-chart-cell selected-row (:detail-slider-axis-value ap) #{:dot}
@@ -746,30 +748,6 @@
                     ]))
     ]])
 
-(rum.core/defc hospital-detail < rum.core/reactive
-  [h-code]
-  (let [ap (rum.core/react core/app)]
-    (if h-code
-      [:#detail
-       (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
-         (map-indexed key-with
-                      [(hospital-header selected-row)
-                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
-                       (chart-cell selected-row (:detail-slider-axis-value ap))
-                       (hospital-data h-code)
-                       (interpretation selected-row)
-                       (legend selected-row)
-                       (hospital-charities h-code)
-                       ]))]
-      [:#detail
-       (let [selected-row content/sample-hospital]
-         (map-indexed key-with
-                      [(sample-hospital-intro-text)
-                       (hospital-header selected-row)
-                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
-                       (chart-cell selected-row (:detail-slider-axis-value ap))
-                       (interpretation selected-row)]))])))
-
 (defn open-hospital-modal
   [h-code]
   (swap! core/app #(assoc % :selected-h-code (keyword h-code)))
@@ -781,6 +759,31 @@
   []
   (swap! core/app #(assoc % :selected-h-code nil))
   (.modal (js/$ "#rowModal") "hide"))
+
+(rum.core/defc hospital-detail < rum.core/reactive
+  [h-code close-modal]
+  (let [ap (rum.core/react core/app)]
+    (if h-code
+      [:#detail
+       (when-let [selected-row (h-code ((rows-by-code (:datasource ap))))]
+         (map-indexed key-with
+                      [(hospital-header selected-row)
+                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
+                       (chart-cell selected-row (:detail-slider-axis-value ap))
+                       (hospital-data h-code)
+                       (interpretation selected-row close-hospital-modal)
+                       (legend selected-row close-hospital-modal)
+                       (hospital-charities h-code)
+                       ]))]
+      [:#detail
+       (let [selected-row content/sample-hospital]
+         (map-indexed key-with
+                      [(sample-hospital-intro-text)
+                       (hospital-header selected-row)
+                       (slider-widget content/detail-slider-label detail-slider-control (:detail-slider-axis-value ap))
+                       (chart-cell selected-row (:detail-slider-axis-value ap))
+                       (interpretation selected-row close-hospital-modal)]))])))
+
 
 
 (rum.core/defc modal < rum.core/reactive []
@@ -794,7 +797,7 @@
      [:.modal-dialog {:role "document"}
       [:.modal-content
        [:.modal-body {:key 1}
-        (hospital-detail selected-h-code)]
+        (hospital-detail selected-h-code close-hospital-modal)]
        [:.modal-footer {:key 2}
         [:button.btn.btn-default
          {:type           "button"

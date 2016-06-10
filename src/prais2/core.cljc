@@ -129,9 +129,10 @@
 ;; url handling
 ;;
 #?(:cljs
-   (defn internal-link-handler [token]
+   (defn internal-link-handler [token before-hook]
      (fn [event]
        (prn (str "internal-link-handler " token))
+       (when before-hook (before-hook))
        (let [[dispatch-key dispatch-value] (token-dispatch-table token)]
          (click->event-bus event dispatch-key dispatch-value token)))
      ))
@@ -181,13 +182,14 @@
   ;;=> {:src "/assets/foo.png", :style {:color "red"}, :width 3}
   )
 
-
-
 (defn internal-ref
   "add in local handler for an internal token"
-  [token]
-  (merge {:href (irl token)}
-         #?(:cljs {:on-click (internal-link-handler token)})))
+  ([token close-modal]
+   (merge {:href (irl token)}
+          #?(:cljs {:on-click       (internal-link-handler token close-modal)
+                    :on-touch-start (internal-link-handler token close-modal)})))
+  ([token]
+   (internal-ref token nil)))
 
 (defn href
 
@@ -198,7 +200,10 @@
   ;;(href "faq/1/2")
   ;;=> {:href "/#/faq/1/2"}
 
-  ([path attrs] (merge (href path) attrs))
+  ([path attrs]
+   (if (map? attrs)
+     (merge (href path) attrs)
+     (internal-ref path attrs)))
   ;;(href "faq/1/2" {:style {:color "red"}})
   ;;=> {:href "/assets/foo.png", :style {:color "red"}}
 
