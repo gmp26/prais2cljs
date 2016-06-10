@@ -8,7 +8,7 @@
   {:did-mount      (fn [state]
                      #?(:cljs (assoc state
                                 ::player (.videojs js/window (:video-id (first (:rum/args state)))
-                                                   (clj->js {:aspect-ratio (/ 480 270) :fluid true})
+                                                   (clj->js {:aspect-ratio "480:270" :fluid true})
                                                    #(video-js-debug (str (:video-id (first (:rum/args state)))
                                                                          " initialised"))))
                         :clj  state))

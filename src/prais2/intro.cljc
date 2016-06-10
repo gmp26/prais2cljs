@@ -28,7 +28,7 @@
      [:h1 "What, why, how?"]
      [:p "This site is to help people make sense of the survival statistics about children's heart surgery published by
      the National Congenital Heart Disease Audit (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ").  The "
-      [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital " :target "_blank") "NCHDA"] " is part of the
+      [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital " :target "_blank") "NCHDA"] " is managed by the
       National Institute of Cardiovascular Outcomes Research (" [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] ")."]
 
      ;     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]
