@@ -427,7 +427,7 @@
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
 #_(def dot-comments
-    {:inner      "There is no evidence that chances of survival in the hospital are different from predicted."
+    {:inner      "There is no evidence that chances of survival in the hospital were different from predicted."
 
      :outer-high "There is some evidence that chances of survival in the hospital were higher than predicted." ; " [;todo 1/2]"
 
@@ -443,7 +443,7 @@
 ;; These texts appear in a concluding remark in each hospital's popup.
 ;;;
 (rum/defc inner-comment []
-  [:span "There is no evidence that chances of survival in the hospital are different from predicted."])
+  [:span "There is no evidence that chances of survival in the hospital were different from predicted."])
 
 (rum/defc high-comment []
   [:span "There is some evidence that chances of survival in the hospital were "
