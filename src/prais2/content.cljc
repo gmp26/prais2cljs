@@ -16,7 +16,7 @@
    :tim       {:id "tim" :name "Tim" :org "KCL"}
    :emily-b   {:id "emily B" :name "Emily Blackshaw" :org "KCL"}
    :emily-j   {:id "emily J" :name "Emily Jesper" :org "SAS"}
-   :joanne    {:id "joanne" :name "Joanne Thomas" :org "SAS"}})
+   :joanne    {:id "joanne" :name "Joanne" :org "SAS"}})
 
 ;;;
 ;; table structure
