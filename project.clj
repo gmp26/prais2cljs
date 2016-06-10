@@ -65,6 +65,7 @@
                                    :externs ["externs/bootstrap.js"
                                              "externs/jquery.js"
                                              "externs/sliders.js"
+                                             "externs/video-js.js"
                                              ]
                                    :asset-path "js/compiled/out"
                                    :output-to "resources/public/js/compiled/prais2.js"
@@ -80,7 +81,8 @@
                                    :main "prais2.examples"
                                    :externs ["externs/bootstrap.js"
                                              "externs/jquery.js"
-                                             "externs/sliders.js"]
+                                             "externs/sliders.js"
+                                             "externs/video-js.js"]
                                    :optimizations :advanced
                                    :source-map "resources/public/js/compiled/examples.js.map"
                                    :compiler-stats true
@@ -107,7 +109,8 @@
                                    :main "prais2.main"
                                    :externs ["externs/bootstrap.js"
                                              "externs/jquery.js"
-                                             "externs/sliders.js"]
+                                             "externs/sliders.js"
+                                             "externs/video-js.js"]
                                    :optimizations :advanced
                                    :closure-warnings {:non-standard-jsdoc :off}
                                    :warnings {:externs-validation :off
