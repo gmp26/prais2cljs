@@ -23,20 +23,41 @@
                      (dissoc state ::player))
    })
 
-(rum.core/defc video-js                                     ;< use-video-js
+(rum.core/defc video-js < use-video-js
+               [{:keys [video-id src controls preload poster track-src]
+                 :or   {controls true preload "auto" poster "" track-src nil}}]
+               [:div
+                {:dangerouslySetInnerHTML
+                 {:__html
+                  (str "<video "
+                       "id=\"" video-id "\" "
+                       "class=\"video-js vjs-default-skin vjs-big-play-centered\" "
+                       "controls=\"" controls "\" "
+                       "preload=\"" preload "\" "
+                       "poster=\"" poster "\" "
+                       "width=\"100%\" >"
+                       "<source src=\"" src "\" type=\"video/mp4\" >"
+                       (when track-src (str "<track src=\"" track-src "\"
+                                        label=\"captions-on\"
+                                        kind=\"captions\" >"))
+                       "</video>")}}])
+
+#_(rum.core/defc video-js  < use-video-js
   [{:keys [video-id src controls preload poster track-src]
     :or   {controls true preload "auto" poster "" track-src nil}}]
-  [:video                                                   ;.video-js.vjs-default-skin.vjs-big-play-centered
-   {:id                      video-id
-    :poster                  poster
-    :controls                controls
-    :preload                 preload
-    :width                   "100%"                            ;; :todo
-    :dangerouslySetInnerHTML {:__html
-                              (str "<source src=\"" src "\" type=\"video/mp4\">"
-                                   (when track-src (str "<track src=\"" track-src "\"
+
+               [:video.video-js.vjs-default-skin.vjs-big-play-centered
+                {:key                     2
+                 :id                      video-id
+                 :poster                  poster
+                 :controls                controls
+                 :preload                 preload
+                 :width                   "100%"            ;; :todo
+                 :dangerouslySetInnerHTML {:__html
+                                           (str "<source src=\"" src "\" type=\"video/mp4\">"
+                                                (when track-src (str "<track src=\"" track-src "\"
                                         label=\"captions-on\"
                                         kind=\"captions\">")))}}
-   ])
+                ])
 
 
