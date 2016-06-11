@@ -31,7 +31,7 @@
     :poster                  poster
     :controls                controls
     :preload                 preload
-    ;:width                   "100%"                            ;; :todo
+    :width                   "100%"                            ;; :todo
     :dangerouslySetInnerHTML {:__html
                               (str "<source src=\"" src "\" type=\"video/mp4\">"
                                    (when track-src (str "<track src=\"" track-src "\"
