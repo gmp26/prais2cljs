@@ -8,7 +8,7 @@
   {:did-mount      (fn [state]
                      #?(:cljs (assoc state
                                 ::player (.videojs js/window (:video-id (first (:rum/args state)))
-                                                   (clj->js {:aspectRatio "480:270" :fluid true})
+                                                   (clj->js {})
                                                    #(video-js-debug (str (:video-id (first (:rum/args state)))
                                                                          " initialised"))))
                         :clj  state))
@@ -26,7 +26,7 @@
 (rum.core/defc video-js < use-video-js
                [{:keys [video-id src controls preload poster track-src]
                  :or   {controls true preload "auto" poster "" track-src nil}}]
-               [:div
+               [:.video-container
                 {:dangerouslySetInnerHTML
                  {:__html
                   (str "<video "
@@ -35,7 +35,8 @@
                        "controls=\"" controls "\" "
                        "preload=\"" preload "\" "
                        "poster=\"" poster "\" "
-                       "width=\"100%\" >"
+                       "data-setup='{ \"aspectRatio\": \"480:270\" }'"
+                       " >"
                        "<source src=\"" src "\" type=\"video/mp4\" >"
                        (when track-src (str "<track src=\"" track-src "\"
                                         label=\"captions-on\"

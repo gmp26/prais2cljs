@@ -81,7 +81,7 @@
          :clj  [:div
                 [:p [:i.fa.fa-spinner.fa-pulse] " Loading"]
                 [:p.ie8 " If the site fails to load in a few seconds, please note that it requires a modern browser which supports HTML5. "
-                 "In particular, we do not yet support Internet Explorer version 8 and below.
+                 "In particular, we need  Internet Explorer version 10 or later.
                          If you are unable to upgrade your browser for any reason,
                          please consider using
                          " [:a (core/href "https://www.google.com/chrome/") "Google Chrome"] "
