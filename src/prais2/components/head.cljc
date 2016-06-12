@@ -21,6 +21,6 @@
 
                 [:link {:rel "stylesheet" :href "//vjs.zencdn.net/5.10.2/video-js.css"}]
                 ;[:script {:src "http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"}]
-                [:script {:src "//vjs.zencdn.net/5.10.2/video.js"}]
+                [:script {:src "//vjs.zencdn.net/5.10.2/video.min.js"}]
                 ])
 

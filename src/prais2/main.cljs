@@ -304,7 +304,9 @@
                   :else
                   (do
                     (prn "Route mismatch" page)
-                    (render-404)))])
+                    (chrome/header)
+                    (render-404)
+                    (chrome/footer)))])
 
 
 (rum.core/defc render-page < rum.core/reactive []

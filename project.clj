@@ -112,6 +112,7 @@
                                              "externs/sliders.js"
                                              "externs/video-js.js"]
                                    :optimizations :advanced
+                                   :pseudo-names true
                                    :closure-warnings {:non-standard-jsdoc :off}
                                    :warnings {:externs-validation :off
                                               :non-standard-jsdoc :off}

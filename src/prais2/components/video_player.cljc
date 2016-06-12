@@ -14,15 +14,23 @@
                         :clj  state))
 
    :transfer-state (fn [old-state state]
-                     (assoc state ::player (::player old-state)))
+                     #?(:cljs (assoc state ::player (::player old-state))
+                        :clj  identity))
 
-   :will-unmount   (fn [state]
-                     ;; :todo cross-browser test this sequence
-                     (.pause (::player state))
-                     (.dispose (::player state))
-                     (dissoc state ::player))
+   :will-unmount   #?(:cljs (fn [state]
+                              ;; :todo cross-browser test this sequence
+                              (.pause (::player state))
+                              (.dispose (::player state))
+                              (dissoc state ::player))
+                      :clj  identity)
+
+   :should-update  (fn [_ _] false)                         ; prevent react from updating after render
    })
-
+;;
+;; Note that video-js wraps the <video> tag in a parent tag and needs to manage the
+;; whole thing. After noticing this, I now create the whole video tag in HTML and inject
+;; it using dangerouslySetInnerHTML. This prevents react from attempting to manage it.
+;;
 (rum.core/defc video-js < use-video-js
                [{:keys [video-id src controls preload poster track-src]
                  :or   {controls true preload "auto" poster "" track-src nil}}]
@@ -43,6 +51,10 @@
                                         kind=\"captions\" >"))
                        "</video>")}}])
 
+;;
+;; original unwrapped code. This causes react to complain on finding the div and the nested video
+;; that video-js recreates, both having the same data-reactid.
+;;
 #_(rum.core/defc video-js  < use-video-js
   [{:keys [video-id src controls preload poster track-src]
     :or   {controls true preload "auto" poster "" track-src nil}}]
