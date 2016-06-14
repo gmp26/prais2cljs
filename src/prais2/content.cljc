@@ -536,8 +536,9 @@
                                [:a (core/href "http://webarchive.nationalarchives.gov.uk/20090811143745/http:/www.bristol-inquiry.org.uk/final_report/the_report.pdf"
                                               :target "_blank") "The Bristol Inquiry 2001"]
                                "), which led to a number of changes, including a new compulsory national reporting
-                               system. So every year since 2001, the proportion of children surviving to 30 days after
-                               heart surgery for all hospitals has been published. "
+                               system. Since 2007, the proportions of children surviving to 30 days after heart surgery
+                               for most types of operations have been published every year. The overall survival rates
+                               after children’s heart surgery for each hospital have been published since 2013. "
                                [:a (core/href "faq/1/4") "When there is some, or strong, evidence"] " that chances of
                                survival at a hospital were lower than expected, the results are
                                checked further by the hospital and the national audit body ("
