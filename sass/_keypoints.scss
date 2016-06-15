@@ -1,0 +1,26 @@
+#key-points {
+  padding: 10px;
+  h2 {
+    padding: 0;
+    color: white;
+  }
+  ul {
+    padding: 0;
+    li {
+      padding: 5px 8px;
+      clear: both;
+      //vertical-align: middle;
+      list-style-type: none;
+      display: inline-block;
+      img {
+        padding-top: 5px;
+      }
+      p {
+        padding: 10px;
+        padding-top: 0;
+        //vertical-align: middle;
+        font-size: 120%;
+      }
+    }
+  }
+}
