@@ -19,8 +19,18 @@
                 [:script {:src "/js/bootstrap-slider.min.js"}]
                 [:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]
 
-                [:link {:rel "stylesheet" :href "//vjs.zencdn.net/5.10.2/video-js.css"}]
-                ;[:script {:src "http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"}]
+                ;; remote CDN
+                ;[:link {:rel "stylesheet" :href "//vjs.zencdn.org/5.10.2/video-js.css"}]
                 [:script {:src "//vjs.zencdn.net/5.10.2/video.min.js"}]
+
+                ;; local
+                ;[:link {:rel "stylesheet" :href "/css/video-js.css"}]
+                ;[:script {:src "/js/video.min.js"}]
+
+                ;; fallback
+                [:script {:dangerouslySetInnerHTML
+                          {:__html "if (!window.videojs)
+                          {console.log(\"no video-js-yet\");
+                          document.write(unescape(\"%3Cscript src='/js/video.min.js' type='text/javascript' %3E%3C/script%3E\"));}"}}]
                 ])
 
