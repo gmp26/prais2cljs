@@ -1,6 +1,7 @@
 #key-points {
   padding: 10px;
   h2 {
+    padding: 0;
     padding-left: 5px;
     color: white;
   }
@@ -23,6 +24,9 @@
         font-size: 140%;
         font-weight: 400;
       }
+    }
+    li:first-child {
+      margin-top: 0px;
     }
   }
 }
