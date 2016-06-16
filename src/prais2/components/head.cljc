@@ -7,11 +7,14 @@
                 [:meta {:name "viewport" :content "width=device-width" :initial-scale "1"}]
                 [:meta {:name "apple-mobile-web-app-capable" :content "yes"}]
                 [:meta {:http-equiv "X-UA-Compatible" :content "IE-edge"}]
+                [:meta {:name "mobile-web-app-capable" :content "yes"}]
                 [:title title]
-                [:link {:rel "apple-touch-icon" :href "/assets/touch-icon-iphone.png"}]
-                [:link {:rel "apple-touch-icon" :sizes "76x76" :href "/assets/touch-icon-ipad.png"}]
-                [:link {:rel "apple-touch-icon" :sizes "120x120" :href "/assets/touch-icon-iphone-retina.png"}]
-                [:link {:rel "apple-touch-icon" :sizes "152x152" :href "/assets/touch-icon-ipad-retina.png"}]
+                [:link {:rel "manifest" :href "/assets/manifest.json"}]
+                [:link {:rel "icon" :sizes "192x192" :href "/assets/touch-icon-android.png"}]
+                [:link {:rel "apple-touch-icon" :sizes "180x180" :href "/assets/touch-icon-iphone.png"}]
+                ;[:link {:rel "apple-touch-icon" :sizes "76x76" :href "/assets/touch-icon-ipad.png"}]
+                ;[:link {:rel "apple-touch-icon" :sizes "120x120" :href "/assets/touch-icon-iphone-retina.png"}]
+                ;[:link {:rel "apple-touch-icon" :sizes "152x152" :href "/assets/touch-icon-ipad-retina.png"}]
 
                 [:script {:src "https://code.jquery.com/jquery-1.11.3.min.js"}]
                 [:link {:rel "stylesheet" :href "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"}]
@@ -31,6 +34,6 @@
                 [:script {:dangerouslySetInnerHTML
                           {:__html "if (!window.videojs)
                           {console.log(\"no video-js-yet\");
-                          document.write(unescape(\"%3Cscript src='/js/video.min.js' type='text/javascript' %3E%3C/script%3E\"));}"}}]
-                ])
+                          document.write(unescape(\"%3Cscript src='/js/video.min.js' type='text/javascript' %3E%3C/script%3E\"));}"}}]])
+
 
