@@ -43,10 +43,10 @@
      (section 5 "What this site can do" section-5-content)
      ]]])
 
-(rum.core/defc key-point [img-src text]
+(rum.core/defc key-point [img-src alt-text text]
                [:li.key-point.row
-                [:img.img-responsive.col-sm-6 (core/isrc img-src)]
                 [:p.col-sm-6 text]
+                [:img.img-responsive.col-sm-6 (core/isrc img-src :alt alt-text)]
                 ]
                )
 
@@ -57,12 +57,12 @@
   [:section#key-points.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
-    (key-point (kp-png "kp5") "The 30-day survival rate after children's heart surgery is very high for all hospitals in the UK and Ireland,
+    (key-point (kp-png "kp1") "A group of hospitals with high survival rates" "The 30-day survival rate after children's heart surgery is very high for all hospitals in the UK and Ireland,
    and is among the best in the world.")
-    (key-point (kp-png "kp2") "A higher survival rate does not imply a better hospital.")
-    (key-point (kp-png "kp4") "A hospital's predicted range of survival, calculated by a formula, depends on the particular children treated
+    (key-point (kp-png "kp2") "No to direct comparison of rates" "A higher survival rate does not imply a better hospital.")
+    (key-point (kp-png "kp3") "Data about the children treated determnes the predicted survival range" "A hospital's predicted range of survival, calculated by a formula, depends on the particular children treated
    at that hospital. So a hospital treating children with more complex medical problems will have a lower predicted range.")
-    (key-point (kp-png "kp3") "A hospital's survival rate should only be compared to its own predicted range. It is not valid to directly
+    (key-point (kp-png "kp4") "Then we compare survival rate to the predicted range." "A hospital's survival rate should only be compared to its own predicted range. It is not valid to directly
    compare survival rates between hospitals.")
     ]])
 
