@@ -41,7 +41,8 @@
      (section 3 "<strong>How</strong> does the NHS monitor hospitals that do children’s heart surgery?" section-3-content)
      (section 4 "What this site cannot do" section-4-content)
      (section 5 "What this site can do" section-5-content)
-     ]]])
+     ]
+    ]])
 
 (rum.core/defc key-point [img-src alt-text text]
                [:li.key-point.row
