@@ -11,7 +11,7 @@
                 [:title title]
                 [:link {:rel "manifest" :href "/assets/manifest.json"}]
                 [:link {:rel "icon" :sizes "192x192" :href "/assets/touch-icon-android.png"}]
-                [:link {:rel "apple-touch-icon" :sizes "180x180" :href "/assets/touch-icon-iphone.png"}]
+                [:link {:rel "apple-touch-icon" :sizes "180x180" :href "/apple-touch-icon.png"}]
                 ;[:link {:rel "apple-touch-icon" :sizes "76x76" :href "/assets/touch-icon-ipad.png"}]
                 ;[:link {:rel "apple-touch-icon" :sizes "120x120" :href "/assets/touch-icon-iphone-retina.png"}]
                 ;[:link {:rel "apple-touch-icon" :sizes "152x152" :href "/assets/touch-icon-ipad-retina.png"}]
