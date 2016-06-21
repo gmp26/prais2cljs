@@ -37,16 +37,16 @@
 ;;  "debug app-state"
 ;;;
 (rum.core/defc debug < rum.core/reactive []
-               [:div
-                [:p (str (rum.core/react core/app))]]
-               )
+  [:div
+   [:p (str (rum.core/react core/app))]]
+  )
 
 (rum.core/defc para < rum.core/static [text]
-               [:p text])
+  [:p text])
 
 (rum.core/defc render-404 []
-               [:h1 "Page not found. "
-                [:a (core/href "home") "Try the home page."]])
+  [:h1 "Page not found. "
+   [:a (core/href "home") "Try the home page."]])
 
 ;;
 ;; Code snippet to remove columns from table
@@ -61,130 +61,130 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum.core/defc render-data-tabs  < rum.core/reactive []
+(rum.core/defc render-data-tabs < rum.core/reactive []
 
-               [:.row
+  [:.row
 
-                [:.col-sm-offset-1.col-sm-10
-                 [:h1 "Explore the data"]
+   [:.col-sm-offset-1.col-sm-10
+    [:h1 "Explore the data"]
 
-                 [:p "In this section you can explore the overall hospital survival statistics published by the National
+    [:p "In this section you can explore the overall hospital survival statistics published by the National
                  Congenital Heart Disease Audit (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ").
                  The data covers all hospitals in the UK and Ireland that performed heart surgery in children
                  (0-16 years old). NCHDA update the data annually and each report covers a 3 year period."]
 
-                 [:p "Data on this site comes from the NCHDA annual reports, all of which can be "
-                  [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument" :target "_blank")
-                   "downloaded from the NCHDA website."]]
+    [:p "Data on this site comes from the NCHDA annual reports, all of which can be "
+     [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument" :target "_blank")
+      "downloaded from the NCHDA website."]]
 
-                 (when (not= :animation (:section (rum.core/react core/app)))
-                   [:p "Use the drop down box to change reporting periods. You can watch our "
-                    [:a (core/href "data/animation"
-                                   :on-click
-                                   #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
-                    " which explains how we present the statistics and how to interpret them. Parents who helped us
-                    develop the website found it a useful guide to interpreting the data. "])
+    (when (not= :animation (:section (rum.core/react core/app)))
+      [:p "Use the drop down box to change reporting periods. You can watch our "
+       [:a (core/href "data/animation"
+                      :on-click
+                      #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
+       " which explains how we present the statistics and how to interpret them. Parents who helped us
+       develop the website found it a useful guide to interpreting the data. "])
 
-                 [:ul.nav.nav-pills {:role "tablist"}
+    [:ul.nav.nav-pills {:role "tablist"}
 
-                  [:li {:class (active? :map)
-                        :role  "presentation"}
-                   [:a#map-tab (core/href "data/map"
-                                          :aria-controls "mapped-data"
-                                          :role "tab"
-                                          :on-click #(core/click->event-bus % :data :map "data/map"))
-                    [:i.fa.fa-map-marker] " Choose a hospital"]]
+     [:li {:class (active? :map)
+           :role  "presentation"}
+      [:a#map-tab (core/href "data/map"
+                             :aria-controls "mapped-data"
+                             :role "tab"
+                             :on-click #(core/click->event-bus % :data :map "data/map"))
+       [:i.fa.fa-map-marker] " Choose a hospital"]]
 
-                  [:li {:class (active? :table)
-                        :role  "presentation"}
-                   [:a#table-tab (core/href "data/table"
-                                            :aria-controls "data-table"
-                                            :role "tab"
-                                            :on-click #(core/click->event-bus % :data :table "data/table"))
-                    [:i.fa.fa-table] " All hospitals"]]
+     [:li {:class (active? :table)
+           :role  "presentation"}
+      [:a#table-tab (core/href "data/table"
+                               :aria-controls "data-table"
+                               :role "tab"
+                               :on-click #(core/click->event-bus % :data :table "data/table"))
+       [:i.fa.fa-table] " All hospitals"]]
 
-                  [:li {:class (active? :animation)
-                        :role  "presentation"}
-                   [:a#map-tab (core/href "data/animation"
-                                          :aria-controls "mapped-data"
-                                          :role "tab"
-                                          :on-click #(core/click->event-bus % :data :animation "data/animation"))
-                    [:i.fa.fa-video-camera] " Two minute video"]]
+     [:li {:class (active? :animation)
+           :role  "presentation"}
+      [:a#map-tab (core/href "data/animation"
+                             :aria-controls "mapped-data"
+                             :role "tab"
+                             :on-click #(core/click->event-bus % :data :animation "data/animation"))
+       [:i.fa.fa-video-camera] " Two minute video"]]
 
-                  ]]])
+     ]]])
 
 
 
 (rum.core/defc render-data-tab-panes < rum.core/reactive [data]
-               [:row.tab-content
+  [:row.tab-content
 
-                [:.tab-pane.col-sm-12 {:key 1
-                                       :class (active? :map)
-                                       :id    "mapped-data"}
-                 (when (active? :map)
-                   (render-map-data))]
+   [:.tab-pane.col-sm-12 {:key   1
+                          :class (active? :map)
+                          :id    "mapped-data"}
+    (when (active? :map)
+      (render-map-data))]
 
-                [:.tab-pane.col-sm-12 {:key 2
-                                       :class (active? :table)
-                                       :id    "data-table"}
-                 (data/modal)
-                 (when (active? :table)
-                   (data/list-tab core/app data event-bus))]
+   [:.tab-pane.col-sm-12 {:key   2
+                          :class (active? :table)
+                          :id    "data-table"}
+    (data/modal)
+    (when (active? :table)
+      (data/list-tab core/app data event-bus))]
 
-                [:.tab-pane.col-sm-12 {:key 3
-                                       :class (active? :animation)
-                                       :id    "mapped-data"}
-                 (when (active? :animation)
-                   [:section.col-sm-offset-1.col-sm-10
-                    [:p {:key 1}]
-                    [:p {:key 2} "Parents who helped us develop the website found this video useful for interpreting the data.
+   [:.tab-pane.col-sm-12 {:key   3
+                          :class (active? :animation)
+                          :id    "mapped-data"}
+    (when (active? :animation)
+      [:section.col-sm-offset-1.col-sm-10
+       [:p {:key 1}]
+       [:p {:key 2} "Parents who helped us develop the website found this video useful for interpreting the data.
                     If you want to know more about how the predicted range of survival is actually calculated, please
                     watch our " [:a (core/href "faqs") [:i.fa.fa-video-camera] " second video"] " in the "
-                     [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]])
+        [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]])
 
-                 (when (active? :animation)
-                   [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
-                    (video-js {:video-id  "video1"
-                               :src       "/assets/video01.mp4"
-                               :controls  true
-                               :preload   ""
-                               :poster    "/assets/video-1-thumbnail.png"
-                               :track-src "/assets/video01.vtt"})])
+    (when (active? :animation)
+      [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
+       (video-js {:video-id  "video1"
+                  :src       "/assets/video01.mp4"
+                  :controls  true
+                  :preload   ""
+                  :poster    "/assets/video-1-thumbnail.png"
+                  :track-src "/assets/video01.vtt"})])
 
 
-                 #_[:video#video1
-                    (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
+    #_[:video#video1
+       (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
 
-                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
+    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
 
-                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
+    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
 
-                 ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
+    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
 
-                 ]
+    ]
 
-                #_[:.tab-pane.col-sm-12 {:class (active? :animation2)
-                                         :id    "mapped-data"}
-                   (when (active? :animation2)
-                     [:section.col-sm-offset-1.col-sm-10
-                      ;[:h2 "How is the predicted range calculated?"]
-                      [:video
-                       (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true
-                                  :style {:max-width "480px"})]
-                      ])]
-                ]
-               )
+   #_[:.tab-pane.col-sm-12 {:class (active? :animation2)
+                            :id    "mapped-data"}
+      (when (active? :animation2)
+        [:section.col-sm-offset-1.col-sm-10
+         ;[:h2 "How is the predicted range calculated?"]
+         [:video
+          (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true
+                     :style {:max-width "480px"})]
+         ])]
+   ]
+  )
 
 (rum.core/defc render-data < rum.core/reactive (core/monitor-react "DATA>" false)
-               []
-               (let [app (rum.core/react core/app)
-                     data ((data/table-data (:datasource app)))]
-                 [:div.container-fluid.main-content
-                  (map-indexed key-with
-                               [
-                                (render-data-tabs)
-                                (render-data-tab-panes data)
-                                ])]))
+  []
+  (let [app (rum.core/react core/app)
+        data ((data/table-data (:datasource app)))]
+    [:div.container-fluid.main-content
+     (map-indexed key-with
+                  [
+                   (render-data-tabs)
+                   (render-data-tab-panes data)
+                   ])]))
 
 #_(defn valid-session-id
     ([session-id]
@@ -201,40 +201,40 @@
             (. modal (js/$ "#start-modal") "hide"))))))
 
 #_(rum.core/defc start-modal < rum.core/reactive []
-                 [:#start-modal.modal.fade {:tab-index       -1
-                                            :role            "dialog"
-                                            :aria-labelledby "myModalLabel"
-                                            :on-click        close-start-modal
-                                            :on-touch-start  close-start-modal
-                                            }
-                  [:.modal-dialog {:role "document"}
-                   [:.modal-content
-                    [:.modal-header {:key 1}
-                     [:h4.modal-title "Starting a new session"]]
-                    [:.modal-body {:key 2}
-                     [:form.form-horizontal
-                      [:.form-group
-                       {:class (if (valid-session-id) "" "has-error")}
-                       [:label.col-md-3.control-label {:for "session-id" :key 1}
-                        "Session id"]
-                       [:.col-sm-3 {:key 2}
-                        [:input#session-id.form-control
-                         {:type         "text"
-                          :placeholder  "my tag"
-                          :value        (rum.core/react logger/session-id)
-                          :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
-                                          (close-start-modal %))
-                          :on-change    #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
-                       ]]]
-                    [:.modal-footer {:key 3}
-                     [:button.btn.btn-primary
-                      {:type           "button"
-                       :disabled       (not (valid-session-id))
-                       :on-click       close-start-modal
-                       :on-touch-start close-start-modal}
-                      "OK"]
-                     ]]]
-                  ])
+    [:#start-modal.modal.fade {:tab-index       -1
+                               :role            "dialog"
+                               :aria-labelledby "myModalLabel"
+                               :on-click        close-start-modal
+                               :on-touch-start  close-start-modal
+                               }
+     [:.modal-dialog {:role "document"}
+      [:.modal-content
+       [:.modal-header {:key 1}
+        [:h4.modal-title "Starting a new session"]]
+       [:.modal-body {:key 2}
+        [:form.form-horizontal
+         [:.form-group
+          {:class (if (valid-session-id) "" "has-error")}
+          [:label.col-md-3.control-label {:for "session-id" :key 1}
+           "Session id"]
+          [:.col-sm-3 {:key 2}
+           [:input#session-id.form-control
+            {:type         "text"
+             :placeholder  "my tag"
+             :value        (rum.core/react logger/session-id)
+             :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
+                             (close-start-modal %))
+             :on-change    #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
+          ]]]
+       [:.modal-footer {:key 3}
+        [:button.btn.btn-primary
+         {:type           "button"
+          :disabled       (not (valid-session-id))
+          :on-click       close-start-modal
+          :on-touch-start close-start-modal}
+         "OK"]
+        ]]]
+     ])
 
 #_(def bs-open-popover
     {:did-mount (fn [state]
@@ -255,72 +255,72 @@
                  state)})
 
 (rum.core/defc page-choice < rum.core/static scroll-to-top [page section]
-               [:div #_{:on-click       close-start-modal
-                        :on-touch-start close-start-modal}
-                (cond
-                  (= page :home)
-                  (do
-                    ;(prn "routes/homes = " (routes/home))
-                    (deselect-all)
-                    (map-indexed key-with
-                                 [(chrome/header)
-                                  (render-home)
-                                  (chrome/footer)]))
+  [:div #_{:on-click       close-start-modal
+           :on-touch-start close-start-modal}
+   (cond
+     (= page :home)
+     (do
+       ;(prn "routes/homes = " (routes/home))
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-home)
+                     (chrome/footer)]))
 
-                  (= page :intro)
-                  (do
-                    (deselect-all)
-                    (map-indexed key-with
-                                 [(chrome/header)
-                                  (render-intro)
-                                  (chrome/footer)]))
+     (= page :intro)
+     (do
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-intro)
+                     (chrome/footer)]))
 
-                  (= page :data)
-                  (do
-                    (deselect-all)
-                    (map-indexed key-with
-                                 [(chrome/header)
-                                  (render-data)
-                                  (chrome/footer)]))
+     (= page :data)
+     (do
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-data)
+                     (chrome/footer)]))
 
-                  (= page :faqs)
-                  (do
-                    (prn "section = " section)
-                    (deselect-all)
-                    (map-indexed key-with
-                                 [(chrome/header)
-                                  (render-faqs section)
-                                  (chrome/footer)]))
+     (= page :faqs)
+     (do
+       (prn "section = " section)
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs section)
+                     (chrome/footer)]))
 
-                  (= page :faq)
-                  (do
-                    (prn "section = " section)
-                    (deselect-all)
-                    (map-indexed key-with
-                                 [(chrome/header)
-                                  (render-faqs [3 0])       ;:todo replace with real params
-                                  (chrome/footer)]))
+     (= page :faq)
+     (do
+       (prn "section = " section)
+       (deselect-all)
+       (map-indexed key-with
+                    [(chrome/header)
+                     (render-faqs [3 0])                    ;:todo replace with real params
+                     (chrome/footer)]))
 
-                  :else
-                  (do
-                    (prn "Route mismatch" page)
-                    (chrome/header)
-                    (render-404)
-                    (chrome/footer)))])
+     :else
+     (do
+       (prn "Route mismatch" page)
+       (chrome/header)
+       (render-404)
+       (chrome/footer)))])
 
 
 (rum.core/defc render-page < rum.core/reactive []
-               (let [{:keys [page section]} (rum.core/react core/app)]
-                 (prn "render page " page section)
-                 (page-choice page section)))
+  (let [{:keys [page section]} (rum.core/react core/app)]
+    (prn "render page " page section)
+    (page-choice page section)))
 
 
 ;;
 ;; Contains the app user interface
 ;;
 (rum.core/defc app-container < bs-popover bs-tooltip []
-               (render-page)
-               )
+  (render-page)
+  )
 
 ;;
 ;; mount main component on html app element

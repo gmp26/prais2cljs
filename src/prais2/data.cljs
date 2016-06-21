@@ -7,9 +7,6 @@
     [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
     [prais2.content :as content]
     [prais2.utils :refer [px pc important key-with]]
-    ;[prais2.logger :as logger]
-    ; [clojure.string :as str]
-    ;[sablono.core :as sab]
     )
   (:require-macros [cljs.core.async.macros :refer [go]])
   )
@@ -142,11 +139,6 @@
                               :width            (str (bar-width slider (- hi-val lo-val)) "%")
                               :text-align       "right"
                               }
-                      ;:data-original-title (str (pc lo-val) " - " (pc hi-val) "<br>" (bar-type content/bar-comments))
-                      ;:data-delay 0
-                      ;:data-html true
-                      ;:data-trigger "hover"
-                      ;:data-placement "bottom"
                       }]))))
 
 
@@ -165,11 +157,13 @@
                             :height           px-size
                             :top              (px (+ 10 (/ (- 25 size) 2)))
                             :position         (if relative "relative" "absolute")
-                            :left             (str "calc("
-                                                   (percent->screen slider value)
-                                                   "% - "
-                                                   (Math/round (/ size 2))
-                                                   "px)")}}]))
+                            :margin-left      (str "-" (Math/round (/ size 2)) "px")
+                            :left             (str (percent->screen slider value) "%")
+                            #_(str "calc("
+                                   (percent->screen slider value)
+                                   "% - "
+                                   (Math/round (/ size 2))
+                                   "px)")}}]))
 
 
 (rum.core/defc dot-no-tip < rum.core/static rum.core/reactive [slider size value dotty & [relative]]
@@ -502,9 +496,9 @@
                          :width   (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
            (str (column-key row) (when (= column-key :survival-rate) " %" ""))
            #_(if (= column-key :h-name)
-             [:a {:on-touch-start info-handler
-                  :on-click       info-handler} (column-key row)]
-             (str (column-key row) (when (= column-key :survival-rate) " %" "")))]
+               [:a {:on-touch-start info-handler
+                    :on-click       info-handler} (column-key row)]
+               (str (column-key row) (when (= column-key :survival-rate) " %" "")))]
 
           (when (= column-key :h-name)
             [:span " " h-code " " [:i.fa.fa-chevron-right]]
@@ -521,12 +515,6 @@
                  (:sort-ascending (rum.core/react app))
                  (first data)
                  )]])
-
-;;;;;;
-
-#_(defn get-chart-state
-  [index]
-  (chart-states index))
 
 (rum.core/defc integer-option < rum.core/static [n]
   [:option {:value n} n])
@@ -600,7 +588,7 @@
                       (chart-state-dropdown event-bus)])]]]])
 
 
-;;;;;;
+
 ;;
 ;; configure title according to dataset
 ;;
@@ -661,27 +649,27 @@
       )))
 
 #_(rum.core/defc interpretation
-  [row]
-  [:span (let [survival-rate (:survival-rate row)]
-           (cond
-             (< survival-rate (:outer-low row))
-             (:low content/dot-comments)
+    [row]
+    [:span (let [survival-rate (:survival-rate row)]
+             (cond
+               (< survival-rate (:outer-low row))
+               (:low content/dot-comments)
 
-             (< survival-rate (:inner-low row))
-             (:outer-low content/dot-comments)
+               (< survival-rate (:inner-low row))
+               (:outer-low content/dot-comments)
 
-             (<= survival-rate (:inner-high row))
-             (:inner content/dot-comments)
+               (<= survival-rate (:inner-high row))
+               (:inner content/dot-comments)
 
-             (<= survival-rate (:outer-high row))
-             (:outer-high content/dot-comments)
+               (<= survival-rate (:outer-high row))
+               (:outer-high content/dot-comments)
 
-             (> survival-rate (:outer-high row))
-             (:high content/dot-comments)
+               (> survival-rate (:outer-high row))
+               (:high content/dot-comments)
 
-             :else
-             "Oops - no text for this"
-             ))])
+               :else
+               "Oops - no text for this"
+               ))])
 
 
 (rum.core/defc hospital-charities < rum.core/reactive [h-code]
