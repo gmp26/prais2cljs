@@ -9,9 +9,6 @@
    [:.home-nav.well.intro
     [:a.active #?(:cljs (core/href "intro")
                   :clj {:href "#"})
-     #_{:href           (core/token->url "intro")
-      :on-click       #(core/click->event-bus % :intro nil "intro")
-      :on-touch-start #(core/click->event-bus % :intro nil "intro")}
      [:i.fa.fa-question.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title {:dangerouslySetInnerHTML {:__html "What, why, how?&nbsp;&nbsp;&nbsp;&nbsp;"}}]]
@@ -25,9 +22,6 @@
    [:.home-nav.well.data
     [:a.active #?(:cljs (core/href "data/map")
                   :clj {:href "#"})
-     #_{:href           (core/token->url "data/map")
-      :on-click       #(core/click->event-bus % :data :map "data/map")
-      :on-touch-start #(core/click->event-bus % :data :map "data/map")}
      [:i.fa.fa-table.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title "Explore the data"]]
@@ -42,9 +36,6 @@
    [:.home-nav.well.faqs
     [:a.active #?(:cljs (core/href "faqs")
                   :clj  {:href "#"})
-     #_{:href           (core/token->url "faqs")
-      :on-click       #(core/click->event-bus % :faqs nil "faqs")
-      :on-touch-start #(core/click->event-bus % :faqs nil "faqs")}
      [:i.fa.fa-info.big]
      [:.chevron [:i.fa.fa-chevron-right]]
      [:.title {:dangerouslySetInnerHTML {:__html "Everything else&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"}}]]
@@ -57,10 +48,6 @@
     ]])
 
 
-#_(rum.core/defc video-thumbnails []
-    [:.row.video-thumbails.hidden-xs.hidden-sm
-     [:a (core/href "data") [:img.center-block (core/isrc "assets/video-1-thumbnail.png" :width "300px")]]])
-
 (rum.core/defc render-home < rum.core/reactive []
   [:div.main-content
    [:.container
@@ -70,7 +57,7 @@
       UK and Ireland. "]
 
       #?(:cljs [:div
-                [:h1 {:style {:display "none"}} "Childrens Heart Surgery Info"]
+                [:h1 {:style {:display "none"}} "Children's Heart Surgery Info"]
                 [:p "Our website will help you:"]
                 [:ul
                  [:li "understand how the NHS monitors children’s heart surgery"]
@@ -94,13 +81,4 @@
     [:.row
      (what-why)
      (data)
-     (everything-else)]]
-   ;(video-thumbnails)
-   ]
-
-  #_[:.container-fluid
-     [:.row.home-thumbail
-      [:.col-xs-12
-       [:img.img-responsive (core/isrc "assets/home-thumbnail.png")]]]]
-
-  )
+     (everything-else)]]])

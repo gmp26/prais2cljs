@@ -8,17 +8,13 @@
     #?(:cljs [prais2.core :as core :refer [event-bus]])
     #?(:clj
     [prais2.core :as core])
-
     [prais2.components.data-selector :refer [data-selector]]
-    ;[prais2.logger :as logger]
-    ;[prais2.data :as data]
     ))
 
 (defn rgba-string
   "return CSS rgba string"
   [[r g b a]]
-  (str "rgba(" r "," g "," b "," a)
-  )
+  (str "rgba(" r "," g "," b "," a))
 
 
 (defrecord Nav-item [long-title short-title class icon token])
@@ -91,21 +87,12 @@
                                              :padding-bottom "10px"
                                              :padding-right  "20px"
                                              :margin-right   "0px"
-                                             :transform "rotate(180deg)"
-                                             }}]]
+                                             :transform "rotate(180deg)"}}]]
     [:.pull-left.main-title
      {:style {:margin-left "0px"
               :padding-left "0px"
               :padding-right "40px"}}
-     "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]
-
-
-    #_[:.chrome-head-rel
-       [:div {:key 1}]                                      ;;styled logo
-       [:h3.main-title {:key 2} "UNDERSTANDING CHILDREN’S HEART SURGERY OUTCOMES"]]
-
-    ;(data-selector)
-    ]])
+     "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]]])
 
 
 (rum.core/defc footer []

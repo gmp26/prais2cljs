@@ -1,14 +1,11 @@
 (ns prais2.components.body
-  (:require [rum.core :as r :include-macros true]
+  (:require [rum.core :as rum :include-macros true]
             [prais2.components.static-home :refer [static-home]]
             [prais2.components.analytics :refer [spa-analytics]]
-            [prais2.components.browser-update :refer [browser-update]]
-    ;[prais2.components.video-player :refer [oz-player-script]]
-            ))
+            [prais2.components.browser-update :refer [browser-update]]))
 
 (rum.core/defc body [content]
                [:body
-
                 #?(:clj [:#app (content)])
                 #?(:cljs [:#app                             ; the spinner is unused now!
                           [:i.fa.fa-spinner.fa-pulse

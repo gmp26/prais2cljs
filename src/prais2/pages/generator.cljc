@@ -20,13 +20,13 @@
 
      (def intro-page
        (str "<!doctype html>"
-            (rum.core/render-static-markup (head "Child heart surgery info"))
+            (rum.core/render-static-markup (head "Child heart surgery info: what, why how"))
             (rum.core/render-static-markup (body static-intro))
             ))
 
      (defn faq-page [faq-ref]
        (str "<!doctype html>"
-            (rum.core/render-static-markup (head "Child heart surgery info"))
+            (rum.core/render-static-markup (head "Child heart surgery info: everything else"))
             (rum.core/render-static-markup (body #(static-faqs faq-ref)))
             ))
 

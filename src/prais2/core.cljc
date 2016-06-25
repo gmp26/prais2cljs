@@ -159,8 +159,8 @@
 
 (defn absolute-path? [path]
   (cond
-    (= (subs path 0 4) "http") true
     (= (first path) "/") true
+    (and (>= (count path) 4) (= (subs path 0 4) "http")) true
     :else false))
 
 (defn isrc
