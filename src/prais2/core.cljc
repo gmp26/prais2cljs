@@ -41,19 +41,18 @@
 (defn token->url [token]
   (if (= prefix "#")
     (str "/" prefix "/" token)
-    (str "/" token)))
+    (if (= token "home") "/" (str "/" token))))                                      ; :home-edit
 
 
 ;;;
-;; window location to token: :todo. Test this if changing prefix
+;; window location to token:
 ;;;
 #?(:cljs
    (defn get-token! []
      (if (= prefix "#")
        (do
          (str/replace-first (.-hash (.-location js/window)) "#/" ""))
-       (.-pathname (.-location js/window))                  ;(.. js/window -location -pathname)
-       )))
+       (.-pathname (.-location js/window)))))
 
 
 ;;;

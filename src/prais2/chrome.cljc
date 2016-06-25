@@ -47,6 +47,11 @@
     (str " " (:short-title nav-item))]])
 
 
+(defn nav-click-handler [nav-item-key]
+  (fn [e] (core/click->event-bus e nav-item-key
+                                 (if (= nav-item-key :data) :map nil)
+                                 (if (= nav-item-key :data) "data/map" (str (name nav-item-key))))))
+
 (rum.core/defc bs-fixed-navbar [active-key]
   [:nav.navbar.navbar-simple.navbar-fixed-top
    [:.navbar-inner
@@ -69,9 +74,7 @@
           (map-indexed #(key-with %1 (bs-nav-link
                                        (= active-key %2)
                                        (%2 nav-items)
-                                       (fn [e] (core/click->event-bus e %2
-                                                                      (if (= %2 :data) :map nil)
-                                                                      (if (= %2 :data) "data/map" (str (name %2)))))))
+                                       (nav-click-handler %2)))
                        (keys nav-items)))]]]]])
 
 
@@ -79,7 +82,10 @@
   [:div
    (bs-fixed-navbar (:page (rum.core/react core/app)))
    [:.main-title-box
-    [:a (core/href "home")
+    [:a (core/href "/"
+                   :on-touch-start (nav-click-handler :home)
+                   :on-click (nav-click-handler :home)
+                   )
      [:img.img-responsive.pull-left {:src   "/assets/logo3.png"
                                      :style {:margin-top     "-50px"
                                              :padding-bottom "10px"
