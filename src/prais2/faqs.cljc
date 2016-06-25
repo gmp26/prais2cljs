@@ -81,12 +81,7 @@
     (render-faq-block 4 "faq-nav-4")
     (render-faq-block 5 "faq-nav-4")
     ;(render-faq-block 6 "faq-nav-4")
-    ]
-
-   ;; old bubble menu
-   #_(map-indexed key-with
-                  (map render-section
-                       (vec (zipmap (range) faq-sections))))])
+    ]])
 
 #?(:cljs
    (defn go-back [_]
@@ -117,10 +112,9 @@
             (prn "rendering glossary " glossary)
             (render-glossary glossary)))
         [:button.btn.btn-primary.back
-         ; :todo: replace with a call on history
          #?(:cljs {:key            3
-                   :on-click       go-back                  ;#(core/click->event-bus % :faqs nil "faqs")
-                   :on-touch-start go-back                  ;#(core/click->event-bus % :faqs nil "faqs")
+                   :on-click       go-back
+                   :on-touch-start go-back
                    })
          "Back"
          ]])])

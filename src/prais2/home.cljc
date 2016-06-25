@@ -70,6 +70,7 @@
       UK and Ireland. "]
 
       #?(:cljs [:div
+                [:h1 {:style {:display "none"}} "Childrens Heart Surgery Info"]
                 [:p "Our website will help you:"]
                 [:ul
                  [:li "understand how the NHS monitors children’s heart surgery"]
