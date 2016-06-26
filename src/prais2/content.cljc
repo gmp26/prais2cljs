@@ -505,6 +505,7 @@
   [{:section "Background"
     :faqs
              [{:title    "Why do some children need heart surgery?"
+               :short-title "Why the need?"
                :glossary []
                :body
                          [:div
@@ -522,6 +523,7 @@
 
 
               {:title        "Why are survival rates after children's heart surgery monitored and published?"
+               :short-title  "Why monitor survival?"
                :glossary     [:survival-rate]
                :short-answer "The NHS monitors survival rates after children’s heart surgery to check if recent survival rates at
       any hospital are much lower than predicted."
@@ -610,6 +612,7 @@
    {:section "Understanding the predicted range"
     :faqs
              [{:title        "Why is a different survival range predicted for each hospital?"
+               :short-title  "Why do predictions differ?"
                :short-answer "The predicted range of survival is the range in which we expect to see each hospital’s
                survival rate the majority of the time. It depends only on the complexity of the medical problems of the
                children who had heart operations. Each hospital treats different children and so each hospital will have

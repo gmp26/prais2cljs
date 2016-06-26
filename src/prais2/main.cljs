@@ -2,14 +2,12 @@
   (:require-macros                                          ;[jayq.macros :refer [ready]]
     [cljs.core.async.macros :refer [go-loop]])
   (:require [rum.core]
-    ;            [cljs.reader :as reader]
             [clojure.set :refer (intersection)]
             [cljsjs.react]
             [cljs.core.async :refer [chan <! pub sub put! close!]]
             [prais2.utils :refer [key-with]]
             [prais2.core :as core :refer [app event-bus event-bus-pub bs-popover bs-tooltip]]
             [prais2.routes :as routes]
-    ;[prais2.content :as content]
             [prais2.data :as data]
             [prais2.open-layers-map :as map]
             [prais2.chrome :as chrome]
@@ -18,12 +16,7 @@
             [prais2.map-data :refer [render-map-data]]
             [prais2.faqs :refer [render-faqs]]
             [prais2.components.video-player :refer [video-js]]
-    ;[prais2.logger :as logger :refer [log-bus-pub]]
             [cljsjs.jquery]
-
-    ;;[jayq.core :refer [$]]
-
-    ; [cljsjs.moment :as moment]
             ))
 
 (enable-console-print!)
@@ -61,7 +54,7 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum.core/defc render-data-tabs < rum.core/reactive []
+(rum.core/defc render-data-tabs < rum.core/reactive (core/update-title "Choose a hospital") []
 
   [:.row
 
@@ -114,6 +107,15 @@
      ]]])
 
 
+(rum.core/defc render-video1 < (core/update-title "Two minute video") []
+  [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
+   (video-js {:video-id  "video1"
+              :src       "/assets/video01.mp4"
+              :controls  true
+              :preload   ""
+              :poster    "/assets/video-1-thumbnail.png"
+              :track-src "/assets/video01.vtt"})])
+
 
 (rum.core/defc render-data-tab-panes < rum.core/reactive [data]
   [:row.tab-content
@@ -143,37 +145,8 @@
         [:a (core/href "faqs" {:key 3}) "Everything Else"] " section. "]])
 
     (when (active? :animation)
-      [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
-       (video-js {:video-id  "video1"
-                  :src       "/assets/video01.mp4"
-                  :controls  true
-                  :preload   ""
-                  :poster    "/assets/video-1-thumbnail.png"
-                  :track-src "/assets/video01.vtt"})])
+      (render-video1))]])
 
-
-    #_[:video#video1
-       (core/isrc "assets/video01.mp4" :poster "/assets/video-1-thumbnail.png" :controls true :preload true :style {:max-width "600px"})]
-
-    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-core/ozplayer.free.js"}]
-
-    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/ozplayer-lang/en.js"}]
-
-    ;[:script {:src "https://ozplayer.global.ssl.fastly.net/2.0/config.js"}]
-
-    ]
-
-   #_[:.tab-pane.col-sm-12 {:class (active? :animation2)
-                            :id    "mapped-data"}
-      (when (active? :animation2)
-        [:section.col-sm-offset-1.col-sm-10
-         ;[:h2 "How is the predicted range calculated?"]
-         [:video
-          (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true
-                     :style {:max-width "480px"})]
-         ])]
-   ]
-  )
 
 (rum.core/defc render-data < rum.core/reactive (core/monitor-react "DATA>" false)
   []
@@ -186,65 +159,9 @@
                    (render-data-tab-panes data)
                    ])]))
 
-#_(defn valid-session-id
-    ([session-id]
-     (#(not (or (nil? %) (= "" %))) session-id))
-    ([]
-     (valid-session-id @logger/session-id)))
-
-#_(defn close-start-modal [_]
-    (if (.hasClass (js/$ "#start-modal") "in")
-      (let [new-session-id (.val (js/$ "#session-id"))]
-        (when (valid-session-id new-session-id)
-          (do
-            (logger/write-log [:start-session nil] new-session-id)
-            (. modal (js/$ "#start-modal") "hide"))))))
-
-#_(rum.core/defc start-modal < rum.core/reactive []
-    [:#start-modal.modal.fade {:tab-index       -1
-                               :role            "dialog"
-                               :aria-labelledby "myModalLabel"
-                               :on-click        close-start-modal
-                               :on-touch-start  close-start-modal
-                               }
-     [:.modal-dialog {:role "document"}
-      [:.modal-content
-       [:.modal-header {:key 1}
-        [:h4.modal-title "Starting a new session"]]
-       [:.modal-body {:key 2}
-        [:form.form-horizontal
-         [:.form-group
-          {:class (if (valid-session-id) "" "has-error")}
-          [:label.col-md-3.control-label {:for "session-id" :key 1}
-           "Session id"]
-          [:.col-sm-3 {:key 2}
-           [:input#session-id.form-control
-            {:type         "text"
-             :placeholder  "my tag"
-             :value        (rum.core/react logger/session-id)
-             :on-key-press #(if (= 13 (.-keyCode (.-nativeEvent %)))
-                             (close-start-modal %))
-             :on-change    #(reset! logger/session-id (.val (js/$ "#session-id")))}]]
-          ]]]
-       [:.modal-footer {:key 3}
-        [:button.btn.btn-primary
-         {:type           "button"
-          :disabled       (not (valid-session-id))
-          :on-click       close-start-modal
-          :on-touch-start close-start-modal}
-         "OK"]
-        ]]]
-     ])
-
-#_(def bs-open-popover
-    {:did-mount (fn [state]
-                  (if (nil? @logger/session-id)
-                    (core/ready #(.modal (js/$ "#start-modal") (clj->js {:show true :backdrop :static}))))
-                  state)})
 ;;;
 ;; pager
 ;;;
-
 
 (defn deselect-all []
   (swap! app assoc :map-h-code nil :selected-h-code nil))

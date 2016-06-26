@@ -21,7 +21,7 @@
 
 
 ;; look at http://materializecss.com/
-(rum.core/defc render-intro < (core/monitor-react "INTRO>" false)  []
+(rum.core/defc render-intro < (core/update-title "Key points") (core/monitor-react "INTRO>" false)  []
   [:.container.main-content
    [:.row
     [:.col-sm-8

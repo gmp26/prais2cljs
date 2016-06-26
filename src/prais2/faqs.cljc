@@ -87,7 +87,13 @@
    (defn go-back [_]
      (.go js/history -1)))
 
-(rum.core/defc render-faq-section [[section-ix ix :as faq-ref]]
+(defn gen-postfix [state]
+  (let [[section-ix ix] (first (:rum/args state))
+        section (faq-sections section-ix)
+        faq ((:faqs section) ix)]
+    (or (:short-title faq) (:title faq))))
+
+(rum.core/defc render-faq-section < (core/update-title gen-postfix) [[section-ix ix :as faq-ref]]
   (prn "render-faq-section " faq-ref)
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
      (let [section (faq-sections section-ix)
@@ -120,7 +126,7 @@
          ]])])
 
 
-(rum.core/defc render-faqs [faq-ref]
+(rum.core/defc render-faqs < (core/update-title gen-postfix) [faq-ref]
 
   [:.container-fluid.main-content
    [:.row

@@ -270,3 +270,19 @@
 
 ;; get element by id
 #?(:cljs (defn el [id] (.getElementById js/document id)))
+
+;;
+;; change page title mixin
+;;
+(def title-prefix "Child Heart Surgery: ")
+
+(defn update-title [title-postfix]
+  {:did-mount #?(:cljs
+                      (fn [state]
+                        (set! (.-title js/document)
+                              (str title-prefix
+                                   (if (string? title-postfix)
+                                     title-postfix
+                                     (title-postfix state))))
+                        state)
+                 :clj identity)})

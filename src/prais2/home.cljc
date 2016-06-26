@@ -43,12 +43,10 @@
     [:p "What happens if the data raises concerns?"]
     [:p "More detail about how survival statistics are monitored, including an explanatory video."]
     [:p "Limitations of this data."]
-    [:p "Information for families."]
-
-    ]])
+    [:p "Information for families."]]])
 
 
-(rum.core/defc render-home < rum.core/reactive []
+(rum.core/defc render-home < rum.core/reactive (core/update-title "Home page") []
   [:div.main-content
    [:.container
     [:.jumbotron.home.row
