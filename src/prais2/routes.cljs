@@ -27,6 +27,17 @@
   (put! core/event-bus [:faqs nil])
   )
 
+(defroute sec "/faq/:section" [section]
+  (let [s (js/parseInt section)
+        ap @core/app]
+    (if (not (and
+               (= (:page ap) :faqs)
+               (= (:section ap) [s 0])))
+      (do
+        (put! core/event-bus [:faq [s 0]])
+        (prn "faq match" s 0))))
+  )
+
 (defroute faq "/faq/:section/:id" [section id]
   (let [s (js/parseInt section)
         f (js/parseInt id)
