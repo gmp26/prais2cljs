@@ -108,7 +108,9 @@ ul.breadcrumb {
       background-color: rgba(127,205,187,0.5);
       border-top-right-radius: 20px;
       border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 20px;
       cursor: pointer;
+      box-shadow: 1px 1px 1px 1px rgba(80,80,80, 0.5);
     }
     li:link {
 
@@ -117,6 +119,5 @@ ul.breadcrumb {
       background-color: rgba(127,205,187,0.7);
       text-decoration: underline;
     }
-
 }
 

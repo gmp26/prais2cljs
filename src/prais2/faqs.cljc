@@ -117,10 +117,10 @@
          faq ((:faqs section) ix)
          short-answer (:short-answer faq)
          glossary (:glossary faq)]
-     #_(breadcrumb faq-ref)
 
      [:div
-      [:ul.breadcrumb
+      (breadcrumb faq-ref)
+      #_[:ul.breadcrumb
        [:li "Everything Else"]
        [:li (:section section)]]
       [:h2 {:key 1}
