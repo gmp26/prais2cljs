@@ -94,3 +94,29 @@ section.short-answer {
 .btn.btn-primary.back {
     margin-top: 20px;
 }
+
+ul.breadcrumb {
+    color: white;
+    list-style-type: none;
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    li {
+      display: inline-block;
+      padding: 8px 10px 3px 10px;
+      margin-right: 10px;
+      background-color: rgba(127,205,187,0.5);
+      border-top-right-radius: 20px;
+      border-bottom-right-radius: 10px;
+      cursor: pointer;
+    }
+    li:link {
+
+    }
+    li:hover, li:active {
+      background-color: rgba(127,205,187,0.7);
+      text-decoration: underline;
+    }
+
+}
+

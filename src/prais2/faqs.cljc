@@ -1,11 +1,11 @@
 (ns ^:figwheel-always prais2.faqs
-    (:require [rum.core]
-              [prais2.core :as core]
-              [prais2.utils :refer [key-with]]
-              [prais2.content :as content :refer [faq-sections]]
-              [prais2.components.video-player :refer [video-js]]
-              #?(:cljs [prais2.data :as data])
-              [prais2.mugshots :as mugs]))
+  (:require [rum.core]
+            [prais2.core :as core]
+            [prais2.utils :refer [key-with]]
+            [prais2.content :as content :refer [faq-sections]]
+            [prais2.components.video-player :refer [video-js]]
+    #?(:cljs [prais2.data :as data])
+            [prais2.mugshots :as mugs]))
 
 (comment
   ;;
@@ -55,7 +55,7 @@
                     :poster    "/assets/video-2-thumbnail.png"
                     :track-src "/assets/video02.vtt"})
          #_[:video#video2
-          (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true)])
+            (core/isrc "assets/video02.mp4" :poster "/assets/video-2-thumbnail.png" :controls true :preload true)])
        [:ul.list-unstyled {:key 2}
         (for [[ix faq] (map-indexed vector (:faqs section))]
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
@@ -99,38 +99,53 @@
         faq ((:faqs section) ix)]
     (or (:short-title faq) (:title faq))))
 
+(rum.core/defc breadcrumb [[section-ix ix :as faq-ref]]
+  (let [section (faq-sections section-ix)
+        faq ((:faqs section) ix)
+        short-answer (:short-answer faq)
+        glossary (:glossary faq)]
+    [:ul.breadcrumb
+     [:li "Everything Else"]
+     [:li (:section section)]
+     [:li (str ix)]]))
+
 (rum.core/defc render-faq-section < (core/update-title gen-postfix)
                                     (core/update-description gen-description) [[section-ix ix :as faq-ref]]
   (prn "render-faq-section " faq-ref)
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
-     (let [section (faq-sections section-ix)
-           faq ((:faqs section) ix)
-           short-answer (:short-answer faq)
-           glossary (:glossary faq)]
-       [:div
-        [:h2 {:key 1}
-         [:.query {:key 1} [:i.fa.fa-question]]
-         [:.title {:key 2} (:title faq)]]
+   (let [section (faq-sections section-ix)
+         faq ((:faqs section) ix)
+         short-answer (:short-answer faq)
+         glossary (:glossary faq)]
+     #_(breadcrumb faq-ref)
 
-        (when short-answer
-          (do
-            (prn "rendering short answer for section " section-ix "." ix)
-            (render-short-answer short-answer)))
-        [:div.body {:key 2}
-         (when (= [4 0] faq-ref)
-           (rum.core/with-key (mugs/reformatted-mugshots) 4))
-         (:body faq)]
-        (when (> (count glossary) 0)
-          (do
-            (prn "rendering glossary " glossary)
-            (render-glossary glossary)))
-        [:button.btn.btn-primary.back
-         #?(:cljs {:key            3
-                   :on-click       go-back
-                   :on-touch-start go-back
-                   })
-         "Back"
-         ]])])
+     [:div
+      [:ul.breadcrumb
+       [:li "Everything Else"]
+       [:li (:section section)]]
+      [:h2 {:key 1}
+       [:.query {:key 1} [:i.fa.fa-question]]
+       [:.title {:key 2} (:title faq)]]
+
+      (when short-answer
+        (do
+          (prn "rendering short answer for section " section-ix "." ix)
+          (render-short-answer short-answer)))
+      [:div.body {:key 2}
+       (when (= [4 0] faq-ref)
+         (rum.core/with-key (mugs/reformatted-mugshots) 4))
+       (:body faq)]
+      (when (> (count glossary) 0)
+        (do
+          (prn "rendering glossary " glossary)
+          (render-glossary glossary)))
+      [:button.btn.btn-primary.back
+       #?(:cljs {:key            3
+                 :on-click       go-back
+                 :on-touch-start go-back
+                 })
+       "Back"
+       ]])])
 
 
 (rum.core/defc render-faqs [faq-ref]
