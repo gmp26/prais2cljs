@@ -3,6 +3,8 @@
 
 (rum.core/defc head [title]
                [:head
+                [:meta {:name "description"
+                        :content "Make sense of published survival data about children’s heart surgery in the UK and Ireland. We explain how hospitals are monitored, and how to understand whether they are performing as predicted."}]
                 [:meta {:charset "utf-8"}]
                 [:meta {:name "viewport" :content "width=device-width" :initial-scale "1"}]
                 [:meta {:name "apple-mobile-web-app-capable" :content "yes"}]

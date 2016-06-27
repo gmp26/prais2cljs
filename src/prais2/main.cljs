@@ -54,7 +54,9 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum.core/defc render-data-tabs < rum.core/reactive (core/update-title "Choose a hospital") []
+(rum.core/defc render-data-tabs < rum.core/reactive
+                                  (core/update-title "Choose a hospital")
+                                  (core/update-description "View all hospital child heart surgery survival data") []
 
   [:.row
 
@@ -107,7 +109,8 @@
      ]]])
 
 
-(rum.core/defc render-video1 < (core/update-title "Two minute video") []
+(rum.core/defc render-video1 < (core/update-title "Two minute video")
+  (core/update-description "View a 2 minute video guide to how we present the results") []
   [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
    (video-js {:video-id  "video1"
               :src       "/assets/video01.mp4"

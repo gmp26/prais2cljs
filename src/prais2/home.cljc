@@ -46,7 +46,9 @@
     [:p "Information for families."]]])
 
 
-(rum.core/defc render-home < rum.core/reactive (core/update-title "Home page") []
+(rum.core/defc render-home < rum.core/reactive
+                             (core/update-title "Home page")
+                             (core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
   [:div.main-content
    [:.container
     [:.jumbotron.home.row

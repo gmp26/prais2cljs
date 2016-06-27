@@ -21,7 +21,9 @@
 
 
 ;; look at http://materializecss.com/
-(rum.core/defc render-intro < (core/update-title "Key points") (core/monitor-react "INTRO>" false)  []
+(rum.core/defc render-intro < (core/update-title "Key points")
+                              (core/update-description "Explains the key points to understand when interpreting hospital child surgery survival data")
+                              (core/monitor-react "INTRO>" false)  []
   [:.container.main-content
    [:.row
     [:.col-sm-8

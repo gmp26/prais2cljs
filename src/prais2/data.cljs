@@ -596,7 +596,9 @@
   [:h2 (str prefix (:mrange (year-range (end-year) "April" "March")))]
   )
 
-(rum.core/defc list-tab < rum.core/reactive (core/update-title "All hospitals") [app data event-bus]
+(rum.core/defc list-tab < rum.core/reactive
+                          (core/update-title "All hospitals")
+                          (core/update-description "View all hospital child heart surgery survival data") [app data event-bus]
   [:div
    [:.col-sm-offset-1.col-sm-10
 

@@ -9,8 +9,19 @@
     #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
     [prais2.utils :refer [key-with]]
     #?(:cljs [goog.events :as events])
+    #?(:cljs [goog.dom :as dom])
+    #?(:cljs [goog.dom.query])
     ))
 
+;;;
+;; js interop
+;;;
+#?(:cljs
+   (extend-type js/NodeList
+     ISeqable
+     (-seq [array] (array-seq array 0)))
+
+   )
 
 ;;;
 ;; define app state once so it doesn't re-initialise on reload.
@@ -35,13 +46,13 @@
 ;; routing prefix
 ;;
 ;;(def prefix "#")                                            ;for hash fragment routing
-(def prefix "/")                                           ; for hash-free routing
+(def prefix "/")                                            ; for hash-free routing
 
 
 (defn token->url [token]
   (if (= prefix "#")
     (str "/" prefix "/" token)
-    (if (= token "home") "/" (str "/" token))))                                      ; :home-edit
+    (if (= token "home") "/" (str "/" token))))             ; :home-edit
 
 
 ;;;
@@ -276,13 +287,27 @@
 ;;
 (def title-prefix "Child Heart Surgery: ")
 
+#?(:cljs (defn meta-description []
+           (first (filter #(= (.-name %) "description") (goog.dom.query "meta")))))
+
 (defn update-title [title-postfix]
-  {:did-mount #?(:cljs
-                      (fn [state]
-                        (set! (.-title js/document)
-                              (str title-prefix
-                                   (if (string? title-postfix)
-                                     title-postfix
-                                     (title-postfix state))))
+  {:did-mount #?(:cljs (fn [state]
+                         (set! (.-title js/document)
+                               (str title-prefix
+                                    (if (string? title-postfix)
+                                      title-postfix
+                                      (title-postfix state))))
+
                         state)
+                 :clj identity)})
+;;
+;; change page metadata mixin
+;;
+(defn update-description [description]
+  {:did-mount #?(:cljs (fn [state]
+                         (set! (.-content (meta-description))
+                         (if (string? description)
+                           description
+                           (description state)))
+                         state)
                  :clj identity)})

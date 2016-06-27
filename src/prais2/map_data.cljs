@@ -22,7 +22,9 @@
      (map-indexed key-with (map hospital-item rows))]))
 
 
-(rum.core/defc render-map-data < (core/update-title "Choose a hospital") rum.core/reactive []
+(rum.core/defc render-map-data < (core/update-title "Choose a hospital")
+                                 (core/update-description "Choose a hospital and view its child heart surgery survival data")
+                                 rum.core/reactive []
   [:div
    [:section.col-sm-offset-1.col-sm-10
 
