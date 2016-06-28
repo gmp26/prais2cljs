@@ -131,15 +131,53 @@
 ;</ul>
 ;</nav>
 
+(defn prev-faq [[section-ix ix :as faq-ref]]
+  (str "faq/"
+       (if (pos? ix)
+         section-ix
+         (max 0 (dec section-ix)))
+       "/"
+       (if (pos? ix)
+         (dec ix)
+         (if (pos? section-ix)
+           (dec (count (:faqs (faq-sections (dec section-ix)))))
+           0))))
+
+(defn next-faq [[section-ix ix :as faq-ref]]
+  (str "faq/"
+
+       (if (>= (inc ix) (count (:faqs (faq-sections section-ix))))
+         (if (< (inc section-ix) (count faq-sections))
+           (inc section-ix)
+           section-ix)
+         section-ix)
+
+       "/"
+
+       (if (>= (inc ix) (count (:faqs (faq-sections section-ix))))
+         (if (< (inc section-ix) (count faq-sections))
+           0
+           ix)
+         (inc ix)
+         )))
+
+(rum.core/defc paginator [[section-ix ix :as faq-ref]]
+  [:nav
+   [:ul.pager
+    [:li [:a (core/internal-ref (prev-faq faq-ref)) "< previous"]]
+    [:li [:a (core/internal-ref (next-faq faq-ref)) "next >"]]]]
+  )
+
+
 (rum.core/defc breadcrumb [[section-ix ix :as faq-ref]]
   (let [section (faq-sections section-ix)]
     (if (nil? ix)
       [:ul.breadcrumb
-       ;[:li [:a (core/internal-ref "home") "Home"]]
+       [:li [:a (core/internal-ref "home") "Home"]]
        [:li [:a (core/internal-ref "faqs") "Everything Else"]]]
       (let [faq ((:faqs section) ix)]
         [:ul.breadcrumb
-         ;[:li [:a (core/internal-ref "home") "Home"]]
+         [:li [:a (core/internal-ref "home") "Home"]]
          [:li [:a (core/internal-ref "faqs") "Everything Else"]]
          [:li [:a (core/internal-ref (str "faq/" section-ix)) (:section section)]]
          ;[:li (str ix)]
@@ -151,12 +189,12 @@
 
   [:.one-block.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (breadcrumb [sec-ix])
-   [:h1 (:section (faq-sections sec-ix))]
+   [:h1 (:section  (faq-sections sec-ix))]
    (render-faq-block sec-ix)])
 
 (rum.core/defc render-faq-section < (core/update-title gen-postfix)
                                     (core/update-description gen-description) [[section-ix ix :as faq-ref]]
-  (prn "render-faq-section " faq-ref)
+
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (let [section (faq-sections section-ix)
          faq ((:faqs section) ix)
@@ -166,7 +204,7 @@
 
      [:div
       (breadcrumb faq-ref)
-
+      (paginator faq-ref)
       [:h1 {:key 1}
        [:.query {:key 1} [:i.fa.fa-question]]
        [:.title {:key 2} (:title faq)]]
