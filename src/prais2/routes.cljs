@@ -31,7 +31,7 @@
   (let [s (js/parseInt section)
         ap @core/app]
     (if (not (and
-               (= (:page ap) :faqs)
+               (= (:page ap) :faq)
                (= (:section ap) [s 0])))
       (do
         (put! core/event-bus [:faq [s 0]])

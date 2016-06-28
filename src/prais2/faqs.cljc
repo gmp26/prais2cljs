@@ -41,12 +41,21 @@
    (map-indexed key-with
                 (map #(render-glossary-term %) glossary))])
 
+(def block-classes ["faq-nav-1"
+                    "faq-nav-3"
+                    "faq-nav-2"
+                    "faq-nav-4"
+                    "faq-nav-4"
+                    "faq-nav-4"
+                    "faq-nav-4"
+                    ])
 
-(rum.core/defc render-faq-block [sec-ix block-class]
+(rum.core/defc render-faq-block [sec-ix]
   (let [section (faq-sections sec-ix)]
     (when-not (:is-glossary section)
-      [:div.faq-block {:class block-class}
-       [:h4 {:key 1} (:section section)]
+      [:div.faq-block {:class (block-classes sec-ix)}
+       [:h4 {:key 1}
+        [:a (core/internal-ref (str "faq/" sec-ix)) (:section section)]]
        (when (= sec-ix 1)
          (video-js {:video-id  "video2"
                     :src       "/assets/video02.mp4"
@@ -64,25 +73,24 @@
 (rum.core/defc render-faq-top < (core/update-title "Everything Else")
                                 (core/update-description "Background, Limitations, Predicted range (with video explanation), Family and Child, Charities, About Us") []
   [:div
-   [:h1.col-md-12 content/title]
+   [:h1.col-md-12
+    content/title]
    ;; new block menu
 
    ;; column 1
    [:div.col-sm-4.col-md-3
-    (render-faq-block 0 "faq-nav-1")
-    (render-faq-block 2 "faq-nav-2")]
+    (render-faq-block 0)
+    (render-faq-block 2)]
 
    ;; column 2
    [:div.col-sm-4.col-md-6
-    (render-faq-block 1 "faq-nav-3")]
+    (render-faq-block 1)]
 
    ;; column 3
    [:div.col-sm-4.col-md-3
-    (render-faq-block 3 "faq-nav-4")
-    (render-faq-block 4 "faq-nav-4")
-    (render-faq-block 5 "faq-nav-4")
-    ;(render-faq-block 6 "faq-nav-4")
-    ]])
+    (render-faq-block 3)
+    (render-faq-block 4)
+    (render-faq-block 5)]])
 
 #?(:cljs
    (defn go-back [_]
@@ -99,15 +107,52 @@
         faq ((:faqs section) ix)]
     (or (:short-title faq) (:title faq))))
 
+(defn gen-bread-title [state]
+  (let [sec-ix (first (:rum/args state))]
+    (:section (faq-sections sec-ix))))
+
+;<nav>
+;<ul class="pagination">
+;<li>
+;<a href="#" aria-label="Previous">
+;<span aria-hidden="true">&laquo;</span>
+;</a>
+;</li>
+;<li><a href="#">1</a></li>
+;<li><a href="#">2</a></li>
+;<li><a href="#">3</a></li>
+;<li><a href="#">4</a></li>
+;<li><a href="#">5</a></li>
+;<li>
+;<a href="#" aria-label="Next">
+;<span aria-hidden="true">&raquo;</span>
+;</a>
+;</li>
+;</ul>
+;</nav>
+
 (rum.core/defc breadcrumb [[section-ix ix :as faq-ref]]
-  (let [section (faq-sections section-ix)
-        faq ((:faqs section) ix)
-        short-answer (:short-answer faq)
-        glossary (:glossary faq)]
-    [:ul.breadcrumb
-     [:li "Everything Else"]
-     [:li (:section section)]
-     [:li (str ix)]]))
+  (let [section (faq-sections section-ix)]
+    (if (nil? ix)
+      [:ul.breadcrumb
+       ;[:li [:a (core/internal-ref "home") "Home"]]
+       [:li [:a (core/internal-ref "faqs") "Everything Else"]]]
+      (let [faq ((:faqs section) ix)]
+        [:ul.breadcrumb
+         ;[:li [:a (core/internal-ref "home") "Home"]]
+         [:li [:a (core/internal-ref "faqs") "Everything Else"]]
+         [:li [:a (core/internal-ref (str "faq/" section-ix)) (:section section)]]
+         ;[:li (str ix)]
+         ]))))
+
+
+(rum.core/defc render-one-faq-block < (core/update-title gen-bread-title)
+                                      (core/update-description gen-bread-title) [sec-ix]
+
+  [:.one-block.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
+   (breadcrumb [sec-ix])
+   [:h1 (:section (faq-sections sec-ix))]
+   (render-faq-block sec-ix)])
 
 (rum.core/defc render-faq-section < (core/update-title gen-postfix)
                                     (core/update-description gen-description) [[section-ix ix :as faq-ref]]
@@ -117,13 +162,12 @@
          faq ((:faqs section) ix)
          short-answer (:short-answer faq)
          glossary (:glossary faq)]
-     #_(breadcrumb faq-ref)
+
 
      [:div
-      [:ul.breadcrumb
-       [:li "Everything Else"]
-       [:li (:section section)]]
-      [:h2 {:key 1}
+      (breadcrumb faq-ref)
+
+      [:h1 {:key 1}
        [:.query {:key 1} [:i.fa.fa-question]]
        [:.title {:key 2} (:title faq)]]
 
@@ -139,7 +183,8 @@
         (do
           (prn "rendering glossary " glossary)
           (render-glossary glossary)))
-      [:button.btn.btn-primary.back
+      (breadcrumb faq-ref)
+      #_[:button.btn.btn-primary.back
        #?(:cljs {:key            3
                  :on-click       go-back
                  :on-touch-start go-back
@@ -148,12 +193,14 @@
        ]])])
 
 
-(rum.core/defc render-faqs [faq-ref]
+(rum.core/defc render-faqs [[section-ix ix :as faq-ref]]
 
   [:.container-fluid.main-content
    [:.row
     (if (= nil faq-ref)
       (render-faq-top)
-      (render-faq-section faq-ref)
+      (if (nil? ix)
+        (render-one-faq-block section-ix)
+        (render-faq-section faq-ref))
       )
     ]])

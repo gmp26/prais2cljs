@@ -35,6 +35,18 @@ section.short-answer {
     .body {
         clear: both;
     }
+    h1 {
+        font-size: 30px;
+    }
+}
+
+.one-block {
+    .faq-block {
+        font-size: 140%;
+        h4 {
+              display: none;
+        }
+    }
 }
 
 .faq-block {
@@ -45,6 +57,9 @@ section.short-answer {
     width: 100%;
     border-radius: 2px;
     box-shadow: 1px 1px 1px #CCCCCC;
+    a {
+      color: white;
+      }
 }
 
 .faq-block li {
@@ -95,28 +110,30 @@ section.short-answer {
     margin-top: 20px;
 }
 
+
 ul.breadcrumb {
-    color: white;
+
     list-style-type: none;
     display: inline-block;
     padding: 0;
     margin: 0;
     li {
       display: inline-block;
-      padding: 8px 10px 3px 10px;
-      margin-right: 10px;
-      background-color: rgba(127,205,187,0.5);
-      border-top-right-radius: 20px;
-      border-bottom-right-radius: 10px;
+      //padding: 8px 10px 3px 10px;
+      //margin-right: 10px;
+      //background-color: rgba(127,205,187,0.5);
+      //border-top-right-radius: 20px;
+      //border-bottom-right-radius: 10px;
       cursor: pointer;
     }
-    li:link {
-
+    li::before {
+      padding: 0 5px 0 5px;
+      content: ">";
     }
-    li:hover, li:active {
-      background-color: rgba(127,205,187,0.7);
-      text-decoration: underline;
+    li:first-child::before {
+      padding: 0;
+      content: "";
     }
-
 }
+
 

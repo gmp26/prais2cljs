@@ -110,10 +110,12 @@
    "data/table"     [:data :table]
    "data/animation" [:data :animation]
    "faqs"           [:faq nil]
+   "faq/0"          [:faq [0]]
    "faq/0/0"        [:faq [0 0]]
    "faq/0/1"        [:faq [0 1]]
    "faq/0/2"        [:faq [0 2]]
    "faq/0/3"        [:faq [0 3]]
+   "faq/1"          [:faq [1]]
    "faq/1/0"        [:faq [1 0]]
    "faq/1/1"        [:faq [1 1]]
    "faq/1/2"        [:faq [1 2]]
@@ -121,17 +123,21 @@
    "faq/1/4"        [:faq [1 4]]
    "faq/1/5"        [:faq [1 5]]
    "faq/1/6"        [:faq [1 6]]
+   "faq/2"          [:faq [2]]
    "faq/2/0"        [:faq [2 0]]
    "faq/2/1"        [:faq [2 1]]
    "faq/2/2"        [:faq [2 2]]
    "faq/2/3"        [:faq [2 3]]
    "faq/2/4"        [:faq [2 4]]
+   "faq/3"          [:faq [3]]
    "faq/3/0"        [:faq [3 0]]
    "faq/3/1"        [:faq [3 1]]
    "faq/3/2"        [:faq [3 2]]
+   "faq/4"          [:faq [4]]
    "faq/4/0"        [:faq [4 0]]
    "faq/4/1"        [:faq [4 1]]
    "faq/4/2"        [:faq [4 2]]
+   "faq/5"          [:faq [5]]
    "faq/5/0"        [:faq [5 0]]
    "faq/5/1"        [:faq [5 1]]})
 
@@ -153,16 +159,18 @@
       (irl fragment false))
 
      ([fragment static]
-      (if static
-        (str "/" fragment)
-        (if (= prefix "#")
-          (str "/#/" fragment)
-          (str "/" fragment))))))                           ;; :todo test
+       ;; home should not appear in an actual URL
+      (let [frag (if (= fragment "home") "" fragment)]
+        (if static
+          (str "/" frag)
+          (if (= prefix "#")
+            (str "/#/" frag)
+            (str "/" frag)))))))                           ;; :todo test
 
 #?(:clj
    (defn irl "internal resource locator"
-     ([fragment _]                                          ; static option
-      (str "/" fragment))
+     ([fragment _]
+      (str "/" (if (= fragment "home") "" fragment)))
 
      ([fragment]
       (irl fragment true))
