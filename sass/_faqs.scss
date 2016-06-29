@@ -38,6 +38,15 @@ section.short-answer {
     h1 {
         font-size: 30px;
     }
+    ul.charities {
+        list-style-type: none;
+        >li {
+           margin-top: 12px;
+           ul {
+               list-style-type: none;
+           }
+        }
+    }
     margin-bottom: 50px;
 }
 

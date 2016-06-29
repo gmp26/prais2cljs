@@ -111,37 +111,26 @@
   (let [sec-ix (first (:rum/args state))]
     (:section (faq-sections sec-ix))))
 
+
 (defn prev-faq [[section-ix ix :as faq-ref]]
-  (str "faq/"
+  (str "faq"
        (if (pos? ix)
-         section-ix
-         (max 0 (dec section-ix)))
-       "/"
-       (if (pos? ix)
-         (dec ix)
+         (str "/" section-ix "/" (dec ix))
          (if (pos? section-ix)
-           (dec (count (:faqs (faq-sections (dec section-ix)))))
-           0))))
+           (str "/" (dec section-ix) "/" (dec (count (:faqs (faq-sections (dec section-ix))))))
+           "s"))))
+
 
 (defn next-faq [[section-ix ix :as faq-ref]]
   (let [shown-section-count (dec (count faq-sections))
         faq-count (count (:faqs (faq-sections section-ix)))]
-    (str "faq/"
-
+    (str "faq"
          (if (>= (inc ix) faq-count)
            (if (< (inc section-ix) shown-section-count)
-             (inc section-ix)
-             section-ix)
-           section-ix)
+             (str "/" (inc section-ix) "/0")
+             "s")
+           (str "/" section-ix "/" (inc ix))))))
 
-         "/"
-
-         (if (>= (inc ix) faq-count)
-           (if (< (inc section-ix) shown-section-count)
-             0
-             ix)
-           (inc ix)
-           ))))
 
 (rum.core/defc paginator [[section-ix ix :as faq-ref]]
   [:nav
@@ -196,7 +185,6 @@
         (do
           (prn "rendering glossary " glossary)
           (render-glossary glossary)))
-      #_(breadcrumb faq-ref)
       (paginator faq-ref)
       #_[:button.btn.btn-primary.back
        #?(:cljs {:key            3
