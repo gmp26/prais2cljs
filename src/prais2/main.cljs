@@ -72,14 +72,6 @@
      [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument" :target "_blank")
       "downloaded from the NCHDA website."]]
 
-    (when (not= :animation (:section (rum.core/react core/app)))
-      [:p "Use the drop down box to change reporting periods. You can watch our "
-       [:a (core/href "data/animation"
-                      :on-click
-                      #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
-       " which explains how we present the statistics and how to interpret them. Parents who helped us
-       develop the website found it a useful guide to interpreting the data. "])
-
     [:ul.nav.nav-pills {:role "tablist"}
 
      [:li {:class (active? :map)
@@ -106,7 +98,17 @@
                              :on-click #(core/click->event-bus % :data :animation "data/animation"))
        [:i.fa.fa-video-camera] " Two minute video"]]
 
-     ]]])
+     ]
+
+    (when (not= :animation (:section (rum.core/react core/app)))
+      [:p.post-tab "Use the drop down box to change reporting periods. You can watch our "
+       [:a (core/href "data/animation"
+                      :on-click
+                      #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
+       " which explains how we present the statistics and how to interpret them. Parents who helped us
+       develop the website found it a useful guide to interpreting the data. "])
+
+    ]])
 
 
 (rum.core/defc render-video1 < (core/update-title "Two minute video")

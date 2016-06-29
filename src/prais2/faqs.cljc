@@ -146,8 +146,8 @@
 (rum.core/defc paginator [[section-ix ix :as faq-ref]]
   [:nav
    [:ul.pager
-    [:li [:a (core/internal-ref (prev-faq faq-ref)) "< previous"]]
-    [:li [:a (core/internal-ref (next-faq faq-ref)) "next >"]]]]
+    [:li [:a (core/internal-ref (prev-faq faq-ref)) [:i.fa.fa-arrow-left] " previous"]]
+    [:li [:a (core/internal-ref (next-faq faq-ref)) "next " [:i.fa.fa-arrow-right]]]]]
   )
 
 
@@ -196,7 +196,8 @@
         (do
           (prn "rendering glossary " glossary)
           (render-glossary glossary)))
-      (breadcrumb faq-ref)
+      #_(breadcrumb faq-ref)
+      (paginator faq-ref)
       #_[:button.btn.btn-primary.back
        #?(:cljs {:key            3
                  :on-click       go-back
