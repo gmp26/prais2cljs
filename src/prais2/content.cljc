@@ -296,7 +296,7 @@
          [:a (core/href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank")
           "Heart Children Ireland"]]
 
-   :NHB [[:a (core/href "http://www.rbht.nhs.uk/" :target "_blank") "Brompton hospital"]
+   :NHB [[:a (core/href "http://www.rbht.nhs.uk/" :target "_blank") "London, Royal Brompton Hospital"]
          [:a (core/href "http://www.thebromptonfountain.org.uk/" :target "_blank") "The Brompton Fountain"]]
 
    :ACH [[:a (core/href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank") "Liverpool, Alder Hey Hospital"]
@@ -316,6 +316,10 @@
 
 (defn active-h-codes []
   (map (comp keyword :h-code) ((:datasource @core/app) datasources)))
+
+(defn sorted-active-h-codes []
+  (map first (sort-by second (map (fn [hosp-meta] [(keyword (:h-code hosp-meta)), (:h-name hosp-meta)]) ((:datasource @core/app) datasources))))
+  )
 
 (def unassoc-charity-list
   [
@@ -395,7 +399,7 @@
 
    [:h3 "Hospitals and hospital-associated charities"]
    [:ul.charities
-    (for [h-code (active-h-codes)]
+    (for [h-code (sorted-active-h-codes)]
       [:li [:b (first (h-code hospital-metadata))]
        [:ul
         (for [charity (rest (h-code hospital-metadata))]
