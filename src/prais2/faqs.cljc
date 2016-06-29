@@ -54,8 +54,8 @@
   (let [section (faq-sections sec-ix)]
     (when-not (:is-glossary section)
       [:div.faq-block {:class (block-classes sec-ix)}
-       [:h4 {:key 1}
-        [:a (core/internal-ref (str "faq/" sec-ix)) (:section section)]]
+       [:h4 {:key 1} (:section section)
+        #_[:a (core/internal-ref (str "faq/" sec-ix)) (:section section)]]
        (when (= sec-ix 1)
          (video-js {:video-id  "video2"
                     :src       "/assets/video02.mp4"
