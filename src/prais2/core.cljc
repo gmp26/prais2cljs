@@ -165,7 +165,7 @@
           (str "/" frag)
           (if (= prefix "#")
             (str "/#/" frag)
-            (str "/" frag)))))))                           ;; :todo test
+            (str "/" frag)))))))
 
 #?(:clj
    (defn irl "internal resource locator"

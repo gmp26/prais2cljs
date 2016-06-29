@@ -111,26 +111,6 @@
   (let [sec-ix (first (:rum/args state))]
     (:section (faq-sections sec-ix))))
 
-;<nav>
-;<ul class="pagination">
-;<li>
-;<a href="#" aria-label="Previous">
-;<span aria-hidden="true">&laquo;</span>
-;</a>
-;</li>
-;<li><a href="#">1</a></li>
-;<li><a href="#">2</a></li>
-;<li><a href="#">3</a></li>
-;<li><a href="#">4</a></li>
-;<li><a href="#">5</a></li>
-;<li>
-;<a href="#" aria-label="Next">
-;<span aria-hidden="true">&raquo;</span>
-;</a>
-;</li>
-;</ul>
-;</nav>
-
 (defn prev-faq [[section-ix ix :as faq-ref]]
   (str "faq/"
        (if (pos? ix)
@@ -144,22 +124,24 @@
            0))))
 
 (defn next-faq [[section-ix ix :as faq-ref]]
-  (str "faq/"
+  (let [shown-section-count (dec (count faq-sections))
+        faq-count (count (:faqs (faq-sections section-ix)))]
+    (str "faq/"
 
-       (if (>= (inc ix) (count (:faqs (faq-sections section-ix))))
-         (if (< (inc section-ix) (count faq-sections))
-           (inc section-ix)
+         (if (>= (inc ix) faq-count)
+           (if (< (inc section-ix) shown-section-count)
+             (inc section-ix)
+             section-ix)
            section-ix)
-         section-ix)
 
-       "/"
+         "/"
 
-       (if (>= (inc ix) (count (:faqs (faq-sections section-ix))))
-         (if (< (inc section-ix) (count faq-sections))
-           0
-           ix)
-         (inc ix)
-         )))
+         (if (>= (inc ix) faq-count)
+           (if (< (inc section-ix) shown-section-count)
+             0
+             ix)
+           (inc ix)
+           ))))
 
 (rum.core/defc paginator [[section-ix ix :as faq-ref]]
   [:nav
@@ -171,17 +153,10 @@
 
 (rum.core/defc breadcrumb [[section-ix ix :as faq-ref]]
   (let [section (faq-sections section-ix)]
-    (if (nil? ix)
-      [:ul.breadcrumb
-       [:li [:a (core/internal-ref "home") "Home"]]
-       [:li [:a (core/internal-ref "faqs") "Everything Else"]]]
-      (let [faq ((:faqs section) ix)]
-        [:ul.breadcrumb
-         [:li [:a (core/internal-ref "home") "Home"]]
-         [:li [:a (core/internal-ref "faqs") "Everything Else"]]
-         [:li [:a (core/internal-ref (str "faq/" section-ix)) (:section section)]]
-         ;[:li (str ix)]
-         ]))))
+    [:ul.breadcrumb
+     [:li [:a (core/internal-ref "faqs") "Everything Else"]]
+     [:li (:section section)]
+     ]))
 
 
 (rum.core/defc render-one-faq-block < (core/update-title gen-bread-title)
