@@ -1113,7 +1113,39 @@
                                                                     :target "_blank") "Leighton Pugh"] " for donating his time and expertise to narrating both
                           videos. The artwork and production for both videos was with developed in collaboration with
                           " [:a (core/href "http://www.qudos-animations.co.uk/" :target "_blank") "Qudos Animations"] ". We thank them
-                          for their great work and responsiveness in working to tight deadlines."]]}]}
+                          for their great work and responsiveness in working to tight deadlines."]]}
+
+              {:title        "Discussion of this site"
+               :short-answer "The site launch generated a lot of media interest which we've collected together here."
+               :glossary     []
+               :body         [:div
+                              [:ul.charities
+                               [:li [:a (core/href "https://www.theguardian.com/science/sifting-the-evidence/2016/jun/21/making-nhs-data-public-is-not-the-same-as-making-it-accessible-we-can-and-should-do-better")
+                                     "Guardian/Science article:"]
+                                " Making NHS data public is not the same as making it accessible – we can and should do better."]
+                               [:li [:a (core/href "http://www.bmj.com/content/353/bmj.i3539" :target "_blank") "The BMJ/News:"]
+                                " Children’s heart surgery website aims to end confusion over survival rates."]
+                               [:li [:a (core/href "http://www.thelancet.com/pdfs/journals/lancet/PIIS0140-6736(16)30888-1.pdf"
+                                                   :target "_blank") " The Lancet/Editorial:"]
+                                " Communicating risk about children’s heart surgery well"]
+                               [:li " David and Alex Smith, a heart parent, spoke about the project on  "
+                                [:a (core/href "http://www.bbc.co.uk/programmes/b07gct24" :target "_blank") " BBC World at One, Radio 4 on 21st June (32 mins 10 secs)."]
+                                " Huge thanks to Alex for doing this great interview. "]
+                               [:li "David also spoke on " [:a (core/href "http://www.bbc.co.uk/programmes/p03xmzf7" :target "_blank") "BBC Radio Cambridge"] " on Wed 22nd June (1hr 40 mins). "]
+                               [:li "We wrote about our approach and why engaging the public, and engaging them early matters, on "
+                                [:a (core/href "http://www.amrc.org.uk/blog/involving-parents-and-patients-in-public-engagement-a-humbling-and-invaluable-experience"
+                                               :target "_blank") "the Association of Medical Research Charities’s blog"] "."]
+                               [:li "Christina shared her insights from the experience in a "
+                                [:a (core/href "http://www.nihr.ac.uk/newsroom/blog/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
+                                               :target "_blank") "National Institute for Health Research (NIHR) blog"] "."]
+                               [:li [:a (core/href "https://www.statslife.org.uk/news/2919-new-online-tool-makes-heart-surgery-data-more-accessible"
+                                                   :target "_blank") "The Royal Statistical Society"]
+                                " blogged about the project."]
+                               [:li "Tim shared his experience in a "
+                                [:a (core/href "http://www.kcl.ac.uk/ioppn/news/records/2016/June/Parent-led-tool-opens-up-NHS-childrens-heart-surgery-data-to-families-.aspx")
+                                 "KCL news piece"] "."]
+                               ]]
+               }]}
 
    #_{:section "Further resources about understanding clinical data"
       :faqs
