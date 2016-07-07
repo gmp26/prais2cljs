@@ -300,7 +300,8 @@
          [:a (core/href "http://www.thebromptonfountain.org.uk/" :target "_blank") "The Brompton Fountain"]]
 
    :ACH [[:a (core/href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank") "Liverpool, Alder Hey Hospital"]
-         [:a (core/href "http://www.alderheycharity.org/" :target "_blank") "Alder Hey Charity"]]
+         [:a (core/href "http://www.alderheycharity.org/" :target "_blank") "Alder Hey Charity"]
+         [:a (core/href "https://heartchild.info/web/" :target "_blank") "Children’s Heart Association"]]
 
    :GUY [[:a (core/href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx" :target "_blank")
           "London, Evelina London Children's Hospital"]
