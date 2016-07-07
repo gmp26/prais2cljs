@@ -1117,7 +1117,7 @@
                           for their great work and responsiveness in working to tight deadlines."]]}
 
               {:title        "In the media"
-               :short-answer "The site launch generated a lot of media interest which we've collected together here."
+               :short-answer "The site launch generated a lot of media interest, some of which we've collected together here."
                :glossary     []
                :body         [:div
                               [:ul.charities
