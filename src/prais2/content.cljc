@@ -1157,6 +1157,8 @@
                                 " “ …parents’ views have been at the heart of developments that today launch a parent-led tool opening up NHS children’s heart surgery data to families.”"]
                                [:li
                                 [:a (core/href "https://www.rcsed.ac.uk/news-public-affairs/news/2016/june/understanding-children-s-heart-surgery-outcomes" :target "_blank") "Royal College of Surgeons of Edinburgh:"] " “Understanding Children’s Heart Surgery Outcomes”"]
+                               [:li
+                                [:a (core/href "http://www.insight.mrc.ac.uk/2016/07/29/beyond-open-making-data-accessible/" :target "_blank") "Insight: Medical Research Council"] " “Beyond open: making your data accessible”"]
                                ]
                               ]
                }]}
