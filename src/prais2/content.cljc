@@ -1159,6 +1159,8 @@
                                 [:a (core/href "https://www.rcsed.ac.uk/news-public-affairs/news/2016/june/understanding-children-s-heart-surgery-outcomes" :target "_blank") "Royal College of Surgeons of Edinburgh:"] " “Understanding Children’s Heart Surgery Outcomes”"]
                                [:li
                                 [:a (core/href "http://www.insight.mrc.ac.uk/2016/07/29/beyond-open-making-data-accessible/" :target "_blank") "Insight: Medical Research Council"] " “Beyond open: making your data accessible”"]
+                               [:li
+                                [:a (core/href "http://www.mumsnet.com/Talk/guest_posts/2699023-Guest-post-I-hope-weve-helped-others-preparing-for-their-childs-heart-surgery" :target "_blank") "Mumsnet guest post:"] " “I hope we've helped others preparing for their child's heart surgery”"]
                                ]
                               ]
                }]}
