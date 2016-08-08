@@ -1161,6 +1161,8 @@
                                 [:a (core/href "http://www.insight.mrc.ac.uk/2016/07/29/beyond-open-making-data-accessible/" :target "_blank") "Insight: Medical Research Council"] " “Beyond open: making your data accessible”"]
                                [:li
                                 [:a (core/href "http://www.mumsnet.com/Talk/guest_posts/2699023-Guest-post-I-hope-weve-helped-others-preparing-for-their-childs-heart-surgery" :target "_blank") "Mumsnet guest post:"] " “I hope we've helped others preparing for their child's heart surgery” by Alex Smith"]
+                               [:li
+                                [:a (core/href "https://understandinguncertainty.org/exploring-language-chance-sensitive-context" :target "_blank") "Understanding Uncertainty:"] " “Exploring the language of chance in a sensitive context” by David Spiegelhalter"]
                                ]
                               ]
                }]}
