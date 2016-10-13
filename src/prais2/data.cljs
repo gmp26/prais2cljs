@@ -344,7 +344,9 @@
                        (dissoc state ::slider ::handler)))})
 
 
-(rum.core/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum.core/static [state value]
+(rum.core/defcs slider-control < (bs-slider "#slider" :slider-axis-value)
+                                 rum.core/static
+  [state value]
   (let [s [:#slider.slider
            [:input {:type "text" :value value}]]
         slider (::slider state)]
