@@ -328,31 +328,23 @@
                                                  :step    0.02
                                                  :value   (change-key @core/app)
                                                  }))
-                           handler #(put! event-bus [change-key (.getValue slider)])
-                           state' (assoc state ::slider slider ::handler handler)]
-
-                       #_(.on slider "slide" handler)
+                           handler #(put! event-bus [change-key (.getValue slider)])]
                        (.on slider "change" handler)
-                       state'))
-
+                       (assoc state ::slider slider ::handler handler)))
 
    :transfer-state (fn [old new]
                      (assoc new ::slider (::slider old)))
 
-
    :will-unmount   (fn [state]
                      (let [slider (::slider state)
                            handler (::handler state)]
-                       (prn (str "unmounting slider " slider))
                        (when slider
-                         (when handler (.off slider "slide" handler))
                          (when handler (.off slider "change" handler))
                          (.destroy slider))
                        (dissoc state ::slider ::handler)))})
 
 
 (rum.core/defcs slider-control < (bs-slider "#slider" :slider-axis-value) rum.core/static [state value]
-  #_(prn "called slider-control with " value)
   (let [s [:#slider.slider
            [:input {:type "text" :value value}]]
         slider (::slider state)]
