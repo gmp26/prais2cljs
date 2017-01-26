@@ -1141,7 +1141,7 @@
                                 [:a (core/href "http://www.amrc.org.uk/blog/involving-parents-and-patients-in-public-engagement-a-humbling-and-invaluable-experience"
                                                :target "_blank") "the Association of Medical Research Charities’s blog"] "."]
                                [:li "Christina shared her insights from the experience and provides tips for other researchers in a "
-                                [:a (core/href "http://www.nihr.ac.uk/newsroom/blog/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
+                                [:a (core/href "http://www.nihr.ac.uk/05-development/newsroom/blog/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
                                                :target "_blank") "National Institute for Health Research (NIHR) blog"] "."]
                                [:li [:a (core/href "https://www.statslife.org.uk/news/2919-new-online-tool-makes-heart-surgery-data-more-accessible"
                                                    :target "_blank") "The Royal Statistical Society"]
@@ -1163,6 +1163,8 @@
                                 [:a (core/href "http://www.mumsnet.com/Talk/guest_posts/2699023-Guest-post-I-hope-weve-helped-others-preparing-for-their-childs-heart-surgery" :target "_blank") "Mumsnet guest post:"] " “I hope we've helped others preparing for their child's heart surgery” by Alex Smith"]
                                [:li
                                 [:a (core/href "https://understandinguncertainty.org/exploring-language-chance-sensitive-context" :target "_blank") "Understanding Uncertainty:"] " “Exploring the language of chance in a sensitive context” by David Spiegelhalter"]
+                               [:li
+                                [:a (core/href "https://www.youtube.com/watch?v=-NebRpbMTK8" :target "_blank") "Communicating Risks Reactively:"] " A video of Mike Pearson's talk about the development of this site which was presented at Euroclojure 2016."]
                                ]
                               ]
                }]}

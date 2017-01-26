@@ -42,6 +42,12 @@ node_modules/
 .idea/encodings.xml
 .idea/misc.xml
 
+#Plugins
+.idea/markdown-navigator.xml
+.idea/markdown-navigator/
+
+
+
 bower_components
 resources/docs/eganimation_narrated\ v2.pptx
 resources/docs/animation/private
