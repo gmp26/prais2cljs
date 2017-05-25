@@ -1141,7 +1141,7 @@
                                 [:a (core/href "http://www.amrc.org.uk/blog/involving-parents-and-patients-in-public-engagement-a-humbling-and-invaluable-experience"
                                                :target "_blank") "the Association of Medical Research Charities’s blog"] "."]
                                [:li "Christina shared her insights from the experience and provides tips for other researchers in a "
-                                [:a (core/href "http://www.nihr.ac.uk/05-development/newsroom/blog/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
+                                [:a (core/href "https://www.nihr.ac.uk/05-development/newsroom/blog-DO-NOT-DELETE/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
                                                :target "_blank") "National Institute for Health Research (NIHR) blog"] "."]
                                [:li [:a (core/href "https://www.statslife.org.uk/news/2919-new-online-tool-makes-heart-surgery-data-more-accessible"
                                                    :target "_blank") "The Royal Statistical Society"]
