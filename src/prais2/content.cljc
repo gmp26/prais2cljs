@@ -92,8 +92,44 @@
 ;; todo: Add Title into dataset
 ;;;
 ;;(Row. "Belfast, Royal Victoria Hospital"	                "RVB"	54.594167 -5.953666 204	        2 	202	99.0 	95.1	96.6  100     100.0 nil)
+
+;; (defrecord Row [h-name h-code h-lat h-lon n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high observed])
+
+(comment
+  ;From 2013-2016 spreadsheet
+  ;HSC 332 8 324 97.6  95.5  96.7  99.4  100.0
+  ;FRE 657 18 639 97.3  94.7  95.6  98.2  98.8
+  ;GRL 669 11 658 98.4  96.3  97.0  99.1  99.6
+  ;RHS 727 21 706 97.1  96.6  97.1  99.0  99.4
+  ;BRC 841 15 826 98.2  96.6  97.1  98.9  99.4
+  ;SGH 872 21 851 97.6  96.0  96.7  98.6  99.1
+  ;OLS 942 19 923 98.0  96.6  97.1  98.9  99.4
+  ;ACH 1071 9 1062 99.2  96.5  97.0  98.7  99.2
+  ;LGI 1089 17 1072 98.4  97.2  97.7  99.2  99.5
+  ;NHB 1126 28 1098 97.5  96.4  97.0  98.7  99.1
+  ;GUY 1248 43 1205 96.6  95.9  96.5  98.2  98.6
+  ;BCH 1381 37 1344 97.3  96.0  96.5  98.2  98.6
+  ;GOS 1894 17 1877 99.1  97.0  97.5  98.7  99.0
+  )
+
 (def datasources
-  {:2015
+  {:2016
+   [
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 332 8 324 97.6  95.5  96.7  99.4  100.0 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 669 11 658 98.4  96.3  97.0  99.1  99.6 nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643 657 18 639 97.3  94.7  95.6  98.2  98.8 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357 727 21 706 97.1  96.6  97.1  99.0  99.4 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014 841 15 826 98.2  96.6  97.1  98.9  99.4 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731 872 21 851 97.6  96.0  96.7  98.6  99.1 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870 1089 17 1072 98.4  97.2  97.7  99.2  99.5 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399 942 19 923 98.0  96.6  97.1  98.9  99.4 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759 1126 28 1098 97.5  96.4  97.0  98.7  99.1 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560 1071 9 1062 99.2  96.5  97.0  98.7  99.2 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835  1248 43 1205 96.6  95.9  96.5  98.2  98.6 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1381 37 1344 97.3  96.0  96.5  98.2  98.6 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 894 17 1877 99.1  97.0  97.5  98.7  99.0 nil)]
+
+   :2015
    [
     (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 418 5 413 98.8 94.5 95.7 98.8 99.3 nil)
     (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 607 14 593 97.7 95.2 96.0 98.5 99.2 nil)
@@ -509,21 +545,21 @@
 (def faq-sections
   [{:section "Background"
     :faqs
-             [{:title    "Why do some children need heart surgery?"
+             [{:title       "Why do some children need heart surgery?"
                :short-title "Why the need?"
-               :glossary []
+               :glossary    []
                :body
-                         [:div
-                          [:p "About 6500—7500 babies are born with a heart defect (called congenital heart disease) in the UK and
+                            [:div
+                             [:p "About 6500—7500 babies are born with a heart defect (called congenital heart disease) in the UK and
        Ireland every year. Congenital heart disease covers a wide range of problems from the relatively minor (such as a
        small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of
        all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also
        develop problems with their heart as they grow up which require hospital care (called acquired heart disease). "]
-                          [:p "Read more about "
-                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank")
-                            "different heart conditions"] " and caring for children with heart conditions on the "
-                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank")
-                            "Children’s Heart Federation’s website."]]]}
+                             [:p "Read more about "
+                              [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank")
+                               "different heart conditions"] " and caring for children with heart conditions on the "
+                              [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank")
+                               "Children’s Heart Federation’s website."]]]}
 
 
 
@@ -810,20 +846,20 @@
                :body         nil
                }
 
-              {:title        "Where did the formula used to calculate the predicted range come from?"
-               :body nil
+              {:title    "Where did the formula used to calculate the predicted range come from?"
+               :body     nil
 
-                             :glossary []
-                             :short-answer
-               [:div
-                [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
+               :glossary []
+               :short-answer
+                         [:div
+                          [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
        University College London called PRAiS (Partial Risk Adjustment in Surgery - see also the "
-                 [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
+                           [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
         the " [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "academic
         literature"] " if you are interested in learning more details."]
 
-                (comment "*** picture of formula churning away at PRAIS risk factors?***")
-                ]}]}
+                          (comment "*** picture of formula churning away at PRAIS risk factors?***")
+                          ]}]}
 
 
    {:section "Limitations of these results and the data"

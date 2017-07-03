@@ -558,7 +558,7 @@
     {:value     (name (:datasource (rum.core/react core/app)))
      :on-change #(put! event-bus [:change-datasource (keyword (.-value (.-target %)) #_(.. % -target -value))])}
     (map-indexed key-with
-                 (for [year (range 2013 2016)]
+                 (for [year (range 2013 2017)]
                    (key-option year)))]
    ])
 
@@ -694,7 +694,7 @@
         selected-row (h-code ((rows-by-code datasource)))]
 
     [:.data-summary
-     [:p {:style {:color "orange"}} " Hover over or tap on the chart areas for more detail on this hospital. "]
+     [:p {:key 0 :style {:color "orange"}} " Hover over or tap on the chart areas for more detail on this hospital. "]
      [:p {:key 1} "The hospital performed "
       [:b (:n-ops selected-row) "  operations. "]]
      [:p {:key 2} "Measured 30 days after surgery, "

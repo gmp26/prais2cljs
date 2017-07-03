@@ -61,20 +61,22 @@
   [:.row
 
    [:.col-sm-offset-1.col-sm-10
-    [:h1 "Explore the data"]
+    [:h1 {:key 1} "Explore the data"]
 
-    [:p "In this section you can explore the overall hospital survival statistics published by the National
+    [:p {:key 2} "In this section you can explore the overall hospital survival statistics published by the National
                  Congenital Heart Disease Audit (" [:a (core/href "http://www.ucl.ac.uk/nicor/audits/congenital" :target "_blank") "NCHDA"] ").
                  The data covers all hospitals in the UK and Ireland that performed heart surgery in children
                  (0-16 years old). NCHDA update the data annually and each report covers a 3 year period."]
 
-    [:p "Data on this site comes from the NCHDA annual reports, all of which can be "
+    [:p {:key 3} "Data on this site comes from the NCHDA annual reports, all of which can be "
      [:a (core/href "https://nicor4.nicor.org.uk/chd/an_paeds.nsf/vwContent/Analysis Documents?Opendocument" :target "_blank")
       "downloaded from the NCHDA website."]]
 
-    [:ul.nav.nav-pills {:role "tablist"}
+    [:ul.nav.nav-pills {:key 4
+                        :role "tablist"}
 
-     [:li {:class (active? :map)
+     [:li {:key 1
+           :class (active? :map)
            :role  "presentation"}
       [:a#map-tab (core/href "data/map"
                              :aria-controls "mapped-data"
@@ -82,7 +84,8 @@
                              :on-click #(core/click->event-bus % :data :map "data/map"))
        [:i.fa.fa-map-marker] " Choose a hospital"]]
 
-     [:li {:class (active? :table)
+     [:li {:key 2
+           :class (active? :table)
            :role  "presentation"}
       [:a#table-tab (core/href "data/table"
                                :aria-controls "data-table"
@@ -90,7 +93,8 @@
                                :on-click #(core/click->event-bus % :data :table "data/table"))
        [:i.fa.fa-table] " All hospitals"]]
 
-     [:li {:class (active? :animation)
+     [:li {:key 3
+           :class (active? :animation)
            :role  "presentation"}
       [:a#map-tab (core/href "data/animation"
                              :aria-controls "mapped-data"
@@ -101,7 +105,7 @@
      ]
 
     (when (not= :animation (:section (rum.core/react core/app)))
-      [:p.post-tab "Use the drop down box to change reporting periods. You can watch our "
+      [:p.post-tab {:key 5} "Use the drop down box to change reporting periods. You can watch our "
        [:a (core/href "data/animation"
                       :on-click
                       #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
@@ -220,7 +224,7 @@
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
-                     (render-faqs [3 0])                    ;:todo replace with real params
+                     (render-faqs [3 0])
                      (chrome/footer)]))
 
      :else
