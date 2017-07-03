@@ -879,7 +879,7 @@
                               [:p "Any statistical formula has to be developed on existing data and so the data will be typically at least a
        year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected
        (for instance more complete data) or new methods of surgical or medical management. Often, these statistical
-       formulas are updated every few years with more up to date information (in 2016, we updated PRAiS for the third time). "]]}
+       formulas are updated every few years with more up to date information (in 2016, we updated the PRAiS statistical model for the third time). "]]}
 
 
               {:title        "How reliable are the data?"
@@ -926,7 +926,7 @@
                :glossary     []
                :body
                              [:div
-                              [:p "Currently (as of 2016), national audit only monitors what happens shortly after surgery (30 days). These data cannot
+                              [:p "As of 2017, national audit only monitors what happens shortly after surgery (30 days). These data cannot
        tell us about longer term (e.g. 5 year) survival, or other outcomes such as post-surgery complication rates or
        the impact of surgery on the child or their family. There is a lot of "
                                [:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
