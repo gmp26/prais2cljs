@@ -99,36 +99,36 @@
   ;From 2013-2016 spreadsheet
 
   ;HSC	332	 8	324	 97.6	95.5	96.7	99.4	100.0
-  ;GRL	669	 11	658	 98.4	96.3	97.0	99.1	99.6
+  ;GRL	671	 11	660	 98.4	96.3	97.0	99.1	99.6
   ;FRE	657	 18	639	 97.3	94.7	95.6	98.2	98.8
-  ;RHS	727	 21	706	 97.1	96.5	97.2	99.0	99.4
+  ;RHS	724	 20	704	 97.2	96.5	97.2	99.0	99.4
   ;BRC	841	 15	826	 98.2	96.6	97.1	98.9	99.4
   ;SGH	872	 21	851	 97.6	96.0	96.7	98.6	99.1
-  ;LGI	1089 17	1072 98.4	97.2	97.7	99.2	99.5
-  ;OLS	942	 19	923	 98.0	96.6	97.1	98.9	99.3
+  ;LGI	1086 17	1069 98.4	97.2	97.7	99.2	99.5
+  ;OLS	947	 20	927	 97.9	96.6	97.1	98.9	99.3
   ;NHB	1126 28	1098 97.5	96.4	97.0	98.7	99.1
-  ;ACH	1071 9	1062 99.2	96.4	97.0	98.7	99.2
-  ;GUY	1248 43	1205 96.6	95.9	96.5	98.2	98.6
+  ;ACH	1068 9	1059 99.2	96.4	97.0	98.7	99.2
+  ;GUY	1247 44	1203 96.5	95.9	96.5	98.2	98.6
   ;BCH	1381 37	1344 97.3	96.0	96.5	98.2	98.6
-  ;GOS	1894 17	1877 99.1	97.0	97.5	98.7	99.0
+  ;GOS	1894 16	1878 99.2	97.0	97.5	98.7	99.0
   )
 
 (def datasources
   {:2016
    [
-    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        332	 8	324	  97.6	95.5	96.7	99.4	100.0 nil)
-    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       669	 11	658	  98.4	96.3	97.0	99.1	99.6 nil)
-    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         657	 18	639	  97.3	94.7	95.6	98.2	98.8 nil)
-    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                727	 21	706	  97.1	96.5	97.2	99.0	99.4 nil)
-    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 841	 15	826	  98.2	96.6	97.1	98.9	99.4 nil)
-    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           872	 21	851	  97.6	96.0	96.7	98.6	99.1 nil)
-    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             1089 17	1072	98.4	97.2	97.7	99.2	99.5 nil)
-    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              942	 19	923	  98.0	96.6	97.1	98.9	99.3 nil)
-    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     1126 28	1098	97.5	96.4	97.0	98.7	99.1 nil)
-    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1071 9	1062	99.2	96.4	97.0	98.7	99.2 nil)
-    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1248 43	1205	96.6	95.9	96.5	98.2	98.6 nil)
-    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1381 37	1344	97.3	96.0	96.5	98.2	98.6 nil)
-    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1894 17	1877	99.1	97.0	97.5	98.7	99.0 nil)]
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        332	 8	324	 97.6	95.5	96.7	99.4	100.0  nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         657	 18	639	 97.3	94.7	95.6	98.2	98.8 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       671	 11	660	 98.4	96.3	97.0	99.1	99.6 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                724	 20	704	 97.2	96.5	97.2	99.0	99.4 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 841	 15	826	 98.2	96.6	97.1	98.9	99.4 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           872	 21	851	 97.6	96.0	96.7	98.6	99.1 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              947	 20	927	 97.9	96.6	97.1	98.9	99.3 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1068 9	1059 99.2	96.4	97.0	98.7	99.2 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             1086 17	1069 98.4	97.2	97.7	99.2	99.5 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     1126 28	1098 97.5	96.4	97.0	98.7	99.1 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1247 44	1203 96.5	95.9	96.5	98.2	98.6 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1381 37	1344 97.3	96.0	96.5	98.2	98.6 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1894 16	1878 99.2	97.0	97.5	98.7	99.0 nil)]
 
    :2015
    [
@@ -1140,6 +1140,11 @@
        psychology experiments and other feedback. We user tested everything from layout to colours to language to page
        navigation and very little remains from the original draft content. "]
 
+                          [:p "Sense about Science have also produced a "
+                           [:a (core/href "http://senseaboutscience.org/activities/public-engagement-guide/"
+                                          :target "_blank") "free practical guide"] " for researchers on how to engage the public
+                                based on the model we used for this website."]
+
                           [:p "Looking back, we cannot thank all those who gave feedback enough – this website is immeasurably better with
        their input than it would otherwise have been. Any niggles that remain are our responsibility alone.  "]
 
@@ -1164,6 +1169,7 @@
                                 do better.” by Christina Pagel, UCL and David Spiegelhalter, University of Cambridge."]]
                               [:h4 {:style {:margin-left "40px"}} "Other coverage"]
                               [:ul.charities
+                               [:li [:a (core/href "" :target "_blank") "The NIHR Blog:"] " “Five steps to help you involve the public in communicating research”"]
                                [:li [:a (core/href "http://www.bmj.com/content/353/bmj.i3539" :target "_blank") "The BMJ/News:"]
                                 " “Children’s heart surgery website aims to end confusion over survival rates”"]
                                [:li [:a (core/href "http://www.thelancet.com/pdfs/journals/lancet/PIIS0140-6736(16)30888-1.pdf"
