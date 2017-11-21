@@ -1169,7 +1169,8 @@
                                 do better.” by Christina Pagel, UCL and David Spiegelhalter, University of Cambridge."]]
                               [:h4 {:style {:margin-left "40px"}} "Other coverage"]
                               [:ul.charities
-                               [:li [:a (core/href "" :target "_blank") "The NIHR Blog:"] " “Five steps to help you involve the public in communicating research”"]
+                               [:li "Sense about Science discuss their new public engagement guide based on this website work " [:a (core/href "https://www.nihr.ac.uk/blogs/five-steps-to-help-you-involve-the-public-in-communicating-research/7359" :target "_blank") " in this NIHR Blog."]]
+                               [:li [:a (core/href "https://www.nihr.ac.uk/blogs/my-journey-through-the-five-steps-of-public-engagement-an-academics-story/7429 ") "Christina Pagel discusses"] " the five steps of public engagement and how they applied to this website in this NIHR blog."]
                                [:li [:a (core/href "http://www.bmj.com/content/353/bmj.i3539" :target "_blank") "The BMJ/News:"]
                                 " “Children’s heart surgery website aims to end confusion over survival rates”"]
                                [:li [:a (core/href "http://www.thelancet.com/pdfs/journals/lancet/PIIS0140-6736(16)30888-1.pdf"
