@@ -92,8 +92,45 @@
 ;; todo: Add Title into dataset
 ;;;
 ;;(Row. "Belfast, Royal Victoria Hospital"	                "RVB"	54.594167 -5.953666 204	        2 	202	99.0 	95.1	96.6  100     100.0 nil)
+
+;; (defrecord Row [h-name h-code h-lat h-lon n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high observed])
+
+(comment
+  ;From 2013-2016 spreadsheet
+
+  ;HSC	332	 8	324	 97.6	95.5	96.7	99.4	100.0
+  ;GRL	671	 11	660	 98.4	96.3	97.0	99.1	99.6
+  ;FRE	657	 18	639	 97.3	94.7	95.6	98.2	98.8
+  ;RHS	724	 20	704	 97.2	96.5	97.2	99.0	99.4
+  ;BRC	841	 15	826	 98.2	96.6	97.1	98.9	99.4
+  ;SGH	872	 21	851	 97.6	96.0	96.7	98.6	99.1
+  ;LGI	1086 17	1069 98.4	97.2	97.7	99.2	99.5
+  ;OLS	947	 20	927	 97.9	96.6	97.1	98.9	99.3
+  ;NHB	1126 28	1098 97.5	96.4	97.0	98.7	99.1
+  ;ACH	1068 9	1059 99.2	96.4	97.0	98.7	99.2
+  ;GUY	1247 44	1203 96.5	95.9	96.5	98.2	98.6
+  ;BCH	1381 37	1344 97.3	96.0	96.5	98.2	98.6
+  ;GOS	1894 16	1878 99.2	97.0	97.5	98.7	99.0
+  )
+
 (def datasources
-  {:2015
+  {:2016
+   [
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        332	 8	324	 97.6	95.5	96.7	99.4	100.0  nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         657	 18	639	 97.3	94.7	95.6	98.2	98.8 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       671	 11	660	 98.4	96.3	97.0	99.1	99.6 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                724	 20	704	 97.2	96.5	97.2	99.0	99.4 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 841	 15	826	 98.2	96.6	97.1	98.9	99.4 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           872	 21	851	 97.6	96.0	96.7	98.6	99.1 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              947	 20	927	 97.9	96.6	97.1	98.9	99.3 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1068 9	1059 99.2	96.4	97.0	98.7	99.2 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             1086 17	1069 98.4	97.2	97.7	99.2	99.5 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     1126 28	1098 97.5	96.4	97.0	98.7	99.1 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1247 44	1203 96.5	95.9	96.5	98.2	98.6 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1381 37	1344 97.3	96.0	96.5	98.2	98.6 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1894 16	1878 99.2	97.0	97.5	98.7	99.0 nil)]
+
+   :2015
    [
     (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 418 5 413 98.8 94.5 95.7 98.8 99.3 nil)
     (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 607 14 593 97.7 95.2 96.0 98.5 99.2 nil)
@@ -509,21 +546,21 @@
 (def faq-sections
   [{:section "Background"
     :faqs
-             [{:title    "Why do some children need heart surgery?"
+             [{:title       "Why do some children need heart surgery?"
                :short-title "Why the need?"
-               :glossary []
+               :glossary    []
                :body
-                         [:div
-                          [:p "About 6500—7500 babies are born with a heart defect (called congenital heart disease) in the UK and
+                            [:div
+                             [:p "About 6500—7500 babies are born with a heart defect (called congenital heart disease) in the UK and
        Ireland every year. Congenital heart disease covers a wide range of problems from the relatively minor (such as a
        small hole in the heart) to more severe conditions where a child needs specialist hospital care. About half of
        all children born with a heart defect will need heart surgery at some stage in their childhood. Children can also
        develop problems with their heart as they grow up which require hospital care (called acquired heart disease). "]
-                          [:p "Read more about "
-                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank")
-                            "different heart conditions"] " and caring for children with heart conditions on the "
-                           [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank")
-                            "Children’s Heart Federation’s website."]]]}
+                             [:p "Read more about "
+                              [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/heart-conditions/" :target "_blank")
+                               "different heart conditions"] " and caring for children with heart conditions on the "
+                              [:a (core/href "http://www.chfed.org.uk/how-we-help/information-service/caring-for-heart-children/" :target "_blank")
+                               "Children’s Heart Federation’s website."]]]}
 
 
 
@@ -810,20 +847,20 @@
                :body         nil
                }
 
-              {:title        "Where did the formula used to calculate the predicted range come from?"
-               :body nil
+              {:title    "Where did the formula used to calculate the predicted range come from?"
+               :body     nil
 
-                             :glossary []
-                             :short-answer
-               [:div
-                [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
+               :glossary []
+               :short-answer
+                         [:div
+                          [:p "The national audit body uses a formula developed by researchers at Great Ormond Street Hospital and
        University College London called PRAiS (Partial Risk Adjustment in Surgery - see also the "
-                 [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
+                           [:a (core/href "intro") "What, why, how?"] " section). The underlying methodology of this method is published in
         the " [:a (core/href "https://www.ucl.ac.uk/operational-research/AnalysisTools/PRAiS" :target "_blank") "academic
         literature"] " if you are interested in learning more details."]
 
-                (comment "*** picture of formula churning away at PRAIS risk factors?***")
-                ]}]}
+                          (comment "*** picture of formula churning away at PRAIS risk factors?***")
+                          ]}]}
 
 
    {:section "Limitations of these results and the data"
@@ -843,7 +880,7 @@
                               [:p "Any statistical formula has to be developed on existing data and so the data will be typically at least a
        year out of date. So risk adjustment cannot adjust or account for future changes to the way data is collected
        (for instance more complete data) or new methods of surgical or medical management. Often, these statistical
-       formulas are updated every few years with more up to date information (in 2016, we updated PRAiS for the third time). "]]}
+       formulas are updated every few years with more up to date information (in 2016, we updated the PRAiS statistical model for the third time). "]]}
 
 
               {:title        "How reliable are the data?"
@@ -890,7 +927,7 @@
                :glossary     []
                :body
                              [:div
-                              [:p "Currently (as of 2016), national audit only monitors what happens shortly after surgery (30 days). These data cannot
+                              [:p "As of 2017, national audit only monitors what happens shortly after surgery (30 days). These data cannot
        tell us about longer term (e.g. 5 year) survival, or other outcomes such as post-surgery complication rates or
        the impact of surgery on the child or their family. There is a lot of "
                                [:a (core/href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors/research/complications-after-heart-surgery-children"
@@ -1103,6 +1140,11 @@
        psychology experiments and other feedback. We user tested everything from layout to colours to language to page
        navigation and very little remains from the original draft content. "]
 
+                          [:p "Sense about Science have also produced a "
+                           [:a (core/href "http://senseaboutscience.org/activities/public-engagement-guide/"
+                                          :target "_blank") "free practical guide"] " for researchers on how to engage the public
+                                based on the model we used for this website."]
+
                           [:p "Looking back, we cannot thank all those who gave feedback enough – this website is immeasurably better with
        their input than it would otherwise have been. Any niggles that remain are our responsibility alone.  "]
 
@@ -1127,6 +1169,8 @@
                                 do better.” by Christina Pagel, UCL and David Spiegelhalter, University of Cambridge."]]
                               [:h4 {:style {:margin-left "40px"}} "Other coverage"]
                               [:ul.charities
+                               [:li "Sense about Science discuss their new public engagement guide based on this website work " [:a (core/href "https://www.nihr.ac.uk/blogs/five-steps-to-help-you-involve-the-public-in-communicating-research/7359" :target "_blank") " in this NIHR Blog."]]
+                               [:li [:a (core/href "https://www.nihr.ac.uk/blogs/my-journey-through-the-five-steps-of-public-engagement-an-academics-story/7429 ") "Christina Pagel discusses"] " the five steps of public engagement and how they applied to this website in this NIHR blog."]
                                [:li [:a (core/href "http://www.bmj.com/content/353/bmj.i3539" :target "_blank") "The BMJ/News:"]
                                 " “Children’s heart surgery website aims to end confusion over survival rates”"]
                                [:li [:a (core/href "http://www.thelancet.com/pdfs/journals/lancet/PIIS0140-6736(16)30888-1.pdf"
@@ -1141,7 +1185,7 @@
                                 [:a (core/href "http://www.amrc.org.uk/blog/involving-parents-and-patients-in-public-engagement-a-humbling-and-invaluable-experience"
                                                :target "_blank") "the Association of Medical Research Charities’s blog"] "."]
                                [:li "Christina shared her insights from the experience and provides tips for other researchers in a "
-                                [:a (core/href "http://www.nihr.ac.uk/newsroom/blog/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
+                                [:a (core/href "https://www.nihr.ac.uk/05-development/newsroom/blog-DO-NOT-DELETE/insights-on-building-a-website-to-help-people-interpret-childrens-heart-surgery-data.htm"
                                                :target "_blank") "National Institute for Health Research (NIHR) blog"] "."]
                                [:li [:a (core/href "https://www.statslife.org.uk/news/2919-new-online-tool-makes-heart-surgery-data-more-accessible"
                                                    :target "_blank") "The Royal Statistical Society"]
@@ -1163,6 +1207,8 @@
                                 [:a (core/href "http://www.mumsnet.com/Talk/guest_posts/2699023-Guest-post-I-hope-weve-helped-others-preparing-for-their-childs-heart-surgery" :target "_blank") "Mumsnet guest post:"] " “I hope we've helped others preparing for their child's heart surgery” by Alex Smith"]
                                [:li
                                 [:a (core/href "https://understandinguncertainty.org/exploring-language-chance-sensitive-context" :target "_blank") "Understanding Uncertainty:"] " “Exploring the language of chance in a sensitive context” by David Spiegelhalter"]
+                               [:li
+                                [:a (core/href "https://www.youtube.com/watch?v=-NebRpbMTK8" :target "_blank") "Communicating Risks Reactively:"] " A video of Mike Pearson's talk about the development of this site which was presented at Euroclojure 2016."]
                                ]
                               ]
                }]}

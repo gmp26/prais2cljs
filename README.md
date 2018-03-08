@@ -20,7 +20,7 @@ This is a ClojureScript project. To create a development environment from scratc
 
 * A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
 * Leiningen. Follow [these installation instructions](http://leiningen.org/), which will provide the `lein` command.
-* A suitable text editor. I use emacs with an [emacs-live set up](http://overtone.github.io/emacs-live/) for clojurescript development. You may prefer Sublime or LightTable or IntelliJ with the Cursive plugin for Clojure. 
+* A suitable text editor. I originally used emacs with an [emacs-live set up](http://overtone.github.io/emacs-live/) for clojurescript development, but later switched to IntelliJ community edition with the Cursive plugin. Another good alternative is the Atom editor with the Proto-REPL plugin.
 >
 Once you have leiningen installed, get an interactive development environment for running by typing:
 ```
@@ -58,23 +58,23 @@ To create a production build run:
 
 Test 
 ----
-Test by serving out the resources/public folder (e.g. with `cd resources/public & python -m'SimpleHTTPServer'` and then viewing localhost:8000).
+Test by serving out the resources/public folder (e.g. with python 2, `cd resources/public & python -m'SimpleHTTPServer'` and then viewing localhost:8000. In python 3, `cd resources/public & python -m'http.server'`).
 
 Deployment
 ----------
 
 Upload and serve the resources/public folder. 
 
-You'll probably want to limit the client-side app to just the interactive parts of the current app for SEO purposes.
-
 ## Other dependencies
 
 The project uses ReactJS to provide a fast virtual DOM, together with the Reagent flavour
 of [tonsky/rum](https://github.com/tonsky/rum) to drive React. To create an initial fresh, empty figwheel/Rum/ReactJS project I used [this Leiningen template](https://github.com/gmp26/fwrum). See project.clj for details.
 
+If upgrading dependencies, pay attention to the latest versions of React that Rum supports.
+
 ## License
 
-Copyright © 2014 FIXME
+Copyright © 2014 University of Cambridge
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
 
