@@ -45,6 +45,8 @@ node_modules/
 #Plugins
 .idea/markdown-navigator.xml
 .idea/markdown-navigator/
+.idea/markdown-exported-files.xml
+
 
 bower_components
 resources/docs/eganimation_narrated\ v2.pptx
