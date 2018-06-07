@@ -80,7 +80,7 @@
                     "&table-selection=" (:selected-h-code app-state)
                     "&map-selection=" (:map-h-code app-state)
                     )]
-    (prn "params = " params)
+    ;(prn "params = " params)
     #_(POST sheets-logger-app
           :params params
           :handler sheets-success-handler

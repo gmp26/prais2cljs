@@ -31,4 +31,5 @@
 ;; optionally do something on app reload
 ;;
 (defn on-js-reload []
-  (prn "load fps"))
+  ;(prn "load fps")
+  )

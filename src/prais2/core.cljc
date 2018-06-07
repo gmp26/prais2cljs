@@ -27,20 +27,20 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(defonce app (atom {:datasource               :2016
-                    :pull-out                 false
-                    :page                     :home
-                    :section                  nil
-                    :sort-by                  nil
-                    :sort-ascending           true
-                    :slider-axis-value        1.0
-                    :detail-slider-axis-value 1.0
-                    :chart-state              3
-                    :theme                    12
-                    :selected-h-code          nil
-                    :map-h-code               nil
-                    :show-nicor               false
-                    :need-a-push              false}))
+(def app (atom {:datasource               :2017
+                :pull-out                 false
+                :page                     :home
+                :section                  nil
+                :sort-by                  nil
+                :sort-ascending           true
+                :slider-axis-value        1.0
+                :detail-slider-axis-value 1.0
+                :chart-state              3
+                :theme                    12
+                :selected-h-code          nil
+                :map-h-code               nil
+                :show-nicor               false
+                :need-a-push              false}))
 
 ;;
 ;; routing prefix
@@ -81,7 +81,7 @@
            [event dispatch-key dispatch-value token]
            (when token
              (do
-               (prn (str "pushing " token))
+               ;(prn (str "pushing " token))
                ; Filter this for URL-only events?
                ;; No.
                ;; If we are here, then we are routing on an internal click
@@ -89,11 +89,12 @@
                ;; So it is safe to push.
                ;;
                (.pushState js/history [] token (token->url token))))
-           (when-not token
-             (prn "NIL TOKEN SENT TO core/click-event-bus"))
+           #_(when-not token
+             (prn "NIL TOKEN SENT TO core/click-event-bus")
+             )
            (.preventDefault event)
            (.stopPropagation event)
-           (prn (str "click->event-bus " dispatch-key " " dispatch-value))
+           ;(prn (str "click->event-bus " dispatch-key " " dispatch-value))
            (put! event-bus [dispatch-key dispatch-value])
 
            ))
@@ -148,7 +149,7 @@
 #?(:cljs
    (defn internal-link-handler [token before-hook]
      (fn [event]
-       (prn (str "internal-link-handler " token))
+       ;(prn (str "internal-link-handler " token))
        (when before-hook (before-hook))
        (let [[dispatch-key dispatch-value] (token-dispatch-table token)]
          (click->event-bus event dispatch-key dispatch-value token)))
@@ -307,16 +308,16 @@
                                       title-postfix
                                       (title-postfix state))))
 
-                        state)
-                 :clj identity)})
+                         state)
+                 :clj  identity)})
 ;;
 ;; change page metadata mixin
 ;;
 (defn update-description [description]
   {:did-mount #?(:cljs (fn [state]
                          (set! (.-content (meta-description))
-                         (if (string? description)
-                           description
-                           (description state)))
+                               (if (string? description)
+                                 description
+                                 (description state)))
                          state)
-                 :clj identity)})
+                 :clj  identity)})

@@ -211,7 +211,7 @@
 
      (= page :faqs)
      (do
-       (prn "section = " section)
+       ;(prn "section = " section)
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -220,7 +220,7 @@
 
      (= page :faq)
      (do
-       (prn "section = " section)
+       ;(prn "section = " section)
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -229,7 +229,7 @@
 
      :else
      (do
-       (prn "Route mismatch" page)
+       ;(prn "Route mismatch" page)
        (chrome/header)
        (render-404)
        (chrome/footer)))])
@@ -237,7 +237,7 @@
 
 (rum.core/defc render-page < rum.core/reactive []
   (let [{:keys [page section]} (rum.core/react core/app)]
-    (prn "render page " page section)
+    ;(prn "render page " page section)
     (page-choice page section)))
 
 
@@ -284,7 +284,7 @@
   []
 
   (dispatch event-bus-pub :reloading
-            (fn [_] (prn ":reloading event - no-op")))
+            (fn [_] nil #_(prn ":reloading event - no-op")))
 
   (dispatch event-bus-pub :slider-axis-value
             (fn [[_ slider-value]]
@@ -298,7 +298,7 @@
             (fn [[_ column-key]] (data/handle-sort core/app column-key)))
 
   (dispatch event-bus-pub :info-clicked
-            (fn [[_ column-key]] (prn (str "clicked on info for column " column-key))))
+            (fn [[_ column-key]] nil #_(prn (str "clicked on info for column " column-key))))
 
   (dispatch event-bus-pub :change-colour-map
             (fn [[_ value]]
@@ -340,32 +340,32 @@
 
   (dispatch event-bus-pub :home
             (fn [[_ section]]
-              (prn "nav to home " section)
+              #_(prn "nav to home " section)
               (swap! core/app #(assoc % :page :home :section section))))
 
   (dispatch event-bus-pub :intro
             (fn [[_ section]]
-              (prn "nav to intro " section)
+              #_(prn "nav to intro " section)
               (swap! core/app #(assoc % :page :intro :section section))))
 
   (dispatch event-bus-pub :data
             (fn [[_ section]]
-              (prn "nav to data " section)
+              #_(prn "nav to data " section)
               (swap! core/app #(assoc % :page :data
                                         :section section
                                         :detail-slider-axis-value 1))))
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]
-              (prn "nav to faqs " section)
+              #_(prn "nav to faqs " section)
               (swap! core/app #(assoc % :page :faqs :section section))))
 
   (dispatch event-bus-pub :faq
             (fn [[_ faq-ref]]
-              (prn faq-ref)
+              #_(prn faq-ref)
               (let [[sec id] faq-ref]
-                (do (prn "nav to faq " faq-ref " = " sec "," id)
-                    (prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
+                (do #_(prn "nav to faq " faq-ref " = " sec "," id)
+                    #_(prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
                     (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
 
   (comment
@@ -378,7 +378,7 @@
                 #_(reset! logger/log-state-index nil)))
 
     (dispatch log-bus-pub :undo
-              (fn [_] #_(prn "undoing: not yet")
+              (fn [_] (prn "undoing: not yet")
                 #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
     (dispatch log-bus-pub :redo

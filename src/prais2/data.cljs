@@ -513,29 +513,6 @@
 (rum.core/defc integer-option < rum.core/static [n]
   [:option {:value n} n])
 
-#_(rum.core/defc chart-state-dropdown < rum.core/reactive [event-bus]
-    [:.form-group.col-md-2
-     [:label-for {:for "chart-selector"} "Chart State "]
-     [:select#chart-selector.form-control.input-sm
-      {
-       :value     (:chart-state (rum.core/react core/app))
-       :on-change #(put! event-bus [:change-chart-state (.. % -target -value)])}
-      (map-indexed key-with
-                   (for [n (range (count chart-states))]
-                     (integer-option n)))
-      ]]
-    )
-
-#_(rum.core/defc theme-dropdown < rum.core/reactive [event-bus]
-    [:.form-group.col-md-1
-     [:label-for {:for "colour-map-selector"} "Theme "]
-     [:select#colour-map-selector.form-control.input-sm
-      {
-       :value     (:theme (rum.core/react core/app))
-       :on-change #(put! event-bus [:change-colour-map (.. % -target -value)])}
-      (map-indexed key-with
-                   (for [n (range (count content/colour-map-options))]
-                     (integer-option n)))]])
 
 (defn year-range [year m1 m2]
   (let [y1 (- year 3)]
@@ -556,32 +533,11 @@
    [:label-for {:for "data-selector"} "Change reporting period"]
    [:select#data-selector.form-control.input-sm
     {:value     (name (:datasource (rum.core/react core/app)))
-     :on-change #(put! event-bus [:change-datasource (keyword (.-value (.-target %)) #_(.. % -target -value))])}
+     :on-change #(put! event-bus [:change-datasource (keyword (.-value (.-target %)))])}
     (map-indexed key-with
-                 (for [year (range 2013 2017)]
+                 (for [year (range 2013 2018)]
                    (key-option year)))]
    ])
-
-#_(rum.core/defc nicor-checkbox < rum.core/reactive []
-    [:.form-group.col-sm-6
-     [:label-for {:for "nicor-check"} "Show Nicor links "]
-     [:input {:type      "checkbox"
-              :checked   (:show-nicor (rum.core/react core/app))
-              :on-change #(swap! core/app update :show-nicor not)
-              }]])
-
-#_(rum.core/defc option-menu < rum.core/reactive [event-bus]
-    [:nav.navbar.navbar-inverse.table-container
-     [:.container-fluid
-      [:navbar-form.form-inline.row
-       [:.col-sm-12
-        (map-indexed key-with
-                     [(datasource-dropdown event-bus)
-                      (nicor-checkbox)
-                      (theme-dropdown event-bus)
-                      (chart-state-dropdown event-bus)])]]]])
-
-
 
 ;;
 ;; configure title according to dataset

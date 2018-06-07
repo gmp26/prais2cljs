@@ -175,7 +175,7 @@
 
       (when short-answer
         (do
-          (prn "rendering short answer for section " section-ix "." ix)
+          ;(prn "rendering short answer for section " section-ix "." ix)
           (render-short-answer short-answer)))
       [:div.body {:key 2}
        (when (= [4 0] faq-ref)
@@ -183,7 +183,7 @@
        (:body faq)]
       (when (> (count glossary) 0)
         (do
-          (prn "rendering glossary " glossary)
+          ;(prn "rendering glossary " glossary)
           (render-glossary glossary)))
       (paginator faq-ref)
       #_[:button.btn.btn-primary.back
