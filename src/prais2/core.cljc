@@ -28,6 +28,7 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 (def app (atom {:datasource               :2017
+                #_#_:datasource               :2016
                 :pull-out                 false
                 :page                     :home
                 :section                  nil

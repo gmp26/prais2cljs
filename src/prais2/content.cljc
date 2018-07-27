@@ -1204,7 +1204,9 @@
                                [:li [:a (core/href "https://www.theguardian.com/science/sifting-the-evidence/2016/jun/21/making-nhs-data-public-is-not-the-same-as-making-it-accessible-we-can-and-should-do-better")
                                      "Guardian article:"]
                                 " “Making NHS data public is not the same as making it accessible – we can and should
-                                do better.” by Christina Pagel, UCL and David Spiegelhalter, University of Cambridge."]]
+                                do better.” by Christina Pagel, UCL and David Spiegelhalter, University of Cambridge."]
+
+                               ]
                               [:h4 {:style {:margin-left "40px"}} "Other coverage"]
                               [:ul.charities
                                [:li "Sense about Science discuss their new public engagement guide based on this website work " [:a (core/href "https://www.nihr.ac.uk/blogs/five-steps-to-help-you-involve-the-public-in-communicating-research/7359" :target "_blank") " in this NIHR Blog."]]
@@ -1247,6 +1249,9 @@
                                 [:a (core/href "https://understandinguncertainty.org/exploring-language-chance-sensitive-context" :target "_blank") "Understanding Uncertainty:"] " “Exploring the language of chance in a sensitive context” by David Spiegelhalter"]
                                [:li
                                 [:a (core/href "https://www.youtube.com/watch?v=-NebRpbMTK8" :target "_blank") "Communicating Risks Reactively:"] " A video of Mike Pearson's talk about the development of this site which was presented at Euroclojure 2016."]
+                               [:li [:a (core/href "https://www.telegraph.co.uk/health-fitness/doctors-diary/doctors-diary-theres-another-side-to-the-closure-of-childrens-he/amp/")
+                                     "Telegraph article:"]
+                                " “Doctor's Diary: There's another side to the closure of children's heart surgery wards” by Michael Fitzpatrick"]
                                ]
                               ]
                }]}
