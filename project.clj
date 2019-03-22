@@ -59,7 +59,9 @@
 
                         :figwheel {:websocket-host "localhost"
                                    :on-jsload "prais2.main/on-js-reload"
-                                   :debug false}
+                                   :debug false
+                                   :open-urls ["http://localhost:3449/index.html"]
+                                   }
 
                         :compiler {:main "prais2.main"
                                    :externs ["externs/bootstrap.js"

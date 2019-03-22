@@ -30,6 +30,13 @@ lein figwheel
 ```
 in a terminal or command line window. This will download and install all other dependencies and launch a local development server. 
 
+### Setting up IntelliJ
+
+Create run configuration with options below.
+
+* Change to Clojure Main REPL.
+* In Common Option - Parameters add "script/figwheel.clj"
+
 ### Switching builds
 
 In a REPL, say `(switch-to-build :devcards)` or `(switch-to-build :dev)`.

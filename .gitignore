@@ -20,6 +20,9 @@ pom.xml
 .sass-cache/
 node_modules/
 
+package-lock.json
+*.iml
+
 # User-specific stuff:
 .idea/workspace.xml
 .idea/tasks.xml
