@@ -135,38 +135,73 @@
   ;BCH	1363	39	1324	97.1	96.9	95.4	96.0	97.8	98.2
   ;GOS	1885	16	1869	99.2	98.1	97.1	97.5	98.7	99.0
   )
+
+
+(comment
+  ;From 2015-2018 spreadsheet
+  ;HSC	210	8	202	96.2	98.3	94.8	96.2	100.0	100.0
+  ;FRE	681	12	669	98.2	97.4	95.3	96.2	98.5	99.1
+  ;GRL	769	5	764	99.4	98.1	96.4	97.0	99.0	99.3
+  ;RHS	718	13	705	98.2	98.4	96.7	97.4	99.2	99.6
+  ;BRC	868	9	859	99.0	97.9	96.2	96.9	98.7	99.2
+  ;SGH	964	17	947	98.2	98.0	96.5	97.1	98.9	99.3
+  ;OLS	906	15	891	98.3	97.9	96.4	96.9	98.8	99.2
+  ;ACH	1027	11	1016	98.9	97.9	96.4	97.0	98.7	99.1
+  ;LGI	984	12	972	98.8	98.3	97.0	97.5	99.1	99.4
+  ;NHB	1002	21	981	97.9	98.0	96.5	97.1	98.8	99.2
+  ;GUY	1226	33	1193	97.3	97.6	96.2	96.7	98.4	98.9
+  ;BCH	1361	33	1328	97.6	97.1	95.5	96.1	97.9	98.4
+  ;GOS	1812	12	1800	99.3	98.3	97.2	97.6	98.8	99.1
+  )
+
 (def datasources
-  {:2017
+  {:2018
    [
-    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        246	 10 236	 95.9	95.1	96.3	99.6	100.0  nil)
-    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         679	 13 666	 98.1	95.0	95.9	98.4	99.0 nil)
-    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       727	 6	721	 99.2	96.4	97.1	99.0	99.4 nil)
-    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                698	 15 683	 97.9	96.1	96.8	99.0	99.4 nil)
-    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 855	 11 844	 98.7	96.3	96.8	98.8	99.2 nil)
-    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           926	 18 908	 98.1	96.2	96.8	98.7	99.1 nil)
-    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              922	 22 900	 97.6	96.0	96.6	98.6	99.0 nil)
-    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1075 12 1063 98.9	96.5	97.0	98.7	99.1 nil)
-    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             1029 17 1012 98.3	97.2	97.7	99.2	99.5 nil)
-    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     1068 28 1040 97.4	96.4	97.0	98.7	99.2 nil)
-    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1231 36 1195 97.1	95.8	96.3	98.1	98.6 nil)
-    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1363 39 1324 97.1	95.4	96.0	97.8	98.2 nil)
-    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1885 16 1869 99.2	97.1	97.5	98.7	99.0 nil)]
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 210 8 202 96.2  94.8 96.2 100.0 100.0 nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643 681 12 669 98.2  95.3 96.2 98.5 99.1 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 769 5 764 99.4  96.4 97.0 99.0 99.3 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357 718 13 705 98.2  96.7 97.4 99.2 99.6 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014 868 9 859 99.0  96.2 96.9 98.7 99.2 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731 964 17 947 98.2  96.5 97.1 98.9 99.3 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399 906 15 891 98.3  96.4 96.9 98.8 99.2 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560 1027 11 1016 98.9  96.4 97.0 98.7 99.1 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870 984 12 972 98.8  97.0 97.5 99.1 99.4 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759 1002 21 981 97.9  96.5 97.1 98.8 99.2 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835 1226 33 1193 97.3  96.2 96.7 98.4 98.9 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1361 33 1328 97.6  95.5 96.1 97.9 98.4 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1812 12 1800 99.3  97.2 97.6 98.8 99.1 nil)
+    ]
+   :2017
+   [
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 246 10 236 95.9 95.1 96.3 99.6 100.0 nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643 679 13 666 98.1 95.0 95.9 98.4 99.0 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 727 6 721 99.2 96.4 97.1 99.0 99.4 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357 698 15 683 97.9 96.1 96.8 99.0 99.4 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014 855 11 844 98.7 96.3 96.8 98.8 99.2 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731 926 18 908 98.1 96.2 96.8 98.7 99.1 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399 922 22 900 97.6 96.0 96.6 98.6 99.0 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560 1075 12 1063 98.9 96.5 97.0 98.7 99.1 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870 1029 17 1012 98.3 97.2 97.7 99.2 99.5 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759 1068 28 1040 97.4 96.4 97.0 98.7 99.2 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835 1231 36 1195 97.1 95.8 96.3 98.1 98.6 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1363 39 1324 97.1 95.4 96.0 97.8 98.2 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1885 16 1869 99.2 97.1 97.5 98.7 99.0 nil)]
 
    :2016
    [
-    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        332	 8	324	 97.6	95.5	96.7	99.4	100.0  nil)
-    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         657	 18	639	 97.3	94.7	95.6	98.2	98.8 nil)
-    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       671	 11	660	 98.4	96.3	97.0	99.1	99.6 nil)
-    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                724	 20	704	 97.2	96.5	97.2	99.0	99.4 nil)
-    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 841	 15	826	 98.2	96.6	97.1	98.9	99.4 nil)
-    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           872	 21	851	 97.6	96.0	96.7	98.6	99.1 nil)
-    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              947	 20	927	 97.9	96.6	97.1	98.9	99.3 nil)
-    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1068 9	1059 99.2	96.4	97.0	98.7	99.2 nil)
-    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             1086 17	1069 98.4	97.2	97.7	99.2	99.5 nil)
-    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     1126 28	1098 97.5	96.4	97.0	98.7	99.1 nil)
-    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1247 44	1203 96.5	95.9	96.5	98.2	98.6 nil)
-    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1381 37	1344 97.3	96.0	96.5	98.2	98.6 nil)
-    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1894 16	1878 99.2	97.0	97.5	98.7	99.0 nil)]
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 332 8 324 97.6 95.5 96.7 99.4 100.0 nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643 657 18 639 97.3 94.7 95.6 98.2 98.8 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 671 11 660 98.4 96.3 97.0 99.1 99.6 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357 724 20 704 97.2 96.5 97.2 99.0 99.4 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014 841 15 826 98.2 96.6 97.1 98.9 99.4 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731 872 21 851 97.6 96.0 96.7 98.6 99.1 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399 947 20 927 97.9 96.6 97.1 98.9 99.3 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560 1068 9 1059 99.2 96.4 97.0 98.7 99.2 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870 1086 17 1069 98.4 97.2 97.7 99.2 99.5 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759 1126 28 1098 97.5 96.4 97.0 98.7 99.1 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835 1247 44 1203 96.5 95.9 96.5 98.2 98.6 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566 1381 37 1344 97.3 96.0 96.5 98.2 98.6 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923 1894 16 1878 99.2 97.0 97.5 98.7 99.0 nil)]
 
    :2015
    [
