@@ -27,8 +27,9 @@
 ;; define app state once so it doesn't re-initialise on reload.
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
-(def app (atom {:datasource               :2018
-                #_#_:datasource               :2016
+; TODO: DATA-UPDATE Set the datasource year - this determines the default end year of the reporting period
+;
+(def app (atom {:datasource               :2019
                 :pull-out                 false
                 :page                     :home
                 :section                  nil

@@ -29,7 +29,13 @@
 ;; Table headers with info texts
 ;;;
 (def datasource-tab
-  {:2017 {:title      "Reporting period"
+  {:2019 {:title      "Reporting period"
+          :label      "2016-2019"
+          :long-label "April 2016 - March 2019"}
+   :2018 {:title      "Reporting period"
+          :label      "2015-2018"
+          :long-label "April 2015 - March 2018"}
+   :2017 {:title      "Reporting period"
           :label      "2014-2017"
           :long-label "April 2014 - March 2017"}
    :2016 {:title      "Reporting period"
@@ -154,10 +160,93 @@
   ;GOS	1812	12	1800	99.3	98.3	97.2	97.6	98.8	99.1
   )
 
+(comment
+  ;From 2016-2019 spreadsheet
+  ;FRE	694	11	683	98.4%	97.5%	95.5%	96.3%	98.6%	99.1%
+  ;GRL	794	9	785	98.9%	98.1%	96.3%	97.1%	99.0%	99.4%
+  ;RHS	711	14	697	98.0%	98.5%	96.9%	97.6%	99.3%	99.7%
+  ;BRC	880	9	871	99.0%	97.9%	96.2%	96.9%	98.7%	99.2%
+  ;SGH	930	18	912	98.1%	98.1%	96.6%	97.2%	98.9%	99.4%
+  ;OLS	892	11	881	98.8%	97.9%	96.3%	97.0%	98.8%	99.2%
+  ;ACH	1058	15	1043	98.6%	97.6%	96.0%	96.6%	98.5%	98.9%
+  ;LGI	929	6	923	99.4%	97.8%	96.1%	96.8%	98.7%	99.1%
+  ;NHB	965	11	954	98.9%	98.3%	96.9%	97.4%	99.1%	99.4%
+  ;GUY	1202	23	1179	98.1%	97.7%	96.3%	96.8%	98.5%	98.9%
+  ;BCH	1308	32	1276	97.6%	97.0%	95.4%	96.0%	97.9%	98.3%
+  ;GOS	1774	15	1759	99.2%	98.4%	97.4%	97.8%	99.0%	99.3%
+  ;
+  ; remove %,
+  ;
+  ;FRE	694	11	683	98.4	97.5	95.5	96.3	98.6	99.1
+  ;GRL	794	9	785	98.9	98.1	96.3	97.1	99.0	99.4
+  ;RHS	711	14	697	98.0	98.5	96.9	97.6	99.3	99.7
+  ;BRC	880	9	871	99.0	97.9	96.2	96.9	98.7	99.2
+  ;SGH	930	18	912	98.1	98.1	96.6	97.2	98.9	99.4
+  ;OLS	892	11	881	98.8	97.9	96.3	97.0	98.8	99.2
+  ;ACH	1058	15	1043	98.6	97.6	96.0	96.6	98.5	98.9
+  ;LGI	929	6	923	99.4	97.8	96.1	96.8	98.7	99.1
+  ;NHB	965	11	954	98.9	98.3	96.9	97.4	99.1	99.4
+  ;GUY	1202	23	1179	98.1	97.7	96.3	96.8	98.5	98.9
+  ;BCH	1308	32	1276	97.6	97.0	95.4	96.0	97.9	98.3
+  ;GOS	1774	15	1759	99.2	98.4	97.4	97.8	99.0	99.3
+
+  ; merge while checking check hospital list corresponds, and block copy to columns before nil
+  #_[
+   (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         694	11	683	  98.4	97.5	95.5	96.3	98.6	99.1 nil)
+   (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       794	9	  785	  98.9	98.1	96.3	97.1	99.0	99.4 nil)
+   (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                711	14	697	  98.0	98.5	96.9	97.6	99.3	99.7 nil)
+   (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 880	9	  871	  99.0	97.9	96.2	96.9	98.7	99.2 nil)
+   (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           930	18	912	  98.1	98.1	96.6	97.2	98.9	99.4 nil)
+   (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              892	11	881	  98.8	97.9	96.3	97.0	98.8	99.2 nil)
+   (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1058 15	1043	98.6	97.6	96.0	96.6	98.5	98.9 nil)
+   (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             929	 6	923	  99.4	97.8	96.1	96.8	98.7	99.1 nil)
+   (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     965  11	954	  98.9	98.3	96.9	97.4	99.1	99.4 nil)
+   (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1202 23	1179	98.1	97.7	96.3	96.8	98.5	98.9 nil)
+   (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1308 32	1276	97.6	97.0	95.4	96.0	97.9	98.3 nil)
+   (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1774 15	1759	99.2	98.4	97.4	97.8	99.0	99.3 nil)
+   ]
+  ; remove the central prais2 prediction 97.5, 98.1, ...
+  #_[
+   (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         694	11	683	  98.4	95.5	96.3	98.6	99.1 nil)
+   (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       794	9	  785	  98.9	96.3	97.1	99.0	99.4 nil)
+   (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                711	14	697	  98.0	96.9	97.6	99.3	99.7 nil)
+   (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 880	9	  871	  99.0	96.2	96.9	98.7	99.2 nil)
+   (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           930	18	912	  98.1	96.6	97.2	98.9	99.4 nil)
+   (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              892	11	881	  98.8	96.3	97.0	98.8	99.2 nil)
+   (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1058 15	1043	98.6	96.0	96.6	98.5	98.9 nil)
+   (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             929	 6	923	  99.4	96.1	96.8	98.7	99.1 nil)
+   (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     965  11	954	  98.9	96.9	97.4	99.1	99.4 nil)
+   (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1202 23	1179	98.1	96.3	96.8	98.5	98.9 nil)
+   (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1308 32	1276	97.6	95.4	96.0	97.9	98.3 nil)
+   (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1774 15	1759	99.2	97.4	97.8	99.0	99.3 nil)
+   ]
+
+  ; edit prais2/core.cljc, defining the current datasource year in
+  ; (def app (atom {:datasource               :2019
+  ; ...
+  )
+
+
 (def datasources
-  {:2018
+  {:2019
    [
-    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726 210 8 202 96.2  94.8 96.2 100.0 100.0 nil)
+    (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         694	11	683	  98.4	95.5	96.3	98.6	99.1 nil)
+    (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836                       794	9	  785	  98.9	96.3	97.1	99.0	99.4 nil)
+    (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357                711	14	697	  98.0	96.9	97.6	99.3	99.7 nil)
+    (Row. "Bristol Royal Hospital for Children" "BRC" 51.457899 -2.597014                 880	9	  871	  99.0	96.2	96.9	98.7	99.2 nil)
+    (Row. "Southampton, Wessex Cardiothoracic Centre" "SGH" 50.932846 -1.432731           930	18	912	  98.1	96.6	97.2	98.9	99.4 nil)
+    (Row. "Dublin, Our Lady's Children's Hospital" "OLS" 53.326005 -6.317399              892	11	881	  98.8	96.3	97.0	98.8	99.2 nil)
+    (Row. "Liverpool, Alder Hey Hospital" "ACH" 53.419566 -2.900560                       1058 15	1043	98.6	96.0	96.6	98.5	98.9 nil)
+    (Row. "Leeds General Infirmary" "LGI" 53.802109 -1.550870                             929	  6	923	  99.4	96.1	96.8	98.7	99.1 nil)
+    (Row. "London, Royal Brompton Hospital" "NHB" 51.489012 -0.170759                     965  11	954	  98.9	96.9	97.4	99.1	99.4 nil)
+    (Row. "London, Evelina London Children's Hospital" "GUY" 51.498044 -0.118835          1202 23	1179	98.1	96.3	96.8	98.5	98.9 nil)
+    (Row. "Birmingham Children’s Hospital" "BCH" 52.484946 -1.894566                      1308 32	1276	97.6	95.4	96.0	97.9	98.3 nil)
+    (Row. "London, Great Ormond Street Hospital for Children" "GOS" 51.522549 -0.120923   1774 15	1759	99.2	97.4	97.8	99.0	99.3 nil)
+    ]
+   :2018
+   [                                                                                ;HSC	210	  8	  202	  96.2	98.3	94.8	96.2	100.0	100.0
+
+    (Row. "London, Harley Street Clinic" "HSC" 51.520348 -0.147726                        210   8   202   96.2  94.8  96.2  100.0 100.0 nil)
     (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643 681 12 669 98.2  95.3 96.2 98.5 99.1 nil)
     (Row. "Leicester, Glenfield Hospital" "GRL" 52.654229 -1.179836 769 5 764 99.4  96.4 97.0 99.0 99.3 nil)
     (Row. "Glasgow, Royal Hospital for Children" "RHS" 55.862745 -4.342357 718 13 705 98.2  96.7 97.4 99.2 99.6 nil)

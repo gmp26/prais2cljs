@@ -90,8 +90,9 @@
                                    :compiler-stats true
                                    :pretty-print false
                                    :parallel-build true
-                                   :closure-warnings {:non-standard-jsdoc :off}
-                                   :warnings {:externs-validation :off
+                                   :closure-warnings {:externs-validation :off
+                                                      :non-standard-jsdoc :off}
+                                   #_#_:warnings {:externs-validation :off
                                               :non-standard-jsdoc :off}
                                    }}
 
@@ -115,8 +116,9 @@
                                              "externs/video-js.js"]
                                    :optimizations :advanced
                                    :pseudo-names true
-                                   :closure-warnings {:non-standard-jsdoc :off}
-                                   :warnings {:externs-validation :off
+                                   :closure-warnings {:externs-validation :off
+                                                      :non-standard-jsdoc :off}
+                                   #_#_:warnings {:externs-validation :off
                                               :non-standard-jsdoc :off}
                                    }}]}
 

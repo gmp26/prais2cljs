@@ -527,6 +527,10 @@
 (rum.core/defc key-option < rum.core/static [year]
   [:option {:value (str year)} (:option (year-range year "April" "March"))])
 
+;
+; todo: DATA. the data range should go from 2013 (fixed) to one more than the current datasource year
+;
+
 (rum.core/defc datasource-dropdown < rum.core/reactive [event-bus]
 
   [:.form-group
@@ -535,7 +539,7 @@
     {:value     (name (:datasource (rum.core/react core/app)))
      :on-change #(put! event-bus [:change-datasource (keyword (.-value (.-target %)))])}
     (map-indexed key-with
-                 (for [year (range 2013 2019)]              ; was 2017
+                 (for [year (range 2013 2020)]              ; was 2017
                    (key-option year)))]
    ])
 

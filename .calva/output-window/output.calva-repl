@@ -1,0 +1,86 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+c o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; nREPL Connection was closed
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS: 
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj::user=> 
+; Creating cljs repl session...
+; Connecting cljs repl: Leiningen + Legacy Figwheel...
+;   The Calva Connection Log might have more connection progress information.
+; CLJS REPL ready to connect. Please, start your ClojureScript app.
+; Opening ClojureScript app in the browser at: http://0.0.0.0:3449 ...
+;   The CLJS REPL will connect when your app is running.
+(st)
+; CompilerException java.lang.RuntimeException: Unable to resolve symbol: st in this context, compiling:(/Users/gmp26/clojure/prais2/.calva/output-window/output.calva-repl:25:1) 
+clojure.lang.Compiler/analyze (Compiler.java:6688)
+clojure.lang.Compiler$InvokeExpr/parse (Compiler.java:3766)
+clojure.lang.Compiler/analyzeSeq (Compiler.java:6870)
+clojure.lang.Compiler/analyze (Compiler.java:6669)
+clojure.lang.Compiler$BodyExpr$Parser/parse (Compiler.java:6001)
+clojure.lang.Compiler$FnMethod/parse (Compiler.java:5380)
+clojure.lang.Compiler$FnExpr/parse (Compiler.java:3972)
+clojure.lang.Compiler/analyzeSeq (Compiler.java:6866)
+clojure.lang.Compiler/analyze (Compiler.java:6669)
+clojure.lang.Compiler/eval (Compiler.java:6924)
+clojure.core/eval (core.clj:3105)
+clojure.core/eval (core.clj:3101)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.core/apply (core.clj:646)
+clojure.core/with-bindings* (core.clj:1881)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:87)
+clojure.main/repl (main.clj:240)
+clojure.main/repl (main.clj:258)
+clojure.main/repl (main.clj:174)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:84)
+nrepl.middleware.interruptible-eval/evaluate (interruptible_eval.clj:56)
+nrepl.middleware.interruptible-eval/interruptible-eval (interruptible_eval.clj:152)
+nrepl.middleware.session/session-exec (session.clj:202)
+nrepl.middleware.session/session-exec (session.clj:201)
+java.lang.Thread/run (Thread.java:748)
+clj::user=> 
+(start-figwheel!)
+Figwheel: Stopped watching CSS Watcher paths  ["resources/public/css"]
+Figwheel: Stopped watching build - dev
+Figwheel: Stopping Websocket Server
+Figwheel: Starting server at http://0.0.0.0:3449
+Figwheel: Watching build - dev
+Compiling build :dev to "resources/public/js/compiled/prais2.js" from ["src"]...
+Successfully compiled build :dev to "resources/public/js/compiled/prais2.js" in 0.766 seconds.
+Figwheel: Starting CSS Watcher for paths  ["resources/public/css"]
+nil
+clj::user=> 
+(require '[figwheel-sidecar.repl-api :as ra])
+nil
+clj::user=> (ra/cljs-repl)
+Launching ClojureScript REPL for build: dev
+Figwheel Controls:
+          (stop-autobuild)                ;; stops Figwheel autobuilder
+          (start-autobuild id ...)        ;; starts autobuilder focused on optional ids
+          (switch-to-build id ...)        ;; switches autobuilder to different build
+          (reset-autobuild)               ;; stops, cleans, and starts autobuilder
+          (reload-config)                 ;; reloads build config and resets autobuild
+          (build-once id ...)             ;; builds source one time
+          (clean-builds id ..)            ;; deletes compiled cljs target files
+          (print-config id ...)           ;; prints out build configurations
+          (fig-status)                    ;; displays current state of system
+          (figwheel.client/set-autoload false)    ;; will turn autoloading off
+          (figwheel.client/set-repl-pprint false) ;; will turn pretty printing off
+  Switch REPL build focus:
+          :cljs/quit                      ;; allows you to switch REPL to another build
+    Docs: 
+(doc function-name-here)
+    Exit: :cljs/quit
+ Results: Stored in vars *1, *2, *3, *e holds last exception object
+Prompt will show when Figwheel connects to your application
