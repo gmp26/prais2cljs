@@ -31,7 +31,7 @@
 ;; whole thing. After noticing this, I now create the whole video tag in HTML and inject
 ;; it using dangerouslySetInnerHTML. This prevents react from attempting to manage it.
 ;;
-(rum.core/defc video-js < use-video-js
+(rum/defc video-js < use-video-js
                [{:keys [video-id src controls preload poster track-src]
                  :or   {controls true preload "auto" poster "" track-src nil}}]
                [:.video-container
@@ -55,7 +55,7 @@
 ;; original unwrapped code. This causes react to complain on finding the div and the nested video
 ;; that video-js recreates, both having the same data-reactid.
 ;;
-#_(rum.core/defc video-js  < use-video-js
+#_(rum/defc video-js  < use-video-js
   [{:keys [video-id src controls preload poster track-src]
     :or   {controls true preload "auto" poster "" track-src nil}}]
 

@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.main
   (:require-macros                                          ;[jayq.macros :refer [ready]]
     [cljs.core.async.macros :refer [go-loop]])
-  (:require [rum.core]
+  (:require [rum.core :as rum]
             [clojure.set :refer (intersection)]
             [cljsjs.react]
             [cljs.core.async :refer [chan <! pub sub put! close!]]
@@ -29,15 +29,15 @@
 ;;;
 ;;  "debug app-state"
 ;;;
-(rum.core/defc debug < rum.core/reactive []
+(rum/defc debug < rum.core/reactive []
   [:div
    [:p (str (rum.core/react core/app))]]
   )
 
-(rum.core/defc para < rum.core/static [text]
+(rum/defc para < rum.core/static [text]
   [:p text])
 
-(rum.core/defc render-404 []
+(rum/defc render-404 []
   [:h1 "Page not found. "
    [:a (core/href "home") "Try the home page."]])
 
@@ -54,9 +54,9 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum.core/defc render-data-tabs < rum.core/reactive
+(rum/defc render-data-tabs < rum.core/reactive
                                   (core/update-title "Choose a hospital")
-                                  (core/update-description "View all hospital child heart surgery survival data") []
+                                  #_(core/update-description "View all hospital child heart surgery survival data") []
 
   [:.row
 
@@ -115,8 +115,8 @@
     ]])
 
 
-(rum.core/defc render-video1 < (core/update-title "Two minute video")
-  (core/update-description "View a 2 minute video guide to how we present the results") []
+(rum/defc render-video1 < (core/update-title "Two minute video")
+  #_(core/update-description "View a 2 minute video guide to how we present the results") []
   [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
    (video-js {:video-id  "video1"
               :src       "/assets/video01.mp4"
@@ -126,7 +126,7 @@
               :track-src "/assets/video01.vtt"})])
 
 
-(rum.core/defc render-data-tab-panes < rum.core/reactive [data]
+(rum/defc render-data-tab-panes < rum.core/reactive [data]
   [:row.tab-content
 
    [:.tab-pane.col-sm-12 {:key   1
@@ -157,7 +157,7 @@
       (render-video1))]])
 
 
-(rum.core/defc render-data < rum.core/reactive (core/monitor-react "DATA>" false)
+(rum/defc render-data < rum.core/reactive (core/monitor-react "DATA>" false)
   []
   (let [app (rum.core/react core/app)
         data ((data/table-data (:datasource app)))]
@@ -180,7 +180,7 @@
                  (js/scrollTo 0 0)
                  state)})
 
-(rum.core/defc page-choice < rum.core/static scroll-to-top [page section]
+(rum/defc page-choice < rum.core/static scroll-to-top [page section]
   [:div #_{:on-click       close-start-modal
            :on-touch-start close-start-modal}
    (cond
@@ -235,7 +235,7 @@
        (chrome/footer)))])
 
 
-(rum.core/defc render-page < rum.core/reactive []
+(rum/defc render-page < rum.core/reactive []
   (let [{:keys [page section]} (rum.core/react core/app)]
     ;(prn "render page " page section)
     (page-choice page section)))
@@ -244,7 +244,7 @@
 ;;
 ;; Contains the app user interface
 ;;
-(rum.core/defc app-container < bs-popover bs-tooltip []
+(rum/defc app-container < bs-popover bs-tooltip []
   (render-page)
   )
 

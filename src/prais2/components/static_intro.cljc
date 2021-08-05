@@ -1,10 +1,10 @@
 (ns prais2.components.static-intro
-  (:require [rum.core]
+  (:require [rum.core :as rum]
             [prais2.intro :refer [render-intro]]
             [prais2.chrome :as chrome]))
 
 
-(rum.core/defc static-intro []
+(rum/defc static-intro []
   [:div
    (chrome/header)
    (render-intro)

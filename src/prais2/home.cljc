@@ -1,10 +1,10 @@
 (ns prais2.home
-  (:require [rum.core]
+  (:require [rum.core :as rum]
             [prais2.core :as core]
             [prais2.utils :refer [key-with]]
             ))
 
-(rum.core/defc what-why []
+(rum/defc what-why []
   [:.col-sm-4
    [:.home-nav.well.intro
     [:a.active #?(:cljs (core/href "intro")
@@ -17,7 +17,7 @@
     [:p [:strong "How"] " does the NHS monitor them?"]
     [:p [:strong "What"] " this site can and cannot do."]]])
 
-(rum.core/defc data []
+(rum/defc data []
   [:.col-sm-4
    [:.home-nav.well.data
     [:a.active #?(:cljs (core/href "data/map")
@@ -31,7 +31,7 @@
     [:p "watching our 2 minute video on how to interpret the results."]
     ]])
 
-(rum.core/defc everything-else []
+(rum/defc everything-else []
   [:.col-sm-4
    [:.home-nav.well.faqs
     [:a.active #?(:cljs (core/href "faqs")
@@ -46,9 +46,9 @@
     [:p "Information for families."]]])
 
 
-(rum.core/defc render-home < rum.core/reactive
-                             (core/update-title "Home page")
-                             (core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
+(rum/defc render-home < rum.core/reactive
+                             #_(core/update-title "Home page")
+                             #_(core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
   [:div.main-content
    [:.container
     [:.jumbotron.home.row

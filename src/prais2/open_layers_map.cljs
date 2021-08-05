@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.open-layers-map
-    (:require [rum.core]
+    (:require [rum.core :as rum]
 ;              [jayq.core :refer [$]]
               [cljsjs.jquery]
               [cljs.core.async :refer [<! put! timeout]]
@@ -209,38 +209,38 @@
     (.popover element "hide")))
 
 
-(rum.core/defc london-button []
+(rum/defc london-button []
   [:button.btn-info.london-button
    {:on-click #(core/click->event-bus % :just-london nil nil)
     :on-touch-start #(core/click->event-bus % :just-london nil nil)
     :tab-index 0}
    "Just London"])
 
-(rum.core/defc home-button []
+(rum/defc home-button []
   [:button.btn-info.h-button
    {:on-click #(core/click->event-bus % :reset-map-to-home nil nil)
     :on-touch-start #(core/click->event-bus % :reset-map-to-home nil nil)
     :tab-index 0}
    "All UK"])
 
-(rum.core/defc hospital-item [row]
+(rum/defc hospital-item [row]
   [:li [:a
         {:tab-index 0
          :on-click #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
         (:h-name row)]])
 
-(rum.core/defc hospital-list < rum.core/reactive []
+(rum/defc hospital-list < rum.core/reactive []
   (let [rows ((:datasource (rum.core/react core/app)) content/datasources)]
     [:ul.dropdown-menu
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))
 
-#_(rum.core/defc hospital-dropdown []
+#_(rum/defc hospital-dropdown []
   [:.dropdown
    (map-indexed key-with [(menu-button) (hospital-list)])
    ])
 
-(rum.core/defc hospitals < map-view rum.core/reactive []
+(rum/defc hospitals < map-view rum.core/reactive []
   [:#open-map.hospital-map {:tab-index 0 :key 1}
    (london-button)
    (home-button)

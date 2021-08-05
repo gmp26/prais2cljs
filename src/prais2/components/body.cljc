@@ -1,10 +1,8 @@
 (ns prais2.components.body
-  (:require [rum.core :as rum :include-macros true]
-            [prais2.components.static-home :refer [static-home]]
-            [prais2.components.analytics :refer [spa-analytics]]
-            [prais2.components.browser-update :refer [browser-update]]))
+  (:require [rum.core :as rum]
+            [prais2.components.analytics :as ana]))
 
-(rum.core/defc body [content]
+(rum/defc body [content]
                [:body
                 #?(:clj [:#app (content)])
                 #?(:cljs [:#app                             ; the spinner is unused now!
@@ -18,7 +16,7 @@
                 ;; goog.History needs this to make it reloadable in figwheel -->
                 [:#dummy {:display "none"}]
 
-                (spa-analytics "UA-77529676-1")
+                (ana/spa-analytics "UA-77529676-1")
                 [:script {:async true :src "https://www.google-analytics.com/analytics.js"}]
                 [:script {:async true :src "/js/autotrack.js"}]
 

@@ -1,5 +1,5 @@
 (ns ^:figwheel-always prais2.faqs
-  (:require [rum.core]
+  (:require [rum.core :as rum]
             [prais2.core :as core]
             [prais2.utils :refer [key-with]]
             [prais2.content :as content :refer [faq-sections]]
@@ -20,12 +20,12 @@
                [(str "faq/" section-ix "/" faq-ix) [:faq [section-ix faq-ix]]]))
     ))
 
-(rum.core/defc render-short-answer [answer]
+(rum/defc render-short-answer [answer]
   [:section.short-answer
    [:.icon [:i.fa.fa-comment]]
    [:.reply answer]])
 
-(rum.core/defc render-glossary-term [term]
+(rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
     [:dl
      [:dt [:i (:title entry)]]
@@ -35,7 +35,7 @@
        #?(:cljs (when (= term :predicted-range)
                   (data/chart-cell content/sample-hospital 1)))]]]))
 
-(rum.core/defc render-glossary [glossary]
+(rum/defc render-glossary [glossary]
   [:div
    [:hr]
    (map-indexed key-with
@@ -50,7 +50,7 @@
                     "faq-nav-4"
                     ])
 
-(rum.core/defc render-faq-block [sec-ix]
+(rum/defc render-faq-block [sec-ix]
   (let [section (faq-sections sec-ix)]
     (when-not (:is-glossary section)
       [:div.faq-block {:class (block-classes sec-ix)}
@@ -70,8 +70,8 @@
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
 
 
-(rum.core/defc render-faq-top < (core/update-title "Everything Else")
-                                (core/update-description "Background, Limitations, Predicted range (with video explanation), Family and Child, Charities, About Us") []
+(rum/defc render-faq-top #_#_< (core/update-title "Everything Else")
+                                #_(core/update-description "Background, Limitations, Predicted range (with video explanation), Family and Child, Charities, About Us") []
   [:div
    [:h1.col-md-12
     content/title]
@@ -132,7 +132,7 @@
            (str "/" section-ix "/" (inc ix))))))
 
 
-(rum.core/defc paginator [[section-ix ix :as faq-ref]]
+(rum/defc paginator [[section-ix ix :as faq-ref]]
   [:nav
    [:ul.pager
     [:li [:a (core/internal-ref (prev-faq faq-ref)) [:i.fa.fa-arrow-left] " previous"]]
@@ -140,7 +140,7 @@
   )
 
 
-(rum.core/defc breadcrumb [[section-ix ix :as faq-ref]]
+(rum/defc breadcrumb [[section-ix ix :as faq-ref]]
   (let [section (faq-sections section-ix)]
     [:ul.breadcrumb
      [:li [:a (core/internal-ref "faqs") "Everything Else"]]
@@ -148,16 +148,16 @@
      ]))
 
 
-(rum.core/defc render-one-faq-block < (core/update-title gen-bread-title)
-                                      (core/update-description gen-bread-title) [sec-ix]
+(rum/defc render-one-faq-block #_#_< (core/update-title gen-bread-title)
+                                      #_(core/update-description gen-bread-title) [sec-ix]
 
   [:.one-block.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (breadcrumb [sec-ix])
    [:h1 (:section  (faq-sections sec-ix))]
    (render-faq-block sec-ix)])
 
-(rum.core/defc render-faq-section < (core/update-title gen-postfix)
-                                    (core/update-description gen-description) [[section-ix ix :as faq-ref]]
+(rum/defc render-faq-section #_#_< (core/update-title gen-postfix)
+                                    #_(core/update-description gen-description) [[section-ix ix :as faq-ref]]
 
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (let [section (faq-sections section-ix)
@@ -195,7 +195,7 @@
        ]])])
 
 
-(rum.core/defc render-faqs [[section-ix ix :as faq-ref]]
+(rum/defc render-faqs [[section-ix ix :as faq-ref]]
 
   [:.container-fluid.main-content
    [:.row

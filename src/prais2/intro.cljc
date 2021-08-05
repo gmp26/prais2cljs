@@ -1,10 +1,10 @@
 (ns ^:figwheel-always prais2.intro
-    (:require [rum.core]
+    (:require [rum.core :as rum]
               [prais2.core :as core]
               [prais2.utils :refer [key-with]]))
 
 
-(rum.core/defc section [section-id section-title section-content]
+(rum/defc section [section-id section-title section-content]
   [:section.col-sm-8.pull-left
    {:id section-id}
    [:h2 {:dangerouslySetInnerHTML {:__html section-title}}]
@@ -21,8 +21,8 @@
 
 
 ;; look at http://materializecss.com/
-(rum.core/defc render-intro < (core/update-title "Key points")
-                              (core/update-description "Explains the key points to understand when interpreting hospital child surgery survival data")
+(rum/defc render-intro < #_(core/update-title "Key points")
+                          #_(core/update-description "Explains the key points to understand when interpreting hospital child surgery survival data")
                               (core/monitor-react "INTRO>" false)  []
   [:.container.main-content
    [:.row
@@ -46,7 +46,7 @@
      ]
     ]])
 
-(rum.core/defc key-point [img-src alt-text text]
+(rum/defc key-point [img-src alt-text text]
                [:li.key-point.row
                 [:p.col-sm-6 text]
                 [:img.img-responsive.col-sm-6 (core/isrc img-src :alt alt-text)]
@@ -56,7 +56,7 @@
 (defn kp-png [name]
   (str "assets/keypoints/" name ".png"))
 
-(rum.core/defc key-points []
+(rum/defc key-points []
   [:section#key-points.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
@@ -69,7 +69,7 @@
    compare survival rates between hospitals.")
     ]])
 
-#_(rum.core/defc key-points []
+#_(rum/defc key-points []
   [:section.well.danger.col-sm-8
    [:h2 "Key points"]
    [:ul
@@ -84,7 +84,7 @@
 
 
 
-(rum.core/defc section-1-content []
+(rum/defc section-1-content []
   [:section.row
    [:p.col-sm-12 "The NHS monitors children’s heart surgery in the UK by reviewing each hospital’s 30-day survival
    rate. The 30-day survival rate is the percentage of operations where the child survived to at least 30 days after
@@ -94,7 +94,7 @@
    and Republic of Ireland."]]
   )
 
-(rum.core/defc section-2-content []
+(rum/defc section-2-content []
   [:section.row
    ;(animation-2)
    [:p.col-lg-12
@@ -108,7 +108,7 @@
     another hospital this is not necessarily evidence that one hospital is better than the other – it could
     indicate that the second hospital treated children with more severe problems. "]])
 
-(rum.core/defc section-3-content []
+(rum/defc section-3-content []
   [:section.row
    [:.col-lg-12
     [:p "When reviewing the 30-day survival rate for each hospital, the NHS takes into account how ill the children were
@@ -152,7 +152,7 @@
       "That is why we only compare a hospital’s survival rate to its predicted range (from the statistical formula)
       and " [:strong "not"] " to survival rates at other hospitals."]]]])
 
-(rum.core/defc section-4-content []
+(rum/defc section-4-content []
   [:section.row
    [:.col-lg-12
     [:p
@@ -180,7 +180,7 @@
      (See " [:a (core/href "faq/2/3") "What about longer term survival and quality of life?"]  ".) "]]]
   )
 
-(rum.core/defc section-5-content []
+(rum/defc section-5-content []
   [:section.row
    [:.col-lg-12
     [:p "This site can help you interpret currently published survival data on children’s heart surgery and explore

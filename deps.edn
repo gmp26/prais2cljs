@@ -1,0 +1,17 @@
+{:deps {com.bhauman/figwheel-main {:mvn/version "0.2.13"}
+        ;org.clojure/clojure {:mvn/version "1.8.0"}
+        ;org.clojure/clojurescript {:mvn/version "1.9.36"}
+        ;org.clojure/core.async {:mvn/version "0.2.374"}
+        cljs-ajax/cljs-ajax {:mvn/version "0.5.1"}
+        cljsjs/openlayers {:mvn/version "3.5.0-1"}
+        cljsjs/moment {:mvn/version "2.10.6-0"}
+        cljsjs/papaparse {:mvn/version "4.1.1-1"}
+        cljsjs/jquery {:mvn/version "1.9.1-0"}
+        cljsjs/bootstrap {:mvn/version "3.3.6-0"}
+        secretary/secretary {:mvn/version "1.2.3"}
+        rum/rum {:mvn/version "0.9.0"}
+        com.stuartsierra/component {:mvn/version "0.3.1"}
+        
+        clj-kondo/config {:git/url "https://github.com/clj-kondo/config"
+                          :sha "e2e156c53c6c228fee7242629b41013f3e55051d"}}
+ :paths ["src" "resources"]}

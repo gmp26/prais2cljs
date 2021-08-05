@@ -1,6 +1,6 @@
 (ns prais2.utils
   (:require [clojure.string :as str]
-            [rum.core]))
+            [rum.core :as rum]))
 
 (defn px
   "value to pixel string"

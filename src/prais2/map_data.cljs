@@ -1,6 +1,6 @@
 (ns ^:figwheek-always prais2.map-data
   (:require
-    [rum.core]
+    [rum.core :as rum]
     [cljs.core.async :refer [<! put! timeout]]
     [prais2.chrome :refer [what-why everything-else]]
     [prais2.utils :refer [key-with]]
@@ -10,20 +10,20 @@
     [prais2.open-layers-map :as map]))
 
 
-(rum.core/defc hospital-item [row]
+(rum/defc hospital-item [row]
   [:li {:on-click  #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])
         :on-touch-start  #(put! event-bus [:click-on-map-menu-item (keyword (:h-code row))])}
    (:h-name row) [:i.fa.fa-chevron-right.pull-right]
    ])
 
-(rum.core/defc hospital-list < rum.core/reactive []
+(rum/defc hospital-list < rum.core/reactive []
   (let [rows (sort-by :h-name ((:datasource (rum.core/react core/app)) content/datasources))]
     [:ul.h-nav.col-sm.6.col-md-8
      (map-indexed key-with (map hospital-item rows))]))
 
 
-(rum.core/defc render-map-data < (core/update-title "Choose a hospital")
-                                 (core/update-description "Choose a hospital and view its child heart surgery survival data")
+(rum/defc render-map-data < (core/update-title "Choose a hospital")
+                                 #_(core/update-description "Choose a hospital and view its child heart surgery survival data")
                                  rum.core/reactive []
   [:div
    [:section.col-sm-offset-1.col-sm-10

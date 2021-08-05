@@ -1,13 +1,13 @@
 (ns ^:figwheel-always prais2.data
   (:require
-    ;[rum.core :as rum]
-    [cljsjs.jquery]
-    [cljsjs.bootstrap]
-    [cljs.core.async :refer [put! <! timeout]]
-    [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
-    [prais2.content :as content]
-    [prais2.utils :refer [px pc important key-with]]
-    )
+   [clojure.edn :as end]
+   [rum.core :as rum]
+   [cljsjs.jquery]
+   [cljsjs.bootstrap]
+   [cljs.core.async :refer [put! <! timeout]]
+   [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
+   [prais2.content :as content]
+   [prais2.utils :refer [px pc important key-with]])
   (:require-macros [cljs.core.async.macros :refer [go]])
   )
 
@@ -99,11 +99,12 @@
 ;;;
 ;; graphic renders
 ;;;
-(rum.core/defc bar < rum.core/static
+(rum/defc bar < rum.core/static
 
   ([slider hi-val lo-val bar-type fill]
 
-   [:div.bar {:style {:background-color fill
+   ;; todo: this doesn't contribute to the result 
+   #_[:div.bar {:style {:background-color fill
                       :width            (str (bar-width slider (- hi-val lo-val)) "%")}}]
 
    [:div.bar.btn {:style               {:background-color fill
@@ -119,7 +120,8 @@
 
 
   ([slider hi-val lo-val bar-type fill no-tip]
-   (if (= fill "rgba(255,255,255,0)")
+   
+   #_(if (= fill "rgba(255,255,255,0)")
      [:div.bar {:style {:background-color fill
                         :width            (str (bar-width slider (- hi-val lo-val)) "%")}}]
      (if-not no-tip
@@ -142,7 +144,7 @@
                       }]))))
 
 
-(rum.core/defc dot < rum.core/static rum.core/reactive bs-tooltip [slider size value dotty & [relative]]
+(rum/defc dot < rum.core/static rum.core/reactive bs-tooltip [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot.btn
      {:data-toggle         "tooltip"
@@ -166,7 +168,7 @@
                                    "px)")}}]))
 
 
-(rum.core/defc dot-no-tip < rum.core/static rum.core/reactive [slider size value dotty & [relative]]
+(rum/defc dot-no-tip < rum.core/static rum.core/reactive [slider size value dotty & [relative]]
   (let [px-size (px size)]
     [:div.dot.btn
      {:style {:background-color (:dot (colour-map (:theme (rum.core/react core/app))))
@@ -194,7 +196,7 @@
 (def chart-states [#{} #{:dot} #{:inner :dot} #{:inner :outer :dot} #{:inner :outer} #{:inner}])
 
 
-(rum.core/defc chart-cell < bs-tooltip rum.core/reactive [row slider]
+(rum/defc chart-cell < bs-tooltip rum.core/reactive [row slider]
   (let [ap (rum.core/react core/app)
         colours (colour-map (:theme ap))
         bars (chart-states (:chart-state ap))
@@ -236,7 +238,7 @@
                       ]))]]))
 
 
-(rum.core/defc annotated-chart-cell < bs-tooltip rum.core/reactive [row slider bars text]
+(rum/defc annotated-chart-cell < bs-tooltip rum.core/reactive [row slider bars text]
   (let [ap (rum.core/react core/app)
         colours (colour-map (:theme ap))
         dotty (:dot bars)
@@ -281,7 +283,7 @@
                        ]))]]]))
 
 
-(rum.core/defc tick < rum.core/static [baseline value tick-height]
+(rum/defc tick < rum.core/static [baseline value tick-height]
   (let [percent (* 100 (/ (- value baseline) (- 100 baseline)))]
     (when (>= percent 0)
       [:.tick {:style
@@ -295,7 +297,7 @@
        [:span.tick-label (pc value)]])))
 
 
-(rum.core/defc ticks < rum.core/static [slider-axis-value tick-count tick-height]
+(rum/defc ticks < rum.core/static [slider-axis-value tick-count tick-height]
   (let [baseline (* (min-outer-low) slider-axis-value)
         raw-interval (/ (- 100 baseline) (inc tick-count))
         interval (cond
@@ -309,7 +311,7 @@
        (rum.core/with-key (tick baseline value tick-height) value))]))
 
 
-(rum.core/defc slider-labels []
+(rum/defc slider-labels []
   [:.slider-label
    [:div.pull-left {:key :left}
     [:i.fa.fa-long-arrow-left {:key :full}] " full view"]
@@ -344,7 +346,7 @@
                        (dissoc state ::slider ::handler)))})
 
 
-(rum.core/defcs slider-control < (bs-slider "#slider" :slider-axis-value)
+(rum/defcs slider-control < (bs-slider "#slider" :slider-axis-value)
                                  rum.core/static
   [state value]
   (let [s [:#slider.slider
@@ -355,7 +357,7 @@
     s))
 
 
-(rum.core/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum.core/static [state value]
+(rum/defcs detail-slider-control < (bs-slider "#detail-slider" :detail-slider-axis-value) rum.core/static [state value]
   #_(prn "called detail-slider-control with " value)
   (let [s [:#detail-slider.slider
            [:input {:type "text" :value value}]]
@@ -367,7 +369,7 @@
 ;;;
 ;; Note: multiple sliders on the same page will fail
 ;;;
-(rum.core/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum.core/static [state value]
+(rum/defcs map-detail-slider-control < (bs-slider "#map-detail-slider" :detail-slider-axis-value) rum.core/static [state value]
   #_(prn "called map-detail-slider-control with " value)
   (let [s [:#map-detail-slider.slider
            [:input {:type "text" :value value}]]
@@ -377,7 +379,7 @@
     s))
 
 
-(rum.core/defc axis-container < rum.core/static
+(rum/defc axis-container < rum.core/static
   ([slider-axis-value]
    (axis-container slider-axis-value 69))
 
@@ -386,12 +388,12 @@
     (rum.core/with-key (ticks slider-axis-value 3 tick-height) :ticks)]))
 
 
-(rum.core/defc slider-title [headers]
+(rum/defc slider-title [headers]
   [:p {:key :p}
    (if (string? headers) headers (:title (:observed headers)))])
 
 
-(rum.core/defc table-header < rum.core/static bs-popover [background ap header column-key]
+(rum/defc table-header < rum.core/static bs-popover [background ap header column-key]
   [:th {:on-click       #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key nil))
         :on-touch-start #(when (:sortable header) (core/click->event-bus % :sort-toggle column-key nil))
         :style          {:max-width        (px (:width header))
@@ -429,7 +431,7 @@
     (:title header)]])
 
 
-(rum.core/defc slider-widget < rum.core/static
+(rum/defc slider-widget < rum.core/static
   ([headers control slider-axis-value]
    (slider-widget headers control slider-axis-value 69))
 
@@ -442,7 +444,7 @@
                   (axis-container slider-axis-value tick-height)])]))
 
 
-(rum.core/defc table-head < rum.core/static [ap headers column-keys slider-axis-value]
+(rum/defc table-head < rum.core/static [ap headers column-keys slider-axis-value]
   [:thead
    [:tr
     (for [column-key column-keys :when (-> headers column-key :shown)]
@@ -459,7 +461,7 @@
       ]]]])
 
 
-(rum.core/defc table1-core [ap data sort-key sort-direction headers]
+(rum/defc table1-core [ap data sort-key sort-direction headers]
   [:table.table.table-bordered {:cell-spacing "0"}
    (rum.core/with-key (table-head ap headers (keys headers) (:slider-axis-value ap)) :thead)
    [:tbody {:key :tbody}
@@ -500,7 +502,7 @@
        [:td {:key   [h-code :bars]
              :style {:background-color "#f0f0f0"}} (chart-cell row slider-axis-value)]])]])
 
-(rum.core/defc table1 < rum.core/reactive [app data]
+(rum/defc table1 < rum.core/reactive [app data]
   [:.table-container
    [:div.data-table
     (table1-core (rum.core/react app)
@@ -510,7 +512,7 @@
                  (first data)
                  )]])
 
-(rum.core/defc integer-option < rum.core/static [n]
+(rum/defc integer-option < rum.core/static [n]
   [:option {:value n} n])
 
 
@@ -522,16 +524,16 @@
      }))
 
 (defn end-year []
-  (int (name (:datasource @core/app))))
+  (js/parseIint (name (:datasource @core/app))))
 
-(rum.core/defc key-option < rum.core/static [year]
+(rum/defc key-option < rum.core/static [year]
   [:option {:value (str year)} (:option (year-range year "April" "March"))])
 
 ;
 ; todo: DATA. the data range should go from 2013 (fixed) to one more than the current datasource year
 ;
 
-(rum.core/defc datasource-dropdown < rum.core/reactive [event-bus]
+(rum/defc datasource-dropdown < rum.core/reactive [event-bus]
 
   [:.form-group
    [:label-for {:for "data-selector"} "Change reporting period"]
@@ -546,13 +548,13 @@
 ;;
 ;; configure title according to dataset
 ;;
-(rum.core/defc datasource-title [prefix]
+(rum/defc datasource-title [prefix]
   [:h2 (str prefix (:mrange (year-range (end-year) "April" "March")))]
   )
 
-(rum.core/defc list-tab < rum.core/reactive
+(rum/defc list-tab < rum.core/reactive
                           (core/update-title "All hospitals")
-                          (core/update-description "View all hospital child heart surgery survival data") [app data event-bus]
+                          #_(core/update-description "View all hospital child heart surgery survival data") [app data event-bus]
   [:div
    [:.col-sm-offset-1.col-sm-10
 
@@ -581,7 +583,7 @@
    (table1 app data)])
 
 
-(rum.core/defc interpretation
+(rum/defc interpretation
   [row close-modal]
   (let [survival-rate (:survival-rate row)]
     (cond
@@ -604,7 +606,7 @@
       "Oops - no text for this"
       )))
 
-#_(rum.core/defc interpretation
+#_(rum/defc interpretation
     [row]
     [:span (let [survival-rate (:survival-rate row)]
              (cond
@@ -628,7 +630,7 @@
                ))])
 
 
-(rum.core/defc hospital-charities < rum.core/reactive [h-code]
+(rum/defc hospital-charities < rum.core/reactive [h-code]
   (let [meta (h-code content/hospital-metadata)
         [link1 link2 link3 link4 link5] meta]
     (when link1 [:div
@@ -641,14 +643,14 @@
                   (when link5 [:li {:key 5} [:a (link5 1) (link5 2)]])]])))
 
 
-(rum.core/defc sample-hospital-intro-text []
+(rum/defc sample-hospital-intro-text []
   [:i {:key :sintros}
    [:p.note {:key 1} "You can move the slider button left to see the rates plotted on the full 0-100% range of possible
    survival rates, or right to focus on the detail near 100%"]
    [:p.note {:key 2} "Mouse over or click on the chart bars and the dot for explanations of their meaning."]])
 
 
-(rum.core/defc hospital-data < rum.core/reactive
+(rum/defc hospital-data < rum.core/reactive
   [h-code]
   (let [datasource (:datasource (rum.core/react core/app))
         selected-row (h-code ((rows-by-code datasource)))]
@@ -666,12 +668,12 @@
       "The hospital's 30 day survival rate was " [:b (:survival-rate selected-row) "%"] "."]]))
 
 
-(rum.core/defc hospital-header < rum.core/static
+(rum/defc hospital-header < rum.core/static
   [selected-row]
   [:h3 (:h-name selected-row)])
 
 
-(rum.core/defc legend < rum.core/reactive [selected-row close-modal]
+(rum/defc legend < rum.core/reactive [selected-row close-modal]
   [:.legend
    [:.box
     [:p {:style {:color "orange"}} "Legend (See also: "
@@ -704,7 +706,7 @@
   (swap! core/app #(assoc % :selected-h-code nil))
   (.modal (js/$ "#rowModal") "hide"))
 
-(rum.core/defc hospital-detail < rum.core/reactive
+(rum/defc hospital-detail < rum.core/reactive
   [h-code close-modal]
   (let [ap (rum.core/react core/app)]
     (if h-code
@@ -730,7 +732,7 @@
 
 
 
-(rum.core/defc modal < rum.core/reactive []
+(rum/defc modal < rum.core/reactive []
   (let [ap (rum.core/react core/app)
         selected-h-code (:selected-h-code ap)
         close-handler #(core/click->event-bus % :close-hospital-modal selected-h-code nil)]

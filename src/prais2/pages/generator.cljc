@@ -1,6 +1,6 @@
 (ns prais2.pages.generator
   #?(:clj
-     (:require [rum.core]
+     (:require [rum.core :as rum]
                [prais2.content :refer [faq-sections]]
                [prais2.components.head :refer [head]]
                [prais2.components.body :refer [body]]
@@ -42,7 +42,7 @@
                (do                                          ;(println "ix = " ix)
                    (write-html (str "resources/public/faq-" section "-" ix ".html") (faq-page [section ix])))))))
 
-     (defn -main []
+     (defn -main [& args]
        (write-html "resources/public/index.html" home-page)
        (write-html "resources/public/intro.html" intro-page)
        (all-faq-refs))))

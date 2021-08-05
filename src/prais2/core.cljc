@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.core
   #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
   (:require
-    [rum.core]
+    [rum.core :as rum]
     [clojure.string :as str]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
@@ -10,7 +10,6 @@
     [prais2.utils :refer [key-with]]
     #?(:cljs [goog.events :as events])
     #?(:cljs [goog.dom :as dom])
-    #?(:cljs [goog.dom.query])
     ))
 
 ;;;
@@ -247,7 +246,7 @@
 ;;;
 ;; wraps raw content in a div and returns a rum react element
 ;;;
-(rum.core/defc rum-wrap [& content]
+(rum/defc rum-wrap [& content]
   (apply conj [:div] content))
 
 ;; mixin to initialise bootstrap collapse code
@@ -299,7 +298,11 @@
 ;;
 (def title-prefix "Child Heart Surgery: ")
 
-#?(:cljs (defn meta-description []
+;;
+;; :todo; goog.dom.query no longer exists. Disabling rewrite of meta-description
+;; till we find what replaced it...
+;;
+#_#?(:cljs (defn meta-description []
            (first (filter #(= (.-name %) "description") (goog.dom.query "meta")))))
 
 (defn update-title [title-postfix]
@@ -311,11 +314,11 @@
                                       (title-postfix state))))
 
                          state)
-                 :clj  identity)})
+                 :clj  (fn [state] title-postfix state))})
 ;;
 ;; change page metadata mixin
 ;;
-(defn update-description [description]
+#_(defn update-description [description]
   {:did-mount #?(:cljs (fn [state]
                          (set! (.-content (meta-description))
                                (if (string? description)

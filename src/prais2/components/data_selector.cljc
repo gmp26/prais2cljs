@@ -1,10 +1,10 @@
 (ns prais2.components.data-selector
-  (:require [rum.core]
+  (:require [rum.core :as rum]
             [prais2.core :as core]
             [prais2.content :as content]
             ))
 
-(rum.core/defc data-selector < rum.core/reactive []
+(rum/defc data-selector < rum.core/reactive []
   (let [app (rum.core/react core/app)]
     [:.data-selector
      [:p

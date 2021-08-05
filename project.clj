@@ -24,12 +24,12 @@
                  [devcards "0.2.1"]
                  [rum "0.9.0"]
 
-                 [figwheel-sidecar "0.5.18"]
+                 [figwheel-sidecar "0.5.21-SNAPSHOT"]
                  [com.stuartsierra/component "0.3.1"]
                  ]
 
   :plugins [[lein-cljsbuild "1.1.1"]
-            ;[lein-figwheel "0.5.0-1"]
+            ;[lein-figwheel "0.5.21-SNAPSHOT"]
             [lein-sass "0.3.7"]
             ]
 
@@ -57,7 +57,7 @@
               :builds [{:id "dev"
                         :source-paths ["src"]
 
-                        :figwheel {:websocket-host "localhost"
+                        :figwheel true #_{:websocket-host "localhost"
                                    :on-jsload "prais2.main/on-js-reload"
                                    :debug false
                                    :open-urls ["http://localhost:3449/index.html"]
@@ -69,11 +69,11 @@
                                              "externs/sliders.js"
                                              "externs/video-js.js"
                                              ]
-                                   :asset-path "js/compiled/out"
+                                   :asset-path "/js/compiled/out"
                                    :output-to "resources/public/js/compiled/prais2.js"
                                    :output-dir "resources/public/js/compiled/out"
                                    :warnings {:single-segment-namespace false}
-                                   :source-map-timestamp true
+                                   ;:source-map-timestamp true
                                    :optimizations :none}}
 
                        {:id "pages"
@@ -101,7 +101,7 @@
                         :figwheel {:devcards true
                                    :on-jsload "prais2.main/on-js-reload"}
                         :compiler { :main       "prais2.devcards"
-                                   :asset-path "js/compiled/devcards_out"
+                                   :asset-path "/js/compiled/devcards_out"
                                    :output-to  "resources/public/js/compiled/devcards.js"
                                    :output-dir "resources/public/js/compiled/devcards_out"
                                    :source-map-timestamp true }}

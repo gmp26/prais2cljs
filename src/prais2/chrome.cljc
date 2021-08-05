@@ -1,7 +1,7 @@
 (ns ^:figwheel-always prais2.chrome
   (:require
     #?(:cljs [goog.string :refer [unescapeEntities]])
-    [rum.core]
+    [rum.core :as rum]
     #?(:cljs [cljsjs.jquery])
     #?(:cljs [cljsjs.bootstrap])
     [prais2.utils :refer [key-with]]
@@ -32,7 +32,7 @@
                 :faqs  (Nav-item. everything-else everything-else "nav-item faqs" "info" "faqs")})
 
 
-(rum.core/defc bs-nav-link [active? nav-item click-handler]
+(rum/defc bs-nav-link [active? nav-item click-handler]
   [:li
    [:a.navbar-btn {:on-click    click-handler
                    :class       (str (if active? " active " " ") (:class nav-item))
@@ -48,7 +48,7 @@
                                  (if (= nav-item-key :data) :map nil)
                                  (if (= nav-item-key :data) "data/map" (str (name nav-item-key))))))
 
-(rum.core/defc bs-fixed-navbar [active-key]
+(rum/defc bs-fixed-navbar [active-key]
   [:nav.navbar.navbar-simple.navbar-fixed-top
    [:.navbar-inner
     [:.container
@@ -74,7 +74,7 @@
                        (keys nav-items)))]]]]])
 
 
-(rum.core/defc header < rum.core/reactive []
+(rum/defc header < rum.core/reactive []
   [:div
    (bs-fixed-navbar (:page (rum.core/react core/app)))
    [:.main-title-box
@@ -95,7 +95,7 @@
      "UNDERSTANDING CHILDREN'S HEART SURGERY OUTCOMES"]]])
 
 
-(rum.core/defc footer []
+(rum/defc footer []
   [:.container-fluid.partners
    [:.row.visible-xs-block
     [:.col-xs-offset-1

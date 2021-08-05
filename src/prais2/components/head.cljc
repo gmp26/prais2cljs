@@ -1,7 +1,7 @@
 (ns prais2.components.head
-  (:require [rum.core]))
+  (:require [rum.core :as rum]))
 
-(rum.core/defc head [title]
+(rum/defc head [title]
                [:head
                 [:meta {:name "description"
                         :content "Make sense of published survival data about children’s heart surgery in the UK and Ireland. We explain how hospitals are monitored, and how to understand whether they are performing as predicted."}]
@@ -22,7 +22,9 @@
                 [:link {:rel "stylesheet" :href "//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"}]
                 [:link {:rel "stylesheet" :href "/css/app.css"}]
                 [:script {:src "/js/bootstrap-slider.min.js"}]
-                [:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]
+
+                ;; todo no longer exists :()
+                ;[:link {:rel "stylesheet" :href "http://openlayers.org/en/v3.0.0/css/ol.css"}]
 
                 ;; remote CDN
                 ;[:link {:rel "stylesheet" :href "//vjs.zencdn.org/5.10.2/video-js.css"}]

@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.logger
-    (:require [rum.core]
-              [cljsjs.papaparse]
+    (:require [rum.core :as rum]
+      ;[cljsjs.papaparse]
               [cljs.core.async :refer [chan <! pub put!]]
               [prais2.core :as core]
               [cljsjs.jquery]
@@ -143,7 +143,7 @@
 (defn prn-log [log]
   #_(.log js/console (log->csv log)))
 
-(rum.core/defc icon-control [icon event-key tooltip]
+(rum/defc icon-control [icon event-key tooltip]
   [:button.btn.btn-default
    {:title tooltip
     :tab-index 0
@@ -151,16 +151,16 @@
    [:i.fa {:class (str "fa-" icon)}]])
 
 
-(rum.core/defc reset-control []
+(rum/defc reset-control []
   (icon-control "step-backward" :rewind "rewind"))
 
-(rum.core/defc undo-control []
+(rum/defc undo-control []
   (icon-control "chevron-left" :undo "undo"))
 
-(rum.core/defc redo-control []
+(rum/defc redo-control []
   (icon-control "chevron-right" :redo "redo"))
 
-(rum.core/defc load-control []
+(rum/defc load-control []
   [:button#load-ctl.btn.btn-default
    {:title "load session from spreadsheet"
     :data-toggle "collapse"
