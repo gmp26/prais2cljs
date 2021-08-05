@@ -66,3 +66,4 @@ resources/public/index*
 resources/public/intro*
 
 .calva
+.clj-kondo/.cache

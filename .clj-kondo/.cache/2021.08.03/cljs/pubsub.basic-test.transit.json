@@ -1,1 +1,0 @@
-["^ ","~$test-numbers",["^ ","~:row",8,"~:col",1,"~:fixed-arities",["~#set",[0]],"~:name","^0","~:ns","~$pubsub.basic-test","~:top-ns","^7"],"~$subscribe-and-publish",["^ ","^1",12,"^2",1,"^3",["^4",[0]],"^5","^9","^6","^7","^8","^7"],"~:filename","/Users/gmp26/clojure/predict-min/test/cljs/pubsub/basic_test.cljs"]
