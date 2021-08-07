@@ -150,16 +150,15 @@
      ]))
 
 
-(rum/defc render-one-faq-block #_#_< (core/update-title gen-bread-title)
-                                      #_(core/update-description gen-bread-title) [sec-ix]
+(rum/defc render-one-faq-block < (core/update-title gen-bread-title)
+                                     [sec-ix]
 
   [:.one-block.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (breadcrumb [sec-ix])
    [:h1 (:section  (faq-sections sec-ix))]
    (render-faq-block sec-ix)])
 
-(rum/defc render-faq-section #_#_< (core/update-title gen-postfix)
-                                    #_(core/update-description gen-description) [[section-ix ix :as faq-ref]]
+(rum/defc render-faq-section < (core/update-title gen-postfix) [[section-ix ix :as faq-ref]]
 
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (let [section (faq-sections section-ix)

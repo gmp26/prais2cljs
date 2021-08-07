@@ -43,12 +43,8 @@
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
 
-(rum/defc render-data-tabs < rum.core/reactive
-                                  (core/update-title "Choose a hospital")
-                                  #_(core/update-description "View all hospital child heart surgery survival data") []
-
+(rum/defc render-data-tabs < rum.core/reactive (core/update-title "Choose a hospital") []
   [:.row
-
    [:.col-sm-offset-1.col-sm-10
     [:h1 {:key 1} "Explore the data"]
 
@@ -89,9 +85,7 @@
                              :aria-controls "mapped-data"
                              :role "tab"
                              :on-click #(core/click->event-bus % :data :animation "data/animation"))
-       [:i.fa.fa-video-camera] " Two minute video"]]
-
-     ]
+       [:i.fa.fa-video-camera] " Two minute video"]]]
 
     (when (not= :animation (:section (rum.core/react core/app)))
       [:p.post-tab {:key 5} "Use the drop down box to change reporting periods. You can watch our "
@@ -99,13 +93,10 @@
                       :on-click
                       #(core/click->event-bus % :data :animation "data/animation")) [:i.fa.fa-video-camera] " two minute video"]
        " which explains how we present the statistics and how to interpret them. Parents who helped us
-       develop the website found it a useful guide to interpreting the data. "])
-
-    ]])
+       develop the website found it a useful guide to interpreting the data. "])]])
 
 
-(rum/defc render-video1 < (core/update-title "Two minute video")
-  #_(core/update-description "View a 2 minute video guide to how we present the results") []
+(rum/defc render-video1 < (core/update-title "Two minute video") []
   [:section.col-sm-offset-1.col-sm-10.col-md-offset-1.col-md-6
    (video-js {:video-id  "video1"
               :src       "/assets/video01.mp4"

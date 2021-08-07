@@ -46,7 +46,7 @@
 
 
 (rum/defc render-home < rum.core/reactive (core/update-title "Home page")
-  #_(core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
+          []
   [:div.main-content
    [:.container
     [:.jumbotron.home.row

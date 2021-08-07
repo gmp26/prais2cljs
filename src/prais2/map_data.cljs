@@ -21,9 +21,7 @@
      (map-indexed key-with (map hospital-item rows))]))
 
 
-(rum/defc render-map-data < (core/update-title "Choose a hospital")
-                                 #_(core/update-description "Choose a hospital and view its child heart surgery survival data")
-                                 rum.core/reactive []
+(rum/defc render-map-data < (core/update-title "Choose a hospital") rum.core/reactive []
   [:div
    [:section.col-sm-offset-1.col-sm-10
 
@@ -35,9 +33,7 @@
     [:.row
      [:p.col-sm-9 "Choose a hospital from the list or the map to see its data. "]]
     #_[:p "These are the hospitals in the UK and Ireland that performed heart surgery in children over this
-             period (0-16 years old). This data is updated annually and covers a 3 year reporting period."]
-
-    ]
+             period (0-16 years old). This data is updated annually and covers a 3 year reporting period."]]
 
    (if (nil? (:map-h-code (rum.core/react core/app)))
      [:.col-sm-6.col-md-offset-1.col-md-7 (hospital-list)]

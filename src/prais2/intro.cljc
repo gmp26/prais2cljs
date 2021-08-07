@@ -20,9 +20,7 @@
 
 
 ;; look at http://materializecss.com/
-(rum/defc render-intro < #_(core/update-title "Key points")
-                          #_(core/update-description "Explains the key points to understand when interpreting hospital child surgery survival data")
-                              (core/monitor-react "INTRO>" false)  []
+(rum/defc render-intro < (core/update-title "Key points") (core/monitor-react "INTRO>" false)  []
   [:.container.main-content
    [:.row
     [:.col-sm-8
@@ -33,7 +31,6 @@
       National Institute of Cardiovascular Outcomes Research (" [:a (core/href "https://www.ucl.ac.uk/nicor" :target "_blank") "NICOR"] ")."]
 
      ;     [:img.thumbnail.img-responsive {:src "assets/keypoint-slides.png"}]
-
      ]
     [:#intro.col-sm-12
      (key-points)
@@ -41,9 +38,7 @@
      (section 2 "<strong>Why</strong> can data about survival be difficult to interpret?" section-2-content)
      (section 3 "<strong>How</strong> does the NHS monitor hospitals that do children’s heart surgery?" section-3-content)
      (section 4 "What this site cannot do" section-4-content)
-     (section 5 "What this site can do" section-5-content)
-     ]
-    ]])
+     (section 5 "What this site can do" section-5-content)]]])
 
 (rum/defc key-point [img-src alt-text text]
                [:li.key-point.row

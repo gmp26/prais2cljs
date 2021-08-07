@@ -295,7 +295,7 @@
 ;; till we find what replaced it...
 ;;
 #?(:cljs (defn meta-description []
-           (first (filter #(= (.-name %) "description") (goog.dom.query "meta")))))
+           (first (filter #(= (.-name %) "description") (.querySelector js/document "meta")))))
 
 (defn update-title [title-postfix]
   {:did-mount #?(:cljs (fn [state]
@@ -307,14 +307,3 @@
 
                          state)
                  :clj  (fn [state] title-postfix state))})
-;;
-;; change page metadata mixin
-;;
-(defn update-description [description]
-  {:did-mount #?(:cljs (fn [state]
-                         (set! (.-content (meta-description))
-                               (if (string? description)
-                                 description
-                                 (description state)))
-                         state)
-                 :clj  identity)})
