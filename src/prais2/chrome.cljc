@@ -1,21 +1,12 @@
 (ns ^:figwheel-always prais2.chrome
   (:require
-    #?(:cljs [goog.string :refer [unescapeEntities]])
-    [rum.core :as rum]
-    #?(:cljs [cljsjs.jquery])
-    #?(:cljs [cljsjs.bootstrap])
-    [prais2.utils :refer [key-with]]
-    #?(:cljs [prais2.core :as core :refer [event-bus]])
-    #?(:clj
-    [prais2.core :as core])
-    [prais2.components.data-selector :refer [data-selector]]
-    ))
-
-(defn rgba-string
-  "return CSS rgba string"
-  [[r g b a]]
-  (str "rgba(" r "," g "," b "," a))
-
+   [rum.core :as rum]
+   #?(:cljs [goog.string :refer [unescapeEntities]])
+   #?(:cljs [cljsjs.jquery])
+   #?(:cljs [cljsjs.bootstrap])
+   #?(:cljs [prais2.utils :as utils])
+   [prais2.core :as core])
+    )
 
 (defrecord Nav-item [long-title short-title class icon token])
 
@@ -48,7 +39,7 @@
                                  (if (= nav-item-key :data) :map nil)
                                  (if (= nav-item-key :data) "data/map" (str (name nav-item-key))))))
 
-(rum/defc bs-fixed-navbar [active-key]
+(rum/defc bs-fixed-navbar [#?(:cljs active-key :clj _)]
   [:nav.navbar.navbar-simple.navbar-fixed-top
    [:.navbar-inner
     [:.container
@@ -65,12 +56,11 @@
        [:span.icon-bar {:key 4}]]]
      [:#navbar.navbar-collapse.collapse {:key 2}
       [:ul.nav.navbar-nav.navbar-right {:key 1}
-
-       #?(:cljs                                             ;only supply real button click handlers once we're loaded
-          (map-indexed #(key-with %1 (bs-nav-link
-                                       (= active-key %2)
-                                       (%2 nav-items)
-                                       (nav-click-handler %2)))
+       #?(:cljs                                             ; only supply real button click handlers once we're loaded
+          (map-indexed #(utils/key-with %1 (bs-nav-link
+                                            (= active-key %2)
+                                            (%2 nav-items)
+                                            (nav-click-handler %2)))
                        (keys nav-items)))]]]]])
 
 

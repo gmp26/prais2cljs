@@ -1,16 +1,10 @@
 (ns ^:figwheel-always prais2.core
-  #?(:cljs (:require-macros [cljs.core.async.macros :refer [go-loop]]))
   (:require
-    [rum.core :as rum]
-    [clojure.string :as str]
-    #?(:cljs [cljsjs.jquery])
-    #?(:cljs [cljsjs.bootstrap])
-    #?(:cljs [secretary.core :as secretary])
-    #?(:cljs [cljs.core.async :refer [chan <! pub put!]])
-    [prais2.utils :refer [key-with]]
-    #?(:cljs [goog.events :as events])
-    #?(:cljs [goog.dom :as dom])
-    ))
+   [rum.core :as rum]
+   #?(:cljs [cljsjs.jquery])
+   #?(:cljs [cljsjs.bootstrap])
+   #?(:cljs [cljs.core.async :refer [chan pub put!]])
+   #?(:cljs [clojure.string :as string])))
 
 ;;;
 ;; js interop
@@ -62,8 +56,7 @@
 #?(:cljs
    (defn get-token! []
      (if (= prefix "#")
-       (do
-         (str/replace-first (.-hash (.-location js/window)) "#/" ""))
+       (string/replace-first (.-hash (.-location js/window)) "#/" "")
        (.-pathname (.-location js/window)))))
 
 
@@ -81,7 +74,6 @@
 #?(:cljs (defn click->event-bus
            [event dispatch-key dispatch-value token]
            (when token
-             (do
                ;(prn (str "pushing " token))
                ; Filter this for URL-only events?
                ;; No.
@@ -89,7 +81,7 @@
                ;; rather than a back/forward navigation.
                ;; So it is safe to push.
                ;;
-               (.pushState js/history [] token (token->url token))))
+             (.pushState js/history [] token (token->url token)))
            #_(when-not token
              (prn "NIL TOKEN SENT TO core/click-event-bus")
              )
@@ -205,7 +197,7 @@
 
 (defn internal-ref
   "add in local handler for an internal token"
-  ([token close-modal]
+  ([token #?(:cljs close-modal) #?(:clj _)]
    (merge {:href (irl token)}
           #?(:cljs {:on-click       (internal-link-handler token close-modal)
                     :on-touch-start (internal-link-handler token close-modal)})))
@@ -302,7 +294,7 @@
 ;; :todo; goog.dom.query no longer exists. Disabling rewrite of meta-description
 ;; till we find what replaced it...
 ;;
-#_#?(:cljs (defn meta-description []
+#?(:cljs (defn meta-description []
            (first (filter #(= (.-name %) "description") (goog.dom.query "meta")))))
 
 (defn update-title [title-postfix]
@@ -318,7 +310,7 @@
 ;;
 ;; change page metadata mixin
 ;;
-#_(defn update-description [description]
+(defn update-description [description]
   {:did-mount #?(:cljs (fn [state]
                          (set! (.-content (meta-description))
                                (if (string? description)

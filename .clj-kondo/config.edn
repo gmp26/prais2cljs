@@ -1,4 +1,5 @@
 {:config-paths ["configs/rum" "configs/ajax" "configs/slingshot"]
  :linters {:unused-referred-var
            {:exclude {clojure.test [is deftest testing]
-                      clj-kondo.impl.utils [err]}}}}
+                      clj-kondo.impl.utils [err]}}}
+ :lint-as {secretary.core/defroute clojure.core/defn}}

@@ -1,10 +1,9 @@
 (ns ^:figwheek-always prais2.map-data
   (:require
     [rum.core :as rum]
-    [cljs.core.async :refer [<! put! timeout]]
-    [prais2.chrome :refer [what-why everything-else]]
+    [cljs.core.async :refer [put!]]
     [prais2.utils :refer [key-with]]
-    [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
+    [prais2.core :as core :refer [event-bus]]
     [prais2.content :as content]
     [prais2.data :as data]
     [prais2.open-layers-map :as map]))

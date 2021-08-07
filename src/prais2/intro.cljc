@@ -1,7 +1,6 @@
 (ns ^:figwheel-always prais2.intro
     (:require [rum.core :as rum]
-              [prais2.core :as core]
-              [prais2.utils :refer [key-with]]))
+              [prais2.core :as core]))
 
 
 (rum/defc section [section-id section-title section-content]

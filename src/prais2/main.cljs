@@ -2,12 +2,10 @@
   (:require-macros                                          ;[jayq.macros :refer [ready]]
     [cljs.core.async.macros :refer [go-loop]])
   (:require [rum.core :as rum]
-            [clojure.set :refer (intersection)]
             [cljsjs.react]
-            [cljs.core.async :refer [chan <! pub sub put! close!]]
+            [cljs.core.async :refer [chan <! sub put! close!]]
             [prais2.utils :refer [key-with]]
             [prais2.core :as core :refer [app event-bus event-bus-pub bs-popover bs-tooltip]]
-            [prais2.routes :as routes]
             [prais2.data :as data]
             [prais2.open-layers-map :as map]
             [prais2.chrome :as chrome]
@@ -16,6 +14,7 @@
             [prais2.map-data :refer [render-map-data]]
             [prais2.faqs :refer [render-faqs]]
             [prais2.components.video-player :refer [video-js]]
+            ;[prais2.logger :refer [log-bus-pub]]
             [cljsjs.jquery]
             ))
 
@@ -40,16 +39,6 @@
 (rum/defc render-404 []
   [:h1 "Page not found. "
    [:a (core/href "home") "Try the home page."]])
-
-;;
-;; Code snippet to remove columns from table
-;;
-(comment headers
-         (assoc (first data')
-           :n-deaths false
-           :n-survivors false
-           :h-code false)
-         data (conj (rest data') headers))
 
 (defn active? [section]
   (if (= (:section @core/app) section) "active" nil))
@@ -186,7 +175,6 @@
    (cond
      (= page :home)
      (do
-       ;(prn "routes/homes = " (routes/home))
        (deselect-all)
        (map-indexed key-with
                     [(chrome/header)
@@ -265,13 +253,8 @@
     (go-loop []
              (let [[ev-key _ :as event] (<! in-chan)]
                (if (= ev-key :reloading)
-                 (do
-                   (close! in-chan))
+                 (close! in-chan)
                  (do (handle event)
-                     (when (= event-bus-pub event-feed)
-
-                       ;(logger/write-log event)
-                       )
                      (recur)))))))
 
 (defn zoom-to-hospital
@@ -298,7 +281,7 @@
             (fn [[_ column-key]] (data/handle-sort core/app column-key)))
 
   (dispatch event-bus-pub :info-clicked
-            (fn [[_ column-key]] nil #_(prn (str "clicked on info for column " column-key))))
+            (fn [[_ _]] nil #_(prn (str "clicked on info for column " column-key))))
 
   (dispatch event-bus-pub :change-colour-map
             (fn [[_ value]]
@@ -357,18 +340,13 @@
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]
-              #_(prn "nav to faqs " section)
               (swap! core/app #(assoc % :page :faqs :section section))))
 
   (dispatch event-bus-pub :faq
             (fn [[_ faq-ref]]
-              #_(prn faq-ref)
-              (let [[sec id] faq-ref]
-                (do #_(prn "nav to faq " faq-ref " = " sec "," id)
-                    #_(prn "routes/faq/x/y " (routes/faq {:section sec :id id}))
-                    (swap! core/app #(assoc % :page :faqs :section faq-ref))))))
+              (swap! core/app #(assoc % :page :faqs :section faq-ref))))
 
-  (comment
+  #_(comment
     ;;;
     ;; log-bus handling from here
     ;;;

@@ -4,13 +4,13 @@
             [prais2.utils :refer [key-with]]
             [prais2.content :as content :refer [faq-sections]]
             [prais2.components.video-player :refer [video-js]]
-    #?(:cljs [prais2.data :as data])
+            #?(:cljs [prais2.data :as data])
             [prais2.mugshots :as mugs]))
 
 (comment
   ;;
-  ;; Use this to regenerate the injected faq list in prais2/core
-  ;; Currently, this is done by hand :(
+  ;; todo? Use this to regenerate the injected faq list in prais2/core?
+  ;; Currently, this is done by hand, but as the faqs have never changed since launch...
   ;;
   (defn faq-refs
     "List all faq refs"
@@ -27,13 +27,15 @@
 
 (rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
+    (println "entry: " entry)
     [:dl
      [:dt [:i (:title entry)]]
      [:dd
       [:div
        (:body entry)
        #?(:cljs (when (= term :predicted-range)
-                  (data/chart-cell content/sample-hospital 1)))]]]))
+                  (data/chart-cell content/sample-hospital 1))
+          :clj [:span])]]]))
 
 (rum/defc render-glossary [glossary]
   [:div
@@ -92,27 +94,28 @@
     (render-faq-block 4)
     (render-faq-block 5)]])
 
-#?(:cljs
-   (defn go-back [_]
-     (.go js/history -1)))
+#_(comment
+  #?(:cljs
+     (defn go-back [_]
+       (.go js/history -1)))
+    
+  (defn gen-description [state]
+    (let [[section-ix ix] (first (:rum/args state))
+          section (faq-sections section-ix)
+          faq ((:faqs section) ix)]
+      (or (:short-title faq) (:title faq))))
+  )
 
 (defn gen-postfix [state]
-  (let [[section-ix ix] (first (:rum/args state))
+  (let [[section-ix _] (first (:rum/args state))
         section (faq-sections section-ix)]
     (:section section)))
-
-(defn gen-description [state]
-  (let [[section-ix ix] (first (:rum/args state))
-        section (faq-sections section-ix)
-        faq ((:faqs section) ix)]
-    (or (:short-title faq) (:title faq))))
 
 (defn gen-bread-title [state]
   (let [sec-ix (first (:rum/args state))]
     (:section (faq-sections sec-ix))))
 
-
-(defn prev-faq [[section-ix ix :as faq-ref]]
+(defn prev-faq [[section-ix ix]]
   (str "faq"
        (if (pos? ix)
          (str "/" section-ix "/" (dec ix))
@@ -120,8 +123,7 @@
            (str "/" (dec section-ix) "/" (dec (count (:faqs (faq-sections (dec section-ix))))))
            "s"))))
 
-
-(defn next-faq [[section-ix ix :as faq-ref]]
+(defn next-faq [[section-ix ix]]
   (let [shown-section-count (dec (count faq-sections))
         faq-count (count (:faqs (faq-sections section-ix)))]
     (str "faq"
@@ -132,7 +134,7 @@
            (str "/" section-ix "/" (inc ix))))))
 
 
-(rum/defc paginator [[section-ix ix :as faq-ref]]
+(rum/defc paginator [faq-ref]
   [:nav
    [:ul.pager
     [:li [:a (core/internal-ref (prev-faq faq-ref)) [:i.fa.fa-arrow-left] " previous"]]
@@ -140,7 +142,7 @@
   )
 
 
-(rum/defc breadcrumb [[section-ix ix :as faq-ref]]
+(rum/defc breadcrumb [[section-ix _]]
   (let [section (faq-sections section-ix)]
     [:ul.breadcrumb
      [:li [:a (core/internal-ref "faqs") "Everything Else"]]
@@ -165,7 +167,6 @@
          short-answer (:short-answer faq)
          glossary (:glossary faq)]
 
-
      [:div
       (breadcrumb faq-ref)
       (paginator faq-ref)
@@ -174,35 +175,20 @@
        [:.title {:key 2} (:title faq)]]
 
       (when short-answer
-        (do
-          ;(prn "rendering short answer for section " section-ix "." ix)
-          (render-short-answer short-answer)))
+        (render-short-answer short-answer))
       [:div.body {:key 2}
        (when (= [4 0] faq-ref)
          (rum.core/with-key (mugs/reformatted-mugshots) 4))
        (:body faq)]
       (when (> (count glossary) 0)
-        (do
-          ;(prn "rendering glossary " glossary)
-          (render-glossary glossary)))
-      (paginator faq-ref)
-      #_[:button.btn.btn-primary.back
-       #?(:cljs {:key            3
-                 :on-click       go-back
-                 :on-touch-start go-back
-                 })
-       "Back"
-       ]])])
-
+        (render-glossary glossary))
+      (paginator faq-ref)])])
 
 (rum/defc render-faqs [[section-ix ix :as faq-ref]]
-
   [:.container-fluid.main-content
    [:.row
     (if (= nil faq-ref)
       (render-faq-top)
       (if (nil? ix)
         (render-one-faq-block section-ix)
-        (render-faq-section faq-ref))
-      )
-    ]])
+        (render-faq-section faq-ref)))]])

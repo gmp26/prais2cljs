@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Leiningen: cljsjs/bootstrap:3.3.6-0">
-    <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/cljsjs/bootstrap/3.3.6-0/bootstrap-3.3.6-0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

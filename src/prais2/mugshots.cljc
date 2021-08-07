@@ -1,8 +1,7 @@
 (ns ^:figwheel-always prais2.mugshots
   (:require [rum.core :as rum]
             [prais2.core :as core]
-            [prais2.content :as content]
-            [clojure.string :as str]))
+            [prais2.content :as content]))
 
 (rum/defc mugshot [key]
   (let [data (key content/mugshot-data)]

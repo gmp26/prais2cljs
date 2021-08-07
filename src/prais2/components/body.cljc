@@ -2,10 +2,13 @@
   (:require [rum.core :as rum]
             [prais2.components.analytics :as ana]))
 
-(rum/defc body [content]
+;; watcha
+
+(rum/defc body [#?(:clj content
+                   :cljs _)]
                [:body
-                #?(:clj [:#app (content)])
-                #?(:cljs [:#app                             ; the spinner is unused now!
+                #?(:clj [:#app (content)]
+                   :cljs [:#app                             ; the spinner is unused now!
                           [:i.fa.fa-spinner.fa-pulse
                            {:style {:font-size "100px"
                                     :position  "absolute"
@@ -21,8 +24,6 @@
                 [:script {:async true :src "/js/autotrack.js"}]
 
                 ;(browser-update)
+                
 
-
-                [:script {:src "/js/compiled/prais2.js"}]
-
-                ])
+                [:script {:src "/cljs-out/prais2-main.js"}]])

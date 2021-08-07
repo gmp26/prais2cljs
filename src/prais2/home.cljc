@@ -1,7 +1,6 @@
 (ns prais2.home
   (:require [rum.core :as rum]
             [prais2.core :as core]
-            [prais2.utils :refer [key-with]]
             ))
 
 (rum/defc what-why []
@@ -46,9 +45,8 @@
     [:p "Information for families."]]])
 
 
-(rum/defc render-home < rum.core/reactive
-                             #_(core/update-title "Home page")
-                             #_(core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
+(rum/defc render-home < rum.core/reactive (core/update-title "Home page")
+  #_(core/update-description "Makes sense of published survival data about children’s heart surgery in the UK and Ireland") []
   [:div.main-content
    [:.container
     [:.jumbotron.home.row
@@ -75,9 +73,7 @@
                          " [:a (core/href "https://www.google.com/chrome/") "Google Chrome"] "
                 or " [:a (core/href "https://www.mozilla.org/en-GB/") "Mozilla Firefox"] " instead.
                 For further help, please contact "
-                 [:a {:mailto "technical@childrensheartsurgey.info"} "technical@childrensheartsurgey.info"]]]
-
-         )]]
+                 [:a {:mailto "technical@childrensheartsurgey.info"} "technical@childrensheartsurgey.info"]]])]]
     [:.row
      (what-why)
      (data)

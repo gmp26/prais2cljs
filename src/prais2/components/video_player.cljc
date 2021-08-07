@@ -2,23 +2,22 @@
   (:require [rum.core :as rum :include-macros true]))
 
 ;(defn video-js-debug [s] (prn s))
-(defn video-js-debug [s] nil)
+(defn video-js-debug [_] nil)
 
 (def use-video-js
   {:did-mount      (fn [state]
                      #?(:cljs (assoc state
-                                ::player (.videojs js/window (:video-id (first (:rum/args state)))
-                                                   (clj->js {})
-                                                   #(video-js-debug (str (:video-id (first (:rum/args state)))
-                                                                         " initialised"))))
+                                     ::player (.videojs js/window (:video-id (first (:rum/args state)))
+                                                        (clj->js {})
+                                                        #(video-js-debug (str (:video-id (first (:rum/args state)))
+                                                                              " initialised"))))
                         :clj  state))
 
    :transfer-state (fn [old-state state]
                      #?(:cljs (assoc state ::player (::player old-state))
-                        :clj  identity))
+                        :clj  (constantly [old-state state])))    ; was identity - todo: check
 
    :will-unmount   #?(:cljs (fn [state]
-                              ;; :todo cross-browser test this sequence
                               (.pause (::player state))
                               (.dispose (::player state))
                               (dissoc state ::player))

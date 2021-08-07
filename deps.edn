@@ -11,7 +11,11 @@
         secretary/secretary {:mvn/version "1.2.3"}
         rum/rum {:mvn/version "0.9.0"}
         com.stuartsierra/component {:mvn/version "0.3.1"}
-        
+
         clj-kondo/config {:git/url "https://github.com/clj-kondo/config"
-                          :sha "e2e156c53c6c228fee7242629b41013f3e55051d"}}
- :paths ["src" "resources"]}
+                          :sha "e2e156c53c6c228fee7242629b41013f3e55051d"}
+        }
+ :paths ["src" "target"]
+ :aliases {:gen {:exec-fn prais2.pages.generator/-main}}
+ #_{:fig {:main-opts ["-m" "figwheel.main"]}
+    :gen {:main-opts ["-m" "prais2.pages.generator"]}}}

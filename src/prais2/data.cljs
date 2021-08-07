@@ -1,14 +1,12 @@
 (ns ^:figwheel-always prais2.data
   (:require
-   [clojure.edn :as end]
    [rum.core :as rum]
    [cljsjs.jquery]
    [cljsjs.bootstrap]
-   [cljs.core.async :refer [put! <! timeout]]
+   [cljs.core.async :refer [put!]]
    [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
    [prais2.content :as content]
-   [prais2.utils :refer [px pc important key-with]])
-  (:require-macros [cljs.core.async.macros :refer [go]])
+   [prais2.utils :refer [px pc key-with]])
   )
 
 ;;;
@@ -104,7 +102,7 @@
   ([slider hi-val lo-val bar-type fill]
 
    ;; todo: this doesn't contribute to the result 
-   #_[:div.bar {:style {:background-color fill
+   [:div.bar {:style {:background-color fill
                       :width            (str (bar-width slider (- hi-val lo-val)) "%")}}]
 
    [:div.bar.btn {:style               {:background-color fill
@@ -121,7 +119,7 @@
 
   ([slider hi-val lo-val bar-type fill no-tip]
    
-   #_(if (= fill "rgba(255,255,255,0)")
+   (if (= fill "rgba(255,255,255,0)")
      [:div.bar {:style {:background-color fill
                         :width            (str (bar-width slider (- hi-val lo-val)) "%")}}]
      (if-not no-tip
@@ -187,7 +185,7 @@
 
 (def extra-right 40)
 
-(def last-pad-right (important (px extra-right)))
+#_(def last-pad-right (important (px extra-right)))
 
 (defn dot-size [slider]
   (Math/round (- 12 (* 7 (- 1 slider)))))
@@ -512,10 +510,6 @@
                  (first data)
                  )]])
 
-(rum/defc integer-option < rum.core/static [n]
-  [:option {:value n} n])
-
-
 (defn year-range [year m1 m2]
   (let [y1 (- year 3)]
     {:y1     y1
@@ -524,7 +518,7 @@
      }))
 
 (defn end-year []
-  (js/parseIint (name (:datasource @core/app))))
+  (js/parseInt (name (:datasource @core/app))))
 
 (rum/defc key-option < rum.core/static [year]
   [:option {:value (str year)} (:option (year-range year "April" "March"))])
@@ -554,7 +548,7 @@
 
 (rum/defc list-tab < rum.core/reactive
                           (core/update-title "All hospitals")
-                          #_(core/update-description "View all hospital child heart surgery survival data") [app data event-bus]
+                          (core/update-description "View all hospital child heart surgery survival data") [app data event-bus]
   [:div
    [:.col-sm-offset-1.col-sm-10
 
@@ -707,7 +701,7 @@
   (.modal (js/$ "#rowModal") "hide"))
 
 (rum/defc hospital-detail < rum.core/reactive
-  [h-code close-modal]
+  [h-code _]
   (let [ap (rum.core/react core/app)]
     (if h-code
       [:#detail

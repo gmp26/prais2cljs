@@ -2,10 +2,8 @@
   (:require [secretary.core :as secretary :refer-macros [defroute]]
             [goog.events :as events]
             [goog.history.EventType :as EventType]
-            [cljs.reader :refer [read-string]]
             [cljs.core.async :refer [put!]]
             [prais2.core :as core]
-    ;[accountant.core :as accountant]
             )
   (:import goog.History)
   )
@@ -63,7 +61,7 @@
     (put! core/event-bus [:intro nil])
     )
 
-(defroute intro "/intro" [id]
+(defroute intro "/intro" []
   (put! core/event-bus [:intro nil])
   (prn "intro match")
   )

@@ -104,19 +104,41 @@
 
 (declare map-click-handler)
 
-; :todo: code smell below! dynamic defs inside a component :(
+(defonce ol-db (atom {:hospital-map nil
+                      :popup nil}))
 
 (def map-view
   {:did-mount (fn [state]
+                (let [new-state (-> state
+                                    (assoc :hospital-map     ;def hospital-map
+                                           (new js/ol.Map (clj->js {:target "open-map"
+                                                                    :layers [tileLayer (vectorLayer)]
+                                                                    :view mapView
+                                                                    :interactions [] ; to disable mouse wheel and pan
+                                                                    :loadTilesWhileAnimating true})))
+                                    (assoc :popup
+                                           (new js/ol.Overlay
+                                                (clj->js {:element (core/el "popup")
+                                                          :positioning "bottom-center"
+                                                          :stopEvent false}))))]
+                  (.addOverlay (new-state :hospital-map) (new-state :popup))
+                  (.on (new-state :hospital-map) "click" map-click-handler)
+                  (reset! ol-db new-state)
+                  new-state))
+   :should-update (fn [_ _] false)         ; prevent React messing with the component that uses this mixin
+   })
+
+#_(def map-view
+  {:did-mount (fn [state]
 ;; once?
-                (def hospital-map
-                  (new js/ol.Map (clj->js {:target "open-map"
-                           :layers [tileLayer (vectorLayer)]
-                           :view mapView
-                           :interactions [] ; to disable mouse wheel and pan
-                           :loadTilesWhileAnimating true})))
+                (swap! ol-db assoc :hospital-map     ;def hospital-map
+                       (new js/ol.Map (clj->js {:target "open-map"
+                                                :layers [tileLayer (vectorLayer)]
+                                                :view mapView
+                                                :interactions [] ; to disable mouse wheel and pan
+                                                :loadTilesWhileAnimating true})))
 ;; once?
-                (def popup
+                (swap! ol-db assoc :popup
                   (new js/ol.Overlay
                        (clj->js {:element (core/el "popup")
                                  :positioning "bottom-center"
@@ -125,8 +147,8 @@
 ;; once?
                 (def once-only
                   (do
-                    (.addOverlay hospital-map popup)
-                    (.on hospital-map "click" map-click-handler)))
+                    (.addOverlay (@ol-db :hospital-map) (@ol-db :popup))
+                    (.on (@ol-db :hospital-map) "click" map-click-handler)))
 
                 state)})
 
@@ -135,7 +157,7 @@
 
 (defn map-click-handler
   [event]
-  (let [the-map hospital-map ;(:map @core/app)
+  (let [the-map (@ol-db :hospital-map) ;(:map @core/app)
         feature (.forEachFeatureAtPixel the-map
                                          (.-pixel event)
                                          (fn [a _] a))]
@@ -152,7 +174,7 @@
 
   ([lat lon resolution]
    (prn (str "resolution = " resolution))
-   (let [pan (.pan ol.animation (clj->js {:duration zoom-time
+   (let [pan (.pan js/ol.animation (clj->js {:duration zoom-time
                                           :source (.getCenter mapView)
                                           :resolution (.getResolution mapView)
                                           }))
@@ -164,7 +186,7 @@
      (.setCenter mapView (project lat lon))
      (.setResolution mapView resolution)
      ;(.beforeRender (:map @core/app) pan zoom)
-     (.beforeRender hospital-map pan zoom)
+     (.beforeRender (@ol-db :hospital-map) pan zoom)
      )))
 
 (defn go-home
@@ -197,7 +219,7 @@
     (zoom-to-location lat lon)
     (go (<! (timeout zoom-time))
 
-        (.setPosition popup (clj->js [(first coord) (+ 150 (second coord))]))
+        (.setPosition (@ol-db :popup) (clj->js [(first coord) (+ 150 (second coord))]))
         (.popover element (clj->js
                            {:placement "top"
                             :html true

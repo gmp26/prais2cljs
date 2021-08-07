@@ -1,0 +1,4 @@
+{:paths ["script"]
+ :deps {medley/medley {:mvn/version "1.3.0"}}
+ :tasks {clean (shell "echo bb cleaning")
+         test (my-project.main/-main)}}
