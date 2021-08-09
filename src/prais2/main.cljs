@@ -14,7 +14,6 @@
             [prais2.map-data :refer [render-map-data]]
             [prais2.faqs :refer [render-faqs]]
             [prais2.components.video-player :refer [video-js]]
-            ;[prais2.logger :refer [log-bus-pub]]
             [cljsjs.jquery]
             ))
 

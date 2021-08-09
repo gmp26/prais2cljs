@@ -72,8 +72,7 @@
           [:li {:key ix} [:a (core/href (str "faq/" sec-ix "/" ix)) (:title faq)]])]])))
 
 
-(rum/defc render-faq-top #_#_< (core/update-title "Everything Else")
-                                #_(core/update-description "Background, Limitations, Predicted range (with video explanation), Family and Child, Charities, About Us") []
+(rum/defc render-faq-top < (core/update-title "Everything Else") []
   [:div
    [:h1.col-md-12
     content/title]
