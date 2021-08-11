@@ -1,0 +1,4 @@
+^{:watch-dirs ["src"]
+  :css-dirs ["target/public/css"]
+  :auto-testing false}
+{:main prais2.main}

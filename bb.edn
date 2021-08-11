@@ -1,4 +1,14 @@
-{:paths ["script"]
- :deps {medley/medley {:mvn/version "1.3.0"}}
- :tasks {clean (shell "echo bb cleaning")
-         test (my-project.main/-main)}}
+{:paths ["script" "src"]
+ :deps {}
+ :tasks {:requires ([babashka.fs :as fs]
+                    [clojure.java.shell :as sh])
+         clean (fs/delete-tree "resources-old/moved")
+         list (shell "ls")
+
+         sass (do
+                (fs/create-dirs "target/foo/bar")
+                (shell "sass sass/app.scss target/foo/bar/app.css"))
+;lein home     # creates static home page for fast load
+;lein cljsbuild once min
+         gen   (clojure " -X prais2.pages.generator/-main")}
+         }
