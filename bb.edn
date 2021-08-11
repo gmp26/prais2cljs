@@ -2,13 +2,13 @@
  :deps {}
  :tasks {:requires ([babashka.fs :as fs]
                     [clojure.java.shell :as sh])
-         clean (fs/delete-tree "resources-old/moved")
-         list (shell "ls")
+         clean (fs/delete-tree "resources-old/moved") ; should do something more useful like clearing the caches
+         list (shell "ls") ; just a test
 
          sass (do
                 (fs/create-dirs "target/foo/bar")
                 (shell "sass sass/app.scss target/foo/bar/app.css"))
-;lein home     # creates static home page for fast load
+
 ;lein cljsbuild once min
-         gen   (clojure " -X prais2.pages.generator/-main")}
+         gen   (clojure "-X prais2.pages.generator/-main")}
          }

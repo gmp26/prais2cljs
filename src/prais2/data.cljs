@@ -488,7 +488,7 @@
           [:div {:style {:display "inline-block"
                          :cursor  (if (= column-key :h-name) "pointer" "auto")
                          :width   (if (= column-key :h-name) "calc(100% - 50px)" "auto")}}
-           (str (column-key row) (when (= column-key :survival-rate) " %" ""))
+           (str (column-key row) (when (= column-key :survival-rate) " %" "")) ;TODO: this does nothing useful
            #_(if (= column-key :h-name)
                [:a {:on-touch-start info-handler
                     :on-click       info-handler} (column-key row)]

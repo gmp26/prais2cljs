@@ -1,1 +1,4 @@
-prais2-prod.cljs.edn
+^{:hot-reload-cljs false}
+{
+ :figwheel-core false
+}

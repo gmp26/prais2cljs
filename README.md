@@ -1,12 +1,31 @@
 # Prais2
+## Build automation
+WIP: Moving to using babashka for build automation. e.g. `bb gen` will kick off the gen task, `bb sass` generates css.
+Need to add some tasks to sort out the other issues below.
+
+## Development builds
+If using VSCode/Calva, Jack-in selecting figwheel-main with deps.edn. Do not tick any aliases.
+Connect to build-dev.
+
+TODO: figwheel main creates a js file named by the build, so the above will create target/public/cljs-out/build-dev-main.js
+The html files must reference this file but currently don't.
+Needs a bb task either before or after the build to hook things up properly.
+
+## HTML generation
+WIP, but see the gen task.
+
+## Production builds
+WIP: Work out the command line and save as a bb.edn task
+
+
+
+
+<!-- 
+The old Leingingen and classic figwheel build is decribed in the commented out section below.
+
 
 Communicating the risks of infant surgery.
-
 # Updated development builds
-
-
-
-
 ## Development builds
 
 
@@ -68,6 +87,7 @@ To create a production build run:
 
     lein cljsbuild once min
 
+-->
 Test 
 ----
 Test by serving out the resources/public folder (e.g. with python 2, `cd resources/public & python -m'SimpleHTTPServer'` and then viewing localhost:8000. In python 3, `cd resources/public & python -m'http.server'`).
