@@ -1,4 +1,4 @@
-(ns ^:figwheek-always prais2.map-data
+(ns ^:figwheel-always prais2.map-data
   (:require
     [rum.core :as rum]
     [cljs.core.async :refer [put!]]
@@ -16,7 +16,7 @@
    ])
 
 (rum/defc hospital-list < rum.core/reactive []
-  (let [rows (sort-by :h-name ((:datasource (rum.core/react core/app)) content/datasources))]
+  (let [rows (sort-by :h-name ((:datasource (rum.core/react core/app)) (:hosp-data (rum.core/react core/app))))]
     [:ul.h-nav.col-sm.6.col-md-8
      (map-indexed key-with (map hospital-item rows))]))
 

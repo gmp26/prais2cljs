@@ -21,8 +21,11 @@
 ;; figwheel counter is a placeholder for any state affected by figwheel live reload events
 ;;;
 ; TODO: DATA-UPDATE Set the datasource year - this determines the default end year of the reporting period
-;
+; DONE via (get-hospital-data)
+
 (def app (atom {:datasource               :2019
+                :hosp-data                {}
+                :data-tabs                {}
                 :pull-out                 false
                 :page                     :home
                 :section                  nil

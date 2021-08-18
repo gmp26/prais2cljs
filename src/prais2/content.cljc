@@ -1,6 +1,12 @@
 (ns ^:figwheel-always prais2.content
-  (:require [rum.core :as rum]
-            [prais2.core :as core]))
+  (:require 
+   [rum.core :as rum]
+   [prais2.core :as core]
+   #?(:cljs [cljs-http.client :as http])
+   #?(:clj [clojure.core.async :refer [go take!]]
+      :cljs [cljs.core.async :refer [<! take!]]))
+  #?(:cljs (:require-macros 
+        [cljs.core.async.macros :refer [go]])))
 
 ;;;
 ;; About us mugshot list
@@ -26,8 +32,79 @@
 (defrecord Row [h-name h-code h-lat h-lon n-ops n-deaths n-survivors survival-rate outer-low inner-low inner-high outer-high observed])
 
 ;;;
+;; importing data
+;;;
+
+(def edn-readers {'prais2.content/Row map->Row})
+
+(defn add-tags
+  "Adds tagged literals depending on the presence of certain keys"
+  [m]
+  (let [ks (vec (keys m))]
+    (cond
+      (some #(= :h-name %) ks) (str "#prais2.content/Row" m)
+      :else (throw (#?(:clj Exception. :cljs js/Error.) "The entry is not a row.")))))
+
+(defn ->records
+  "Translates data into defrecords implementations for a suitable datasource"
+  [data]
+  (into {} (for [[k v] data] 
+             (do (let [with-tags (mapv #(add-tags %) v)]
+                   [k #?(:clj (mapv #(clojure.edn/read-string {:readers edn-readers} %) with-tags)
+                         :cljs (mapv #(cljs.reader/read-string {:readers edn-readers} %) with-tags))])))))
+
+(defn get-file 
+  "Loads data from the endpoint and transforms each map into a Row. record."
+  [endpoint]
+  (go 
+    (let [data #?(:clj (clojure.edn/read-string (slurp "/data.edn")) 
+                  :cljs (:body (<! (http/get endpoint {:as :auto}))))]
+      (->records data)))) 
+
+(defn find-max-year
+  "Returns the max year of a map with years as keys"
+  [m]
+  #?(:clj (apply max (mapv #(Integer. (name %)) (keys m)))
+     :cljs (apply max (mapv #(js/parseInt (name %)) (keys m)))))
+
+(defn find-min-year
+  "Returns the min year of a map with years as keys"
+  [m]
+  #?(:clj (apply min (mapv #(Integer. (name %)) (keys m)))
+     :cljs (apply min (mapv #(js/parseInt (name %)) (keys m)))))
+
+(defn make-datasource-tabs
+  "Creates the datasource-tabs from a map with years as keys"
+  [m]
+  (cond
+    (= m {}) {}
+    :else (let [mink (find-min-year m)
+                maxk (find-max-year m)]
+            (into {} (mapv (fn [x] [(keyword (str x)) {:title "Reporting period"
+                                                       :label (str (- x 3) "-" x)
+                                                       :long-label (str "April " (- x 3) " - March " x)}]) (range mink (+ 1 maxk)))))))
+
+(defn get-hospital-data 
+  "Swaps the core/app state with: 
+  - :hosp-data: the downloaded data transformed into Row. records, 
+  - :data-tabs: the datasource-tab
+  - :datasource: the maximum year found in the data"
+  []
+  (take!
+   (get-file "/data.edn")
+   #(do 
+      (swap! core/app assoc :hosp-data %)
+      (swap! core/app assoc :data-tabs (make-datasource-tabs %))
+      (swap! core/app assoc :datasource (keyword (str (find-max-year %)))))))
+
+;;;
 ;; Table headers with info texts
 ;;;
+
+#_(def datasource-tab (make-datasource-tabs (:hosp-data @core/app)))
+
+;; TO DO: decide whether to get rid of this and data-selector or not
+;; Left because it is referenced in data-selector, although data-selector doesn't seem to be loaded... 
 (def datasource-tab
   {:2019 {:title      "Reporting period"
           :label      "2016-2019"
@@ -53,7 +130,7 @@
    })
 
 
-(def header-row
+(defn header-row []
   (Row. (Header. "Hospital" true true 300 50
                  "The hospital name")
         (Header. "Hospital Code" false false 77 50
@@ -63,7 +140,7 @@
         (Header. "Longitude" false false 0 0
                  "")
         (Header. "Number of Operations" true true 95 50
-                 (str "The number of heart operations carried out on under-16s at each hospital during " (:long-label ((:datasource @core/app) datasource-tab))
+                 (str "The number of heart operations carried out on under-16s at each hospital during " (:long-label ((:datasource @core/app) (:data-tabs @core/app)))
                       ". Operations that occur within 30 days of each other are treated as a single operation."))
         (Header. "Number of Deaths" false true 75 50
                  "The number of operations where the child died within 30 days of their operation, from any cause")
@@ -227,7 +304,7 @@
   )
 
 
-(def datasources
+#_(def datasources
   {:2019
    [
     (Row. "Newcastle, Freeman Hospital" "FRE" 55.002386 -1.593643                         694	11	683	  98.4	95.5	96.3	98.6	99.1 nil)
@@ -515,10 +592,10 @@
          [:a (core/href "http://www.gosh.org/" :target "_blank") "Great Ormond Street Hospital Charity GOSHCC"]]})
 
 (defn active-h-codes []
-  (map (comp keyword :h-code) ((:datasource @core/app) datasources)))
+  (map (comp keyword :h-code) ((:datasource @core/app) (:hosp-data @core/app))))
 
 (defn sorted-active-h-codes []
-  (map first (sort-by second (map (fn [hosp-meta] [(keyword (:h-code hosp-meta)), (:h-name hosp-meta)]) ((:datasource @core/app) datasources))))
+  (map first (sort-by second (map (fn [hosp-meta] [(keyword (:h-code hosp-meta)), (:h-name hosp-meta)]) ((:datasource @core/app) (:hosp-data @core/app)))))
   )
 
 (def unassoc-charity-list

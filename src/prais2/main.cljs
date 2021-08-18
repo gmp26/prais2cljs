@@ -15,6 +15,7 @@
             [prais2.faqs :refer [render-faqs]]
             [prais2.components.video-player :refer [video-js]]
             [cljsjs.jquery]
+            [prais2.content :refer [get-hospital-data]]
             ))
 
 (enable-console-print!)
@@ -227,10 +228,12 @@
   )
 
 ;;
-;; mount main component on html app element
+;; mount main component on html app element and update state
 ;;
 (if-let [mount-point (core/el "app")]
-  (rum.core/mount (app-container) mount-point))
+  (do
+    (rum.core/mount (app-container) mount-point)
+    (get-hospital-data)))
 
 ;;;
 ;; Read events off the event bus and handle them

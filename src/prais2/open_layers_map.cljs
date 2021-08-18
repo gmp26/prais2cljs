@@ -125,6 +125,7 @@
                   (.on (new-state :hospital-map) "click" map-click-handler)
                   (reset! ol-db new-state)
                   new-state))
+   
    :should-update (fn [_ _] false)         ; prevent React messing with the component that uses this mixin
    })
 
@@ -252,7 +253,7 @@
         (:h-name row)]])
 
 (rum/defc hospital-list < rum.core/reactive []
-  (let [rows ((:datasource (rum.core/react core/app)) content/datasources)]
+  (let [rows ((:datasource (rum.core/react core/app)) (:hosp-data (rum.core/react core/app)))]
     [:ul.dropdown-menu
      {:aria-labelled-by "drop1"}
      (map-indexed key-with (map hospital-item rows))]))
@@ -264,11 +265,11 @@
 
 (rum/defc hospitals < map-view rum.core/reactive []
   [:#open-map.hospital-map {:tab-index 0 :key 1}
-   (london-button)
-   (home-button)
-   [:.col-xs-12 {:key 2}
-    [:#popup {:key 2}]
-    ]
-   ]
+     (london-button)
+     (home-button)
+     [:.col-xs-12 {:key 2}
+      [:#popup {:key 2}]
+      ]
+     ]
   #_[:div.row
 ])

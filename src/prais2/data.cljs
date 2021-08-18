@@ -30,12 +30,13 @@
     table-rows))
 
 
-(defn make-datasource [datasource]
+(defn make-datasource 
+  [datasource]
   (into []
-        (concat [content/header-row]
+        (concat [(content/header-row)]
                 (if (number? (js/parseInt (name datasource)))
-                  (datasource content/datasources)
-                  (add-markers (datasource content/datasources))))))
+                  (datasource (:hosp-data @core/app))
+                  (add-markers (datasource (:hosp-data @core/app)))))))
 
 
 (defn table-data
@@ -535,7 +536,8 @@
     {:value     (name (:datasource (rum.core/react core/app)))
      :on-change #(put! event-bus [:change-datasource (keyword (.-value (.-target %)))])}
     (map-indexed key-with
-                 (for [year (range 2013 2020)]              ; was 2017
+                 (for [year (range (content/find-min-year (:hosp-data (rum.core/react core/app)))
+                                   (+ 1 (content/find-max-year (:hosp-data (rum.core/react core/app)))))]            
                    (key-option year)))]
    ])
 

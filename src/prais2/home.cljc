@@ -73,7 +73,7 @@
                          " [:a (core/href "https://www.google.com/chrome/") "Google Chrome"] "
                 or " [:a (core/href "https://www.mozilla.org/en-GB/") "Mozilla Firefox"] " instead.
                 For further help, please contact "
-                 [:a {:mailto "technical@childrensheartsurgey.info"} "technical@childrensheartsurgey.info"]]])]]
+                 [:a {:mailto "technical@childrensheartsurgery.info"} "technical@childrensheartsurgery.info"]]])]]
     [:.row
      (what-why)
      (data)

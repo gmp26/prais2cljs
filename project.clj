@@ -7,12 +7,14 @@
 
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/clojurescript "1.9.36"]
-                 [org.clojure/core.async "0.2.374"]
+                 ;; [org.clojure/core.async "0.2.374"]
+                 [org.clojure/core.async "1.3.618"]
                  [cljs-ajax "0.5.1"]
                  [cljsjs/openlayers "3.5.0-1"]
                  [cljsjs/moment "2.10.6-0"]
                  [cljsjs/papaparse "4.1.1-1"]
-
+                 [cljs-http "0.1.46"]
+                 
                  [cljsjs/jquery "1.9.1-0"]
                  [cljsjs/bootstrap "3.3.6-0"]
 
@@ -29,7 +31,7 @@
                  ]
 
   :plugins [[lein-cljsbuild "1.1.1"]
-            ;[lein-figwheel "0.5.21-SNAPSHOT"]
+            [lein-figwheel "0.5.21-SNAPSHOT"]
             [lein-sass "0.3.7"]
             ]
 
