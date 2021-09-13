@@ -11,33 +11,34 @@
 
 #?(:clj
    (do
-     (def home-page
+     (defn home-page [build-name]
        (str "<!doctype html>"
             (rum.core/render-static-markup (head "Child heart surgery info"))
-            (rum.core/render-static-markup (body static-home))))
+            (rum.core/render-static-markup (body static-home build-name))))
 
-     (def intro-page
+     (defn intro-page [build-name]
        (str "<!doctype html>"
             (rum.core/render-static-markup (head "Child heart surgery info: what, why how"))
-            (rum.core/render-static-markup (body static-intro))))
+            (rum.core/render-static-markup (body static-intro build-name))))
 
-     (defn faq-page [faq-ref]
+     (defn faq-page [faq-ref build-name]
        (str "<!doctype html>"
             (rum.core/render-static-markup (head "Child heart surgery info: everything else"))
-            (rum.core/render-static-markup (body #(static-faqs faq-ref)))))
+            (rum.core/render-static-markup (body #(static-faqs faq-ref) build-name))))
 
      (defn write-html [path html]
        (println " Writing " path)
        (spit path html))
 
-     (defn all-faq-refs []
+     (defn all-faq-refs [build-name]
        ;(println "This is weird")
        (doseq [section (range (count faq-sections))]
          (doseq [ix (range (count (:faqs (faq-sections section))))]
-           (write-html (str "target/public/faq-" section "-" ix ".html") (faq-page [section ix])))))
+           (write-html (str "target/public/faq-" section "-" ix ".html") (faq-page [section ix] build-name)))))
 
-     (defn -main [& _]
-       (write-html "target/public/index.html" home-page)
-       (write-html "target/public/intro.html" intro-page)
-       (all-faq-refs))))
+     (defn -main [argsmap & _]
+       (let [build-name (:build-name argsmap)]
+         (write-html "target/public/index.html" (home-page build-name))
+         (write-html "target/public/intro.html" (intro-page build-name))
+         (all-faq-refs build-name)))))
 

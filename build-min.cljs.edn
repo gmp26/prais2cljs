@@ -1,4 +1,0 @@
-^{:hot-reload-cljs false}
-{
- :figwheel-core false
-}

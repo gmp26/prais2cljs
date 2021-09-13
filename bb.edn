@@ -4,11 +4,19 @@
                     [clojure.java.shell :as sh])
          clean (fs/delete-tree "resources-old/moved") ; should do something more useful like clearing the caches
          list (shell "ls") ; just a test
-
+         
+         ;;generates the css
          sass (do
-                (fs/create-dirs "target/foo/bar")
-                (shell "sass sass/app.scss target/foo/bar/app.css"))
+                (fs/create-dirs "target/public/css")
+                (shell "sass sass/app.scss target/public/css/app.css"))
 
-;lein cljsbuild once min
-         gen   (clojure "-X prais2.pages.generator/-main")}
+         ;;builds index.html, intro.html and the faq pages
+         gen-html-dev (shell "clj -X:gen-dev")
+         gen-html (shell "clj -X:gen")  
+         
+         ;;create the builds
+         gen-dev (shell "clj -M:fig:build-dev")
+         gen (shell "clj -M:build-min")
+         ;lein cljsbuild once min
+         }
          }

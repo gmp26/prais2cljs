@@ -1,21 +1,53 @@
 # Prais2
 ## Build automation
+
 WIP: Moving to using babashka for build automation. e.g. `bb gen` will kick off the gen task, `bb sass` generates css.
 Need to add some tasks to sort out the other issues below.
 
-## Development builds
-If using VSCode/Calva, Jack-in selecting figwheel-main with deps.edn. Do not tick any aliases.
-Connect to build-dev.
+## CSS generation
 
-TODO: figwheel main creates a js file named by the build, so the above will create target/public/cljs-out/build-dev-main.js
-The html files must reference this file but currently don't.
-Needs a bb task either before or after the build to hook things up properly.
+The following task will generate the styles in `target/public/css`.
+
+```shell
+$ bb sass
+```
 
 ## HTML generation
-WIP, but see the gen task.
 
-## Production builds
-WIP: Work out the command line and save as a bb.edn task
+Pages are generated for the correct build, as the html files must reference the correct js file. Figwheel-main creates a js file named by the build (e.g. `dev-main.js` for the dev build) in `target/public/cljs-out/`.
+
+```shell
+$ bb gen-html 
+```
+> This will generate the html pages for a production build.
+
+```shell
+bb gen-html-dev 
+```
+> This will generate the html pages for a development build.
+
+## Development build
+
+To create a development build with hot-reload using figwheel-main:
+
+```shell
+$ bb gen-dev
+```
+>If using VSCode/Calva, Jack-in selecting figwheel-main with deps.edn.>Do not tick any aliases.
+>Connect to the dev build.
+
+## Production build
+
+To create a production build:
+
+```shell
+$ bb gen 
+```
+
+
+
+
+MH: I think the script folder isn't used by babashka (because the tasks are not defined in clj file in the script folder)
 
 
 
@@ -88,14 +120,15 @@ To create a production build run:
     lein cljsbuild once min
 
 -->
-Test 
-----
-Test by serving out the resources/public folder (e.g. with python 2, `cd resources/public & python -m'SimpleHTTPServer'` and then viewing localhost:8000. In python 3, `cd resources/public & python -m'http.server'`).
 
-Deployment
-----------
+## Test
 
-Upload and serve the resources/public folder. 
+Test by serving out the target/public folder (e.g. with python 2, `cd target/public & python -m 'SimpleHTTPServer'` and then viewing localhost:8000. In python 3, `cd target/public & python -m 'http.server'`).
+
+## Deployment
+
+Upload and serve the target/public folder.
+> Be sure to have generated the styles and relevant html pages and build first.
 
 ## Other dependencies
 

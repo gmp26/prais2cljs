@@ -1,4 +1,15 @@
-^{:watch-dirs ["src"]
-  :css-dirs ["target/public/css"]
-  :auto-testing false}
-{:main prais2.main}
+^{
+ ;:hot-reload-cljs false ;not required when :figwheel-core is false
+  :clean-outputs true
+  :figwheel-core false}
+{
+ :main prais2.main
+ :externs ["externs/bootstrap.js"
+           "externs/jquery.js"
+           "externs/sliders.js"
+           "externs/video-js.js"]
+ :optimizations :advanced
+ :pseudo-names true
+ :closure-warnings {:externs-validation :off
+                    :non-standard-jsdoc :off}
+ }

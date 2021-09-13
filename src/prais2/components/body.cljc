@@ -4,8 +4,8 @@
 
 ;; watcha
 
-(rum/defc body [#?(:clj content
-                   :cljs _)]
+(rum/defc body [#?@(:clj [content build-name]
+                    :cljs [_ build-name])]
                [:body
                 #?(:clj [:#app (content)]
                    :cljs [:#app                             ; the spinner is unused now!
@@ -26,4 +26,4 @@
                 ;(browser-update)
                 
 
-                [:script {:src "/cljs-out/prais2-main.js"}]])
+                [:script {:src (str "/cljs-out/" build-name "-main.js")}]])
