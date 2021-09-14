@@ -1,8 +1,8 @@
 # Prais2
+
 ## Build automation
 
-WIP: Moving to using babashka for build automation. e.g. `bb gen` will kick off the gen task, `bb sass` generates css.
-Need to add some tasks to sort out the other issues below.
+This version of the project uses babashka and deps.edn aliases to automate the generation of the pages and the construction of the different builds.
 
 ## CSS generation
 
@@ -20,6 +20,7 @@ Pages are generated for the correct build, as the html files must reference the 
 $ bb gen-html 
 ```
 > This will generate the html pages for a production build.
+
 
 ```shell
 bb gen-html-dev 
@@ -43,14 +44,6 @@ To create a production build:
 ```shell
 $ bb gen 
 ```
-
-
-
-
-MH: I think the script folder isn't used by babashka (because the tasks are not defined in clj file in the script folder)
-
-
-
 
 <!-- 
 The old Leingingen and classic figwheel build is decribed in the commented out section below.

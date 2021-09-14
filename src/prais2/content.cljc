@@ -45,10 +45,19 @@
       (some #(= :h-name %) ks) (str "#prais2.content/Row" m)
       :else (throw (#?(:clj Exception. :cljs js/Error.) "The entry is not a row.")))))
 
+(defn ->map 
+  "If m is a map, returns m, if it is a string, returns the underlying map"
+  [m]
+  (cond
+    (string? m) #?(:clj (clojure.edn/read-string m)
+                   :cljs (cljs.reader/read-string m))
+    :else m))
+
+
 (defn ->records
   "Translates data into defrecords implementations for a suitable datasource"
   [data]
-  (into {} (for [[k v] data] 
+  (into {} (for [[k v] (->map data)] 
              (do (let [with-tags (mapv #(add-tags %) v)]
                    [k #?(:clj (mapv #(clojure.edn/read-string {:readers edn-readers} %) with-tags)
                          :cljs (mapv #(cljs.reader/read-string {:readers edn-readers} %) with-tags))])))))

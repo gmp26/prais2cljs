@@ -1,5 +1,5 @@
-{:deps {;org.clojure/clojure {:mvn/version "1.10.3"}
-        org.clojure/clojurescript {:mvn/version "1.10.329"} #_{:mvn/version "1.10.758"} #_{:mvn/version "1.10.879"}
+{:deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        org.clojure/clojurescript {:mvn/version "1.10.329"} ;v758 and v879 both create goog.base errors
         org.clojure/core.async {:mvn/version "1.3.618"}
         cljs-ajax/cljs-ajax {:mvn/version "0.5.1"}
         cljsjs/openlayers {:mvn/version "3.5.0-1"}
