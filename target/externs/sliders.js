@@ -1,0 +1,16 @@
+function Slider() {};
+Slider.prototype._init = function() {};
+Slider.prototype.getElemen = function() {};
+Slider.prototype.getValue = function() {};
+Slider.prototype.setValue = function(){};
+Slider.prototype.destroy = function(){};
+Slider.prototype.disable = function(){};
+Slider.prototype.enable = function(){};
+Slider.prototype.toggle = function(){};
+Slider.prototype.isEnabled = function(){};
+Slider.prototype.on = function() {};
+Slider.prototype.off = function() {};
+Slider.prototype.getAttribute = function() {};
+Slider.prototype.setAttribute = function() {};
+Slider.prototype.refresh = function() {};
+Slider.prototype.relayout = function() {};
