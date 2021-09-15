@@ -28,7 +28,8 @@
                        {com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
                         com.bhauman/figwheel-main {:mvn/version "0.2.13"}} ;0.2.14 creates SLF4J issues
                        :extra-paths ["target" "test"]}
-           :build-dev {:main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}
+           :build-dev {:extra-deps {com.bhauman/figwheel-main {:mvn/version "0.2.13"}}
+                       :main-opts ["-m" "figwheel.main" "-b" "dev" "-r"]}
            :build-min {:extra-deps {com.bhauman/figwheel-main {:mvn/version "0.2.13"}}
                        :main-opts ["-m" "figwheel.main" "-O" "advanced" "-bo" "prais2"]}
            #_#_:test  {:main-opts ["-m" "figwheel.main" "-co" "test.cljs.edn" "-m" "practicalli.test-runner"]}
