@@ -68,4 +68,3 @@ resources/public/intro*
 .clj-kondo/.cache
 .cpcache
 .lsp
-.rebel_readline_history
