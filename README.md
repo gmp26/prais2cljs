@@ -46,7 +46,7 @@ bb gen-html-dev
 
 ## Development build
 
-To create a development build with hot-reload and connect a cljs REPl using figwheel-main, execute:
+To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute:
 
 ```shell
 $ bb gen-dev
