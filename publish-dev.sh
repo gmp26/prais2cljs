@@ -6,10 +6,11 @@ TARGET='dev.wintoncentre.uk:/var/www/childrensheartsurgery.dev.wintoncentre.uk/'
 LOCAL_DEV='target/public/'
 echo "===============Building files============="
 # lein clean
-bb clean
+# bb clean
 # lein home     # creates static home page for fast load
 bb gen-html
 # lein cljsbuild once min
+bb gen
 # mkdir -p target/public/css
 # sass sass/app.scss target/public/css/app.css
 bb sass
