@@ -35,9 +35,9 @@ $baseBorderRadius: 4px;
     width: 210px;
     height: $baseLineHeight;
     .slider-track {
-      height: $baseLineHeight/2;
+      height: $baseLineHeight*0.5;
       width: 100%;
-      margin-top: -$baseLineHeight/4;
+      margin-top: -$baseLineHeight*0.25;
       top:  50%;
       left: 0;
     }
@@ -48,10 +48,10 @@ $baseBorderRadius: 4px;
     }
     .slider-tick,
     .slider-handle {
-      margin-left: -$baseLineHeight/2;
-      margin-top: -$baseLineHeight/4;
+      margin-left: -$baseLineHeight*0.5;
+      margin-top: -$baseLineHeight*0.25;
       &.triangle {
-        border-width: 0 $baseLineHeight/2 $baseLineHeight/2 $baseLineHeight/2;
+        border-width: 0 $baseLineHeight*0.5 $baseLineHeight*0.5 $baseLineHeight*0.5;
         width: 0;
         height: 0;
         border-bottom-color: #0480be;
@@ -72,9 +72,9 @@ $baseBorderRadius: 4px;
     height: 210px;
     width: $baseLineHeight;
     .slider-track {
-      width: $baseLineHeight/2;
+      width: $baseLineHeight*0.5;
       height: 100%;
-      margin-left: -$baseLineHeight/4;
+      margin-left: -$baseLineHeight*0.25;
       left: 50%;
       top: 0;
     }
@@ -91,10 +91,10 @@ $baseBorderRadius: 4px;
    }
    .slider-tick,
    .slider-handle {
-    margin-left: -$baseLineHeight/4;
-    margin-top: -$baseLineHeight/2;
+    margin-left: -$baseLineHeight*0.25;
+    margin-top: -$baseLineHeight*0.5;
     &.triangle {
-      border-width: $baseLineHeight/2 0 $baseLineHeight/2 $baseLineHeight/2;
+      border-width: $baseLineHeight*0.5 0 $baseLineHeight*0.5 $baseLineHeight*0.5;
       width:  1px;
       height: 1px;
       border-left-color: #0480be;
