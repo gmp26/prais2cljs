@@ -1,8 +1,25 @@
 # Prais2
 
-## Build automation
+![Heart logo](https://childrensheartsurgery.info/assets/logo3.png)
 
-This version of the project uses babashka and deps.edn aliases to automate the generation of the pages and the construction of the different builds.
+## Setting up the project
+This is a ClojureScript project. To create a development environment from scratch you will need to install:
+
+* A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
+* Clojure. Follow [these installation instructions](https://clojure.org/guides/getting_started), which will provide the CLI tools, namely the `clojure` and `clj` commands.
+* Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions.
+* A suitable text editor. Emacs, IntelliJ community edition (cursive plugin), Atom (Proto-REPL plugin) are all sensible options. See [this discussion](https://practical.li/clojure/clojure-editors/) on the most common editors used in the community.
+>
+Once you have all these tools and their required dependencies installed, type the following in a terminal or a command line window.
+
+```
+git clone https://github.com/gmp26/prais2cljs.git prais2
+cd prais2
+bb sass
+bb gen-html-dev
+bb gen-dev
+```
+This will download and install all other dependencies and launch a local development server.
 
 ## CSS generation
 
@@ -29,7 +46,7 @@ bb gen-html-dev
 
 ## Development build
 
-To create a development build with hot-reload using figwheel-main:
+To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute:
 
 ```shell
 $ bb gen-dev
