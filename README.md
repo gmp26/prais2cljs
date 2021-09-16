@@ -8,30 +8,31 @@ This is a ClojureScript project. To create a development environment from scratc
 * A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
 * Clojure. Follow [these installation instructions](https://clojure.org/guides/getting_started), which will provide the CLI tools, namely the `clojure` and `clj` commands.
 * Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions.
+* Sass. This will allow you to compile .scss files in to the css stylesheets. Follow [these instructions](https://sass-lang.com/install) to install it.
 * A suitable text editor. Emacs, IntelliJ community edition (cursive plugin), Atom (Proto-REPL plugin) are all sensible options. See [this discussion](https://practical.li/clojure/clojure-editors/) on the most common editors used in the community.
 >
-Once you have all these tools and their required dependencies installed, type the following in a terminal or a command line window.
-
-```
-git clone https://github.com/gmp26/prais2cljs.git prais2
-cd prais2
-bb sass
-bb gen-html-dev
-bb gen-dev
-```
-This will download and install all other dependencies and launch a local development server.
+Once you have all these tools and their required dependencies installed, you can start generating the project's files that will be served.
 
 ## CSS generation
 
-The following task will generate the styles in `target/public/css`.
+If you are using Linux, the following task will generate the styles in `target/public/css`.
 
 ```shell
 $ bb sass
 ```
 
+On Windows, you should type the following from the root directory:
+
+```shell
+$ mkdir .\target\public\css
+$ sass .\sass\app.scss .\target\public\css\app.css
+```
+
 ## HTML generation
 
 Pages are generated for the correct build, as the html files must reference the correct js file. Figwheel-main creates a js file named by the build (e.g. `dev-main.js` for the dev build) in `target/public/cljs-out/`.
+
+On Linux:
 
 ```shell
 $ bb gen-html 
@@ -40,17 +41,39 @@ $ bb gen-html
 
 
 ```shell
-bb gen-html-dev 
+$ bb gen-html-dev 
 ```
 > This will generate the html pages for a development build.
 
+On Windows:
+
+```shell
+$ clj -X:gen 
+```
+> This will generate the html pages for a production build.
+
+
+```shell
+$ clj -X:gen-dev 
+```
+> This will generate the html pages for a development build.
+
+
 ## Development build
 
-To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute in a terminal:
+To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute in a Linux terminal:
 
 ```shell
 $ bb gen-dev
 ```
+
+On Windows, type:
+
+```shell
+$ clojure -M:fig:build-dev
+```
+
+Executing these lines will download and install all the necessary dependencies.
 
 ### Using Emacs
 
@@ -70,11 +93,18 @@ See [this article](https://practical.li/blog/posts/clojure-repl-jack-in-or-conne
 
 ## Production build
 
-To create a production build:
+To create a production build on Linux, type:
 
 ```shell
 $ bb gen 
 ```
+
+On Windows, use:
+
+```shell
+$ clj -M:build-min 
+```
+
 
 <!-- 
 The old Leingingen and classic figwheel build is decribed in the commented out section below.
