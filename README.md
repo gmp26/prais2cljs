@@ -5,9 +5,9 @@
 ## Setting up the project
 This is a ClojureScript project. To create a development environment from scratch you will need to install:
 
-* A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html))
-* Clojure. Follow [these installation instructions](https://clojure.org/guides/getting_started), which will provide the CLI tools, namely the `clojure` and `clj` commands.
-* Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions.
+* A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), 1.8 or later)
+* Clojure. Follow [these installation instructions](https://clojure.org/guides/getting_started), which will provide the CLI tools, namely the `clojure` and `clj` commands. Windows users should consult [this link](https://github.com/clojure/tools.deps.alpha/wiki/clj-on-Windows) as clojure is still in an alpha state on this platform at the time of writing.
+* Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions. Although Babashka works on Windows, the tasks have been written to target a Linux shell. Please use directly the `clj` or `clojure` commands as instructed below.
 * Sass. This will allow you to compile .scss files in to the css stylesheets. Follow [these instructions](https://sass-lang.com/install) to install it.
 * A suitable text editor. Emacs, IntelliJ community edition (cursive plugin), Atom (Proto-REPL plugin) are all sensible options. See [this discussion](https://practical.li/clojure/clojure-editors/) on the most common editors used in the community.
 >
