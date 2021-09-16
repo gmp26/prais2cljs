@@ -1,1 +1,0 @@
-{:output-dir "target/public/cljs-out/prais2", :closure-warnings {:externs-validation :off, :non-standard-jsdoc :off}, :externs ["externs/bootstrap.js" "externs/jquery.js" "externs/sliders.js" "externs/video-js.js"], :optimizations :advanced, :aot-cache false, :output-to "target/public/cljs-out/prais2-main.js", :asset-path "/cljs-out/prais2", :pseudo-names true, :main prais2.main}

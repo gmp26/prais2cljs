@@ -46,11 +46,20 @@ bb gen-html-dev
 
 ## Development build
 
-To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute:
+To create a development build with hot-reload and connect a cljs REPL using figwheel-main, execute in a terminal:
 
 ```shell
 $ bb gen-dev
 ```
+
+### Using Emacs
+
+To launch a development environment within Emacs using CIDER, open one of your source file (e.g. main.cljs) with clojurescript-mode. Then with the cursor on this file, type `M-x cider-jack-in-cljs`.
+This uses the .dir-locals.el file, selecting `figwheel-main` as your REPL, `clojure-cli` as your build tool, the `dev` build and appending `-A:fig` when launching the nREPL.
+
+### Using VSCode/Calva
+
+
 >If using VSCode/Calva, Jack-in selecting figwheel-main with deps.edn.>Do not tick any aliases.
 >Connect to the dev build.
 
