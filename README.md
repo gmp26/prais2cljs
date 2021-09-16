@@ -57,11 +57,16 @@ $ bb gen-dev
 To launch a development environment within Emacs using CIDER, open one of your source file (e.g. main.cljs) with clojurescript-mode. Then with the cursor on this file, type `M-x cider-jack-in-cljs`.
 This uses the .dir-locals.el file, selecting `figwheel-main` as your REPL, `clojure-cli` as your build tool, the `dev` build and appending `-A:fig` when launching the nREPL.
 
+See [CIDER's documentation](https://docs.cider.mx/cider/basics/clojurescript#_clojure_cli_figwheel_main_setup) for more information.
+
 ### Using VSCode/Calva
 
+To launch a development environment within Emacs using Calva, go to the root project and launch the jack-in process by pressing `ctrl+alt+c ctrl+alt+j`.
+Then select the project type `deps.edn + Figwheel Main`, tick the `:calva` alias to launch with and click `OK`.
+This will first launch a clojure REPL. Calva will then prompt you for the build to start. Select `dev` and click `OK`.
+Now the clojurescript REPL will launch, a browser tab will open to http://localhost:9500, and the REPL prompt will appear once the connexion of the REPL to the build is made.
 
->If using VSCode/Calva, Jack-in selecting figwheel-main with deps.edn.>Do not tick any aliases.
->Connect to the dev build.
+See [this article](https://practical.li/blog/posts/clojure-repl-jack-in-or-connect/) for more information on the different jack-in processes and how to automate them.
 
 ## Production build
 

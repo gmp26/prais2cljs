@@ -23,7 +23,8 @@
                        :exec-args {:build-name "prais2"}}
            :gen-dev   {:exec-fn prais2.pages.generator/-main
                        :exec-args {:build-name "dev"}}
-           #_#_:fig {:main-opts ["-m" "figwheel.main"]} ; vscode/calva does its own thing when selecting a figwheel-main build on jack-in
+           :calva     {:extra-deps
+                       {com.bhauman/figwheel-main {:mvn/version "0.2.13"}}}
            :fig       {:extra-deps
                        {com.bhauman/rebel-readline-cljs {:mvn/version "0.1.4"}
                         com.bhauman/figwheel-main {:mvn/version "0.2.13"}} ;0.2.14 creates SLF4J issues
