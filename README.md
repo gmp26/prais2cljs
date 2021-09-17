@@ -7,7 +7,7 @@ This is a ClojureScript project. To create a development environment from scratc
 
 * A Java virtual machine. (e.g. A [recent JRE from Oracle](http://www.oracle.com/technetwork/java/javase/downloads/index.html), 1.8 or later)
 * Clojure. Follow [these installation instructions](https://clojure.org/guides/getting_started), which will provide the CLI tools, namely the `clojure` and `clj` commands. Windows users should consult [this link](https://github.com/clojure/tools.deps.alpha/wiki/clj-on-Windows) as clojure is still in an alpha state on this platform at the time of writing.
-* Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions. Although Babashka works on Windows, the tasks have been written to target a Linux shell. Please use directly the `clj` or `clojure` commands as instructed below.
+* Babashka. This will allow you to run the tasks found in `bb.edn` to create the builds. See [the github repo](https://github.com/babashka/babashka) for the installation instructions. Although Babashka works on Windows, the tasks have been written to target a Linux shell. Please use directly the `clj` or `clojure` commands as instructed below when on Windows.
 * Sass. This will allow you to compile .scss files in to the css stylesheets. Follow [these instructions](https://sass-lang.com/install) to install it.
 * A suitable text editor. Emacs, IntelliJ community edition (cursive plugin), Atom (Proto-REPL plugin) are all sensible options. See [this discussion](https://practical.li/clojure/clojure-editors/) on the most common editors used in the community.
 >
@@ -177,7 +177,21 @@ To create a production build run:
 
 ## Test
 
-Test by serving out the target/public folder (e.g. with python 2, `cd target/public & python -m 'SimpleHTTPServer'` and then viewing localhost:8000. In python 3, `cd target/public & python -m 'http.server'`).
+Test by serving out the target/public folder.
+
+For instance using python 2:
+
+```shell
+$ cd target/public
+$ python -m 'SimpleHTTPServer'
+```
+
+Or using python 3:
+
+```shell
+$ cd target/public
+$ python -m 'http.server'
+```
 
 ## Deployment
 
@@ -187,7 +201,7 @@ Upload and serve the target/public folder.
 ## Other dependencies
 
 The project uses ReactJS to provide a fast virtual DOM, together with the Reagent flavour
-of [tonsky/rum](https://github.com/tonsky/rum) to drive React. To create an initial fresh, empty figwheel/Rum/ReactJS project I used [this Leiningen template](https://github.com/gmp26/fwrum). See project.clj for details.
+of [tonsky/rum](https://github.com/tonsky/rum) to drive React. It uses [Figwheel-Main](https://figwheel.org/) for hot-reloading and REPL driven development.
 
 If upgrading dependencies, pay attention to the latest versions of React that Rum supports.
 

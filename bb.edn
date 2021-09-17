@@ -2,10 +2,11 @@
  :deps {}
  :tasks {:requires ([babashka.fs :as fs]
                     [clojure.java.shell :as sh])
-         clean (fs/delete-tree "resources-old/moved") ; should do something more useful like clearing the caches
-         list (shell "ls") ; just a test
+
+         ; clears the caches - compilation may fail on first try after running this task
+         clean (fs/delete-tree ".cpcache/") 
          
-         ;;generates the css
+         ;; generates the css
          sass (do
                 (fs/create-dirs "target/public/css")
                 (shell "sass sass/app.scss target/public/css/app.css"))
