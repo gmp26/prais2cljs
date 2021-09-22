@@ -198,6 +198,11 @@ $ python -m 'http.server'
 Upload and serve the target/public folder.
 > Be sure to have generated the styles and relevant html pages and build first.
 
+Scripts named publish*.sh are used for publication on the Universities test, staging and production environments. To use publish-dev.sh, you need to be an authorized user. Type ./publish-dev.sh username in a shell to run the script.
+
+To deploy on any other host, upload and serve manually the target/public folder following your host's guidelines.
+A redirection of any URL to the root URL may be needed to make sure that the browser's controls (refresh, history) do work as expected.
+
 ## Other dependencies
 
 The project uses ReactJS to provide a fast virtual DOM, together with the Reagent flavour
