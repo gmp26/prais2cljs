@@ -26,4 +26,4 @@
                 ;(browser-update)
                 
 
-                [:script {:src (str "/cljs-out/" build-name "-main.js")}]])
+                [:script {:src (str "/js/compiled/" build-name ".js")}]])

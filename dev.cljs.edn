@@ -2,4 +2,5 @@
   :css-dirs ["target/public/css"]
   :auto-testing false
   :clean-outputs true}
-{:main prais2.main}
+{:main prais2.main
+ :output-to "target/public/js/compiled/dev.js"}

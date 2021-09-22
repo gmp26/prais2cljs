@@ -11,7 +11,7 @@
                 [:meta {:http-equiv "X-UA-Compatible" :content "IE-edge"}]
                 [:meta {:name "mobile-web-app-capable" :content "yes"}]
                 [:title title]
-                [:link {:rel "manifest" :href "/assets/manifest.json"}]
+                [:link {:rel "manifest" :href "/assets/manifest.json" :crossorigin "use-credentials"}]
                 [:link {:rel "icon" :sizes "192x192" :href "/assets/touch-icon-android.png"}]
                 [:link {:rel "apple-touch-icon" :sizes "180x180" :href "/apple-touch-icon.png"}]
                 ;[:link {:rel "apple-touch-icon" :sizes "76x76" :href "/assets/touch-icon-ipad.png"}]

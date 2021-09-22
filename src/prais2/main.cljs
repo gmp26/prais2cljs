@@ -6,6 +6,7 @@
             [cljs.core.async :refer [chan <! sub put! close!]]
             [prais2.utils :refer [key-with]]
             [prais2.core :as core :refer [app event-bus event-bus-pub bs-popover bs-tooltip]]
+            [prais2.routes :as routes]
             [prais2.data :as data]
             [prais2.open-layers-map :as map]
             [prais2.chrome :as chrome]
