@@ -28,7 +28,8 @@
 
                 ;; remote CDN
                 ;[:link {:rel "stylesheet" :href "//vjs.zencdn.org/5.10.2/video-js.css"}]
-                [:script {:src "//vjs.zencdn.net/5.10.2/video.min.js"}]
+                ;[:script {:src "//vjs.zencdn.net/5.10.2/video.min.js"}]
+                [:script {:src "//vjs.zencdn.net/7.15.4/video.min.js"}]
 
                 ;; local
                 ;[:link {:rel "stylesheet" :href "/css/video-js.css"}]
