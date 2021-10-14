@@ -7360,7 +7360,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-play:before, .video-js .vjs-big-play-button:before, .video-js .vjs-play-control:before {
-  content: "";
+  content: "\f101";
 }
 
 .vjs-icon-play-circle {
@@ -7370,7 +7370,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-play-circle:before {
-  content: "";
+  content: "\f102";
 }
 
 .vjs-icon-pause, .video-js .vjs-play-control.vjs-playing {
@@ -7380,7 +7380,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-pause:before, .video-js .vjs-play-control.vjs-playing:before {
-  content: "";
+  content: "\f103";
 }
 
 .vjs-icon-volume-mute, .video-js .vjs-mute-control.vjs-vol-0,
@@ -7392,7 +7392,7 @@ ul.pager li > a, ul.pager li > span {
 
 .vjs-icon-volume-mute:before, .video-js .vjs-mute-control.vjs-vol-0:before,
 .video-js .vjs-volume-menu-button.vjs-vol-0:before {
-  content: "";
+  content: "\f104";
 }
 
 .vjs-icon-volume-low, .video-js .vjs-mute-control.vjs-vol-1,
@@ -7404,7 +7404,7 @@ ul.pager li > a, ul.pager li > span {
 
 .vjs-icon-volume-low:before, .video-js .vjs-mute-control.vjs-vol-1:before,
 .video-js .vjs-volume-menu-button.vjs-vol-1:before {
-  content: "";
+  content: "\f105";
 }
 
 .vjs-icon-volume-mid, .video-js .vjs-mute-control.vjs-vol-2,
@@ -7416,7 +7416,7 @@ ul.pager li > a, ul.pager li > span {
 
 .vjs-icon-volume-mid:before, .video-js .vjs-mute-control.vjs-vol-2:before,
 .video-js .vjs-volume-menu-button.vjs-vol-2:before {
-  content: "";
+  content: "\f106";
 }
 
 .vjs-icon-volume-high, .video-js .vjs-mute-control,
@@ -7428,7 +7428,7 @@ ul.pager li > a, ul.pager li > span {
 
 .vjs-icon-volume-high:before, .video-js .vjs-mute-control:before,
 .video-js .vjs-volume-menu-button:before {
-  content: "";
+  content: "\f107";
 }
 
 .vjs-icon-fullscreen-enter, .video-js .vjs-fullscreen-control {
@@ -7438,7 +7438,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-fullscreen-enter:before, .video-js .vjs-fullscreen-control:before {
-  content: "";
+  content: "\f108";
 }
 
 .vjs-icon-fullscreen-exit, .video-js.vjs-fullscreen .vjs-fullscreen-control {
@@ -7448,7 +7448,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-fullscreen-exit:before, .video-js.vjs-fullscreen .vjs-fullscreen-control:before {
-  content: "";
+  content: "\f109";
 }
 
 .vjs-icon-square {
@@ -7458,7 +7458,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-square:before {
-  content: "";
+  content: "\f10a";
 }
 
 .vjs-icon-spinner {
@@ -7468,7 +7468,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-spinner:before {
-  content: "";
+  content: "\f10b";
 }
 
 .vjs-icon-subtitles, .video-js .vjs-subtitles-button {
@@ -7478,7 +7478,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-subtitles:before, .video-js .vjs-subtitles-button:before {
-  content: "";
+  content: "\f10c";
 }
 
 .vjs-icon-captions, .video-js .vjs-captions-button {
@@ -7488,7 +7488,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-captions:before, .video-js .vjs-captions-button:before {
-  content: "";
+  content: "\f10d";
 }
 
 .vjs-icon-chapters, .video-js .vjs-chapters-button {
@@ -7498,7 +7498,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-chapters:before, .video-js .vjs-chapters-button:before {
-  content: "";
+  content: "\f10e";
 }
 
 .vjs-icon-share {
@@ -7508,7 +7508,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-share:before {
-  content: "";
+  content: "\f10f";
 }
 
 .vjs-icon-cog {
@@ -7518,7 +7518,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-cog:before {
-  content: "";
+  content: "\f110";
 }
 
 .vjs-icon-circle, .video-js .vjs-mouse-display, .video-js .vjs-play-progress, .video-js .vjs-volume-level {
@@ -7528,7 +7528,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-circle:before, .video-js .vjs-mouse-display:before, .video-js .vjs-play-progress:before, .video-js .vjs-volume-level:before {
-  content: "";
+  content: "\f111";
 }
 
 .vjs-icon-circle-outline {
@@ -7538,7 +7538,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-circle-outline:before {
-  content: "";
+  content: "\f112";
 }
 
 .vjs-icon-circle-inner-circle {
@@ -7548,7 +7548,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-circle-inner-circle:before {
-  content: "";
+  content: "\f113";
 }
 
 .vjs-icon-hd {
@@ -7558,7 +7558,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-hd:before {
-  content: "";
+  content: "\f114";
 }
 
 .vjs-icon-cancel, .video-js .vjs-control.vjs-close-button {
@@ -7568,7 +7568,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-cancel:before, .video-js .vjs-control.vjs-close-button:before {
-  content: "";
+  content: "\f115";
 }
 
 .vjs-icon-replay {
@@ -7578,7 +7578,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-replay:before {
-  content: "";
+  content: "\f116";
 }
 
 .vjs-icon-facebook {
@@ -7588,7 +7588,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-facebook:before {
-  content: "";
+  content: "\f117";
 }
 
 .vjs-icon-gplus {
@@ -7598,7 +7598,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-gplus:before {
-  content: "";
+  content: "\f118";
 }
 
 .vjs-icon-linkedin {
@@ -7608,7 +7608,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-linkedin:before {
-  content: "";
+  content: "\f119";
 }
 
 .vjs-icon-twitter {
@@ -7618,7 +7618,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-twitter:before {
-  content: "";
+  content: "\f11a";
 }
 
 .vjs-icon-tumblr {
@@ -7628,7 +7628,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-tumblr:before {
-  content: "";
+  content: "\f11b";
 }
 
 .vjs-icon-pinterest {
@@ -7638,7 +7638,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-pinterest:before {
-  content: "";
+  content: "\f11c";
 }
 
 .vjs-icon-audio-description, .video-js .vjs-descriptions-button {
@@ -7648,7 +7648,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-audio-description:before, .video-js .vjs-descriptions-button:before {
-  content: "";
+  content: "\f11d";
 }
 
 .vjs-icon-audio, .video-js .vjs-audio-button {
@@ -7658,7 +7658,7 @@ ul.pager li > a, ul.pager li > span {
 }
 
 .vjs-icon-audio:before, .video-js .vjs-audio-button:before {
-  content: "";
+  content: "\f11e";
 }
 
 .video-js {

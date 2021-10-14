@@ -27,7 +27,7 @@
 
 (rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
-    (println "entry: " entry)
+    ;(println "entry: " entry)
     [:dl
      [:dt [:i (:title entry)]]
      [:dd
