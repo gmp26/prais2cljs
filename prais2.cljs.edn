@@ -11,6 +11,7 @@
  :optimizations :advanced
  :output-to "target/public/js/compiled/prais2.js"
  :pseudo-names true
+ :pretty-print true
  :closure-warnings {:externs-validation :off
                     :non-standard-jsdoc :off}
  }

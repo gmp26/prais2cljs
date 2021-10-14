@@ -4,7 +4,7 @@
             [prais2.chrome :as chrome]))
 
 
-(rum/defc static-faqs [section]
+(rum/defc static-faqs < rum/reactive [section]
   [:div
    (chrome/header)
    (render-faqs section)

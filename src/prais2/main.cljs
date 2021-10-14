@@ -1,6 +1,6 @@
 (ns ^:figwheel-always prais2.main
   (:require-macros                                          ;[jayq.macros :refer [ready]]
-    [cljs.core.async.macros :refer [go-loop]])
+   [cljs.core.async.macros :refer [go-loop]])
   (:require [rum.core :as rum]
             [cljsjs.react]
             [cljs.core.async :refer [chan <! sub put! close!]]
@@ -16,8 +16,7 @@
             [prais2.faqs :refer [render-faqs]]
             [prais2.components.video-player :refer [video-js]]
             [cljsjs.jquery]
-            [prais2.content :refer [get-hospital-data]]
-            ))
+            [prais2.content :refer [get-hospital-data get-hospital-metadata get-unassoc-charities]]))
 
 (enable-console-print!)
 
@@ -31,8 +30,7 @@
 ;;;
 (rum/defc debug < rum.core/reactive []
   [:div
-   [:p (str (rum.core/react core/app))]]
-  )
+   [:p (str (rum.core/react core/app))]])
 
 (rum/defc para < rum.core/static [text]
   [:p text])
@@ -144,10 +142,8 @@
         data ((data/table-data (:datasource app)))]
     [:div.container-fluid.main-content
      (map-indexed key-with
-                  [
-                   (render-data-tabs)
-                   (render-data-tab-panes data)
-                   ])]))
+                  [(render-data-tabs)
+                   (render-data-tab-panes data)])]))
 
 ;;;
 ;; pager
@@ -225,8 +221,7 @@
 ;; Contains the app user interface
 ;;
 (rum/defc app-container < bs-popover bs-tooltip []
-  (render-page)
-  )
+  (render-page))
 
 ;;
 ;; mount main component on html app element and update state
@@ -234,7 +229,9 @@
 (if-let [mount-point (core/el "app")]
   (do
     (rum.core/mount (app-container) mount-point)
-    (get-hospital-data)))
+    (get-hospital-data)
+    (get-hospital-metadata)
+    (get-unassoc-charities)))
 
 ;;;
 ;; Read events off the event bus and handle them
@@ -245,11 +242,11 @@
   (let [in-chan (chan)]
     (sub event-feed event-key in-chan)
     (go-loop []
-             (let [[ev-key _ :as event] (<! in-chan)]
-               (if (= ev-key :reloading)
-                 (close! in-chan)
-                 (do (handle event)
-                     (recur)))))))
+      (let [[ev-key _ :as event] (<! in-chan)]
+        (if (= ev-key :reloading)
+          (close! in-chan)
+          (do (handle event)
+              (recur)))))))
 
 (defn zoom-to-hospital
   [[_ h-code _]]
@@ -329,8 +326,8 @@
             (fn [[_ section]]
               #_(prn "nav to data " section)
               (swap! core/app #(assoc % :page :data
-                                        :section section
-                                        :detail-slider-axis-value 1))))
+                                      :section section
+                                      :detail-slider-axis-value 1))))
 
   (dispatch event-bus-pub :faqs
             (fn [[_ section]]
@@ -344,26 +341,25 @@
     ;;;
     ;; log-bus handling from here
     ;;;
-    (dispatch log-bus-pub :rewind
-              (fn [_]
-                (prn "rewind session: not yet")
-                #_(reset! logger/log-state-index nil)))
+      (dispatch log-bus-pub :rewind
+                (fn [_]
+                  (prn "rewind session: not yet")
+                  #_(reset! logger/log-state-index nil)))
 
-    (dispatch log-bus-pub :undo
-              (fn [_] (prn "undoing: not yet")
-                #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
+      (dispatch log-bus-pub :undo
+                (fn [_] (prn "undoing: not yet")
+                  #_(swap! logger/log-state-index #(if (zero? %) 0 (dec %)))))
 
-    (dispatch log-bus-pub :redo
-              (fn [_] (prn "redoing: not yet")
-                #_(swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
+      (dispatch log-bus-pub :redo
+                (fn [_] (prn "redoing: not yet")
+                  #_(swap! logger/log-state-index #(if (< % (dec (count @logger/log-states))) (inc %) %))))
 
 
 
-    (dispatch log-bus-pub :parse-session
-              (fn [_]
-                (prn "parse-session: not yet")
-                #_(logger/parse-session)
-                ))))
+      (dispatch log-bus-pub :parse-session
+                (fn [_]
+                  (prn "parse-session: not yet")
+                  #_(logger/parse-session)))))
 
 ;; start the event dispatcher
 (dispatch-central)

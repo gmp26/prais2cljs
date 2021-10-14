@@ -6,8 +6,7 @@
    [cljs.core.async :refer [put!]]
    [prais2.core :as core :refer [event-bus bs-popover bs-tooltip]]
    [prais2.content :as content]
-   [prais2.utils :refer [px pc key-with]])
-  )
+   [prais2.utils :refer [px pc key-with]]))
 
 ;;;
 ;; datasource utilities
@@ -626,7 +625,7 @@
 
 
 (rum/defc hospital-charities < rum.core/reactive [h-code]
-  (let [meta (h-code content/hospital-metadata)
+  (let [meta (h-code (:hosp-metadata (rum.core/react core/app)))
         [link1 link2 link3 link4 link5] meta]
     (when link1 [:div
                  [:h4 {:key 1} "Further web information"]

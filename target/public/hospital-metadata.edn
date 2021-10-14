@@ -1,0 +1,56 @@
+{:RVB [[:a {:href "http://belfasttrust-cardiacsurgery.hscni.net/about-cardiac-surgery/location/" :target "_blank"}
+        "Belfast, Royal Victoria Hospital"]
+       [:a {:href "http://www.childrensheartbeattrust.org/" :target "_blank"} "Children’s Heartbeat Trust"]]
+
+ :HSC [[:a {:href "http://theharleystreetclinic.co.uk/cardiac/congenital-heart-care" :target "_blank"}
+        "London, Harley Street Clinic"]]
+
+ :GRL [[:a {:href "http://www.leicestershospitals.nhs.uk/ " :target "_blank"}
+        "Leicester, Glenfield Hospital"]
+       [:a {:href "http://www.heartlink-glenfield.org.uk/" :target "_blank"} "Heart Link"]]
+
+ :FRE [[:a {:href "http://www.newcastle-hospitals.org.uk/services/cardiothoracic_services_childrens-heart-unit.aspx" :target "_blank"}
+        "Newcastle, Freeman Hospital"]
+       [:a {:href "http://chuf.org.uk/" :target "_blank"} "Newcastle Children’s Heart Unit Fund"]]
+
+ :RHS [[:a {:href "http://www.nhsggc.org.uk/locations/hospitals/the-royal-hospital-for-children-glasgow/"
+             :target "_blank"}
+        "Glasgow, Royal Hospital for Children"]
+       [:a {:href "http://www.youngheart.info/" :target "_blank"}
+        "The Scottish Association for Children with Heart Disorders (SACHD)"]]
+
+ :BRC [[:a {:href "http://www.uhbristol.nhs.uk/patients-and-visitors/your-hospitals/bristol-royal-hospital-for-children/the-paediatric-cardiac-service/"
+            :target "_blank"} "Bristol Royal Hospital for Children"]
+       [:a {:href "http://www.heartfamilies.org.uk/" :target "_blank"} "Heart Families South West"]
+       [:a {:href "http://www.heartcircle.org/" :target "_blank"} "South West Children’s Heart Circle"]]
+
+ :SGH [[:a {:href "http://www.uhs.nhs.uk/OurServices/Childhealth/Childrenscongenitalcardiacservices/Childrenscongenitalcardiacservices.aspx"
+            :target "_blank"} "Southampton, Wessex Cardiothoracic Centre (Southampton Children’s Hospital)"]
+       [:a {:href "http://www.oceanward.co.uk/" :target "_blank"} "Families of Ocean Ward"]]
+
+ :LGI [[:a {:href "http://www.leedsth.nhs.uk/a-z-of-services/childrens-cardiology/" :target "_blank"} "Leeds General Infirmary"]
+       [:a {:href "http://chsf.org.uk/" :target "_blank"} "The Childrens Heart Surgery Fund"]]
+
+ :OLS [[:a {:href "http://www.olchc.ie/" :target "_blank"}
+        "Dublin, Our Lady's Children's Hospital"]
+       [:a {:href "http://www.heartchildren.ie/our-lady%E2%80%99s-children%E2%80%99s-hospital-crumlin" :target "_blank"}
+        "Heart Children Ireland"]]
+
+ :NHB [[:a {:href "http://www.rbht.nhs.uk/" :target "_blank"} "London, Royal Brompton Hospital"]
+       [:a {:href "http://www.thebromptonfountain.org.uk/" :target "_blank"} "The Brompton Fountain"]]
+
+ :ACH [[:a {:href "http://www.alderhey.nhs.uk/departments/cardiac/" :target "_blank"} "Liverpool, Alder Hey Hospital"]
+       [:a {:href "http://www.alderheycharity.org/" :target "_blank"} "Alder Hey Charity"]
+       [:a {:href "https://heartchild.info/web/" :target "_blank"} "Children’s Heart Association"]]
+
+ :GUY [[:a {:href "http://www.evelinalondon.nhs.uk/our-services/hospital/heart-services/overview.aspx" :target "_blank"}
+        "London, Evelina London Children's Hospital"]
+       [:a {:href "http://www.echo-evelina.org.uk/" :target "_blank"} "ECHO – Evelina Children’s Heart Organisation"]]
+
+ :BCH [[:a {:href "http://www.bwc.nhs.uk" :target "_blank"} "Birmingham Children’s Hospital"]
+       [:a {:href "http://www.youngatheart.org.uk/" :target "_blank"} "Young at Heart"]
+       [:a {:href "http://www.bch.org.uk" :target "_blank"} "Birmingham Children’s Hospital Charity"]]
+
+ :GOS [[:a {:href "http://www.gosh.nhs.uk/medical-information/clinical-specialties/cardiothoracic-surgery-information-parents-and-visitors"
+            :target "_blank"} "London, Great Ormond Street Hospital for Children"]
+       [:a {:href "http://www.gosh.org/" :target "_blank"} "Great Ormond Street Hospital Charity GOSHCC"]]}

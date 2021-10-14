@@ -15,8 +15,8 @@
   (defn faq-refs
     "List all faq refs"
     []
-    (into {} (for [section-ix (range (count faq-sections))
-                   faq-ix (range (count (:faqs (faq-sections section-ix))))]
+    (into {} (for [section-ix (range (count #_(faq-sections) faq-sections))
+                   faq-ix (range (count (:faqs #_((faq-sections) section-ix) (faq-sections section-ix))))]
                [(str "faq/" section-ix "/" faq-ix) [:faq [section-ix faq-ix]]]))
     ))
 
@@ -27,7 +27,7 @@
 
 (rum/defc render-glossary-term [term]
   (let [entry (term content/glossary)]
-    (println "entry: " entry)
+    ;(println "entry: " entry)
     [:dl
      [:dt [:i (:title entry)]]
      [:dd
@@ -53,7 +53,7 @@
                     ])
 
 (rum/defc render-faq-block [sec-ix]
-  (let [section (faq-sections sec-ix)]
+  (let [section #_((faq-sections) sec-ix) (faq-sections sec-ix)]
     (when-not (:is-glossary section)
       [:div.faq-block {:class (block-classes sec-ix)}
        [:h4 {:key 1} (:section section)
@@ -107,24 +107,24 @@
 
 (defn gen-postfix [state]
   (let [[section-ix _] (first (:rum/args state))
-        section (faq-sections section-ix)]
+        section #_((faq-sections) section-ix) (faq-sections section-ix)]
     (:section section)))
 
 (defn gen-bread-title [state]
   (let [sec-ix (first (:rum/args state))]
-    (:section (faq-sections sec-ix))))
+    (:section #_((faq-sections) sec-ix) (faq-sections sec-ix))))
 
 (defn prev-faq [[section-ix ix]]
   (str "faq"
        (if (pos? ix)
          (str "/" section-ix "/" (dec ix))
          (if (pos? section-ix)
-           (str "/" (dec section-ix) "/" (dec (count (:faqs (faq-sections (dec section-ix))))))
+           (str "/" (dec section-ix) "/" (dec (count (:faqs #_((faq-sections) (dec section-ix)) (faq-sections (dec section-ix))))))
            "s"))))
 
 (defn next-faq [[section-ix ix]]
-  (let [shown-section-count (dec (count faq-sections))
-        faq-count (count (:faqs (faq-sections section-ix)))]
+  (let [shown-section-count (dec (count #_(faq-sections) faq-sections))
+        faq-count (count (:faqs #_((faq-sections) section-ix) (faq-sections section-ix)))]
     (str "faq"
          (if (>= (inc ix) faq-count)
            (if (< (inc section-ix) shown-section-count)
@@ -142,7 +142,7 @@
 
 
 (rum/defc breadcrumb [[section-ix _]]
-  (let [section (faq-sections section-ix)]
+  (let [section #_((faq-sections) section-ix) (faq-sections section-ix)]
     [:ul.breadcrumb
      [:li [:a (core/internal-ref "faqs") "Everything Else"]]
      [:li (:section section)]
@@ -154,13 +154,13 @@
 
   [:.one-block.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
    (breadcrumb [sec-ix])
-   [:h1 (:section  (faq-sections sec-ix))]
+   [:h1 (:section #_((faq-sections) sec-ix) (faq-sections sec-ix))]
    (render-faq-block sec-ix)])
 
 (rum/defc render-faq-section < (core/update-title gen-postfix) [[section-ix ix :as faq-ref]]
 
   [:.faq.col-sm-10.col-sm-offset-1.col-md-7.col-md-offset-1
-   (let [section (faq-sections section-ix)
+   (let [section #_((faq-sections) section-ix) (faq-sections section-ix)
          faq ((:faqs section) ix)
          short-answer (:short-answer faq)
          glossary (:glossary faq)]

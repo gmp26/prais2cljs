@@ -1,7 +1,6 @@
 (ns prais2.home
   (:require [rum.core :as rum]
-            [prais2.core :as core]
-            ))
+            [prais2.core :as core]))
 
 (rum/defc what-why []
   [:.col-sm-4

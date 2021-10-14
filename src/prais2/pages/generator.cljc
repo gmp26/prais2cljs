@@ -32,8 +32,8 @@
 
      (defn all-faq-refs [build-name]
        ;(println "This is weird")
-       (doseq [section (range (count faq-sections))]
-         (doseq [ix (range (count (:faqs (faq-sections section))))]
+       (doseq [section (range (count #_(faq-sections) faq-sections))]
+         (doseq [ix (range (count (:faqs #_((faq-sections) section) (faq-sections section))))]
            (write-html (str "target/public/faq-" section "-" ix ".html") (faq-page [section ix] build-name)))))
 
      (defn -main [argsmap & _]
